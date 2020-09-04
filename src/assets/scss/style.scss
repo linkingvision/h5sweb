@@ -1,0 +1,19 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles with default layout.
+@import "~@coreui/coreui-pro/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+a{
+    color: none;
+    text-decoration:none;
+}
+// 顶部高
+.c-header-nav{
+    min-height: 40px;
+}
+.c-header-brand{
+    min-height: 40px;
+}

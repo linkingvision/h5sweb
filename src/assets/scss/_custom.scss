@@ -1,0 +1,141 @@
+// Here you can add other styles
+// 顶部
+$G_back:#181818;
+$top_back:#202020;
+$top_viceback:#494A4C;
+$header_size:#FFFFFF;
+//左侧栏
+$sidebar_back:#0C0C0C;
+$sidebar_size:#B7B7B7;
+//实时播放页面
+$liveview_lback:#2D2D2D;
+//组件
+//收缩
+$collapse_header:#292929;
+$collapse_size:#FFFFFF;
+.c-app.c-dark-theme{
+    background-color: $G_back;
+    //左侧栏
+    .c-sidebar{
+        background-color: $sidebar_back;
+        .el-menu{
+            border: none;
+            .el-menu-item{
+                color: $sidebar_size;
+                i{
+                    margin-left: 15%;
+                    margin-right: 10px;
+                    font-size: 16px;
+                }
+            }
+            .el-menu-item.is-active{
+                color: #FFFFFF !important;
+                background-color: $top_back!important;
+                border-right: 2px solid #1DD3FA;
+            }
+        }
+    }
+    // 顶部
+    .c-header{
+        background-color: $top_back;
+        color: $header_size;
+        .btn{
+            color: $header_size;
+        }
+        .c-header-nav-btn{
+            color: $header_size;
+        }
+        .c-subheader{
+            background-color: $top_viceback;  
+        }
+    }
+    //实时播放页面
+    .liveview{
+        .liveview_left{
+            background-color: $liveview_lback;
+            .el-input__inner{ //输入框
+                background-color:#4A4A4C;
+                border: none;
+                border-radius: 30px;
+            }
+        }
+    }
+
+    // 组件
+    //收缩
+    .el-collapse{
+        border: none;
+        background: none;
+        .el-collapse-item__header{
+            color: $collapse_size;
+            background-color: $collapse_header;
+            border: none;
+            padding: 0 7px;
+            font-size: 15px;
+        }
+        .el-collapse-item__wrap{
+            background: none;
+            border-bottom: none;
+            .el-collapse-item__content{
+                color: $collapse_size;
+
+            }
+        }
+    }
+    //树形
+    .el-tree{
+        background: none !important;
+        color: $collapse_size;
+        font-size: 14px;
+        .el-tree-node.is-current>.el-tree-node__content{
+            background: none !important;
+            color: #3ABBFE;
+            overflow: auto;
+            width: 100%;
+            &::-webkit-scrollbar{
+                display: none;
+            }
+        }
+        .el-tree-node__content{
+            background: none !important;
+            &:hover{
+                background: none !important;
+                color: #3ABBFE;
+            }
+        }
+    }
+    //时间轴
+    .el-timeline {
+        .el-timeline-item{
+            padding: 0;
+            .el-timeline-item__tail {
+                position: absolute;
+                left: 4px;
+                height: 100%;
+                border-left: 2px solid #E4E7ED;
+                margin-top: 7px;
+            }
+            .el-timeline-item__node--normal {
+                left: -1px;
+                width: 12px;
+                height: 12px;
+                margin-top: 7px;
+            }
+            .el-timeline-item__wrapper{
+                .el-timeline-item__timestamp.is-top{
+                    margin: 0;
+                }
+                .el-timeline-item__content{
+                    .el-card{
+                        border: 0px;
+                        background: none;
+                        .el-card__body{
+                            display: block;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

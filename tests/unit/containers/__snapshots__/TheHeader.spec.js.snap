@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TheHeader.vue renders correctly 1`] = `
+<cheader-stub
+  colorscheme="light"
+  fixed="true"
+  tag="header"
+  withsubheader="true"
+>
+  <ctoggler-stub
+    class="ml-3 d-lg-none"
+    inheader="true"
+    tag="button"
+  />
+   
+  <ctoggler-stub
+    class="ml-3 d-md-down-none"
+    inheader="true"
+    tag="button"
+  />
+   
+  <cheaderbrand-stub
+    activeclass="router-link-active"
+    alt="CoreUI Logo"
+    class="mx-auto d-lg-none"
+    event="click"
+    exactactiveclass="router-link-exact-active"
+    height="46"
+    routertag="a"
+    src="img/brand/coreui-vue-pro-logo.svg"
+    tag="div"
+    target="_self"
+    width="190"
+  />
+   
+  <cheadernav-stub
+    class="d-md-down-none mr-auto"
+  >
+    <cheadernavitem-stub
+      class="px-3"
+    >
+      <cheadernavlink-stub
+        activeclass="router-link-active"
+        event="click"
+        exactactiveclass="router-link-exact-active"
+        routertag="a"
+        target="_self"
+        to="/dashboard"
+      >
+        
+        Dashboard
+      
+      </cheadernavlink-stub>
+    </cheadernavitem-stub>
+  </cheadernav-stub>
+   
+  <cheadernav-stub>
+    <cheadernavitem-stub
+      class="px-3"
+    >
+      <button
+        class="c-header-nav-btn"
+      >
+        <cicon-stub
+          name="cil-moon"
+        />
+      </button>
+    </cheadernavitem-stub>
+  </cheadernav-stub>
+   
+  <csubheader-stub
+    class="px-3"
+    tag="div"
+  >
+    <cbreadcrumbrouter-stub
+      class="border-0 mb-0"
+    />
+  </csubheader-stub>
+</cheader-stub>
+`;

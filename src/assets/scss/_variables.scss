@@ -1,0 +1,19 @@
+// Variable overrides
+// 顶部
+$G_back:#181818;
+$top_back:#FFFFFF;
+$top_viceback:#494A4C;
+//左侧栏
+$sidebar_back:#0C0C0C;
+.c-app{
+    background-color: $G_back;
+    .c-sidebar{
+        background-color: $sidebar_back;
+    }
+    .c-header{
+        background-color: $top_back;
+        .c-subheader{
+            background-color: $top_viceback;  
+        }
+    }
+}
