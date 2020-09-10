@@ -46,7 +46,7 @@
 				<template #toggler-content>
 					<i class="iconfont icon-yonghuming"></i> {{user}}
 				</template>
-				<CDropdownItem>
+				<CDropdownItem :to="{name:'Logout'}">
 					<div class="about_ab"><i class="iconfont icon-tuichudenglu"></i>退出登录</div>
 				</CDropdownItem>
 			</CDropdown>
@@ -73,11 +73,27 @@
 		</CHeaderNav>
 	
 		<CSubheader class="px-4">
+			<!-- 修改面包屑导航 -->
 			<CHeaderNav>
 				<div class="header_size">
-				<i :class="this.$route.matched[1].meta.icon"> </i>
-				{{this.$route.matched[1].meta.name}}
+					<i :class="this.$route.matched[1].meta.icon"> </i>
+					{{this.$route.matched[1].meta.name}}
 				</div>
+			</CHeaderNav>
+			<CHeaderNav>
+				<CHeaderNavItem>
+					<button
+					in-header
+					class="c-header-nav-btn"
+					@click="$store.commit('toggle', 'asideShows')"
+					>
+						<img 
+						src="../assets/imgs/liveview_setting.png"
+						width="16"
+						height="16"
+						alt="CoreUI Logo"/>
+					</button>
+				</CHeaderNavItem>
 			</CHeaderNav>
 		<!-- <CBreadcrumbRouter class="border-0 mb-0"/> -->
 		</CSubheader>
@@ -91,7 +107,11 @@ export default {
 	data(){
 		return {
 			user:"",
-			Rebootdialog:""
+			Rebootdialog:"",
+			subtitle:{
+				icon:this.$route.matched[1].meta.icon,
+				name:this.$route.matched[1].meta.name
+			}
 		}
 	},
 	methods:{
@@ -110,5 +130,8 @@ export default {
     margin-right: 10px;
   }
 }
-
+.c-subheader{
+	display: flex;
+	justify-content: space-between;
+}
 </style>

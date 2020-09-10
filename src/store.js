@@ -7,6 +7,7 @@ const state = {
   sidebarMinimize: false,
   darkMode: true,
   asideShow: false,
+  asideShows:false,
   lang:"zhchs",
   token:null,
   IPPORT:'',

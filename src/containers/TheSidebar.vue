@@ -25,18 +25,22 @@
 		</CSidebarBrand>
 		<el-menu
 			router
-			:default-active="activemenu"
+			:default-active="activeIndex" 
 			class="el-menu-vertical-demo"
 			:background-color="($store.state.darkMode) ? '#0C0C0C' : '#FFFFFF'"
 			:text-color="($store.state.darkMode) ? '#B7B7B7' : '#000000'"
 			active-text-color="#3277FF">
-			<el-menu-item index="Dashboard">
-				<i class="iconfont icon-gengduo"></i>
+			<el-menu-item index="/Dashboard">
+				<i class="iconfont icon-11111-copy"></i>
 				<span slot="title">{{$t("message.left.dashboard")}}</span>
 			</el-menu-item>
-			<el-menu-item index="Liveview">
-				<i class="iconfont icon-shexiangji1"></i>
+			<el-menu-item index="/Liveview">
+				<i class="iconfont icon-shipin1"></i>
 				<span slot="title">{{$t("message.live.liveview")}}</span>
+			</el-menu-item>
+			<el-menu-item index="/Replay/Advancepb">
+				<i class="iconfont icon-bofang1"></i>
+				<span slot="title">{{$t("message.left.playback")}}</span>
 			</el-menu-item>
 		</el-menu>
 	</CSidebar>
@@ -57,7 +61,7 @@ export default {
 	},
 	data(){
 		return {
-			activemenu:"1"
+			activeIndex:"Dashboard"
 		}
 	},
 	mounted(){
@@ -66,8 +70,8 @@ export default {
 	methods:{
 		menuList(){ 
 			let path = this.$route.matched[1].meta.title
-			// console.log(this.$route.matched[1].meta)
-            this.activemenu = path
+			console.log(this.$route)
+            this.activeIndex = path
         }
 	}
 }

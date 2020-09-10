@@ -155,7 +155,7 @@ export default {
     },
     beforeDestroy() {
         this.CloseVideo();
-        this.$root.bus.$off('liveplay');
+        // this.$root.bus.$off('liveplay');
     },
     mounted(){
         let _this = this;
@@ -288,6 +288,23 @@ export default {
         },
         //关闭
         CloseVideo(){
+            //转码
+            this.videoname="";
+            this.valuebutton='';
+            var $container = $("#"+this.h5id);
+            var $ptzcontrols = $container.children(".ptzcontrols");
+            
+            // var valueId=document.getElementById('inputid ')
+            // var divId=document.getElementById('divid')
+            // console.log(divId)
+            $ptzcontrols.css("display", "none");
+            $("#"+this.videonameid).removeClass("videoname");
+            $("#"+this.inputid).removeClass("streambutton")
+            $("#"+this.qualityid).removeClass("quality")
+            $("#"+this.rtcid).removeClass("rtc_new");
+            $("#"+this.spanqualityid).addClass("spanquality")
+            $("#"+this.inputid).addClass("spanpicturequality")
+            
             if (this.h5handler != undefined)
             {
                 this.h5handler.disconnect();
@@ -796,7 +813,8 @@ export default {
                         flex-wrap: wrap;
                         justify-content: space-around;
                         align-content: space-around;
-                        margin-left: 16%;
+                        margin-left: 40px
+                        ;
                         .zoom_add{
                             width: 20px;
                             height: 20px;
@@ -818,7 +836,7 @@ export default {
                     right: 4%;
                     .block {
                         width: 100%;
-                        height: 175px;
+                        height: 140px;
                         margin-right: 4%;
                         overflow: auto;
                         color: #FFFFFF;

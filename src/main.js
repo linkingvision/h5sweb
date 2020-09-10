@@ -15,6 +15,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+
 import VueI18n from 'vue-i18n'
 import LangEn from '../static/lang/en'
 import LangZhCHS from '../static/lang/zhchs'
@@ -33,6 +34,37 @@ const i18n = new VueI18n({
 i18n.locale = store.state.lang
 
 Vue.use(CoreuiVue)
+
+
+router.beforeEach((to, from, next) => {
+    const type = to.meta.type
+    // console.log(store.state.root,type)
+    // 判断该路由是否需要登录权限
+    if (type === 'Administrator'||type === 'Operator') {
+        // console.log(type,"1");
+      if (store.state.token) {
+		// console.log(type,"2");
+		if(store.state.root==='Operator'||type === 'Operator'){
+			console.log(type,store.state.root,"4");
+			next('/dashboard')
+		}else{
+			// console.log(type,"5");
+			next()  // 确保一定要有next()被调用
+		}
+      } else {
+        sessionStorage.removeItem('mcutoken')
+        store.state.token = null
+        sessionStorage.removeItem('mcuuser')
+        store.state.user = null
+        sessionStorage.removeItem('mcuroot')
+        store.state.root = null
+        // console.log(type,"3");
+        next('/login')
+      }
+    } else {
+		next()
+    }
+})
 
 new Vue({
   el: '#app',

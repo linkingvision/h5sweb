@@ -25,14 +25,14 @@
                         ref="tree"
                         @node-click="handleNodeClick"
                         :props="defaultProps">
-                        <span slot-scope="{ node, data }" style="width:100%;">
+                        <span slot-scope="{ data }" style="width:100%;">
                             <div style="width:100%;display: flex;justify-content: space-between;">
                                 <!-- draggable="true" 
                                     @dragstart="dragStart($event,data.token,data.label,data.streamprofile, data.name,data.disabled_me,node)" -->
                                 <span 
                                     class="size_color" 
                                     draggable="true" 
-                                    @dragstart="dragStart($event,data.token,data.label,data.streamprofile, data.name,data.disabled_me,node)">
+                                    @dragstart="dragStart($event,data.token,data.label,data.streamprofile, data.name,data.disabled_me)">
                                     <span style="font-size: 12px;" :class="data.iconclass" :id="'icon'+data.token"></span>
                                     <span :class="data.iconclass1" style="padding-left: 4px;">{{data.label}}</span>
                                 </span>
@@ -85,7 +85,7 @@
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>视图</div>
                             <div class="liveview_colltitle">
-                                <div @click.stop="DesktopSwitch" class="liveview_titleicon2"></div>
+                                <div class="liveview_titleicon2"></div>
                             </div>
                         </div>
                     </template>
@@ -135,7 +135,7 @@ import Vue from 'vue'
 import Liveplay from './liveview/Liveplay'
 import {listdatag,listdatagload,listdatag1} from './public/device'
 export default {
-    name: 'Dashboard',
+    name: 'Liveview',
     components: {
         'live-play': Liveplay
     },
@@ -165,7 +165,7 @@ export default {
 		}
     },
 	mounted(){
-        console.log(listdatag,listdatagload,listdatag1,this.data)
+        // console.log(listdatag,listdatagload,listdatag1,this.data)
         this.updateUI();
         $('#headswitch').hide()
 	},
@@ -429,6 +429,7 @@ export default {
 
 <style lang="scss">
 .liveview{
+    padding-top: 10px;
     display: flex;
     // flex-wrap: wrap;
     justify-content: space-between;
