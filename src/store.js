@@ -10,6 +10,9 @@ const state = {
   asideShows:false,
   lang:"zhchs",
   token:null,
+  user:null,
+  root:null,
+  Adswitch:"false",
   IPPORT:'',
   WSROOT:''
 }

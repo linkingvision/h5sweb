@@ -80,7 +80,7 @@
 					{{this.$route.matched[1].meta.name}}
 				</div>
 			</CHeaderNav>
-			<CHeaderNav>
+			<CHeaderNav v-if="this.$route.matched[1].meta.icon=='iconfont icon-shipin1'">
 				<CHeaderNavItem>
 					<button
 					in-header
@@ -106,7 +106,7 @@ export default {
 	name: 'TheHeader',
 	data(){
 		return {
-			user:"",
+			user:this.$store.state.user,
 			Rebootdialog:"",
 			subtitle:{
 				icon:this.$route.matched[1].meta.icon,

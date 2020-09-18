@@ -1,129 +1,121 @@
 <template>
-    <div>
-        <div id="page-wrapper">
-            <!-- 头部 -->
-            <div class="container-fluid">
-                <div class="row bg-title" style="margin-bottom: 0px;">
-                    <h4 class="page-title">{{$t("message.left.snapshot")}}</h4>
+    <div class="playback">
+        <div class="playback_snap_zuo">
+            <!-- 模糊查询搜查 -->
+            <el-input
+                class="snap_zuo_input"
+                placeholder="输入关键字进行过滤"
+                v-model="filterText">
+            </el-input>
+            <div class="snap_zuo_title">设备</div>
+            <!-- 这是原下拉框代码 -->
+            <el-tree
+                :data="data"
+                show-checkbox
+                node-key="id"
+                :filter-node-method="filterNode"
+                ref="tree"
+                highlight-current
+                :props="defaultProps">
+                <span slot-scope="{ data }">
+                    <i :class="data.iconclass" style="color:rgb(142, 132, 132);"></i>
+                    <span :class="data.iconclass1" style="padding-left: 4px;">{{data.label}}</span>
+                </span>
+            </el-tree>
+        </div>
+        <div class="playback_snap_you">
+            <div class="snap_you_top">
+                <div class="snap_you_topfast">
+                    <div class="snap_you_topinterval">日期</div>
+                    <el-select v-model="value" placeholder="请选择" @change="datechange">
+                        <el-option
+                        v-for="item in selectdate"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="snap_you_topdate">
+                    <div class="snap_you_topinterval">开始日期</div>
+                    <el-date-picker
+                        v-model="startvalue"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                    </el-date-picker>
+                    <div class="snap_you_topinterval1"> —— </div>
+                    <div class="snap_you_topinterval">结束日期</div>
+                    <el-date-picker
+                        v-model="endvalue"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                    </el-date-picker>
+                </div>
+                <div class="snap_you_topbutt">
+                    <el-button class="snap_you_topbutt1" @click="getCheckedNodes">{{$t("message.archive.search")}}</el-button>
+                    <el-button class="snap_you_topbutt2" @click="tableDatak">{{$t("message.archive.Clear")}}</el-button>
                 </div>
             </div>
-            <!-- 内容 -->
-            <div class="content-mythe">
-                <div class="content-mythe-one">
-                    <!-- 时间表 -->
-                    <div class="block">
-                        <el-date-picker
-                            v-model="value"
-                            type="datetimerange"
-                            :picker-options="pickerOptions"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期"
-                            :default-time="['0:00:00', '24:00:00']">
-                        </el-date-picker>
-                    </div>
-                    <!-- 模糊查询搜查 -->
-                    <el-input
-                        placeholder="输入关键字进行过滤"
-                        v-model="filterText">
-                    </el-input>
-                    <!-- 这是原下拉框代码 -->
-                    <el-tree
-                        :data="data"
-                        show-checkbox
-                        node-key="id"
-						:check-strictly="true"
-                        :filter-node-method="filterNode"
-                        ref="tree"
-                        highlight-current
-                        :props="defaultProps">
-                        <span slot-scope="{ data }">
-                            <i :class="data.iconclass" style="color:rgb(142, 132, 132);"></i>
-                            <span :class="data.iconclass1" style="padding-left: 4px;">{{data.label}}</span>
-                        </span>
-                    </el-tree>
-                </div>
-                <!-- 表格 -->
-                <div class="content-mythe-two">
-                    <!-- 查询按钮 -->
-                    <div style="margin: 10px 20px;display: flex;justify-content: space-between;">
-                        <el-button @click="getCheckedNodes"  icon="el-icon-search">{{$t("message.archive.search")}}</el-button>
-                        <el-button size="mini" @click="tableDatak">{{$t("message.archive.Clear")}}</el-button>
-                    </div>
-                    <!-- 有按钮 -->
-                    <el-table
-                        :data="tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-                        style="width: 100%;">
-                        <el-table-column
-                            prop="token"
-                            :label="label.Name" >
+            <div class="snap_you_bottom">
+                <!-- 有按钮 -->
+                <el-table
+                    :data="tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+                    style="width: 100%;">
+                    <el-table-column
+                        prop="token"
+                        :label="label.Name" >
+                        <template slot-scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.token }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="name"
+                        :label="label.Token">
                             <template slot-scope="scope">
-                                <span style="margin-left: 10px">{{ scope.row.token }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column
-                            prop="name"
-                            :label="label.Token">
-                             <template slot-scope="scope">
-                                <span>{{ scope.row.name }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column
-                            prop="starf"
-                            :label="label.Time">
-                             <template slot-scope="scope">
-                                <i class="el-icon-time"></i>
-                                <span>{{ scope.row.starf }}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column>
+                            <span>{{ scope.row.name }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="starf"
+                        :label="label.Time">
                             <template slot-scope="scope">
-                                <div class="button_edi">
-                                    <a :href="scope.row.url" :download="scope.row.urlto"><button type="button" style="margin-right: 40px;" class="iconfont icon-download"></button></a>
-                                    <button type="button" class="iconfont icon-browse" @click="Refresh1(scope.$index, scope.row)" data-toggle="modal" data-target="#myModal"></button>
-                                </div>
-                                <!-- <el-button
-                                size="mini"
-                                type="success"><a :href="scope.row.url" :download="scope.row.urlto">{{$t("message.archive.Download")}}</a></el-button>
-                                <el-button size="mini"  @click="Refresh1(scope.$index, scope.row)" data-toggle="modal" data-target="#myModal">{{$t("message.archive.Preview")}}</el-button> -->
-                            </template>
-                         </el-table-column>
-                    </el-table>
-                    <!-- 分页 -->
-                    <el-pagination
-                        style="text-align: center;"
-                        layout="prev, pager, next"
-                        @size-change="handleSizeChange" 
-                        @current-change="handleCurrentChange"
-                        :current-page="currentPage"
-                        :total="total">
-                    </el-pagination>
-                </div>
+                            <i class="el-icon-time"></i>
+                            <span>{{ scope.row.starf }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column>
+                        <template slot-scope="scope">
+                            <div class="button_edi">
+                                <a :href="scope.row.url" :download="scope.row.urlto"><button type="button" style="margin-right: 40px;" class="iconfont icon-download"></button></a>
+                                <button type="button" class="iconfont icon-play" @click="Refresh1(scope.$index, scope.row)" data-toggle="modal" data-target="#myModal"></button>
+                            </div>
+                        </template>
+                        </el-table-column>
+                </el-table>
+                <!-- 分页 -->
+                <el-pagination
+                    style="text-align: center;"
+                    layout="prev, pager, next"
+                    @size-change="handleSizeChange" 
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :total="total">
+                </el-pagination>
             </div>
         </div>
-        <!-- bootstrap模态框1 -->
-        <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            {{$t("message.archive.Picture")}}
-                        </h4>
-                        <!-- 开始结束时间 -->
-                        <div class="kai">
-                            <span>{{$t("message.archive.Time")}}:{{rowstarf}}</span>
-                        </div>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img :src="url" class="imgmin"/>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
+        <el-dialog
+            class="dasboard_modal"
+            :title="label.picture"
+            :visible.sync="myModal1"
+            width="25%">
+            <div>{{$t("message.archive.Time")}}:{{rowstarf}}</div>
+            <span slot="footer" class="dialog-footer">
+                <img :src="url" class="imgmin"/>
+            </span>
+        </el-dialog>
     </div>
 </template>
+
 <script>
 import {listdatagload,listdatag} from '../public/regional'
 export default {
@@ -134,11 +126,28 @@ export default {
             label:{
                 Name:this.$t("message.table.Name"),
                 Token:this.$t("message.table.Token"),
-                Time:this.$t("message.table.Time")
+                Time:this.$t("message.table.Time"),
+                Picture:this.$t("message.archive.Picture")
             },
             timelink:0,//滑块
             max:0,//滑块最大值
-            value: [new Date(new Date().getTime()- 3600 * 1000 * 1), new Date()],
+            value: '',
+            endvalue: new Date().getTime(),
+            startvalue:new Date().getTime() - 3600 * 1000 * 1,
+            myModal1:false,
+            selectdate: [{
+                    value: (new Date().getTime() - 3600 * 1000 * 1),
+                    label: this.$t("message.archive.Onehour")
+                }, {
+                    value: (new Date().getTime() - 3600 * 1000 * 24),
+                    label: this.$t("message.archive.Oneday")
+                }, {
+                    value: (new Date().getTime() - 3600 * 1000 * 24 * 7),
+                    label: this.$t("message.archive.Oneweek")
+                }, {
+                    value: (new Date().getTime() - 3600 * 1000 * 24 * 30),
+                    label: this.$t("message.archive.Onemonth")
+            }],
             //分页
             currentPage: 1, // 当前页码
             total: 0, // 总条数
@@ -153,106 +162,70 @@ export default {
                 iconclass:"iconclass"
             },
             tableData1: [],
-            pickerOptions: {
-                shortcuts: [{
-                    text: this.$t("message.archive.Onehour"),
-                    onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 1);
-                    picker.$emit('pick', [start, end]);
-                    }
-                },{
-                    text: this.$t("message.archive.Oneday"),
-                    onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24);
-                    picker.$emit('pick', [start, end]);
-                    }
-                },{
-                    text: this.$t("message.archive.Oneweek"),
-                    onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                    picker.$emit('pick', [start, end]);
-                    }
-                }, {
-                    text: this.$t("message.archive.Onemonth"),
-                    onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                    picker.$emit('pick', [start, end]);
-                    }
-                }]
-            },
             rowstarf:"",//跟进进度条开始时间
             url:""//图片地址
         }
     },
     mounted(){
-        // this.loadDevice();
-        // this.loadtest();
-        // this.NumberDevice();
-        // this.cloudDevice();
     },
     methods:{
+        datechange(){
+            console.log(this.value)
+            this.startvalue=this.value
+        },
         //播放
         Refresh1(index, row){
             console.log(index, row);
             this.rowstarf=row.starf;
             this.url=row.url;
+            this.myModal1=true
         },
        
         // 表格归档 下载 刷新
         
         //按钮搜索
         getCheckedNodes() {
+            this.tableData1=[];
             console.log("node值",this.$refs.tree.getCheckedNodes());
             var nodes=this.$refs.tree.getCheckedNodes();
-            if(nodes.length==1){
-            var idname=nodes[0].token;
-            var idname1=nodes[0].label;
-            }else{
-               this.$message(this.$t("message.archive.Pleaseselectone"));
-                return false;
+            var srartdate=new Date(this.startvalue).toISOString()+"08:00";
+            var enddate= new Date(this.endvalue).toISOString()+"08:00";
+            console.log(this.endvalue,this.startvalue,srartdate,enddate)
+            for(var i=0 ;i<nodes.length; i++){
+                if(nodes[i].token!=undefined){
+                    console.log(nodes[i].token,nodes[i].label)
+                    // return false
+                    var url = this.$store.state.IPPORT + "/api/v1/Search?type=snapshot&token="+nodes[i].token+"&start="+srartdate+"&end="+enddate+"&session="+ this.$store.state.token;
+                    console.log(url);
+                    //return false;
+                    this.$http.get(url).then(result=>{
+                        if(result.status == 200){
+                            this.$message('Query successful');
+                            var data=result.data;
+                            for(var i=0;i<data.record.length;i++){
+                                var item=data.record[i];
+                                var urlto=item["strPath"].split("/");
+                                var timeitem={
+                                        name: nodes[i].token,
+                                        token: nodes[i].label,
+                                        starf : item['strStartTime'],
+                                        percentage:0,
+                                        url:item["strPath"],
+                                        urlto:urlto[urlto.length-1],
+                                        strFileName:""
+                                    };
+                                    this.tableData1.push(timeitem);
+                            }
+                            
+                            this.total=this.tableData1.length;
+                            console.log("length",this.total)
+                        }
+                    }).catch(error => {
+                        console.log('Snapshot failed!', error);
+                        this.$message('Query failed !');
+                    });
+                }
             }
-            var timevalue=this.value;
-            console.log(timevalue ,"nodes",nodes);
-            var timevalues=timevalue[0].toISOString();
-            var timevaluee=timevalue[1].toISOString();
-
-			var url = this.$store.state.IPPORT + "/api/v1/Search?type=snapshot&token="+idname+"&start="+timevalues+"&end="+timevaluee+"&session="+ this.$store.state.token;
-            console.log(url);
-            //return false;
-            this.$http.get(url).then(result=>{
-				  if(result.status == 200){
-                    this.$message('Query successful');
-					var data=result.data;
-					for(var i=0;i<data.record.length;i++){
-                        var item=data.record[i];
-                        var urlto=item["strPath"].split("/");
-						var timeitem={
-                                name: idname,
-                                token: idname1,
-								starf : item['strStartTime'],
-                                percentage:0,
-                                url:item["strPath"],
-                                urlto:urlto[urlto.length-1],
-                                strFileName:""
-                              };
-                              this.tableData1.push(timeitem);
-                    }
-                    
-                    this.total=this.tableData1.length;
-                    console.log("length",this.total)
-				  }
-			  }).catch(error => {
-                console.log('Snapshot failed!', error);
-                this.$message('Query failed !');
-            });
         },
         //清空表格
         tableDatak(){
@@ -284,39 +257,79 @@ export default {
     
 }
 </script>
-<style scoped>
-    a{
-        color: #797979;
+
+<style lang="scss" scoped>
+.playback{
+    display: flex;
+    justify-content: space-between;
+    .playback_snap_zuo{
+        width: 18%;
+        height: 87vh;
+        .snap_zuo_title{
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
     }
-    .imgmin{
-        width: 100%;
+    .playback_snap_you{
+        width: 82%;
+        height: 87vh;
+        .snap_you_top{
+            padding: 15px 20px;
+            @extend .g_flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            .el-input__inner{
+                background: none;
+                padding: 0;
+            }
+            .snap_you_topfast{
+                width: 17%;
+                min-width: 240px;
+                @extend .g_flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+            .snap_you_topdate{
+                width: 45%;
+                min-width: 600px;
+                @extend .g_flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+            .snap_you_topbutt{
+                width: 15%;
+                min-width: 160px;
+                @extend .g_flex;
+                justify-content: space-around;
+                align-items: center;
+                .snap_you_topbutt1{
+                    background: #3ABBFE;
+                    border: none;
+                }
+            }
+        }
+        .snap_you_bottom{
+            .button_edi button{
+                border: 0;
+                background:none;
+                font-size: 24px;
+                margin-right: 40px;
+                button:last-child{
+                    margin-right: 0;
+                }
+            }
+        }
     }
-    .kai{
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-    .content-mythe{
-		width: 100%;
-		height: auto;
-		display: flex;
-		justify-content: space-between;
-        /* align-items:flex-start; */
-	}
-	.content-mythe-one{
-		min-width: 20%;
-		height: 800px;
-		padding: 10px;
-        position: relative;
-        overflow-y:auto
-	}
-	.content-mythe-two{
-		width: 76%;
-	}
-    /* 按钮 */
-    .butt-plains{
-        position: absolute;
-        bottom: 30px;
-        right: 10px;
-    }
+}
+.imgmin{
+    width: 100%;
+}
+.g_flex{
+    display: flex;
+}
 </style>

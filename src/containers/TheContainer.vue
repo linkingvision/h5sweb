@@ -24,14 +24,43 @@ import TheHeader from './TheHeader'
 import TheFooter from './TheFooter'
 import TheAside from './TheAside'
 
+import '../assets/js/adapter'
+import {H5sEvent} from '../assets/js/h5sevent.js'
+
 export default {
-  name: 'TheContainer',
-  components: {
-    TheSidebar,
-    TheHeader,
-    TheFooter,
-    TheAside
-  }
+	name: 'TheContainer',
+	components: {
+		TheSidebar,
+		TheHeader,
+		TheFooter,
+		TheAside
+	},
+	data(){
+		return {}
+	},
+	mounted(){
+		this.open();
+	},
+	methods:{
+		open(){
+			var conf1 = {
+				protocol: window.location.protocol, //http: or https:
+				host:this.$store.state.WSROOT, //localhost:8080
+				rootpath:'/', // '/'
+				callback: this.EventCB, 
+				userdata: null, // user data
+				session: this.$store.state.token //session got from login
+			};
+			
+			// console.log("*******2",conf1)
+			this.e1 = new H5sEvent(conf1);
+			this.e1.connect();
+		},
+		EventCB(event, userdata){
+			var msgevent = JSON.parse(event);
+			console.log("****消息",msgevent)
+		}
+	}
 }
 </script>
 <style lang="scss" scoped>

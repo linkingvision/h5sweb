@@ -60,8 +60,146 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+    //回放
+    .playback{
+        .playback_snap_zuo{
+            background-color: #2D2D2D;
+            .snap_zuo_input{
+                padding: 10px 10px;
+                .el-input__inner{
+                    background: #333333;
+                    border: none;
+                    border-radius: 30px;
+                }
+            }
+            .snap_zuo_title{
+                background: #292929;
+            }
+        }
+        .playback_snap_you{
+            .el-input__inner{
+                background: none;
+                border: 1px solid #999999;
+                height: 30px;
+                line-height: 30px;
+            }
+            .el-input__icon{
+                line-height: 30px;
+            }
+            .snap_you_topbutt{
+                .snap_you_topbutt1{
+                    background: #3ABBFE;
+                    border: none;
+                    color: #FFFFFF;
+                    padding: 8px 20px;
+                }
+                .snap_you_topbutt2{
+                    background: none;
+                    border: 1px solid #3ABBFE;
+                    color: #FFFFFF;
+                    padding: 7px 20px;
+                }
+            }
+            .snap_you_bottom{
+                .button_edi button{
+                    color: $header_size;
+                }
+                .snap_you_lable_butt{
+                    button{
+                        color: $header_size;
+                    }
+                }
+            }
+            .tab{
+                .function_butt{
+                    .fixed_input{
+                        .el-input__inner{
+                            color: #3ABBFE !important;
+                        }
+                    }
+                    .button_resume{
+                        color: $header_size;
+                    }
+                }
+            }
+            .content_name{
+                color: $header_size;
+            }
+                    
+        }
+        .dasboard_modal{
+            .el-select.el-select--mini{
+                .el-input__inner{
+                    background: none !important;
+                }
+            }
+            .el-slider__runway{
+                margin: 0;
+            }
+        }
+    }
 
     // 组件
+    //弹出框
+    .el-dialog{
+        width: 25%;
+        background-color: $top_back;
+        .el-dialog__header{
+            .el-dialog__title{
+                color: $header_size;
+            }
+        }
+        .el-dialog__body{
+            color: $header_size;
+        }
+        
+    }
+    // 表格
+    .el-table {
+        min-height: 60vh;
+        background: none;
+        .el-table__empty-block{
+            background: none{
+                repeat:no-repeat;
+                position:center
+            }
+            // background-image: url('~@/assets/imgs/setting_tober1.png');
+            background-size: 10%;
+            .el-table__empty-text{
+                display: none;
+            }
+        }
+        .el-table__header th, .el-table__header tr{
+            background-color: #3c3c3c !important;
+        }
+        .el-table--striped .el-table__body tr.el-table__row--striped td {
+            background: $body-bg !important;
+        }
+        .el-table__body tr:hover>td {
+          background:none!important;
+        }
+         .el-table__body tr.hover-row>td{
+          background: none;
+        }
+        & td, & th.is-leaf {
+            color:rgba(255,255,255,1);
+            border: none!important;
+        }
+        & th, & tr{
+            background: none;
+        }
+    }
+    /* 分页 */
+    .el-pagination {
+        li{
+            background: none!important;
+            color: #FFFFFF;
+        }
+        button{
+            background: none!important;
+            color: #FFFFFF!important;
+        }
+    }
     //收缩
     .el-collapse{
         border: none;
@@ -103,6 +241,14 @@ $collapse_size:#FFFFFF;
                 color: #3ABBFE;
             }
         }
+        .el-checkbox__inner{
+            background-color: #494B4E !important;
+            border-radius: 50px !important;
+        }
+        .el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner{
+            background-color: #3277FF !important;
+            border-color: rgba(255,255,255,1) !important;
+        }
     }
     //时间轴
     .el-timeline {
@@ -136,6 +282,58 @@ $collapse_size:#FFFFFF;
                     }
                 }
             }
+        }
+    }
+    //select下拉
+    & ~ .el-select-dropdown.el-popper{
+        background: #2D2D2D;
+        border:none;
+        .hover{
+            background: #181818;
+        }
+        .popper__arrow{
+            opacity: 0;
+        }
+    }
+    //时间下拉
+    & ~ .el-picker-panel{
+        background-color: #181818 !important;
+        border:none !important;
+        color: #FFFFFF !important;
+        .el-date-picker__time-header{
+            color: #CDCDCD !important;
+            .el-input__inner{
+                background: none;
+            }
+        }
+        .el-date-picker__header{
+            .el-picker-panel__icon-btn{
+                color: #CDCDCD !important;
+            }
+        }
+        .el-picker-panel__footer{
+            background-color: #181818 !important;
+            border:none !important;
+        }
+        .el-picker-panel__footer .is-plain{
+            background-color: #3277FF;
+            border: none;
+            color: #FFFFFF;
+        }
+        .el-select-dropdown__item.selected{
+            background: #181818  !important;
+            color: #3277FF !important;
+        }
+        
+        .el-select-dropdown{
+            background: #252525 !important;
+            border: 1px solid #B5B5B5 !important;
+        }
+        .el-select-dropdown__item{
+            color:rgba(255,255,255,1)!important;
+        }
+        .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
+            background-color: #4F5255!important;
         }
     }
 }

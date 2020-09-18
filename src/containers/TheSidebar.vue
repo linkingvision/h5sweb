@@ -42,6 +42,14 @@
 				<i class="iconfont icon-bofang1"></i>
 				<span slot="title">{{$t("message.left.playback")}}</span>
 			</el-menu-item>
+			<el-menu-item index="/Avintercom/Avintercoms">
+				<i class="iconfont icon-shipinhuiyi3"></i>
+				<span slot="title">{{$t("message.Conference.Upload")}}</span>
+			</el-menu-item>
+			<el-menu-item index="/Tour">
+				<i class="iconfont icon-sigongge"></i>
+				<span slot="title">{{$t("message.left.tour")}}</span>
+			</el-menu-item>
 		</el-menu>
 	</CSidebar>
 </template>
