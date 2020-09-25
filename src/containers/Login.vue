@@ -1,5 +1,8 @@
 <template>
     <div class="login_back">
+        <div class="Copyrightnotice" id="Copyrightnotice">
+            系统版权将于({{capability}})到期，为了避免您的正常使用，请及时购买许可
+        </div>
         <div class="login_head">
             <div class="login_title"></div>
             <div class="login_content">
@@ -57,6 +60,7 @@ export default {
             date:new Date().getFullYear(),
             name:"",
             passw:"",
+            capability:"",
             dialogVisible: false,
             selectOptions: [
                 'English', '简体中文',
@@ -76,9 +80,33 @@ export default {
         };
     },
     mounted(){
+        this.GetSystemInfo()
         console.log(sessionStorage.getItem('mcutoken'),sessionStorage.getItem('mcuuser'),sessionStorage.getItem('mculang'),sessionStorage.getItem('mcuroot'),this.$store.state.token,this.$store.state.user)
     },
     methods: {
+        GetSystemInfo() {
+            let root=this.$store.state.IPPORT;
+            var url =root + "/api/v1/GetLicEndTime?session=" + this.$store.state.token;
+                // console.log("------------",url)
+            this.$http.get(url).then(result => {
+                console.log(result);
+                if (result.status == 200) {
+                    var Enddate=new Date(result.data.strEndtime).getTime()
+                    var date=new Date().getTime()
+                    var Timedifference=1000*60*60*24*31
+                    if((Enddate-date)<Timedifference){
+                        console.log(date-Enddate,Timedifference);
+                        this.capability=result.data.strEndtime
+                        document.getElementById("Copyrightnotice").style.display='block';
+                    }
+
+                    console.log(Enddate-date,Timedifference);
+                }
+            }).catch(error => {
+                console.log("GetSystemInfo", error);
+            });
+        },
+        
         langchang(){
             console.log("111",this.lang)
             this.$i18n.locale=this.lang
@@ -135,6 +163,21 @@ export default {
     height: 100%;
     position: fixed;
     background: url('../assets/imgs/login_back.png') no-repeat;
+    /* 版权 */
+    .Copyrightnotice{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        line-height: 40px;
+        text-align: center;
+        font-size: 14px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        z-index: 100000;
+        background-color: #E62424;
+        display: none;
+    }
     .login_head{
         text-align: center;
         margin: 12% auto 0;

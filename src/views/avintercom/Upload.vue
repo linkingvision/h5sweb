@@ -1,6 +1,6 @@
 <template>
     <div class="playback">
-        <div class="playback_snap_zuo">
+        <div class="playback_snap_zuo playback_snap_zuoupload">
             <video class="h5video" id="h5sVideoLocal" autoplay webkit-playsinline playsinline></video>
         </div>
         <div class="playback_snap_you">

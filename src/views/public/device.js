@@ -33,7 +33,7 @@ function loadtest(){
             var data =  result.data;
             var srcGroup = {children: []};
             srcGroup.label=i18n.tc('message.live.camera');
-            srcGroup.iconclass="iconfont  icon-shexiangtou";
+            srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
             for(var i=0; i< data.src.length; i++){
                  var item = data.src[i];
                 if(item['nOriginalType'] == 'H5_CH_GB'){
@@ -58,7 +58,7 @@ function loadtest(){
                     var newItem ={
                             token : item['strToken'],
                             label : item['strName'],
-                            iconclass : 'iconfont  icon-shexiangtou',
+                            iconclass : 'iconfont  icon-kaiqishexiangtou1',
                             iconclass2 : 'iconfont  icon-shexiangtou',
                             name:item['strName']+"--"+i18n.tc('message.live.mainstream'),
                             children:node,
@@ -116,7 +116,7 @@ function loadSrc(srclevel, srcData) {
             var data =  result.data;
             var srcGroup = {children: []};
             srcGroup.label=srclevel.strName;
-            srcGroup.iconclass="iconfont  icon-shexiangtou";
+            srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
             for(var i=0; i< data.src.length; i++){
                 var item = data.src[i];
                 // 主副流
@@ -144,7 +144,7 @@ function loadSrc(srclevel, srcData) {
                 var newItem ={
                         token : item['strToken'],
                         label : item['strName'],
-                        iconclass : 'iconfont  icon-shexiangtou',
+                        iconclass : 'iconfont  icon-kaiqishexiangtou1',
                         iconclass1 : '',
                         name:item['strName']+"--"+i18n.tc('message.live.mainstream'),
                         children:node,
@@ -209,7 +209,7 @@ function NumberSrc(srclevel, srcData) {
             var data =  result.data;
             var srcGroup = {children: []};
             srcGroup.label=srclevel.strName;
-            srcGroup.iconclass="iconfont  icon-shexiangtou";
+            srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
             for(var i=0; i< data.src.length; i++){
                 var item = data.src[i];
                 // 主副流
@@ -231,7 +231,7 @@ function NumberSrc(srclevel, srcData) {
                 var newItem ={
                         token : item['strToken'],
                         label : item['strName'],
-                        iconclass : 'iconfont  icon-shexiangtou',
+                        iconclass : 'iconfont  icon-kaiqishexiangtou1',
                         name:item['strName']+"--"+i18n.tc('message.live.mainstream'),
                         children:node,
                         disabled_me:false};
@@ -287,7 +287,7 @@ function cloudSrc(srclevel, srcData) {
             var data =  result.data;
             var srcGroup = {children: []};
             srcGroup.label=srclevel.strName;
-            srcGroup.iconclass="iconfont icon-shexiangtou";
+            srcGroup.iconclass="iconfont icon-kaiqishexiangtou1";
             for(var i=0; i< data.src.length; i++){
                 var item = data.src[i];
                 // 主副流
@@ -318,7 +318,7 @@ function cloudSrc(srclevel, srcData) {
                     newItem['iconclass'] = 'iconfont icon-kaiqishexiangtou';
 
                 if(item['nType'] == 'H5_CLOUD')
-                    newItem['iconclass'] = 'iconfont  icon-shexiangtou';
+                    newItem['iconclass'] = 'iconfont  icon-kaiqishexiangtou1';
 
                 if(item['bRec'] == true)
                         newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
@@ -369,13 +369,13 @@ function getchild(arr,arr1) {
                     arr.cam[i].strName = arr1[j].strName;
                     arr.cam[i].name=arr1[j].strName+"--"+i18n.tc('message.live.mainstream')
                     arr.cam[i].bOnline = arr1[j].bOnline;
-                    arr.cam[i].iconclass="iconfont  icon-shexiangtou"
+                    arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou1"
                     arr.cam[i].disabled_me=false
                     if(!arr1[j].bOnline)
                         arr.cam[i].iconclass = 'iconfont icon-kaiqishexiangtou';
 
                     if(arr1[j].nConnectType == 'H5_CLOUD')
-                        arr.cam[i].iconclass = 'iconfont  icon-shexiangtou';
+                        arr.cam[i].iconclass = 'iconfont  icon-kaiqishexiangtou1';
 
                     if(arr1[j].bRec == true)
                         arr.cam[i].iconclass2  = 'iconfont icon-radioboxfill none';

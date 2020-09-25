@@ -205,6 +205,16 @@ if(sessionStorage.getItem('mcuuser')){
 	store.state.user=sessionStorage.getItem('mcuuser');
 }
 
+if(localStorage.getItem('liveviewrtc')){
+	store.state.liveviewrtc=localStorage.getItem('liveviewrtc');
+}
+if(localStorage.getItem('watermarktoggle')){
+	store.state.watermarktoggle=localStorage.getItem('watermarktoggle');
+}
+if(localStorage.getItem('tourrtc')){
+	store.state.tourrtc=localStorage.getItem('tourrtc');
+}
+
 let root=process.env.VUE_APP_URL;
 if (root == undefined){
 	root = window.location.protocol + '//' + window.location.host + window.location.pathname;

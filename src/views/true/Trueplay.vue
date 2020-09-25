@@ -6,6 +6,7 @@
 <script>
 import '../../assets/js/adapter'
 import {H5sPlayerWS,H5sPlayerHls,H5sPlayerRTC,H5sPlayerAudBack} from '../../assets/js/h5splayer.js'
+import {H5siOS,H5sPlayerCreate} from '../../assets/js/h5splayerhelper.js'
 export default {
     name:"liveplay",
     props:['h5id', 'h5videoid',"cols","rows"],
@@ -13,6 +14,7 @@ export default {
         return{
             videoid: this.h5videoid,
             h5handler:undefined,//v1
+            proto: this.$store.state.tourrtc,
         }
     },
     beforeDestroy() {
@@ -20,22 +22,38 @@ export default {
     },
     mounted(){
         let _this = this;
-        _this.$root.bus.$on('liveplay', function(token,streamprofile,name,label, id)
+        this.$root.bus.$on('livetour', function(token,streamprofile, id)
         {
-            console.log("++++++++++++++++++++",name,label,_this.h5videoid,_this.h5id,id)
+            console.log(token)
             if (_this.h5id != id)
             {
                 return;
             }
-            _this.PlayVideo(token,streamprofile,label,name);
+            _this.PlayVideo(token,streamprofile);
+            _this.tokenshou=token;
+        });
+        this.$root.bus.$on('liveplaystop', function()
+        {
+            _this.PlayVideostop();
         });
 
     },
     methods:{
-        
+        PlayVideostop(){
+            console.log("aaa");
+            //console.log("-----------",this.h5handler);
+            if (this.h5handler != undefined)
+            {
+                this.h5handler.disconnect();
+                delete this.h5handler;
+                this.h5handler = undefined;
+                $("#" + this.videoid).get(0).load();
+                $("#" + this.videoid).get(0).poster = '';
+
+            }
+        },
         //播放
         PlayVideo(token,streamprofile,label,name){
-            this.CloseVideo();
             if (this.h5handler != undefined)
             {
                 this.h5handler.disconnect();
@@ -52,7 +70,11 @@ export default {
                 hlsver: 'v1', //v1 is for ts, v2 is for fmp4
                 session: this.$store.state.token //session got from login
             };
-            this.h5handler = new H5sPlayerRTC(conf);
+            if (this.$store.state.tourrtc == 'RTC' || (H5siOS() === true)){
+                this.h5handler = new H5sPlayerRTC(conf);
+            }else{
+                this.h5handler = new H5sPlayerWS(conf);
+            }
             this.h5handler.connect();
         },
         //关闭

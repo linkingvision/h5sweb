@@ -18,7 +18,7 @@
 				class="c-header-nav-btn"
 				@click="$store.commit('toggle', 'asideShow')"
 				>
-				<CIcon size="lg" name="cil-applications-settings" class="mr-2"/>
+					<i class="iconfont icon-hanbaobao" style="font-size: 24px;"></i>
 				</button>
 			</CHeaderNavItem>
 		</CHeaderNav>
@@ -27,7 +27,7 @@
 			src="../assets/imgs/logo.png"
 			width="190"
 			height="26"
-			alt="CoreUI Logo"/>
+			alt="H5S Logo"/>
 		</CHeaderNav>
 		<CHeaderNav>
 			<CHeaderNavItem class="px-3">
@@ -58,13 +58,13 @@
 					<i class="iconfont icon-gengduo"></i>
 				</template>
 				<CDropdownItem >
-					<div @click="about=true" class="about_ab"><i class="iconfont icon-guanyu"></i>关于</div>
+					<div @click="about=true" class="about_ab"><i class="iconfont icon-prompt"></i>关于</div>
 				</CDropdownItem>
 				<CDropdownItem href="doc/api.html">
-					<div class="about_ab"><i class="iconfont icon-API"></i>API</div>
+					<div class="about_ab"><i class="iconfont icon-category"></i>API</div>
 				</CDropdownItem>
 				<CDropdownItem @click="skin">
-					<div class="about_ab"><i class="iconfont icon-mingpianhuanfu"></i>主题</div>
+					<div class="about_ab"><i class="iconfont icon-huanfu"></i>主题</div>
 				</CDropdownItem>
 				<CDropdownItem @click="Rebootdialog=true">
 					<div class="about_ab"><i class="iconfont icon-zhongqi"></i>重启</div>
@@ -133,5 +133,8 @@ export default {
 .c-subheader{
 	display: flex;
 	justify-content: space-between;
+}
+.about_ab i{
+	margin-right: 10px;
 }
 </style>

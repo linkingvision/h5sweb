@@ -8,6 +8,11 @@ const state = {
   darkMode: true,
   asideShow: false,
   asideShows:false,
+  liveviewrtc:'WS',
+  tourrtc:"WS",
+  watermarkstring:"linkingvision",
+  watermarktoggle:"",
+  
   lang:"zhchs",
   token:null,
   user:null,

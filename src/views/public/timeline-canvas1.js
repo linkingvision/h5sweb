@@ -4,7 +4,7 @@ var TimeSlider = function(elementId, options) {
     this.canvansW = this.canvas.width;
     this.canVansH = this.canvas.height;
     this.timecell = options.init_cells;
-    
+    console.log(this.canvansW,this.canVansH)
     this.ctx.font="20px Arial";
     this.minutes_per_step = [1, 2, 5, 10, 15, 20, 30, 60, 120, 180, 240, 360, 720, 1440]; // min/格
     this.graduation_step = 20;//刻度间最小宽度，单位px
@@ -35,14 +35,14 @@ TimeSlider.prototype.init = function(start_timestamp,timecell,redrawFlag){
     this.drawCellBg();
     this.add_graduations(start_timestamp);
     this.add_cells(timecell);
-    this.drawLine(0,this.canVansH,this.canvansW,this.canVansH,"rgb(151, 158, 167)",1); //底线
-    this.drawLine(this.canvansW/2,0,this.canvansW/2,53,"rgb(64, 196, 255",2); //中间播放点时间线
+    // this.drawLine(0,this.canVansH,this.canvansW,this.canVansH,"rgb(151, 158, 167)",1); //底线
+    this.drawLine(this.canvansW/2,0,this.canvansW/2,35,"rgb(64, 196, 255",2); //中间播放点时间线
     if(!redrawFlag){//只有第一次进入才需要添加事件
         this.add_events();
     }
     var time = start_timestamp + (this.hours_per_ruler*3600*1000)/2;
-    this.ctx.fillStyle = "rgb(64, 196, 255";
-    this.ctx.fillText(this.changeTime(time),this.canvansW/2-60,75);
+    this.ctx.fillStyle = "rgb(64, 196, 255)";
+    this.ctx.fillText(this.changeTime(time),this.canvansW/2-60,57);
 }
 
 /**
@@ -85,18 +85,18 @@ TimeSlider.prototype.add_graduations = function(start_timestamp){
         var date = new Date(graduation_time);
         if (date.getUTCHours() == 0 && date.getUTCMinutes() == 0) {
             caret_class = 'big';
-            lineH = 45;//刻度位置
+            lineH = 20;//刻度位置
             var big_date = _this.graduation_title(date);
-            _this.ctx.fillText(big_date,graduation_left-20,50);//刻度时间位置
+            _this.ctx.fillText(big_date,graduation_left-20,35);//刻度时间位置
             _this.ctx.fillStyle = "rgba(151,158,167,1)";
         }else if (graduation_time / (60 * 1000) % medium_step == 0) {
             caret_class = 'middle';
-            lineH = 35;
+            lineH = 15;//刻度位置
             var middle_date = _this.graduation_title(date);
-            _this.ctx.fillText(middle_date,graduation_left-20,50);
+            _this.ctx.fillText(middle_date,graduation_left-20,35);//刻度时间位置
             _this.ctx.fillStyle = "rgba(151,158,167,1)";
         }else{
-            lineH = 30;
+            lineH = 0;
         }
         // drawLine(graduation_left,0,graduation_left,lineH,"rgba(151,158,167,0.4)",1);
         _this.drawLine(graduation_left,0,graduation_left,lineH,"rgba(151,158,167,1)",1);
@@ -145,15 +145,15 @@ TimeSlider.prototype.draw_cell = function(cell){
     var beginX = (cell.beginTime - _this.start_timestamp) * px_per_ms;
     var cell_width = ( cell.endTime - cell.beginTime) * px_per_ms;
     _this.ctx.fillStyle = cell.style.background;
-    _this.ctx.fillRect(beginX,0,cell_width,35);
+    _this.ctx.fillRect(beginX,60,cell_width,20);
 }
 
 /**
  * 绘制录像块背景
  */
 TimeSlider.prototype.drawCellBg = function(){
-    this.ctx.fillStyle = "rgba(62,61,61,1)";
-    this.ctx.fillRect(0,0,this.canvansW,75); 
+    this.ctx.fillStyle = "rgba(150, 150, 150, 1)";
+    this.ctx.fillRect(0,60,this.canvansW,20); 
 }
 
 /**
@@ -184,8 +184,9 @@ TimeSlider.prototype.mousedownFunc = function(e){
 TimeSlider.prototype.mousemoveFunc = function(e){
     var _this = this;
     var pos_x = _this.get_cursor_x_position(e);
-    console.log(pos_x,_this.changeTime(time))
     var px_per_ms = _this.canvansW / (_this.hours_per_ruler * 60 * 60 * 1000); // px/ms
+    // console.log(_this.canvansW,px_per_ms )
+
     _this.clearCanvas();
     if(_this.g_isMousedown){
         var diff_x = pos_x - _this.g_mousedownCursor;
@@ -194,11 +195,11 @@ TimeSlider.prototype.mousemoveFunc = function(e){
         _this.g_isMousemove = true;
         _this.g_mousedownCursor = pos_x;
     }else{
-        var time = (_this.start_timestamp-390) + pos_x/px_per_ms-22430000;
+        // var time = (_this.start_timestamp-390) + pos_x/px_per_ms-22430000;
         _this.init(_this.start_timestamp,_this.timecell,true);
-        _this.drawLine(pos_x+90,0,pos_x+90,50,"rgb(194, 202, 215)",1);
-        _this.ctx.fillStyle = "rgb(194, 202, 215)";
-        _this.ctx.fillText(_this.changeTime(time),pos_x,70);//黑色竖线的位置和时间位置
+        // _this.drawLine(pos_x-342,0,pos_x-342,50,"rgb(194, 202, 215)",1);
+        // _this.ctx.fillStyle = "rgb(194, 202, 215)";
+        // _this.ctx.fillText(_this.changeTime(time),pos_x-420,75);//黑色竖线的位置和时间位置
     }
 }
 

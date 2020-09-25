@@ -46,7 +46,8 @@ $collapse_size:#FFFFFF;
             color: $header_size;
         }
         .c-subheader{
-            background-color: $top_viceback;  
+            background-color: $top_viceback;
+            border: none;
         }
     }
     //实时播放页面
@@ -57,6 +58,175 @@ $collapse_size:#FFFFFF;
                 background-color:#4A4A4C;
                 border: none;
                 border-radius: 30px;
+            }
+            .liveview_colltitle{
+                display: flex;
+                .liveview_titleicon{
+                    width: 35px;
+                    height: 35px;
+                    background: url("~@/views/liveview/imgs/liveview_titleicon.png") no-repeat;
+                    background: {
+                        size: 100%;
+                        
+                    };
+                }
+                .liveview_titleicon1{
+                    width: 35px;
+                    height: 35px;
+                    background: url("~@/views/liveview/imgs/liveview_titleicon1.png") no-repeat;
+                    background: {
+                        size: 100%;
+                        
+                    };
+                }
+                .liveview_titleicon2{
+                    width: 35px;
+                    height: 35px;
+                    background: url("~@/views/liveview/imgs/liveview_titleicon2.png") no-repeat;
+                    background: {
+                        size: 100%;
+                        
+                    };
+                }
+            }
+        }
+        .liveview_right{
+            .videoColor {
+                background-color: #222222;
+                .palace{
+                    background-size: 10%;
+                    flex: 1 1 10%;
+                    border:1px solid black;
+                }
+
+            }
+            .liveview_group{
+                .liveview_function{
+                    .el-input__inner{
+                        background: none;
+                        border: 1px solid #9A9A9A;
+                    }
+                }
+                .layout1x1 {
+                    background: url('~@/views/liveview/imgs/liveview_1.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout1x3 {
+                    background: url('~@/views/liveview/imgs/liveview_3.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout2x2 {
+                    background: url('~@/views/liveview/imgs/liveview_4.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout2x3 {
+                    background: url('~@/views/liveview/imgs/liveview_6.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout1x7 {
+                    background: url('~@/views/liveview/imgs/liveview_7.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout3x3 {
+                    background: url('~@/views/liveview/imgs/liveview_9.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout1x13 {
+                    background: url('~@/views/liveview/imgs/liveview_13.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout4x4 {
+                    background: url('~@/views/liveview/imgs/liveview_16.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layout5x5 {
+                    background: url('~@/views/liveview/imgs/liveview_25.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 32px 32px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+                .layoutfull {
+                    background: url('~@/views/liveview/imgs/liveview_full.png') center;
+                    background-repeat: no-repeat;
+                    background-size: 30px 30px;
+                    color: #000;
+                    height: 32px;
+                    width: 32px;
+                    padding: 0;
+                }
+            }
+        }
+    }
+    .Aside{
+        .c-sidebar{
+            background-color: #2D2D2D;
+            .c-sidebar-brand{
+                background: none;
+                .Aside_title{
+                    color: #FFFFFF;
+                    opacity: 0.4;
+                }
+            }
+            .Aside_content_buttom{
+                .liveview_left_input{
+                    .el-input__inner{
+                        width: 70%;
+                        border: none;
+                        background-color: #494A4C;
+                        border-radius: 50px;
+                        color: #ffffff;
+                    }
+                }
+            }
+            .up_you_but{
+                & div:nth-child(2){
+                    button{
+                        color: #FFFFFF;
+                    }
+                }
             }
         }
     }
@@ -76,7 +246,12 @@ $collapse_size:#FFFFFF;
                 background: #292929;
             }
         }
+        //上传
+        .playback_snap_zuoupload{
+            background-color: #222222;
+        }
         .playback_snap_you{
+            background-color: #202020;
             .el-input__inner{
                 background: none;
                 border: 1px solid #999999;
@@ -101,6 +276,7 @@ $collapse_size:#FFFFFF;
                 }
             }
             .snap_you_bottom{
+                background: none;
                 .button_edi button{
                     color: $header_size;
                 }
@@ -111,6 +287,17 @@ $collapse_size:#FFFFFF;
                 }
             }
             .tab{
+                .mode_Choice{
+                    .back_Choice{
+                        .back_Choice1{
+                            color: RGBA(242, 241, 241, 0.8);
+                            background:rgba(0,0,0,0.8);
+                        }
+                        .back_zi{
+                            color:#B2B1B1;
+                        }
+                    }
+                }
                 .function_butt{
                     .fixed_input{
                         .el-input__inner{
@@ -120,10 +307,49 @@ $collapse_size:#FFFFFF;
                     .button_resume{
                         color: $header_size;
                     }
+                    .layout1x1 {
+                        border: none;
+                        background: none;
+                        background: url('~@/views/liveview/imgs/liveview_1.png') center;
+                        background-repeat: no-repeat;
+                        background-size: 32px 32px;
+                        color: #000;
+                        height: 20px;
+                        width: 20px;
+                        padding: 0;
+                    }
+                    .layout2x2 {
+                        border: none;
+                        background: none;
+                        background: url('~@/views/liveview/imgs/liveview_4.png') center;
+                        background-repeat: no-repeat;
+                        background-size: 32px 32px;
+                        color: #000;
+                        height: 20px;
+                        width: 20px;
+                        padding: 0;
+                    }
+                    .layoutfull {
+                        background: url('~@/views/liveview/imgs/liveview_full.png') center;
+                        background-repeat: no-repeat;
+                        background-size: 20px 20px;
+                        color: #000;
+                        height: 20px;
+                        width: 20px;
+                        padding: 0;
+                    }
                 }
             }
             .content_name{
                 color: $header_size;
+            }
+            .up_you_but{
+                
+                & div:nth-child(2){
+                    button{
+                        color: #FFFFFF;
+                    }
+                }
             }
                     
         }
@@ -138,7 +364,23 @@ $collapse_size:#FFFFFF;
             }
         }
     }
-
+    //选项卡
+    .top_el_menu{
+        .el-menu.el-menu--horizontal{
+            border: none;
+            .el-menu-item{
+                height: auto;
+                border: none;
+                line-height:35px;
+                border-top: 2px solid #1F6678;
+                &.is-active{
+                border: none;
+                border-top: 2px solid #26B4FC;
+                background-color: #181818 !important;
+                }
+            }
+        }
+    }
     // 组件
     //弹出框
     .el-dialog{

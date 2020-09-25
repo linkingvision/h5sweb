@@ -1,6 +1,7 @@
 <template>
     <div class=liveview>
-      <!-- 左侧数据栏 -->
+        <div id="watermarktoggle"></div>
+        <!-- 左侧数据栏 -->
 		<div class="liveview_left">
             <el-input
                 class="liveview_left_input"
@@ -141,6 +142,7 @@ export default {
     },
 	data(){
 		return{
+            proto: this.$store.state.liveviewrtc,
             activeNames: ['1','2'],//左边
 			rows: 3,
 			cols: 3,
@@ -168,8 +170,37 @@ export default {
         // console.log(listdatag,listdatagload,listdatag1,this.data)
         this.updateUI();
         $('#headswitch').hide()
+		this.addWaterMarker();
 	},
 	methods:{
+        //水印
+        addWaterMarker(){
+			if(!document.getElementById("watermarktoggle")){
+				return
+			}
+            var date=new Date();
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = date.getDate() + ' ';
+            var dates=Y+M+D;
+            var watermarkstring= this.$store.state.watermarkstring;
+            // console.log(watermarkstring);
+
+            var can = document.createElement('canvas');
+            var body = document.body;
+            body.appendChild(can);
+            can.width=300; //画布的宽
+            can.height=200;//画布的高度
+            can.style.display='none';
+            var cans = can.getContext('2d');
+            cans.rotate(-20*Math.PI/180); //画布里面文字的旋转角度
+            cans.font = "16px Microsoft JhengHei"; //画布里面文字的字体
+            cans.fillStyle = "rgba(17, 17, 17, 1)";//画布里面文字的颜色
+            cans.textAlign = 'left'; //画布里面文字的水平位置
+            cans.textBaseline = 'Middle'; //画布里面文字的垂直位置
+            cans.fillText(watermarkstring,can.width/3,can.height/2); //画布里面文字的间距比例
+            document.getElementById("watermarktoggle").style.backgroundImage="url("+can.toDataURL("image/png")+")";
+        },
         //树形节点点击
         handleNodeClick(data, checked, indeterminate){
             console.log(data)
@@ -433,6 +464,18 @@ export default {
     display: flex;
     // flex-wrap: wrap;
     justify-content: space-between;
+    /* 水印 */
+    #watermarktoggle{
+        position: fixed;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        display: block;
+        pointer-events: none;
+        margin-top: 40px;
+    }
     .liveview_left{
         width: 16%;
         min-width: 290px;
@@ -472,36 +515,6 @@ export default {
                 }
             }
         }
-        .liveview_colltitle{
-            display: flex;
-            .liveview_titleicon{
-                width: 35px;
-                height: 35px;
-                background: url("~@/views/liveview/imgs/liveview_titleicon.png") no-repeat;
-                background: {
-                    size: 100%;
-                    
-                };
-            }
-            .liveview_titleicon1{
-                width: 35px;
-                height: 35px;
-                background: url("~@/views/liveview/imgs/liveview_titleicon1.png") no-repeat;
-                background: {
-                    size: 100%;
-                    
-                };
-            }
-            .liveview_titleicon2{
-                width: 35px;
-                height: 35px;
-                background: url("~@/views/liveview/imgs/liveview_titleicon2.png") no-repeat;
-                background: {
-                    size: 100%;
-                    
-                };
-            }
-        }
     }
     .liveview_right{
         width: 84%;
@@ -514,11 +527,9 @@ export default {
             z-index: 10;
         }
         .videoColor {
-            background-color: #222222;
             .palace{
                 background-size: 10%;
                 flex: 1 1 10%;
-                border:1px solid black;
             }
 
             /* 六 */
@@ -604,100 +615,9 @@ export default {
         }
         .liveview_group{
             width: 100%;
-            text-align: center;
             padding: 20px 20%;
             display: flex;
             justify-content: space-between;
-            .layout1x1 {
-                background: url('~@/views/liveview/imgs/liveview_1.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout1x3 {
-                background: url('~@/views/liveview/imgs/liveview_3.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout2x2 {
-                background: url('~@/views/liveview/imgs/liveview_4.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout2x3 {
-                background: url('~@/views/liveview/imgs/liveview_6.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout1x7 {
-                background: url('~@/views/liveview/imgs/liveview_7.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout3x3 {
-                background: url('~@/views/liveview/imgs/liveview_9.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout1x13 {
-                background: url('~@/views/liveview/imgs/liveview_13.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout4x4 {
-                background: url('~@/views/liveview/imgs/liveview_16.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layout5x5 {
-                background: url('~@/views/liveview/imgs/liveview_25.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layoutfull {
-                background: url('~@/views/liveview/imgs/liveview_full.png') center;
-                background-repeat: no-repeat;
-                background-size: 30px 30px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
         }
     }
 }

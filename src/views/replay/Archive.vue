@@ -316,6 +316,7 @@ export default {
                     row.url=strUrl;//下载的地址
                     var urlto=strUrl.split("/");
                     row.urlto=urlto[urlto.length-1];//下载文件
+                    // this.Refresh()
                 }
             }).catch(error => {
                 console.log('Snapshot failed!', error);

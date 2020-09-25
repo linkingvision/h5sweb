@@ -1,5 +1,5 @@
 <template>
-    <div class=liveview>
+    <div class="liveview tour">
       <!-- 左侧数据栏 -->
 		<div class="liveview_left">
             <el-input
@@ -8,7 +8,7 @@
                 v-model="filterText">
             </el-input>
             <el-collapse v-model="activeNames">
-                <el-collapse-item name="1" id="headswitch">
+                <el-collapse-item name="1" id="headswitchtour">
                     <template slot="title">
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.device")}}</div>
@@ -39,7 +39,7 @@
                         </span>
                     </el-tree>
                 </el-collapse-item>
-                <el-collapse-item name="1" id="headswitch1">
+                <el-collapse-item name="1" id="headswitchtour1">
                     <template slot="title">
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.Region")}}</div>
@@ -100,27 +100,27 @@
                         :key="c" 
                         @contextmenu.prevent="stopVideo($event)" 
                         @click="videoClick(r,c,$event)">
-                        <True-play v-bind:id="'h'+r+c" :h5id="'h'+r+c" :rows="rows" :cols="cols" :h5videoid="'hvideo'+r+c"></True-play>
+                        <True-play v-bind:id="'h'+r+c" :h5id="'tour'+r+c" :rows="rows" :cols="cols" :h5videoid="'hvideo'+r+c"></True-play>
                     </div>
                 </div>
             </div>
 			<div class="liveview_group blocks">
                 <div class="liveview_function">
                     <el-button class="tour_start" size="mini" @click="Playall">{{$t("message.tour.Start")}}</el-button>
-                        <el-button class="tour_stop" size="mini" @click="Allpause">{{$t("message.tour.stop")}}</el-button>
-                        <el-select v-model="region" size="mini" style="width:70px" @change="Speed()">
-                            <el-option label="20" value="20"></el-option>
-                            <el-option label="30" value="30"></el-option>
-                            <el-option label="60" value="60"></el-option>
-                        </el-select>
-                        <el-select v-model="streamprofile" size="mini" style="width:120px">
-                            <el-option :label="label.label2" value="main"></el-option>
-                            <el-option :label="label.label3" value="sub"></el-option>
-                        </el-select>
-                        <el-select v-model="proto" size="mini" style="width:120px">
-                            <el-option label="WS" value="WS"></el-option>
-                            <el-option label="RTC" value="RTC"></el-option>
-                        </el-select>
+                    <el-button class="tour_stop" size="mini" @click="Allpause">{{$t("message.tour.stop")}}</el-button>
+                    <el-select v-model="region" size="mini" style="width:70px" @change="Speed()">
+                        <el-option label="20" value="20"></el-option>
+                        <el-option label="30" value="30"></el-option>
+                        <el-option label="60" value="60"></el-option>
+                    </el-select>
+                    <el-select v-model="streamprofile" size="mini" style="width:120px">
+                        <el-option :label="label.label2" value="main"></el-option>
+                        <el-option :label="label.label3" value="sub"></el-option>
+                    </el-select>
+                    <el-select v-model="proto" size="mini" style="width:120px" @change="changeWS">
+                        <el-option label="WS" value="WS"></el-option>
+                        <el-option label="RTC" value="RTC"></el-option>
+                    </el-select>
                 </div>
                 <div class="liveview_butt">
                     <el-button type="button" class="layout3x3" data-row="3|3" @click="changePanel($event)"></el-button>
@@ -173,18 +173,29 @@ export default {
             title:this.$t("message.live.setting"),
             region:20,//几秒钟更换
             streamprofile:"main",//码流
-            proto: 'WS',//协议
+            proto: this.$store.state.tourrtc,//协议
             h5playev1:[],//内容
             timersetInterval:"",//定时器
             token_index:""//删除个数
 		}
     },
+    beforeDestroy() {
+        clearInterval(this.timersetInterval);
+    },
 	mounted(){
         // console.log(listdatag,listdatagload,listdatag1,this.data)
         this.updateUI();
-        $('#headswitch').hide()
+        $('#headswitchtour').hide()
 	},
 	methods:{
+        //ws rtc
+        changeWS(event) {
+            //this.proto = "WS";
+            console.log(this.proto);
+            var proto=this.proto;
+            this.$store.state.tourrtc=proto
+            localStorage.setItem("tourrtc",proto);
+        },
         //全部开始
         Playall(){
             this.Allpause();
@@ -292,7 +303,7 @@ export default {
 
             }.bind(this),timing)
             this.$once('hook:beforeDestroy', () => {            
-                clearInterval(timersetInterval);                                    
+                clearInterval(this.timersetInterval);                                    
             })
             
         }, 
@@ -417,12 +428,12 @@ export default {
         },
         //最菜的写法
         headswitch(){
-            $('#headswitch').show()
-            $('#headswitch1').hide()
+            $('#headswitchtour').show()
+            $('#headswitchtour1').hide()
         },
         headswitch1(){
-            $('#headswitch1').show()
-            $('#headswitch').hide()
+            $('#headswitchtour1').show()
+            $('#headswitchtour').hide()
         },
         //模糊查询
         filterNode(value, data, node) {
@@ -448,7 +459,7 @@ export default {
 </script>
 
 <style lang="scss">
-.liveview{
+.liveview.tour{
     padding-top: 10px;
     display: flex;
     // flex-wrap: wrap;
@@ -534,11 +545,9 @@ export default {
             z-index: 10;
         }
         .videoColor {
-            background-color: #222222;
             .palace{
                 background-size: 10%;
                 flex: 1 1 10%;
-                border:1px solid black;
             }
         }
         div[name='flex'] {
@@ -561,27 +570,26 @@ export default {
             align-items: center;
             .liveview_function{
                 width: 50%;
+                div{
+                    margin: 0 10px;
+                }
+                .tour_start{
+                    background-color: #3ABCFE;
+                    border: none;
+                    color: #FFFFFF;
+                }
+                .tour_stop{
+                    background: none;
+                    border: 1px solid #3ABCFE;
+                    // color: #FFFFFF;
+                }
+                .el-input__inner{
+                    // background: none;
+                    border: 1px solid #9A9A9A;
+                }
             }
             .liveview_butt{
                 width: 50%;
-            }
-            .layout3x3 {
-                background: url('~@/views/liveview/imgs/liveview_9.png') center;
-                background-repeat: no-repeat;
-                background-size: 32px 32px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
-            }
-            .layoutfull {
-                background: url('~@/views/liveview/imgs/liveview_full.png') center;
-                background-repeat: no-repeat;
-                background-size: 30px 30px;
-                color: #000;
-                height: 32px;
-                width: 32px;
-                padding: 0;
             }
         }
     }

@@ -6,6 +6,9 @@
 
 // If you want to add something do it here
 @import "custom";
+.c-app{
+    background-color: #F2F1F1;
+}
 a{
     color: none;
     text-decoration:none;
@@ -16,4 +19,11 @@ a{
 }
 .c-header-brand{
     min-height: 40px;
+}
+//顶部下拉原生组件
+.dropdown-menu{
+    min-width: 100px;
+    .dropdown-item{
+        min-width: 100px;
+    }
 }

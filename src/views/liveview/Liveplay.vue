@@ -120,11 +120,13 @@
 import QRCode from 'qrcodejs2';
 import '../../assets/js/adapter'
 import {H5sPlayerWS,H5sPlayerHls,H5sPlayerRTC,H5sPlayerAudBack} from '../../assets/js/h5splayer.js'
+import {H5siOS,H5sPlayerCreate} from '../../assets/js/h5splayerhelper.js'
 export default {
     name:"liveplay",
     props:['h5id', 'h5videoid',"cols","rows"],
     data(){
         return{
+            proto: this.$store.state.liveviewrtc,
             videoid: this.h5videoid,
             h5handler:undefined,//v1
             audioback:undefined,//语音
@@ -238,14 +240,19 @@ export default {
         },
         //播放
         PlayVideo(token,streamprofile,label,name){
-            this.CloseVideo();
+            if (this.h5handler != undefined)
+            {
+                this.h5handler.disconnect();
+                delete this.h5handler;
+                this.h5handler = undefined;
+            }
             this.currtoken = token;
 
             var videosize = document.querySelector('#'+this.h5id);
             // return false;
-           this.inputtoken=token
-           this.inputlabel=name
-           this.streamprofile=streamprofile
+            this.inputtoken=token
+            this.inputlabel=name
+            this.streamprofile=streamprofile
             // this.streamprofile=streamprofile
             this.videoname=name;//视频名称
            
@@ -256,13 +263,6 @@ export default {
             //console.log("*********************",label,token);
             $("#"+this.spanqualityid).removeClass("spanquality")
             $("#"+this.inputid).removeClass("spanpicturequality") 
-            if (this.h5handler != undefined)
-            {
-                document.getElementById("icon"+this.tokenshou).style.color="rgb(142, 132, 132)";
-                this.h5handler.disconnect();
-                delete this.h5handler;
-                this.h5handler = undefined;
-            }
             this.currtoken = token;
             // console.log(streamprofile,"111111111111111111*****")
             if(streamprofile==="sub"){
@@ -283,7 +283,14 @@ export default {
                 hlsver: 'v1', //v1 is for ts, v2 is for fmp4
                 session: this.$store.state.token //session got from login
             };
-            this.h5handler = new H5sPlayerRTC(conf);
+            if (this.$store.state.liveviewrtc == 'RTC' || (H5siOS() === true)){
+                console.log(this.$store.state.liveviewrtc)
+                this.h5handler = new H5sPlayerRTC(conf);
+                $("#"+this.rtcid).addClass("rtc_new");
+            }else{
+                console.log(this.$store.state.liveviewrtc)
+                this.h5handler = new H5sPlayerWS(conf);
+            }
             this.h5handler.connect();
         },
         //关闭

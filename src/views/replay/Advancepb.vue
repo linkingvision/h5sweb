@@ -65,10 +65,13 @@
                 <div v-for="r in rows" :key="r">
                     <div v-for="c in cols" :key="c">
                         <div class="tab" :id="'tab'+r+c" >
-                            <canvas class="timeline" :id="'timeline'+r+c" width="1800px" height="80px"
-                                @mouseup="timetz"
-                                ondragstart="return false;">
-                            </canvas>
+							<div>
+								<canvas class="timeline" :id="'timeline'+r+c" style="width:100%;background: #343434;" width="1500" height="80px"
+								 	@mousedown ="timelinndown($event)"
+									@mouseup="timetz"
+									ondragstart="return false;">
+								</canvas>
+							</div>
                             <div style="width:100%;display: flex;justify-content: space-between;">
                                 <div class="mode_Choice">
                                     <div class="back_Choice"  @mouseenter="enter1()" @mouseleave="leave1()">
@@ -289,6 +292,26 @@ export default {
 			this.Play(data);
 		},
 		//拉播
+		timelinndown(err){
+			console.log('a',err)
+			if(this.selectRow=="1"&&this.selectCol=="1"){
+				if(this.v1 != undefined){
+					this.v1.pause();
+				}
+			}else if(this.selectRow=="1"&&this.selectCol=="2"){
+				if(this.v2 != undefined){
+					this.v2.pause();
+				}
+			}else if(this.selectRow=="2"&&this.selectCol=="1"){
+				if(this.v3 != undefined){
+					this.v3.pause();
+				}
+			}else if(this.selectRow=="2"&&this.selectCol=="2"){
+				if(this.v4 != undefined){
+					this.v4.pause();
+				}
+			}
+        },
 		timetz(){
 			var timevalue=this.xzvalue;
 			var _this=this;
@@ -658,7 +681,7 @@ export default {
 				this.contentHeight = $(document.body).height()*0.4;
 			}else
 			{
-				this.contentHeight = $(document.body).height()*0.74;
+				this.contentHeight = $(document.body).height()*0.73;
 			}
 			$('div[name="flex"]').height(this.contentHeight / this.rows);
 			$('.content-mythe-one').height(this.contentHeight / this.rows*2.4);
@@ -1221,33 +1244,29 @@ export default {
             }
         }
         .tab{
-            .timeline{
-                width: 100%;
-            }
             .mode_Choice{
-                    .back_Choice{
-                        width: 120px;
-                        position: relative;
-                        cursor:pointer;
-                        .back_Choice1{
-                            border-radius:10px; 
-                            display: none;
-                            width: auto;
-                            position: absolute;
-                            top: -60px;
-                            left: -20px;
-                            background:rgba(255,255,255,0.5);
-                            padding: 10px 20px;
-                            div:nth-child(1){
-                                margin-bottom: 10px;
-                            }
-                            .co_Baise{
-                                color: #fff !important;
-                            }
-                        }
-                        .back_zi{
-                            line-height: 46px;font-size: 20px;color:#B2B1B1;margin-left:10px;
-                        }
+				.back_Choice{
+					width: 120px;
+					position: relative;
+					cursor:pointer;
+					.back_Choice1{
+						border-radius:10px; 
+						display: none;
+						width: auto;
+						position: absolute;
+						top: -60px;
+						left: -20px;
+						padding: 10px 20px;
+						div:nth-child(1){
+							margin-bottom: 10px;
+						}
+						.co_Baise{
+							color: #fff !important;
+						}
+					}
+					.back_zi{
+						line-height: 46px;font-size: 20px;margin-left:10px;
+					}
                 }
             }
 			.function_butt{
@@ -1265,37 +1284,7 @@ export default {
 					border: none;
 					background: none;
 				}
-				.layout1x1 {
-					border: none;
-					background: none;
-					background: url('~@/views/liveview/imgs/liveview_1.png') center;
-					background-repeat: no-repeat;
-					background-size: 32px 32px;
-					color: #000;
-					height: 20px;
-					width: 20px;
-					padding: 0;
-				}
-				.layout2x2 {
-					border: none;
-					background: none;
-					background: url('~@/views/liveview/imgs/liveview_4.png') center;
-					background-repeat: no-repeat;
-					background-size: 32px 32px;
-					color: #000;
-					height: 20px;
-					width: 20px;
-					padding: 0;
-				}
-				.layoutfull {
-					background: url('~@/views/liveview/imgs/liveview_full.png') center;
-					background-repeat: no-repeat;
-					background-size: 20px 20px;
-					color: #000;
-					height: 20px;
-					width: 20px;
-					padding: 0;
-				}
+				
 			}
             .caveat_butt{
                 display: flex;align-items:center;width:11%;min-width: 180px;
