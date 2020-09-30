@@ -41,6 +41,16 @@
 					<i class="iconfont icon-sigongge"></i>
 					<span slot="title">{{$t("message.left.tour")}}</span>
 				</el-menu-item>
+				<a href='/mediastore'>
+					<el-menu-item >
+						<i class="iconfont icon-icon-test1"></i>
+						<span slot="title">{{$t("message.left.screenshots")}}</span>
+					</el-menu-item>
+				</a>
+				<el-menu-item index="/Settings/DeviceStream">
+					<i class="iconfont icon-icon-test1"></i>
+					<span slot="title">{{$t("message.setting.setting")}}</span>
+				</el-menu-item>
 			</el-menu>
 		</CSidebar>
 	</div>
@@ -76,3 +86,8 @@ export default {
 	}
 }
 </script>
+<style lang="scss" scoped>
+a{
+	text-decoration: none;
+}
+</style>

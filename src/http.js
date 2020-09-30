@@ -37,11 +37,11 @@ axios.interceptors.response.use(
             // 401 清除token信息并跳转到登录页面
             // console.log('http auth');
             // 只有在当前路由不是登录页面才跳转
-            localStorage.removeItem('mcutoken')
+            sessionStorage.removeItem('mcutoken')
             store.state.token = null
-            localStorage.removeItem('mcuuser')
+            sessionStorage.removeItem('mcuuser')
             store.state.user = null
-            localStorage.removeItem('mcuroot')
+            sessionStorage.removeItem('mcuroot')
             store.state.root = null
             router.currentRoute.path !== 'login' &&
             router.replace({

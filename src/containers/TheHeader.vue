@@ -1,4 +1,18 @@
 <template>
+<div>
+	<el-dialog
+		class="Rebootdialog"
+		title="重启"
+		append-to-body
+		:visible.sync="Rebootdialog"
+		width="30%">
+		<div class="Rebootdialog1">
+			<div style="">修改后请您重启</div>
+			<div slot="footer" class="dialog-footer" style="display: flex;justify-content: flex-end;">
+				<el-button type="primary" @click="Reboot">{{label.Reboot}}</el-button>
+			</div>
+		</div>
+	</el-dialog>
 	<CHeader with-subheader>
 		<!-- <CToggler
 		in-header
@@ -28,6 +42,10 @@
 			width="190"
 			height="26"
 			alt="H5S Logo"/>
+		</CHeaderNav>
+
+		<CHeaderNav>
+			<div class="c_Docker" id="Docker"></div>
 		</CHeaderNav>
 		<CHeaderNav>
 			<CHeaderNavItem class="px-3">
@@ -97,24 +115,80 @@
 			</CHeaderNav>
 		<!-- <CBreadcrumbRouter class="border-0 mb-0"/> -->
 		</CSubheader>
+		
 	</CHeader>
+	
+</div>
 </template>
 
 <script>
-
+import Vue from 'vue'
 export default {
 	name: 'TheHeader',
 	data(){
 		return {
 			user:this.$store.state.user,
-			Rebootdialog:"",
+			Rebootdialog:false,
 			subtitle:{
 				icon:this.$route.matched[1].meta.icon,
 				name:this.$route.matched[1].meta.name
-			}
+			},
+			label:{
+				Edit:this.$t("message.table.Edit"),
+				user:this.$t("message.setting.username"),
+				role:this.$t("message.setting.role"),
+				type:this.$t("message.setting.Authority"),
+				olPassword:this.$t("message.setting.currentpass"),
+				nePassword:this.$t("message.setting.newpass"),
+				nePassword1:this.$t("message.setting.confirmpass"),
+				Change:this.$t("message.setting.Change"),
+				Download:this.$t("message.archive.Download"),
+				Control:this.$t("message.left.Control"),
+				goto:this.$t("message.header.goto"),
+				control1:this.$t("message.header.control"),
+				Reboot:this.$t("message.header.Reboot")
+			},
 		}
 	},
+	mounted(){
+		this.Docker()
+	},
 	methods:{
+		//重启
+		Reboot(){
+			var url = this.$store.state.IPPORT + "/api/v1/Restart?session="+ this.$store.state.token;
+			this.$http.get(url).then(result=>{
+				if(result.status==200){
+					if(result.data.bStatus){
+						console.log("重启",result.data.bStatus)
+					}
+				}
+			})
+			
+			var loading = Vue.prototype.$loading({
+				lock: true,
+				text: '拼命加载中...',
+				background:"RGBA(0, 0, 0, 0.5)",
+				target: '.Rebootdialog1'  // 需要loading的元素的类名
+			})
+			setTimeout(()=>{
+				this.$nextTick(()=>{
+					loading.close();
+					this.$router.push({ path:'../../login'})
+				})
+			},1000*30)
+		},
+		Docker(){
+			var url = this.$store.state.IPPORT + "/api/v1/GetEnableLinkagent?session="+ this.$store.state.token;
+			this.$http.get(url).then(result=>{
+				if(result.status==200){
+					console.log(result)
+					if(result.data.enable){
+						document.getElementById('Docker').style.display='block'
+					}
+				}
+			})
+		},
 		skin(){
 			this.toggle=this.$store.state.darkMode
 			this.$store.commit('toggle', 'darkMode')
@@ -136,5 +210,11 @@ export default {
 }
 .about_ab i{
 	margin-right: 10px;
+}
+.c_Docker{
+    width: 40px;
+	height: 100%;
+    background: url("~@/assets/imgs/Docker.png") center center no-repeat;
+    display: none;
 }
 </style>

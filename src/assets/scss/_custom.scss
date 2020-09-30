@@ -381,7 +381,36 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+    //设置
+    .Setting{
+        .setting_zuo{
+            width: 16%;
+            height: 91vh;
+            // overflow-y: auto;
+            .el-menu{
+                border: none;
+                .el-submenu{
+                    .el-menu-item{
+                        &.is-active {
+                            border: none;
+                            .Setting_tree{
+                                padding-right: 50px;
+                                border-right: 2px solid #2E9EFB;
+                            }
+                            color: #FFFFFF;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
     // 组件
+    //input框
+    .el-input__inner{
+        background: none!important;
+        color:rgba(255,255,255,1)!important;
+    }
     //弹出框
     .el-dialog{
         width: 25%;
@@ -394,12 +423,28 @@ $collapse_size:#FFFFFF;
         .el-dialog__body{
             color: $header_size;
         }
-        
+        .el-form-item__label{
+            color: #FFFFFF;
+        }
     }
     // 表格
     .el-table {
-        min-height: 60vh;
+        min-height: 80vh;
         background: none;
+        .el-input{
+            .el-input__inner{
+                background: #3c3c3c;
+                border: none;
+            }
+        }
+        .el-checkbox__inner{
+            background-color: #494B4E !important;
+            border-radius: 50px !important;
+        }
+        .el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner{
+            background-color: #3277FF !important;
+            border-color: rgba(255,255,255,1) !important;
+        }
         .el-table__empty-block{
             background: none{
                 repeat:no-repeat;
@@ -407,22 +452,19 @@ $collapse_size:#FFFFFF;
             }
             // background-image: url('~@/assets/imgs/setting_tober1.png');
             background-size: 10%;
-            .el-table__empty-text{
-                display: none;
-            }
         }
         .el-table__header th, .el-table__header tr{
-            background-color: #3c3c3c !important;
+            background-color: #202020 !important;
         }
-        .el-table--striped .el-table__body tr.el-table__row--striped td {
-            background: $body-bg !important;
-        }
-        .el-table__body tr:hover>td {
-          background:none!important;
+        .el-table__body tr.el-table__row--striped td {
+            background: #202020 !important;
         }
          .el-table__body tr.hover-row>td{
           background: none;
         }
+        .el-table__body tr.hover-row>td{
+            background-color: #252525!important;
+          }
         & td, & th.is-leaf {
             color:rgba(255,255,255,1);
             border: none!important;

@@ -27,3 +27,29 @@ a{
         min-width: 100px;
     }
 }
+
+.button_edi{
+    margin-bottom: 10px;
+    .form_butt{
+        background:#3ABBFE;
+        border-radius:2px;
+        padding: 2px 16px;
+        font-size:12px;
+        font-family:PingFang SC;
+        font-weight:600;
+        color:rgba(255,255,255,1);
+        margin-right: 20px;
+        border-color: none;
+    }
+    .form_butt1{
+        background:rgba(55,62,72,1);
+        border:1px solid #3ABBFE;
+        padding: 2px 16px;
+        font-size:12px;
+        font-family:PingFang SC;
+        font-weight:600;
+        color:rgba(255,255,255,1);
+        box-sizing: border-box;
+    }
+    
+}

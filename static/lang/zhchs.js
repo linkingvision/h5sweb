@@ -174,6 +174,17 @@ export default {
 		  MinPort:"最小端口",
 		  MaxPort:"最大端口",
 		  PasswordEncrypt:"密码加密",
+		  //日志
+		  Log:'日志',
+		  LogLevel:'日志级别',
+		  LogRotating:'循环覆盖',
+		  System:'系统维护',
+		  Snopshot:'快照',
+		  SnapshotList:'快照列表',
+		  Name:'名称',
+		  Refresh:'刷新',
+		  Protocol:'协议',
+		  ServiceDetection:'RTSP服务检测',
   
 		  currentpass: '当前密码',
 		  newpass: '新密码',
@@ -249,6 +260,23 @@ export default {
 		  Domain:"服务器域",
 		  Refreshsuccess:"刷新成功",
 		  Restartsuccessfully:"重启成功",
+		  //service
+		  GbID:"SIP服务器ID",
+		  GbServerIpAddr:"SIP服务器地址",
+		  GbServerPort:"SIP服务器端口",
+		  PortRangeMin:"端口最小范围",
+		  PortRangeMax:"端口最大范围",
+		  GbStreamProto:"流媒体协议",
+		  GbServerProto:"SIP协议",
+		  GbTimeout:"超时时间",
+		  Password:"密码",
+		  Realm:"SIP服务器域",
+		  SubAlarm:"订阅报警",
+		  SubMobilePosition:"订阅位置",
+		  Enable:"启用",
+		  EnableAudio:"开启音频",
+		  EnableSSRCCheck:"SSRC检查",
+  
   
   
 		  DeleteAll:"删除",

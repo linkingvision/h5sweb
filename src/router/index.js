@@ -30,11 +30,32 @@ const Liveview = () => import('@/views/Liveview')
 const Replay = () => import('@/views/Replay')
 const Avintercom = () => import('@/views/Avintercom')
 const Tour = () => import('@/views/Tour')
+const Settings = () => import('@/views/Settings')
 
 const Advancepb = () => import('@/views/replay/Advancepb')
 const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
+
+const DeviceStream = () => import('@/views/settings/device/DeviceStream')
+const DeviceOnvif = () => import('@/views/settings/device/DeviceOnvif')
+const DeviceFile = () => import('@/views/settings/device/DeviceFile')
+const DeviceAll = () => import('@/views/settings/device/DeviceAll')
+const Docker = () => import('@/views/settings/docker/Docker')
+const RTSP = () => import('@/views/settings/Protocol/RTSP')
+const DeviceSdk = () => import('@/views/settings/SDK/DeviceSdk')
+const User = () => import('@/views/settings/user/User')
+const Role = () => import('@/views/settings/user/Role')
+const CyberSecurity = () => import('@/views/settings/user/CyberSecurity')
+const Default = () => import('@/views/settings/Transcoding/Default')
+const Profile = () => import('@/views/settings/Transcoding/Profile')
+const CloudMode = () => import('@/views/settings/WEBRTC/CloudMode')
+const RelayMode = () => import('@/views/settings/WEBRTC/RelayMode')
+const TURNServer = () => import('@/views/settings/WEBRTC/TURNServer')
+const Record = () => import('@/views/settings/record/Record')
+const LogLevel = () => import('@/views/settings/log/LogLevel')
+const LogRotating = () => import('@/views/settings/log/LogRotating')
+const System = () => import('@/views/settings/system/System')
 
 const Avintercoms = () => import('@/views/avintercom/Avintercoms')
 const Upload = () => import('@/views/avintercom/Upload')
@@ -168,6 +189,209 @@ export default new Router({
 								title: 'Upload',
 								name:i18n.tc("message.Conference.Upload"),
 								icon:'iconfont icon-bofang1',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						}
+					]
+				},{
+					path: 'Settings',
+					name: 'Settings',
+					component: Settings,
+					meta: {
+						title: '/Settings/DeviceStream',
+						name:i18n.tc("message.setting.setting"),
+						icon:'iconfont icon-icon-test1',
+						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+					},
+					children: [
+						{
+							path: 'DeviceStream',
+							name: 'DeviceStream',
+							component: DeviceStream,
+							meta: {
+								title: '/DeviceStream',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'DeviceOnvif',
+							name: 'DeviceOnvif',
+							component: DeviceOnvif,
+							meta: {
+								title: '/DeviceOnvif',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'DeviceFile',
+							name: 'DeviceFile',
+							component: DeviceFile,
+							meta: {
+								title: '/DeviceFile',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'DeviceAll',
+							name: 'DeviceAll',
+							component: DeviceAll,
+							meta: {
+								title: '/DeviceAll',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Docker',
+							name: 'Docker',
+							component: Docker,
+							meta: {
+								title: '/Docker',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'RTSP',
+							name: 'RTSP',
+							component: RTSP,
+							meta: {
+								title: '/RTSP',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'DeviceSdk',
+							name: 'DeviceSdk',
+							component: DeviceSdk,
+							meta: {
+								title: '/DeviceSdk',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'User',
+							name: 'User',
+							component: User,
+							meta: {
+								title: '/User',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Role',
+							name: 'Role',
+							component: Role,
+							meta: {
+								title: '/Role',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'CyberSecurity',
+							name: 'CyberSecurity',
+							component: CyberSecurity,
+							meta: {
+								title: '/CyberSecurity',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Default',
+							name: 'Default',
+							component: Default,
+							meta: {
+								title: '/Default',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Profile',
+							name: 'Profile',
+							component: Profile,
+							meta: {
+								title: '/Profile',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'CloudMode',
+							name: 'CloudMode',
+							component: CloudMode,
+							meta: {
+								title: '/CloudMode',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'RelayMode',
+							name: 'RelayMode',
+							component: RelayMode,
+							meta: {
+								title: '/RelayMode',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'TURNServer',
+							name: 'TURNServer',
+							component: TURNServer,
+							meta: {
+								title: '/TURNServer',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Record',
+							name: 'Record',
+							component: Record,
+							meta: {
+								title: '/Record',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'LogLevel',
+							name: 'LogLevel',
+							component: LogLevel,
+							meta: {
+								title: '/LogLevel',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'LogRotating',
+							name: 'LogRotating',
+							component: LogRotating,
+							meta: {
+								title: '/LogRotating',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'System',
+							name: 'System',
+							component: System,
+							meta: {
+								title: '/System',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						}

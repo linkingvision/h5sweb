@@ -378,6 +378,14 @@ $collapse_header:#E5E5E5;
             }
         }
     }
+    //设置协议
+    .portcheck_input{
+        .el-input__inner{
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+    }
     //组件
     //收缩
     .el-collapse{
@@ -401,7 +409,7 @@ $collapse_header:#E5E5E5;
     }
     // 表格
     .el-table {
-        min-height: 76vh;
+        min-height: 80vh;
         background: none;
         .el-table__empty-block{
             background: none{
@@ -410,9 +418,6 @@ $collapse_header:#E5E5E5;
             }
             // background-image: url('~@/assets/imgs/setting_tober1.png');
             background-size: 10%;
-            .el-table__empty-text{
-                display: none;
-            }
         }
         .el-table__header th, .el-table__header tr{
             background-color: #DBDBDB !important;
