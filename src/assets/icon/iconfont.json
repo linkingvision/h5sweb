@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9818391",
+      "name": "长箭头",
+      "font_class": "jiang-right",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "11487984",
+      "name": "ashbin",
+      "font_class": "ashbin",
+      "unicode": "e744",
+      "unicode_decimal": 59204
+    },
+    {
+      "icon_id": "11487973",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e742",
+      "unicode_decimal": 59202
+    },
+    {
+      "icon_id": "13704832",
+      "name": "流量",
+      "font_class": "liuliang",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "10457709",
+      "name": "文件夹",
+      "font_class": "wenjianjia",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
       "icon_id": "9466501",
       "name": "换肤",
       "font_class": "huanfu",
@@ -298,13 +333,6 @@
       "font_class": "jiankong",
       "unicode": "e669",
       "unicode_decimal": 58985
-    },
-    {
-      "icon_id": "3594526",
-      "name": "文件夹",
-      "font_class": "wenjian",
-      "unicode": "e602",
-      "unicode_decimal": 58882
     },
     {
       "icon_id": "8055864",

@@ -20,8 +20,25 @@
             </el-dropdown>
         </span>
 
+        <div class="information"  style="display:none padding:0px">
+        <div class="information_con">
+            <div class="information1">
+                <div class="information_title">{{$t('message.live.Video')}}</div>
+                <div class="information_content" v-for="(a,index) in informationVideo" :key="index">
+                    <div class="information_content_left">{{a.name}}</div>
+                    <div class="information_content_right">{{a.data}}</div>
+                </div>
+            </div>
+            <div class="information1">
+                <div class="information_title">{{$t('message.live.Audio')}}</div>
+                <div class="information_content" v-for="(a,index) in informationAudio" :key="index">
+                    <div class="information_content_left">{{a.name}}</div>
+                    <div class="information_content_right">{{a.data}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
         <div class="liveplay_butt">
-            
             <CDropdown
                 class="fw_butt"
                 style=""
@@ -45,12 +62,13 @@
                     </div>
                 </div>
             </CDropdown>
+            <button class="info_id_show iconfont icon-liuliang" @click="Information"></button>
             <button class="iconfont" :class="Shoutwheatclass" @click="Shoutwheat"></button>
             <button class="iconfont icon-picfill" @click="DoSnapshotWeb"></button>
             <button class="iconfont icon-camerafill" @click="DoSnapshot"></button>
             <button class="iconfont icon-videofill" @click="DoManualRecordStart"></button>
             <button class="iconfont icon-radioboxfill" @click="DoManualRecordStop"></button>
-            <button class="iconfont icon-yuntai" @click="PtzControlShow"></button>
+            <button class="ptz_id_show iconfont icon-yuntai" @click="PtzControlShow"></button>
             <button class="iconfont icon-full" @click="FullScreen"></button>
             <button class="iconfont icon-roundclosefill" @click="CloseVideo"></button>
         </div>
@@ -126,6 +144,9 @@ export default {
     props:['h5id', 'h5videoid',"cols","rows"],
     data(){
         return{
+            informationshow: false,
+            informationAudio:[],
+            informationVideo:[],
             proto: this.$store.state.liveviewrtc,
             videoid: this.h5videoid,
             h5handler:undefined,//v1
@@ -177,6 +198,81 @@ export default {
         this. Gettranscod()
     },
     methods:{
+        //码率
+        Information(){
+            console.log('124')
+            var $container = $("#"+this.h5id);
+            var $controlsin = $container.children(".information");
+            var cors=this.cols*this.rows;
+            console.log(this.tokenshou)
+            if(cors>9||this.tokenshou==undefined){
+                return false
+            }
+            if (this.informationshow == false)
+            {
+                console.log('12455',cors)
+                $controlsin.css("display", "block");
+                this.informationshow = true;
+            }else
+            {
+                $controlsin.css("display", "none");
+                this.informationshow = false;
+                clearInterval(this.timerRunInfo);
+                return false
+            }
+            this.Informationdate()
+            this.timerRunInfo = setInterval(() => {
+                this.Informationdate()
+            },8000)
+
+        },
+        Informationdate(){
+            var root = this.$store.state.IPPORT;
+            //url
+            var url = root + "/api/v1/GetVidStreamStatus?token="+this.tokenshou+"&stream=main&session="+ this.$store.state.token;
+            //重组
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    console.log(result)
+                    var item=result.data
+                    var informationAudio=[{
+                            name:this.$t("message.live.Codec"),
+                            data:item.strAudioType
+                        },{
+                            name:this.$t("message.live.SampleRate"),
+                            data:item.nAudioSampleRate
+                        },{
+                            name:this.$t("message.live.SampleBit"),
+                            data:item.nAudioSampleBit
+                        },{
+                            name:this.$t("message.live.Channels"),
+                            data:item.nAudioChannels
+                        },{
+                            name:this.$t("message.live.Bitrate"),
+                            data:(item.nAudioBitrate/1024).toFixed(1)+'kpbs'
+                        }]
+
+                        var informationVideo=[{
+                            name:this.$t("message.live.Codec"),
+                            data:item.strVideoType
+                        },{
+                            name:this.$t("message.live.Width"),
+                            data:item.nVideoWidth
+                        },{
+                            name:this.$t("message.live.Height"),
+                            data:item.nVideoHeight
+                        },{
+                            name:this.$t("message.live.FPS"),
+                            data:item.nVideoFPS
+                        },{
+                            name:this.$t("message.live.Bitrate"),
+                            data:(item.nVideoBitrate/1024).toFixed(1)+'kpbs'
+                        }]
+                        this.informationAudio=informationAudio
+                        this.informationVideo=informationVideo
+                }
+            })
+        },
         //码流按钮
         Bitstream(event){
             console.log(event,this.$t("message.live.substream"))
@@ -295,6 +391,7 @@ export default {
         },
         //关闭
         CloseVideo(){
+            clearInterval(this.timerRunInfo);
             //转码
             this.videoname="";
             this.valuebutton='';
@@ -590,6 +687,10 @@ export default {
         },
         PtzControlShow(event){
             this.Presetdata=[];
+            var cors=this.cols*this.rows;
+            if(cors>9){
+                return false
+            }
 		   //url
            var url = this.$store.state.IPPORT + "/api/v1/GetPresets?token="+this.tokenshou+"&session="+ this.$store.state.token;
             //重组
@@ -613,8 +714,7 @@ export default {
             })
             var $container = $("#"+this.h5id);
             var $controls = $container.children(".liveplay_ptz");
-            var cors=this.cols*this.rows;
-            if (this.ptzshow == false&&cors<="9")
+            if (this.ptzshow == false)
             {
                 $controls.css("display", "block");
                 this.ptzshow = true;
@@ -877,6 +977,54 @@ export default {
 
             }
         }
+        .information {
+            position:absolute;
+            bottom:40px;
+            left: 10px;
+            background:rgba(0,0,0,0.5);
+            box-sizing:content-box;
+            /* z-index:1100; */
+            width: 330px;
+            height: 150px;
+            display:none;
+            color: #FFFFFF;
+            .information_con{
+                width: 100%;
+                height: 90%;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                align-content: space-between;
+                .information1{
+                    width: 50%;
+                    .information_title{
+                        width: 100%;
+                        height: 30px;
+                        line-height: 30px;
+                        background-color: rgba(0, 0, 0, 0.7);
+                        padding: 0 10px;
+                    }
+                    .information_content{
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0 2px;
+                        .information_content_left{
+                            width: 50%;
+                            color: #3ABBFE;
+                            text-align: left;
+                        }
+                        .information_content_right{
+                            width: 50%;
+                            color: #3ABBFE;
+                            text-align: left;
+                        }
+
+                    }
+                }
+            }
+        }
+
         //主副码流
         .videoname{ 
             position: absolute;

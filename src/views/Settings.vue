@@ -33,6 +33,15 @@
                         <span class="Setting_tree">H5-DEV</span> 
                     </el-menu-item>
 				</el-submenu>
+				
+				<el-submenu index="/Settings/RtmpPush">
+					<template slot="title">
+						<span>{{$t("message.setting.devicertmppush")}} </span>
+					</template>
+                    <el-menu-item index="/Settings/RtmpPush">
+                        <span class="Setting_tree">{{$t("message.setting.devicertmppush")}}</span> 
+                    </el-menu-item>
+				</el-submenu>
 
 				<el-submenu index="/Settings/User">
 					<template slot="title">
@@ -58,6 +67,18 @@
                     </el-menu-item>
 				</el-submenu>
 
+				<el-submenu index="/Settings/Edit">
+					<template slot="title">
+						<span>{{$t("message.setting.Regional")}} </span>
+					</template>
+                    <el-menu-item index="/Settings/Edit">
+                        <span class="Setting_tree">{{$t("message.setting.Area")}}</span> 
+                    </el-menu-item>
+					<el-menu-item index="/Settings/Region">
+                        <span class="Setting_tree">{{$t("message.setting.Regional")}}</span> 
+                    </el-menu-item>
+				</el-submenu>
+
 				<el-submenu index="/Settings/Default">
 					<template slot="title">
 						<span>{{$t("message.setting.Transcoding")}}</span>
@@ -69,6 +90,16 @@
                         <span class="Setting_tree">{{this.$t("message.setting.Profile")}}</span> 
                     </el-menu-item>
 				</el-submenu>
+
+				<el-submenu index="/Settings/CloudConnect">
+					<template slot="title">
+						<span>{{$t("message.setting.CloudConnect")}}</span>
+					</template>
+                    <el-menu-item index="/Settings/CloudConnect">
+                        <span class="Setting_tree">{{this.$t("message.setting.CloudConnect")}}</span> 
+                    </el-menu-item>
+				</el-submenu>
+
 				<el-submenu index="/Settings/CloudMode">
 					<template slot="title">
 						<span>WEBRTC</span>

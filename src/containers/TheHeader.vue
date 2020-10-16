@@ -215,6 +215,7 @@ export default {
     width: 40px;
 	height: 100%;
     background: url("~@/assets/imgs/Docker.png") center center no-repeat;
-    display: none;
+	display: none;
+	background-size: 65%;
 }
 </style>

@@ -250,7 +250,7 @@ import uuid from '../../../assets/js/uuid'
       };
     },
     mounted(){
-        // this.loadHIK();
+        this.loadHIK();
     },
     methods:{
         //第一个表格的数据

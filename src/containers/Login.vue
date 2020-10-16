@@ -3,6 +3,11 @@
         <div class="Copyrightnotice" id="Copyrightnotice">
             系统版权将于({{capability}})到期，为了避免您的正常使用，请及时购买许可
         </div>
+        <div class="login_but">
+            <router-link :to="{name:'Downloadapp'}">
+                <el-button class="but_jump" plain>{{this.$t("message.archive.Download")}}</el-button>
+            </router-link>
+        </div>
         <div class="login_head">
             <div class="login_title"></div>
             <div class="login_content">
@@ -163,6 +168,13 @@ export default {
     height: 100%;
     position: fixed;
     background: url('../assets/imgs/login_back.png') no-repeat;
+    .login_but{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 20px;
+        margin-top: 40px;
+    }
     /* 版权 */
     .Copyrightnotice{
         position: fixed;
@@ -180,7 +192,7 @@ export default {
     }
     .login_head{
         text-align: center;
-        margin: 12% auto 0;
+        margin: 6% auto 0;
         .login_title{
             height: 70px;
             margin-bottom: 30px;

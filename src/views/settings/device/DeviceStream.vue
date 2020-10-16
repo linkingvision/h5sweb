@@ -71,8 +71,8 @@
         <div class="button_edi">
             <!-- <button @click="addto" type="button" class="iconfont icon-add"></button>
             <button @click="deleteselect" type="button" class="iconfont icon-reduce"></button> -->
-            <CButton class="form_butt" @click="addto" type="submit">添加</CButton>
-            <CButton class="form_butt1" @click="deleteselect" type="submit">删除</CButton>
+            <CButton class="form_butt" @click="addto" type="submit">{{$t("message.setting.ADD")}}</CButton>
+            <CButton class="form_butt1" @click="deleteselect" type="submit">{{$t("message.setting.DeleteAll")}}</CButton>
         </div>
             <!-- 表格 -->
         <el-table

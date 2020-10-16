@@ -204,6 +204,9 @@ export default {
         //树形节点点击
         handleNodeClick(data, checked, indeterminate){
             console.log(data)
+            if(data.streamprofile==undefined){
+                data.streamprofile='main'
+            }
             // return false;
             let _this =this;
             if(data.disabled_me==false){
@@ -259,6 +262,9 @@ export default {
         dropTarget (ev,r,c) {
             let _this =this;
             var data=this.drag;
+            if(data.streamprofile==undefined){
+                data.streamprofile='main'
+            }
             // return false;
             if(data.disabled_me==false){
                 // document.getElementById("icon"+data.token).style.color="#5fbfa7";
@@ -362,6 +368,18 @@ export default {
             Vue.nextTick(function () {
                 //$('div[name="flex"]').height(($(".content").height() - 50) / rows);
                 $('div[name="flex"]').height(_this.contentHeight / rows);
+                var cors=_this.cols*_this.rows;
+                console.log(cors)
+                if(cors>9){
+                    $('.ptz_id_show').hide()
+                    $('.info_id_show').hide()
+                    $('.ptzcontrols').hide()
+                    $('.information').hide()
+                }
+                if(cors<=9){
+                    $('.ptz_id_show').show()
+                    $('.info_id_show').show()
+                }
             })
         },
         //全屏
@@ -446,7 +464,30 @@ export default {
             }
             // 否则要去判断它是不是选中节点的子节点
             return this.checkBelongToChooseNode(value, data, node);
-        }
+        },
+        // 判断传入的节点是不是选中节点的子节点
+        checkBelongToChooseNode(value, data, node) {
+            const level = node.level;
+            // 如果传入的节点本身就是一级节点就不用校验了
+            if (level === 1) {
+            return false;
+            }
+            // 先取当前节点的父节点
+            let parentData = node.parent;
+            // 遍历当前节点的父节点
+            let index = 0;
+            while (index < level - 1) {
+            // 如果匹配到直接返回
+            if (parentData.data.label.indexOf(value) !== -1) {
+                return true;
+            }
+            // 否则的话再往上一层做匹配
+            parentData = parentData.parent;
+            index ++;
+            }
+            // 没匹配到返回false
+            return false;
+        },
     },
     //模糊查询
     watch: {
@@ -534,10 +575,10 @@ export default {
 
             /* 六 */
             .Six_Palace{
-                flex: 1 1 33.33%;
+                flex: 1 1 33.33%!important;
                 height: 33.33% !important;
                 &:nth-child(1){
-                    flex: 1 1 66.66%;
+                    flex: 1 1 66.66% !important;
                     height: 66.66% !important;
                 }
                 &:nth-child(3){
@@ -549,7 +590,7 @@ export default {
             }
             /* 十三宫格 */
             .videoflexitem{
-                flex: 1 1 25%;
+                flex: 1 1 25% !important;
                 width: 25% !important;
                 height: 25% !important;
                 &:nth-child(6){
@@ -558,11 +599,11 @@ export default {
                     left: 0;
                 }
                 &:nth-child(7){
-                    flex: 1 1 50%;
+                    flex: 1 1 50% !important;
                     height: 50% !important;
                 }
                 &:nth-child(8){
-                    flex: 1 1 25%;
+                    flex: 1 1 25% !important;
                     position: absolute;
                     top: 50%;
                     right: 0;

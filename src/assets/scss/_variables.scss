@@ -102,7 +102,7 @@ $collapse_header:#E5E5E5;
                 }
                 .snap_you_lable_butt{
                     button{
-                        color: $header_size;
+                        color: #606266;
                     }
                 }
             }
@@ -361,6 +361,15 @@ $collapse_header:#E5E5E5;
             }
         }
     }
+    //区域
+    .Region{
+        .Root_node1{
+            .but_add{
+                color: #000;
+            }
+        }
+    }
+
     //选项卡
     .top_el_menu{
         .el-menu.el-menu--horizontal{

@@ -1,6 +1,6 @@
 <template>
     <div class="Protocol">
-        <div>PTSP服务检测</div>
+        <div>{{this.$t("message.setting.ServiceDetection")}}</div>
         <div>
             <el-switch
                 @change="Certchange()"
@@ -9,7 +9,7 @@
             </el-switch>
         </div>
         <div class="portcheck">
-            心跳周期 <el-input class="portcheck_input" style="width:100px" v-model="input" type='number'></el-input>(S)
+            {{this.$t("message.GB.KeepaliveTime")}} <el-input class="portcheck_input" style="width:100px" v-model="input" type='number'></el-input>(S)
         </div>
     </div>
 </template>

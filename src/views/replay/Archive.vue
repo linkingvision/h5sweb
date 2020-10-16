@@ -59,6 +59,7 @@
             <div class="snap_you_bottom">
                 <!-- 有按钮 -->
                 <el-table
+                    stripe
                     :data="tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                     style="width: 100%;">
                     <el-table-column
@@ -95,6 +96,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
+                        fixed="right"
                         width=310px>
                         <template slot-scope="scope">
                             <div class="snap_you_lable_butt">

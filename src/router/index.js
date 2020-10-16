@@ -23,6 +23,7 @@ i18n.locale = store.state.lang
 const TheContainer = () => import('@/containers/TheContainer')
 const Login = () => import('@/containers/Login')
 const Logout = () => import('@/containers/Logout')
+const Downloadapp = () => import('@/containers/Downloadapp')
 
 // Views
 const Dashboard = () => import('@/views/Dashboard')
@@ -31,6 +32,13 @@ const Replay = () => import('@/views/Replay')
 const Avintercom = () => import('@/views/Avintercom')
 const Tour = () => import('@/views/Tour')
 const Settings = () => import('@/views/Settings')
+const GB = () => import('@/views/GB')
+const Camera = () => import('@/views/Camera')
+const Clouds = () => import('@/views/Clouds')
+
+const GB28181 = () => import('@/views/GB/GB28181')
+const GBplatform = () => import('@/views/GB/GBplatform')
+const GBService = () => import('@/views/GB/GBService')
 
 const Advancepb = () => import('@/views/replay/Advancepb')
 const Archive = () => import('@/views/replay/Archive')
@@ -56,6 +64,10 @@ const Record = () => import('@/views/settings/record/Record')
 const LogLevel = () => import('@/views/settings/log/LogLevel')
 const LogRotating = () => import('@/views/settings/log/LogRotating')
 const System = () => import('@/views/settings/system/System')
+const RtmpPush = () => import('@/views/settings/RTMP/RtmpPush')
+const CloudConnect = () => import('@/views/settings/CloudConnect/CloudConnect')
+const Edit = () => import('@/views/settings/region/Edit')
+const Region = () => import('@/views/settings/region/Region')
 
 const Avintercoms = () => import('@/views/avintercom/Avintercoms')
 const Upload = () => import('@/views/avintercom/Upload')
@@ -84,7 +96,7 @@ export default new Router({
 						title: '/Dashboard',
 						name:i18n.tc("message.left.dashboard"),
 						icon:'iconfont icon-11111-copy',
-						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
 					path: 'Liveview',
@@ -93,6 +105,26 @@ export default new Router({
 					meta: {
 						title: '/Liveview',
 						name:i18n.tc("message.live.liveview"),
+						icon:'iconfont icon-shipin1',
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
+					},
+				},{
+					path: 'Camera',
+					name: 'Camera',
+					component: Camera,
+					meta: {
+						title: '/Camera',
+						name:i18n.tc("message.left.camera"),
+						icon:'iconfont icon-shipin1',
+						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+					},
+				},{
+					path: 'Clouds',
+					name: 'Clouds',
+					component: Clouds,
+					meta: {
+						title: '/Clouds',
+						name:i18n.tc("message.left.cloud"),
 						icon:'iconfont icon-shipin1',
 						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
@@ -104,7 +136,7 @@ export default new Router({
 						title: '/Tour',
 						name:i18n.tc("message.left.tour"),
 						icon:'iconfont icon-sigongge',
-						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
 					path: 'Replay',
@@ -114,7 +146,7 @@ export default new Router({
 						title: '/Replay/Advancepb',
 						name:i18n.tc("message.left.playback"),
 						icon:'iconfont icon-bofang1',
-						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 					},
 					children: [
 						{
@@ -125,7 +157,7 @@ export default new Router({
 								title: 'Advancepb',
 								name:i18n.tc("message.left.AdvancePB"),
 								icon:'iconfont icon-bofang1',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+								type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						},{
 							path: 'Archive',
@@ -135,7 +167,7 @@ export default new Router({
 								title: 'Archive',
 								name:i18n.tc("message.left.AdvancePB"),
 								icon:'iconfont icon-bofang1',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+								type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						},{
 							path: 'Playback',
@@ -145,7 +177,7 @@ export default new Router({
 								title: 'Playback',
 								name:i18n.tc("message.left.AdvancePB"),
 								icon:'iconfont icon-bofang1',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+								type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						},{
 							path: 'Snapshot',
@@ -155,7 +187,7 @@ export default new Router({
 								title: 'Snapshot',
 								name:i18n.tc("message.left.AdvancePB"),
 								icon:'iconfont icon-bofang1',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+								type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						},
 						
@@ -188,6 +220,49 @@ export default new Router({
 							meta: {
 								title: 'Upload',
 								name:i18n.tc("message.Conference.Upload"),
+								icon:'iconfont icon-bofang1',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						}
+					]
+				},{
+					path: 'GB',
+					name: 'GB',
+					component: GB,
+					meta: {
+						title: '/GB/GB28181',
+						name:'GB',
+						icon:'iconfont icon-shipinhuiyi3',
+						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+					},
+					children: [
+						{
+							path: 'GB28181',
+							name: 'GB28181',
+							component: GB28181,
+							meta: {
+								title: 'GB28181',
+								name:i18n.tc("message.GB.GB28181"),
+								icon:'iconfont icon-bofang1',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'GBplatform',
+							name: 'GBplatform',
+							component: GBplatform,
+							meta: {
+								title: 'GBplatform',
+								name:i18n.tc("message.GB.GBPlatform"),
+								icon:'iconfont icon-bofang1',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'GBService',
+							name: 'GBService',
+							component: GBService,
+							meta: {
+								title: 'GBService',
+								name:i18n.tc("message.GB.GBService"),
 								icon:'iconfont icon-bofang1',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 							},
@@ -394,6 +469,46 @@ export default new Router({
 								icon:'iconfont icon-11111-copy',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 							},
+						},{
+							path: 'RtmpPush',
+							name: 'RtmpPush',
+							component: RtmpPush,
+							meta: {
+								title: '/RtmpPush',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'CloudConnect',
+							name: 'CloudConnect',
+							component: CloudConnect,
+							meta: {
+								title: '/CloudConnect',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Edit',
+							name: 'Edit',
+							component: Edit,
+							meta: {
+								title: '/Edit',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Region',
+							name: 'Region',
+							component: Region,
+							meta: {
+								title: '/Region',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
 						}
 					]
 				}
@@ -404,6 +519,14 @@ export default new Router({
 			component: Login,
 			meta: {
 				title: 'login',
+				type: '' // 不需要鉴权
+			}
+        },{
+			path: '/Downloadapp',
+			name: 'Downloadapp',
+			component: Downloadapp,
+			meta: {
+				title: 'Downloadapp',
 				type: '' // 不需要鉴权
 			}
         },{

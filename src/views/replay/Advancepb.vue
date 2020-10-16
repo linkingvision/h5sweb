@@ -148,6 +148,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import {listdatagload,listdatag} from '../public/regional'
 import '../../assets/js/adapter'
 import {H5sPlayerWS,H5sPlayerHls,H5sPlayerRTC,H5sPlayerAudBack} from '../../assets/js/h5splayer.js'
