@@ -13,16 +13,16 @@
 						<span>{{$t("message.setting.device")}} </span>
 					</template>
                     <el-menu-item index="/Settings/DeviceStream">
-                        <span class="Setting_tree">DeviceStream</span> 
+                        <span class="Setting_tree">H5_STREAM</span> 
                     </el-menu-item>
                     <el-menu-item index="/Settings/DeviceOnvif">
-                         <span class="Setting_tree">DeviceOnvif</span> 
+                         <span class="Setting_tree">H5_ONVIF</span> 
                     </el-menu-item>
 					<el-menu-item index="/Settings/DeviceFile">
-                         <span class="Setting_tree">DeviceFile</span> 
+                         <span class="Setting_tree">H5_FILE</span> 
                     </el-menu-item>
 					<el-menu-item index="/Settings/DeviceAll">
-                         <span class="Setting_tree">DeviceAll</span> 
+                         <span class="Setting_tree">{{$t("message.setting.all")}}</span> 
                     </el-menu-item>
 				</el-submenu>
 				<el-submenu index="/Settings/DeviceSdk">

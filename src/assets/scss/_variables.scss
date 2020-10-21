@@ -12,6 +12,14 @@ $liveview_lback:#FFFFFF;
 $collapse_size:#000000;
 $collapse_header:#E5E5E5;
 .c-app{
+    //设备页面
+    .Dashboard_Device{
+        .container_co{
+            .container{
+                background-color: #FFFFFF;
+            }
+        }
+    }
     .Sidebar{  
         .c-sidebar{
             background-color: $sidebar_back;

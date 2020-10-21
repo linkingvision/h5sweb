@@ -47,7 +47,7 @@
 		<CHeaderNav>
 			<div class="c_Docker" id="Docker"></div>
 		</CHeaderNav>
-		<CHeaderNav>
+		<!-- <CHeaderNav>
 			<CHeaderNavItem class="px-3">
 				<button 
 				@click="() => $store.commit('toggle', 'darkMode')" 
@@ -57,7 +57,7 @@
 				<CIcon v-else name="cil-moon"/>
 				</button>
 			</CHeaderNavItem>
-		</CHeaderNav>
+		</CHeaderNav> -->
 		<CHeaderNav>
 			<CDropdown
 				:caret="false">
@@ -133,6 +133,7 @@ export default {
 				icon:this.$route.matched[1].meta.icon,
 				name:this.$route.matched[1].meta.name
 			},
+			toggle:"",//主题
 			label:{
 				Edit:this.$t("message.table.Edit"),
 				user:this.$t("message.setting.username"),
@@ -148,6 +149,11 @@ export default {
 				control1:this.$t("message.header.control"),
 				Reboot:this.$t("message.header.Reboot")
 			},
+		}
+	},
+	watch:{
+		toggle(a){
+			this.$root.bus.$emit('skintoggle', a);
 		}
 	},
 	mounted(){
@@ -192,6 +198,7 @@ export default {
 		skin(){
 			this.toggle=this.$store.state.darkMode
 			this.$store.commit('toggle', 'darkMode')
+
 		},
 	}
 }

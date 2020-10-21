@@ -36,6 +36,9 @@ const GB = () => import('@/views/GB')
 const Camera = () => import('@/views/Camera')
 const Clouds = () => import('@/views/Clouds')
 
+const Device = () => import('@/views/dashboard/Device')
+const GPU = () => import('@/views/dashboard/GPU')
+
 const GB28181 = () => import('@/views/GB/GB28181')
 const GBplatform = () => import('@/views/GB/GBplatform')
 const GBService = () => import('@/views/GB/GBService')
@@ -93,8 +96,28 @@ export default new Router({
 					name: 'Dashboard',
 					component: Dashboard,
 					meta: {
-						title: '/Dashboard',
+						title: 'Dashboard',
 						name:i18n.tc("message.left.dashboard"),
+						icon:'iconfont icon-11111-copy',
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
+					},
+				},{
+					path: 'Device',
+					name: 'Device',
+					component: Device,
+					meta: {
+						title: 'Device',
+						name:i18n.tc("message.dashboard.device"),
+						icon:'iconfont icon-11111-copy',
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
+					},
+				},{
+					path: 'GPU',
+					name: 'GPU',
+					component: GPU,
+					meta: {
+						title: 'GPU',
+						name:'GPU',
 						icon:'iconfont icon-11111-copy',
 						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 					},

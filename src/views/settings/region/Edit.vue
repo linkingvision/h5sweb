@@ -280,8 +280,8 @@
         background: rgba(218, 218, 218,0.1);
     }
     .but_add{
-        border: none;
-        background: none;
+        border: none!important;
+        background: none!important;
         padding: 0;
     }
 }

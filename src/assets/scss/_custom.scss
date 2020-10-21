@@ -12,8 +12,36 @@ $liveview_lback:#2D2D2D;
 //组件
 //收缩
 $collapse_header:#292929;
-$collapse_size:#FFFFFF;
+$collapse_size:#4b3131;
 .c-app.c-dark-theme{
+    //设备页面
+    .Dashboard_Device{
+        .container_co{
+            .container{
+                background-color: #2C2C2C;
+            }
+        }
+    }
+    .c-body{
+        &::-webkit-scrollbar {/*滚动条整体样式*/
+            width: 8px;     /*高宽分别对应横竖滚动条的尺寸*/
+            height: 8px;
+            scrollbar-arrow-color:red;
+        }
+        &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+            box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+            background: rgba(218, 218, 218,0.2);
+            scrollbar-arrow-color:red;
+        }
+        &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+            box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+            border-radius: 0;
+            background: rgba(218, 218, 218,0.1);
+        }
+    }
     background-color: $G_back;
     //左侧栏
     .c-sidebar{
