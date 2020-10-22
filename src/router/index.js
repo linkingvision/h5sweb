@@ -138,7 +138,7 @@ export default new Router({
 					meta: {
 						title: '/Camera',
 						name:i18n.tc("message.left.camera"),
-						icon:'iconfont icon-shipin1',
+						icon:'iconfont icon-jiankong',
 						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
@@ -148,7 +148,7 @@ export default new Router({
 					meta: {
 						title: '/Clouds',
 						name:i18n.tc("message.left.cloud"),
-						icon:'iconfont icon-shipin1',
+						icon:'iconfont icon-yun',
 						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
