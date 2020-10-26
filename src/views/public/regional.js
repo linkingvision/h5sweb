@@ -55,6 +55,11 @@ function loadtest(){
                     
                     if(item['bRec'] == true)
                         newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+
+                    if(item['bDisable'] == true){
+                        newItem['disabled_me'] =true;
+                        newItem['iconclass1'] = 'camera';
+                    }
                         
                 srcGroup.children.push(newItem);
                 }
@@ -187,6 +192,11 @@ function NumberSrc(srclevel, srcData) {
 
                 if(item['bRec'] == true)
                         newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+                        
+                if(item['bDisable'] == true){
+                    newItem['disabled_me'] =true;
+                    newItem['iconclass1'] = 'camera';
+                }
 
                srcGroup.children.push(newItem);
             }
@@ -248,6 +258,11 @@ function cloudSrc(srclevel, srcData) {
 
                 if(item['bRec'] == true)
                         newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+
+                if(item['bDisable'] == true){
+                    newItem['disabled_me'] =true;
+                    newItem['iconclass1'] = 'camera';
+                }
 
                srcGroup.children.push(newItem);
             }

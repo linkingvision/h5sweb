@@ -169,7 +169,7 @@ export default {
 	mounted(){
         // console.log(listdatag,listdatagload,listdatag1,this.data)
         this.updateUI();
-        $('#headswitch').hide()
+        $('#headswitch1').hide()
 		this.addWaterMarker();
 	},
 	methods:{

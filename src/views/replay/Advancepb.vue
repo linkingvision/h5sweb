@@ -271,6 +271,9 @@ export default {
 		//树形节点点击
 		//开始播放时间  0：00 每天结束时间可能回到第二天清晨
 		handleNodeClick(data, checked, indeterminate){
+			if(data.disabled_me){
+				return false
+			}
 			var data=data.token;
 			if(data==undefined){
 				return false;
@@ -320,210 +323,222 @@ export default {
 			// return false
 			var root = this.$store.state.IPPORT;
 			var wsroot = this.$store.state.WSROOT;
-				setTimeout(function(){
-					var a = $("#timeline"+_this.selectRow+_this.selectCol).TimeSlider('returnMouseupTime',null,null,function(time){
-						console.log("time",time)
-						// return false;
-						// 放入视频
-						if(_this.Gtoken==undefined||_this.Gtoken==""){
-							return false;
-						}
-						// return false;
-						var timevalue=new Date(time);
-						var year = timevalue.getFullYear();
-						var month = timevalue.getMonth() + 1;
-						var strDate = timevalue.getDate();
-						var strDate1 = timevalue.getDate()+1;
-						var strDate2 = timevalue.getDate()-1;
-						var getHours = timevalue.getHours();
-						var getMinutes = timevalue.getMinutes();
-						var getSeconds = timevalue.getSeconds();
-						var localOffset = Math.abs(timevalue.getTimezoneOffset() /60);
-						var timevalues=year+"-"+month+"-"+strDate+"T"+""+getHours+":"+getMinutes+":"+getSeconds+""+"+0"+localOffset+":00";
-						
-						var timevaluee=year+"-"+month+"-"+strDate+"T"+"23:59:59"+"+0"+localOffset+":00";
+			if(_this.Gtoken==undefined||_this.Gtoken==""){
+				return false;
+			}
+			setTimeout(function(){
+				var a = $("#timeline"+_this.selectRow+_this.selectCol).TimeSlider('returnMouseupTime',null,null,function(time){
+					console.log("time",time,_this.Gtoken)
+					// return false;
+					// 放入视频
+					// return false;
+					var timevalue=new Date(time);
+					var year = timevalue.getFullYear();
+					var month = timevalue.getMonth() + 1;
+					var strDate = timevalue.getDate();
+					var strDate1 = timevalue.getDate()+1;
+					var strDate2 = timevalue.getDate()-1;
+					var getHours = timevalue.getHours();
+					var getMinutes = timevalue.getMinutes();
+					var getSeconds = timevalue.getSeconds();
+					var localOffset = Math.abs(timevalue.getTimezoneOffset() /60);
+					var timevalues=year+"-"+month+"-"+strDate+"T"+""+getHours+":"+getMinutes+":"+getSeconds+""+"+0"+localOffset+":00";
+					
+					var timevaluee=year+"-"+month+"-"+strDate+"T"+"23:59:59"+"+0"+localOffset+":00";
 
-						var timevalues1=year+"-"+month+"-"+strDate2+"T"+""+getHours+":"+getMinutes+":"+getSeconds+""+"+0"+localOffset+":00";
-						
-						var timevaluee1=year+"-"+month+"-"+strDate1+"T"+"23:59:59"+"+0"+localOffset+":00";
-						
-						// console.log("======",strDate1);
-						// console.log("timevaluee222222",timevalues,timevaluee,"------",localOffset,"**",timevalue);
-						var url=""
-						if(_this.Adswitch=="false"){
-							url = url = root + "/api/v1/SearchDeviceRecordByTime?token="+_this.Gtoken+"&start="+encodeURIComponent(timevalues1)+"&end="+encodeURIComponent(timevaluee1)+"&session="+ _this.$store.state.token;
-						}else{
-							url = root + "/api/v1/Search?type=record&token="+_this.Gtoken
-							+"&start="+encodeURIComponent(timevalues1)+"&end="+encodeURIComponent(timevaluee)+"&session="+ _this.$store.state.token;
-						}
-						// console.log(url);
-						//  return false;
-						_this.$http.get(url).then(result=>{
-							if(result.status == 200){
-								var data=result.data;
-								var timedata1=[];
-								//console.log("length",data.record.length);
-								for(var i=0;i<data.record.length;i++){
-									var item=data.record[i];
-									//时间转换
-									var starf=new Date(item['strStartTime']).getTime();
-									var end=new Date(item['strEndTime']).getTime();
-									var starf=new Date(starf);
-									var end=new Date(end);
-									var timeitem={
-											beginTime :starf,
-											endTime :end,
-											style:{background:"rgba(60,196,60, 0.498039)"}
-										};
-									//console.log("录像段时间段颜色",timeitem["style"].background); //录像段时间段颜色
-									if(item["nType"]==="H5_REC_MANUAL"){
-										timeitem["style"].background="rgba(60,196,60, 0.498039)"
-										//console.log("录像段时间段颜色1",timeitem["style"].background);
-									}else{
-										timeitem["style"].background="rgba(238,17,17, 0.498039)"
-										//console.log("录像段时间段颜色2",timeitem["style"].background);
-									}
-									// _this.timedata.push(timeitem);
-									timedata1.push(timeitem);
-									console.log(timedata1)
-									
-									$("#timeline"+_this.selectRow+_this.selectCol).TimeSlider('init',timevalue,timedata1);
-									
+					var timevalues1=year+"-"+month+"-"+strDate2+"T"+""+getHours+":"+getMinutes+":"+getSeconds+""+"+0"+localOffset+":00";
+					
+					var timevaluee1=year+"-"+month+"-"+strDate1+"T"+"23:59:59"+"+0"+localOffset+":00";
+					
+					// console.log("======",strDate1);
+					// console.log("timevaluee222222",timevalues,timevaluee,"------",localOffset,"**",timevalue);
+					var url=""
+					if(_this.Adswitch=="false"){
+						url = url = root + "api/v1/SearchDeviceRecordByTime?token="+_this.Gtoken+"&start="+encodeURIComponent(timevalues1)+"&end="+encodeURIComponent(timevaluee1)+"&session="+ _this.$store.state.token;
+					}else{
+						url = root + "api/v1/Search?type=record&token="+_this.Gtoken
+						+"&start="+encodeURIComponent(timevalues1)+"&end="+encodeURIComponent(timevaluee)+"&session="+ _this.$store.state.token;
+					}
+					// console.log(url);
+					//  return false;
+					_this.$http.get(url).then(result=>{
+						if(result.status == 200){
+							var data=result.data;
+							var timedata1=[];
+							//console.log("length",data.record.length);
+							for(var i=0;i<data.record.length;i++){
+								var item=data.record[i];
+								//时间转换
+								var starf=new Date(item['strStartTime']).getTime();
+								var end=new Date(item['strEndTime']).getTime();
+								var starf=new Date(starf);
+								var end=new Date(end);
+								var timeitem={
+										beginTime :starf,
+										endTime :end,
+										style:{background:"rgba(60,196,60, 0.498039)"}
+									};
+								//console.log("录像段时间段颜色",timeitem["style"].background); //录像段时间段颜色
+								if(item["nType"]==="H5_REC_MANUAL"){
+									timeitem["style"].background="rgba(60,196,60, 0.498039)"
+									//console.log("录像段时间段颜色1",timeitem["style"].background);
+								}else{
+									timeitem["style"].background="rgba(238,17,17, 0.498039)"
+									//console.log("录像段时间段颜色2",timeitem["style"].background);
 								}
+								// _this.timedata.push(timeitem);
+								timedata1.push(timeitem);
+								// console.log(timedata1)
+								
+								$("#timeline"+_this.selectRow+_this.selectCol).TimeSlider('init',timevalue,timedata1);
+								
 							}
-						})
-						if(_this.selectRow=="1"&&_this.selectCol=="1"){
-							_this.selectCol1 = _this.selectCol;
-							_this.selectRow1 = _this.selectRow;
-							if (_this.v1 != undefined)
-							{
-								_this.v1.disconnect();
-								delete _this.v1;
-								_this.v1 = undefined;
-								console.log("上this.v1",_this.v1);
-							}
-							var pbconf1 = {
-								begintime: timevalues,
-								endtime: timevaluee,
-								autoplay: 'true',
-								showposter:"true", //'true' or 'false' show poster
-								callback: _this.PlaybackCB,
-								serverpb: _this.Adswitch, 
-								userdata:  _this // user data
-							};
-							let conf = {
-								videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
-								protocol: window.location.protocol, //http: or https:
-								host: wsroot, //localhost:8080
-								rootpath:'/', // '/'
-								token:_this.Gtoken,
-								pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-								hlsver:'v1', //v1 is for ts, v2 is for fmp4
-								session: _this.$store.state.token
-							};
-							_this.v1 = new H5sPlayerRTC(conf);
-							console.log("v111111111111",_this.v1)
-							//return false;
-							_this.v1.connect();
-						}else if(_this.selectRow=="1"&&_this.selectCol=="2"){
-							_this.selectCol1 = _this.selectCol;
-							_this.selectRow1 = _this.selectRow;
-							if (_this.v2 != undefined)
-							{
-								_this.v2.disconnect();
-								delete _this.v2;
-								_this.v2 = undefined;
-							}
-							var pbconf1 = {
-								begintime: timevalues,
-								endtime: timevaluee,
-								autoplay: 'true',
-								showposter:"true", //'true' or 'false' show poster
-								callback: _this.PlaybackCB1,
-								serverpb: _this.Adswitch, 
-								userdata:  _this // user data
-							};
-							let conf2 = {
-								videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
-								protocol: window.location.protocol, //http: or https:
-								host: wsroot, //localhost:8080
-								rootpath:'/', // '/'
-								token:_this.Gtoken,
-								pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-								hlsver:'v1', //v1 is for ts, v2 is for fmp4
-								session: _this.$store.state.token
-							};
-							_this.v2 = new H5sPlayerRTC(conf2);
-							console.log("v22222222222222222",_this.v2)
-							//return false;
-							_this.v2.connect();
-						}else if(_this.selectRow=="2"&&_this.selectCol=="1"){
-							_this.selectCol1 = _this.selectCol;
-							_this.selectRow1 = _this.selectRow;
-							if (_this.v3 != undefined)
-							{
-								_this.v3.disconnect();
-								delete _this.v3;
-								_this.v3 = undefined;
-								console.log("上this.v1",_this.v1);
-							}
-							var pbconf1 = {
-								begintime: timevalues,
-								endtime: timevaluee,
-								autoplay: 'true',
-								showposter:"true", //'true' or 'false' show poster
-								callback: _this.PlaybackCB2,
-								serverpb: _this.Adswitch, 
-								userdata:  _this // user data
-							};
-							let conf3 = {
-								videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
-								protocol: window.location.protocol, //http: or https:
-								host: wsroot, //localhost:8080
-								rootpath:'/', // '/'
-								token:_this.Gtoken,
-								pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-								hlsver:'v1', //v1 is for ts, v2 is for fmp4
-								session: _this.$store.state.token
-							};
-							_this.v3 = new H5sPlayerRTC(conf3);
-							//return false;
-							_this.v3.connect();
-						}else if(_this.selectRow=="2"&&_this.selectCol=="2"){
-							_this.selectCol1 = _this.selectCol;
-							_this.selectRow1 = _this.selectRow;
-							if (_this.v4 != undefined)
-							{
-								_this.v4.disconnect();
-								delete _this.v4;
-								_this.v4 = undefined;
-								console.log("上this.v1",_this.v1);
-							}
-							var pbconf1 = {
-								begintime: timevalues,
-								endtime: timevaluee,
-								autoplay: 'true',
-								showposter:"true", //'true' or 'false' show poster
-								callback: _this.PlaybackCB3,
-								serverpb: _this.Adswitch, 
-								userdata:  _this // user data
-							};
-							let conf4 = {
-								videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
-								protocol: window.location.protocol, //http: or https:
-								host: wsroot, //localhost:8080
-								rootpath:'/', // '/'
-								token:_this.Gtoken,
-								pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-								hlsver:'v1', //v1 is for ts, v2 is for fmp4
-								session: _this.$store.state.token
-							};
-							_this.v4 = new H5sPlayerRTC(conf4);
-							//return false;
-							_this.v4.connect();
 						}
 					})
-				},100);
+					if(_this.selectRow=="1"&&_this.selectCol=="1"){
+						_this.selectCol1 = _this.selectCol;
+						_this.selectRow1 = _this.selectRow;
+						if (_this.v1 != undefined)
+						{
+							_this.v1.disconnect();
+							delete _this.v1;
+							_this.v1 = undefined;
+							console.log("上this.v1",_this.v1);
+						}
+						var pbconf1 = {
+							begintime: timevalues,
+							endtime: timevaluee,
+							autoplay: 'true',
+							showposter:"true", //'true' or 'false' show poster
+							callback: _this.PlaybackCB,
+							serverpb: _this.Adswitch, 
+							userdata:  _this // user data
+						};
+						let conf = {
+							videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
+							protocol: window.location.protocol, //http: or https:
+							host: wsroot, //localhost:8080
+							rootpath:'/', // '/'
+							token:_this.Gtoken,
+							pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+							hlsver:'v1', //v1 is for ts, v2 is for fmp4
+							session: _this.$store.state.token
+						};
+						_this.$nextTick (()=>{
+							_this.v1 = new H5sPlayerRTC(conf);
+							//return false;
+							_this.v1.connect();
+							_this.icon="iconfont icon-zantingtingzhi";
+						})
+					}else if(_this.selectRow=="1"&&_this.selectCol=="2"){
+						_this.selectCol1 = _this.selectCol;
+						_this.selectRow1 = _this.selectRow;
+						if (_this.v2 != undefined)
+						{
+							_this.v2.disconnect();
+							delete _this.v2;
+							_this.v2 = undefined;
+						}
+						var pbconf1 = {
+							begintime: timevalues,
+							endtime: timevaluee,
+							autoplay: 'true',
+							showposter:"true", //'true' or 'false' show poster
+							callback: _this.PlaybackCB1,
+							serverpb: _this.Adswitch, 
+							userdata:  _this // user data
+						};
+						let conf2 = {
+							videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
+							protocol: window.location.protocol, //http: or https:
+							host: wsroot, //localhost:8080
+							rootpath:'/', // '/'
+							token:_this.Gtoken,
+							pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+							hlsver:'v1', //v1 is for ts, v2 is for fmp4
+							session: _this.$store.state.token
+						};
+						
+						_this.$nextTick (()=>{
+							_this.v2 = new H5sPlayerRTC(conf);
+							//return false;
+							_this.v2.connect();
+							_this.icon="iconfont icon-zantingtingzhi";
+						})
+					}else if(_this.selectRow=="2"&&_this.selectCol=="1"){
+						_this.selectCol1 = _this.selectCol;
+						_this.selectRow1 = _this.selectRow;
+						if (_this.v3 != undefined)
+						{
+							_this.v3.disconnect();
+							delete _this.v3;
+							_this.v3 = undefined;
+							console.log("上this.v1",_this.v1);
+						}
+						var pbconf1 = {
+							begintime: timevalues,
+							endtime: timevaluee,
+							autoplay: 'true',
+							showposter:"true", //'true' or 'false' show poster
+							callback: _this.PlaybackCB2,
+							serverpb: _this.Adswitch, 
+							userdata:  _this // user data
+						};
+						let conf3 = {
+							videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
+							protocol: window.location.protocol, //http: or https:
+							host: wsroot, //localhost:8080
+							rootpath:'/', // '/'
+							token:_this.Gtoken,
+							pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+							hlsver:'v1', //v1 is for ts, v2 is for fmp4
+							session: _this.$store.state.token
+						};
+						
+						_this.$nextTick (()=>{
+							_this.v3 = new H5sPlayerRTC(conf);
+							//return false;
+							_this.v3.connect();
+							_this.icon="iconfont icon-zantingtingzhi";
+						})
+					}else if(_this.selectRow=="2"&&_this.selectCol=="2"){
+						_this.selectCol1 = _this.selectCol;
+						_this.selectRow1 = _this.selectRow;
+						if (_this.v4 != undefined)
+						{
+							_this.v4.disconnect();
+							delete _this.v4;
+							_this.v4 = undefined;
+							console.log("上this.v1",_this.v1);
+						}
+						var pbconf1 = {
+							begintime: timevalues,
+							endtime: timevaluee,
+							autoplay: 'true',
+							showposter:"true", //'true' or 'false' show poster
+							callback: _this.PlaybackCB3,
+							serverpb: _this.Adswitch, 
+							userdata:  _this // user data
+						};
+						let conf4 = {
+							videoid: "gaovideohb"+_this.selectRow+_this.selectCol,
+							protocol: window.location.protocol, //http: or https:
+							host: wsroot, //localhost:8080
+							rootpath:'/', // '/'
+							token:_this.Gtoken,
+							pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+							hlsver:'v1', //v1 is for ts, v2 is for fmp4
+							session: _this.$store.state.token
+						};
+						_this.$nextTick (()=>{
+							_this.v4 = new H5sPlayerRTC(conf);
+							//return false;
+							_this.v4.connect();
+							_this.icon="iconfont icon-zantingtingzhi";
+						})
+					}
+				})
+			},100);
 		},
 		//开始
 		resume(){
@@ -613,12 +628,15 @@ export default {
 		//关闭
 		CloseVideo(event)
 		{
+			var timevalue=new Date();
+			var timedata1=[];
 			if(this.selectRow=="1"&&this.selectCol=="1"){
 				if (this.v1 != undefined)
 				{
 					this.v1.disconnect();
 					delete this.v1;
 					this.v1 = undefined;
+					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
 					
@@ -629,6 +647,7 @@ export default {
 					this.v2.disconnect();
 					delete this.v2;
 					this.v2 = undefined;
+					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
 					
@@ -639,6 +658,7 @@ export default {
 					this.v3.disconnect();
 					delete this.v3;
 					this.v3 = undefined;
+					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
 					
@@ -652,6 +672,7 @@ export default {
 					this.$.info({
 						title: "Stop successfully"
 					});
+					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
 					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
 					
@@ -818,15 +839,6 @@ export default {
                 rows: parseInt(rows),
                 cols: parseInt(cols)
             });
-            Vue.nextTick(function () {
-				// console.log(_this.contentHeight / rows);
-                //$('div[name="flex"]').height(($(".content").height() - 50) / rows);
-                $('div[name="flex"]').height(_this.contentHeight / rows);
-			})
-			// this.funtimeine();
-			$("#timeline12").TimeSlider({init_cells:this.timedata});
-			$("#timeline21").TimeSlider({init_cells:this.timedata});
-			$("#timeline22").TimeSlider({init_cells:this.timedata});
 			// clearInterval(this.PlaybackCB);
 			if (this.v2 != undefined)
 			{
@@ -855,6 +867,15 @@ export default {
 				$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
 				
 			}
+			Vue.nextTick(function () {
+				// console.log(_this.contentHeight / rows);
+                //$('div[name="flex"]').height(($(".content").height() - 50) / rows);
+				$('div[name="flex"]').height(_this.contentHeight / rows);
+				
+				$("#timeline12").TimeSlider({init_cells:_this.timedata});
+				$("#timeline21").TimeSlider({init_cells:_this.timedata});
+				$("#timeline22").TimeSlider({init_cells:_this.timedata});
+			})
         },
 		stopVideo(event){
 		    return;

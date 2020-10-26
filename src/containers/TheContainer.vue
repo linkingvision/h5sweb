@@ -58,7 +58,7 @@ export default {
 		},
 		EventCB(event, userdata){
 			var msgevent = JSON.parse(event);
-			console.log("****消息",msgevent)
+			// console.log("****消息",msgevent)
 		}
 	}
 }

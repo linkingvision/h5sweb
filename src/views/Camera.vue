@@ -52,6 +52,7 @@
                     :label="open_Close">
                     <template slot-scope="scope">
                         <el-switch
+                            @change="openchange"
                             v-model="scope.row.open_close"
                             :disabled="scope.row.disabled"
                             active-color="#13ce66"
@@ -63,7 +64,7 @@
                     fixed="right"
                     :label="label.GBID">
                     <template slot-scope="scope">
-                        <el-input v-model="scope.row.gbid" placeholder="请输入内容"></el-input>
+                        <el-input @blur="openchange" v-model="scope.row.gbid" placeholder="请输入内容"></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -71,6 +72,7 @@
                     :label="audio">
                     <template slot-scope="scope">
                         <el-switch
+                            @change="openchange"
                             v-model="scope.row.audio"
                             active-color="#13ce66"
                             inactive-color="#ff4949">
@@ -148,6 +150,14 @@ export default {
         this.NumberDevice();
 	},
 	methods:{
+        //修改后提示
+        openchange(){
+            this.$message({
+                message: '修改后请保存',
+                type: 'warning',
+                center: true
+            });
+        },
         //第一个表格的数据
         GetSrc(){
             var root = this.$store.state.IPPORT;

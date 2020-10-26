@@ -443,6 +443,31 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+    //顶部关于弹窗
+    & ~ .plugin_adout{
+        .el-dialog{
+            background: url('~@/assets/imgs/Header_on.png') center no-repeat;
+            min-height: 326px;
+            background-size: 100%;
+            .el-dialog__body{
+                .about_flex{
+                    min-height: 226px;
+                    text-align: center;
+                    color: #FFFFFF;
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    div{
+                        width: 100%;
+                    }
+                    .adout_img{
+                        width: 320px;
+                        height: 60px;
+                    }
+                }
+            }
+        }
+    }
     // 组件
     //input框
     .el-input__inner{

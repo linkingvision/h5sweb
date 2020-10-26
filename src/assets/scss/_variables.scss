@@ -403,6 +403,50 @@ $collapse_header:#E5E5E5;
             text-align: center;
         }
     }
+    //顶部关于弹窗
+    & ~ .plugin_adout{
+        .el-dialog{
+            background: url('~@/assets/imgs/Header_on1.png') center no-repeat;
+            min-height: 326px;
+            background-size: 100%;
+            .el-dialog__body{
+                .about_flex{
+                    min-height: 226px;
+                    text-align: center;
+                    color: #000000;
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    div{
+                        width: 100%;
+                    }
+                    .adout_img{
+                        width: 320px;
+                        height: 60px;
+                    }
+                }
+            }
+        }
+    }
+    //顶部重启弹窗
+    & ~ .Rebootdialog{
+        .el-dialog{
+            background-color: #212121;
+            .el-dialog__header{
+                .el-dialog__title{
+                    color: #FFFFFF;
+                }
+                .el-dialog__headerbtn{
+                    color: #FFFFFF;
+                }
+            }
+            .el-dialog__body{
+                .Rebootdialog1{
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
     //组件
     //收缩
     .el-collapse{

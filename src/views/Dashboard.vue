@@ -65,9 +65,9 @@
                             <div class="nr_mory1">
                                 <el-progress
                                 v-if="strRunTime"
-                                type="circle" 
+                                type="dashboard" 
                                 :width='100'
-                                :stroke-width="10"
+                                :stroke-width="5"
                                 color="#4C80FA"
                                 :percentage="Number(Math.round((strRunTime.nTotalSpaceByte-strRunTime.nFreeSpaceByte)/strRunTime.nTotalSpaceByte*100))"></el-progress> 
                                 <div>{{this.$t("message.dashboard.free_space")}}</div>
@@ -75,9 +75,9 @@
                             </div>
                             <div class="nr_mory1">
                                 <el-progress
-                                type="circle"
+                                type="dashboard"
                                 :width='100'
-                                :stroke-width="10"
+                                :stroke-width="5"
                                 v-if="strRunTime"
                                 color="#FFF025"
                                 :percentage="Number(strRunTime.nMemoryUsage)"></el-progress>
@@ -87,9 +87,9 @@
                             </div>
                             <div class="nr_mory1">
                                 <el-progress
-                                    type="circle"
+                                    type="dashboard"
                                     :width='100'
-                                    :stroke-width="10"
+                                    :stroke-width="5"
                                     v-if="strRunTime"
                                     color="#FF3FE5"
                                     :percentage="Number(Math.round((strRunTime.nRecordTotalSpaceByte-strRunTime.nRecordFreeSpaceByte)/strRunTime.nRecordTotalSpaceByte*100))"></el-progress>

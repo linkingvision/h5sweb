@@ -1,11 +1,29 @@
 <template>
 <div>
 	<el-dialog
+		class="plugin_adout"
+		:visible.sync="centerDialogVisible"
+		width="25%"
+		append-to-body
+		center>
+		<div class="about_flex">
+			<div v-if="$store.state.darkMode">
+				<img class="adout_img" src="../assets/imgs/logo_hei.svg"/>
+			</div>
+			<div v-else>
+				<img class="adout_img" src="../assets/imgs/logo.svg"/>
+			</div>
+			<div style="margin: 20px 0 10px 20px; text-align: center;">
+				<div>{{$t("message.dashboard.version")}}: {{information.strVersion}}</div>
+			</div>
+		</div>
+	</el-dialog>
+	<el-dialog
 		class="Rebootdialog"
 		title="重启"
 		append-to-body
 		:visible.sync="Rebootdialog"
-		width="30%">
+		width="25%">
 		<div class="Rebootdialog1">
 			<div style="">修改后请您重启</div>
 			<div slot="footer" class="dialog-footer" style="display: flex;justify-content: flex-end;">
@@ -76,7 +94,7 @@
 					<i class="iconfont icon-gengduo"></i>
 				</template>
 				<CDropdownItem >
-					<div @click="about=true" class="about_ab"><i class="iconfont icon-prompt"></i>关于</div>
+					<div @click="centerDialogVisible=true" class="about_ab"><i class="iconfont icon-prompt"></i>关于</div>
 				</CDropdownItem>
 				<CDropdownItem href="doc/api.html">
 					<div class="about_ab"><i class="iconfont icon-category"></i>API</div>
@@ -129,9 +147,13 @@ export default {
 		return {
 			user:this.$store.state.user,
 			Rebootdialog:false,
+			centerDialogVisible:false,
 			subtitle:{
 				icon:this.$route.matched[1].meta.icon,
 				name:this.$route.matched[1].meta.name
+			},
+			information:{
+				strVersion: ""
 			},
 			toggle:"",//主题
 			label:{
@@ -157,9 +179,26 @@ export default {
 		}
 	},
 	mounted(){
-		this.Docker()
+		this.Docker();
+		this.GetSystemInfo();
 	},
 	methods:{
+		GetSystemInfo(){
+			var root = this.$store.state.IPPORT;
+			var url = root + "/api/v1/GetSystemInfo?session="+ this.$store.state.token;
+
+			this.$http.get(url).then(result => {
+				//console.log(result);
+				if (result.status == 200) 
+				{
+					this.information = result.data;
+					// console.log(_this.information);
+				}
+			}).catch(error => {
+				console.log('GetSystemInfo', error);
+			});
+
+		},
 		//重启
 		Reboot(){
 			var url = this.$store.state.IPPORT + "/api/v1/Restart?session="+ this.$store.state.token;
@@ -173,7 +212,7 @@ export default {
 			
 			var loading = Vue.prototype.$loading({
 				lock: true,
-				text: '拼命加载中...',
+				text: '重启中',
 				background:"RGBA(0, 0, 0, 0.5)",
 				target: '.Rebootdialog1'  // 需要loading的元素的类名
 			})

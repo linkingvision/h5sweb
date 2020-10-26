@@ -185,7 +185,7 @@ export default {
 	mounted(){
         // console.log(listdatag,listdatagload,listdatag1,this.data)
         this.updateUI();
-        $('#headswitchtour').hide()
+        $('#headswitchtour1').hide()
 	},
 	methods:{
         //ws rtc
