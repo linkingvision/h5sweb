@@ -23,6 +23,7 @@
             :label="label.Type">
             </el-table-column>
             <el-table-column
+                fixed="right"
                 :label="label.Edit">
                 <template slot-scope="scope">
                     <div class="button_edi">

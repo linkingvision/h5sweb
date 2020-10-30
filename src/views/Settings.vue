@@ -33,6 +33,14 @@
                         <span class="Setting_tree">H5-DEV</span> 
                     </el-menu-item>
 				</el-submenu>
+				<el-submenu index="/Settings/BatchImport">
+					<template slot="title">
+						<span>{{$t("message.setting.devicesdk")}} </span>
+					</template>
+                    <el-menu-item index="/Settings/BatchImport">
+                        <span class="Setting_tree">BatchImport</span> 
+                    </el-menu-item>
+				</el-submenu>
 				
 				<el-submenu index="/Settings/RtmpPush">
 					<template slot="title">
@@ -153,6 +161,16 @@
                         <span class="Setting_tree">Docker</span> 
                     </el-menu-item>
 				</el-submenu>
+				<el-menu-item index="/Settings/Camera">
+					<!-- <i class="iconfont icon-jiankong" style="font-size:18px"></i> -->
+					<span slot="title">{{$t("message.left.camera")}}</span>
+				</el-menu-item>
+				<a href='/mediastore'>
+					<el-menu-item >
+						<!-- <i class="iconfont icon-wenjianjia" style="font-size:20px"></i> -->
+						<span slot="title">{{$t("message.left.screenshots")}}</span>
+					</el-menu-item>
+				</a>
 			</el-menu>
 		</div>
 		<div class="setting_you">

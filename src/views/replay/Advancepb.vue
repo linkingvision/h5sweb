@@ -68,7 +68,7 @@
 							<div>
 								<canvas class="timeline" :id="'timeline'+r+c" style="width:100%;background: #343434;" width="1500" height="80px"
 								 	@mousedown ="timelinndown($event)"
-									@mouseup="timetz"
+									@onmouseup="timetz"
 									ondragstart="return false;">
 								</canvas>
 							</div>
@@ -235,6 +235,16 @@ export default {
 		// this.goolsh();
 		this.functlist();
 		this.funtimeine();
+		var _this=this
+		window.onresize = () => {
+			console.log("aaa1")
+			// 全屏下监控是否按键了ESC
+			if (!_this.checkFull()) {
+				// 全屏下按键esc后要执行的动作
+				$(".layout").css("display",  "block");
+				// this.isFullscreen = false
+			}
+		}
     },
     methods:{
         Adswitchs(){
@@ -732,6 +742,15 @@ export default {
 					fxhdr.attr('checked', false);
 				}
 			});
+		},
+		// esc退出全屏
+		checkFull() {
+			var isFull =document.fullscreenElement ||document.webkitFullscreenElement ||document.mozFullScreenElement ||document.msFullscreenElement
+			
+			if (isFull === undefined) {
+				isFull = false
+			}
+			return isFull
 		},
 		panelFullScreen(event) {
 			var elem = document.getElementById('Fullscreen');

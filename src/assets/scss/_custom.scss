@@ -135,95 +135,20 @@ $collapse_size:#FFFFFF;
                         border: 1px solid #9A9A9A;
                     }
                 }
-                .layout1x1 {
-                    background: url('~@/views/liveview/imgs/liveview_1.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
+                button{
                     padding: 0;
+                    color: #999999;
                 }
-                .layout1x3 {
-                    background: url('~@/views/liveview/imgs/liveview_3.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout2x2 {
-                    background: url('~@/views/liveview/imgs/liveview_4.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout2x3 {
-                    background: url('~@/views/liveview/imgs/liveview_6.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout1x7 {
-                    background: url('~@/views/liveview/imgs/liveview_7.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout3x3 {
-                    background: url('~@/views/liveview/imgs/liveview_9.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout1x13 {
-                    background: url('~@/views/liveview/imgs/liveview_13.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout4x4 {
-                    background: url('~@/views/liveview/imgs/liveview_16.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout5x5 {
-                    background: url('~@/views/liveview/imgs/liveview_25.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layoutfull {
-                    background: url('~@/views/liveview/imgs/liveview_full.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 30px 30px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
+                
+                .liveview_butt{
+                    button{
+                        padding: 0;
+                        color: #999999;
+                        border: none;
+                        background: none;
+                        color: #999999;
+                        font-size: 30px;
+                    }
                 }
             }
         }
@@ -469,6 +394,14 @@ $collapse_size:#FFFFFF;
         }
     }
     // 组件
+    //顶部下拉
+    .dropdown-menu {
+        border: none;
+        background-color: #2D2D2D;
+        .dropdown-item:hover{
+            background-color: #3a3a3a;
+        }
+    }
     //input框
     .el-input__inner{
         background: none!important;
@@ -547,6 +480,9 @@ $collapse_size:#FFFFFF;
         .el-table__body tr.el-table__row--striped td {
             background: #202020 !important;
         }
+        .el-table__body tr:hover>td {
+            background:none!important;
+          }
         .el-table__body tr.hover-row>td{
             background-color: #252525!important;
         }

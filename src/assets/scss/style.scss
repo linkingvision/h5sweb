@@ -6,6 +6,11 @@
 
 // If you want to add something do it here
 @import "custom";
+//全局按钮
+button:focus{
+    outline: none !important;
+}
+
 /* 自制图标 为啦显示禁用的图标*/
 .camera{
     text-decoration:line-through

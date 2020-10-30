@@ -45,22 +45,13 @@
 					<i class="iconfont icon-wendang" style="font-size:18px"></i>
 					<span slot="title">GB</span>
 				</el-menu-item>
-				<el-menu-item index="/Camera">
-					<i class="iconfont icon-jiankong" style="font-size:18px"></i>
-					<span slot="title">{{$t("message.left.camera")}}</span>
-				</el-menu-item>
+				
 				<el-menu-item index="/Clouds">
 					<i class="iconfont icon-yun" style="font-size:14px"></i>
 					<span slot="title">{{$t("message.left.cloud")}}</span>
 				</el-menu-item>
-				<a href='/mediastore'>
-					<el-menu-item >
-						<i class="iconfont icon-wenjianjia" style="font-size:20px"></i>
-						<span slot="title">{{$t("message.left.screenshots")}}</span>
-					</el-menu-item>
-				</a>
 				<el-menu-item index="/Settings/DeviceStream">
-					<i class="iconfont icon-icon-test1"></i>
+					<i class="iconfont icon-shezhi"></i>
 					<span slot="title">{{$t("message.setting.setting")}}</span>
 				</el-menu-item>
 			</el-menu>

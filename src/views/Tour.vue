@@ -123,8 +123,8 @@
                     </el-select>
                 </div>
                 <div class="liveview_butt">
-                    <el-button type="button" class="layout3x3" data-row="3|3" @click="changePanel($event)"></el-button>
-                    <el-button type="button" class="layoutfull" @click="panelFullScreen($event)"> </el-button>
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben5" data-row="3|3" @click="changePanel($event)"></el-button>
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben9" @click="panelFullScreen($event)"> </el-button>
                 </div>
 			</div>
 		</div>
@@ -597,11 +597,13 @@ export default {
                     margin: 0 10px;
                 }
                 .tour_start{
+                    padding: 8px 15px;
                     background-color: #3ABCFE;
                     border: none;
                     color: #FFFFFF;
                 }
                 .tour_stop{
+                    padding: 8px 15px;
                     background: none;
                     border: 1px solid #3ABCFE;
                     // color: #FFFFFF;

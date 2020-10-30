@@ -6,6 +6,83 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17912249",
+      "name": "二十五",
+      "font_class": "tubiao_huaban1fuben81",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "9858336",
+      "name": "复制",
+      "font_class": "fuzhi",
+      "unicode": "e6e9",
+      "unicode_decimal": 59113
+    },
+    {
+      "icon_id": "17801605",
+      "name": "全屏",
+      "font_class": "tubiao_huaban1fuben9",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "17801630",
+      "name": "十六",
+      "font_class": "tubiao_huaban1fuben7",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "17801635",
+      "name": "十三",
+      "font_class": "tubiao_huaban1fuben6",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "17801665",
+      "name": "九",
+      "font_class": "tubiao_huaban1fuben5",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "17801667",
+      "name": "七",
+      "font_class": "tubiao_huaban1fuben4",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "17801673",
+      "name": "六",
+      "font_class": "tubiao_huaban1fuben3",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "17801679",
+      "name": "四",
+      "font_class": "tubiao_huaban1fuben2",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "17801682",
+      "name": "三",
+      "font_class": "tubiao_huaban1fuben",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "17801686",
+      "name": "一",
+      "font_class": "tubiao_huaban1",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
       "icon_id": "9818391",
       "name": "长箭头",
       "font_class": "jiang-right",

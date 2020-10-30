@@ -247,95 +247,18 @@ $collapse_header:#E5E5E5;
                         border: 1px solid #9A9A9A;
                     }
                 }
-                .layout1x1 {
-                    background: url('~@/views/liveview/imgs/liveview_1_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
+                button{
                     padding: 0;
+                    color: #333333;
                 }
-                .layout1x3 {
-                    background: url('~@/views/liveview/imgs/liveview_3_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout2x2 {
-                    background: url('~@/views/liveview/imgs/liveview_4_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout2x3 {
-                    background: url('~@/views/liveview/imgs/liveview_6_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout1x7 {
-                    background: url('~@/views/liveview/imgs/liveview_7_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout3x3 {
-                    background: url('~@/views/liveview/imgs/liveview_9_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout1x13 {
-                    background: url('~@/views/liveview/imgs/liveview_13_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout4x4 {
-                    background: url('~@/views/liveview/imgs/liveview_16_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layout5x5 {
-                    background: url('~@/views/liveview/imgs/liveview_25_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 32px 32px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
-                }
-                .layoutfull {
-                    background: url('~@/views/liveview/imgs/liveview_full_bai.png') center;
-                    background-repeat: no-repeat;
-                    background-size: 30px 30px;
-                    color: #000;
-                    height: 32px;
-                    width: 32px;
-                    padding: 0;
+                .liveview_butt{
+                    button{
+                        padding: 0;
+                        border: none;
+                        background: none;
+                        color: #333333;
+                        font-size: 30px;
+                    }
                 }
             }
         }

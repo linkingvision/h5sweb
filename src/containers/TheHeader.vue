@@ -65,6 +65,15 @@
 		<CHeaderNav>
 			<div class="c_Docker" id="Docker"></div>
 		</CHeaderNav>
+		<CHeaderNav>
+		<div class="use_user" id="rtc_togg">
+			<el-tooltip content="重启" placement="bottom" effect="dark">
+				<el-button @click="Rebootdialog=true" style="border: none;background: none; color:#fff;line-height: 0.9;padding-right: 10px;" >
+					<i style=" font-size: 18px;color:#ea5252;font-weight: 500;" class="iconfont icon-zhongqi"></i>
+				</el-button>
+			</el-tooltip>
+		</div>
+		</CHeaderNav>
 		<!-- <CHeaderNav>
 			<CHeaderNavItem class="px-3">
 				<button 
@@ -181,8 +190,16 @@ export default {
 	mounted(){
 		this.Docker();
 		this.GetSystemInfo();
+		var _this=this
+		$("#rtc_togg").hide();
+		_this.$root.bus.$on('webrtc', function(token){
+			$("#rtc_togg").show();
+		});
 	},
 	methods:{
+		rtctogg(){
+			$("#rtc_togg").hide();
+		},
 		GetSystemInfo(){
 			var root = this.$store.state.IPPORT;
 			var url = root + "/api/v1/GetSystemInfo?session="+ this.$store.state.token;

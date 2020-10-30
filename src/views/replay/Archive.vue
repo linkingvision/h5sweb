@@ -414,6 +414,7 @@ export default {
         timelinn(timelink){
             console.log(timelink);
             this.v1.seek(timelink);
+            this.icon="icon_start";
         },
         //关闭
         handleClose(){

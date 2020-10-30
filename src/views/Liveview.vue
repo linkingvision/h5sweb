@@ -111,21 +111,21 @@
                 </div>
             </div>
 			<div class="liveview_group blocks">
-				<el-button type="button" class="layout1x1" data-row="1|1" @click="changePanel($event)"></el-button>
-				<el-button type="button" class="layout1x3" data-row="1|3" @click="changePanel($event)"></el-button>
-				<el-button type="button" class="layout2x2" data-row="2|2" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1" data-row="1|1" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben" data-row="1|3" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben2" data-row="2|2" @click="changePanel($event)"></el-button>
 
-				<el-button type="button" class="layout2x3" data-row="1|6" @click="changePanel($event)"></el-button>
-				<el-button type="button" class="layout1x7" data-row="1|7" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben3" data-row="1|6" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben4" data-row="1|7" @click="changePanel($event)"></el-button>
 
-				<el-button type="button" class="layout3x3" data-row="3|3" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben5" data-row="3|3" @click="changePanel($event)"></el-button>
 
 				
-				<el-button type="button" class="layout1x13" data-row="1|13" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben6" data-row="1|13" @click="changePanel($event)"></el-button>
 
-				<el-button type="button" class="layout4x4" data-row="4|4" @click="changePanel($event)"></el-button>
-				<el-button type="button" class="layout5x5" data-row="5|5" @click="changePanel($event)"></el-button>
-				<el-button type="button" class="layoutfull" @click="panelFullScreen($event)"> </el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben7" data-row="4|4" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben8" data-row="5|5" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben9" @click="panelFullScreen($event)"> </el-button>
 			</div>
 		</div>
     </div>
@@ -659,6 +659,11 @@ export default {
             padding: 20px 20%;
             display: flex;
             justify-content: space-between;
+            button{
+                border: none;
+                background: none;
+                font-size: 30px;
+            }
         }
     }
 }

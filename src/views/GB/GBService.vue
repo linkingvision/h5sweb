@@ -109,7 +109,7 @@
                 </el-collapse>
                 
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div slot="footer" class="dialog-footer button_table">
                 <el-button @click="editPopup = false">{{$t("message.setting.Cancel")}}</el-button>
                 <el-button type="primary" @click="edityes">{{$t("message.camera.save")}}</el-button>
             </div>
@@ -369,6 +369,7 @@ import uuid from '../../assets/js/uuid'
                 console.log("1",result);
                 if(result.status==200){
                     if(result.data.bStatus==true){
+                        this.$root.bus.$emit('webrtc',true);
                         // console.log("1222",result);
                         this.loadplatform();
                     }else{

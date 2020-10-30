@@ -3,11 +3,11 @@
         <div id="watermarktoggle"></div>
         <!-- 左侧数据栏 -->
 		<div class="liveview_left">
-            <el-input
+            <!-- <el-input
                 class="liveview_left_input"
                 placeholder="输入关键字进行过滤"
                 v-model="filterText">
-            </el-input>
+            </el-input> -->
             <el-collapse v-model="activeNames">
                 <el-collapse-item name="1" id="headswitch">
                     <template slot="title">
@@ -105,8 +105,8 @@
 
 <script>
 import Vue from 'vue'
-import Liveplay from './liveview/Liveplay'
-import {listdatag,listdatagload,listdatag1} from './public/device'
+import Liveplay from '../../liveview/Liveplay'
+import {listdatag,listdatagload,listdatag1} from '../../public/device'
 export default {
     name: 'Liveview',
     components: {
@@ -561,6 +561,7 @@ export default {
         margin-top: 40px;
     }
     .liveview_left{
+        background: none !important;
         width: 16%;
         min-width: 290px;
         height: 90vh;

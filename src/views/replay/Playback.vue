@@ -64,14 +64,14 @@
                     style="width: 100%;">
                     <el-table-column
                         prop="token"
-                        :label="label.Name" >
+                        :label="label.Token" >
                         <template slot-scope="scope">
                             <span style="margin-left: 10px">{{ scope.row.token }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
                         prop="name"
-                        :label="label.Token">
+                        :label="label.Name">
                             <template slot-scope="scope">
                             <span>{{ scope.row.name }}</span>
                         </template>
@@ -328,6 +328,7 @@ export default {
         timelinn(timelink){
             console.log(timelink);
             this.v1.seek(timelink);
+            this.icon="icon_start";
         },
         //关闭
         handleClose(){

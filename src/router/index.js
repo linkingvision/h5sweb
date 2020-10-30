@@ -33,7 +33,6 @@ const Avintercom = () => import('@/views/Avintercom')
 const Tour = () => import('@/views/Tour')
 const Settings = () => import('@/views/Settings')
 const GB = () => import('@/views/GB')
-const Camera = () => import('@/views/Camera')
 const Clouds = () => import('@/views/Clouds')
 
 const Device = () => import('@/views/dashboard/Device')
@@ -48,6 +47,9 @@ const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
 
+
+const BatchImport = () => import('@/views/settings/Batch/BatchImport')
+const Camera = () => import('@/views/settings/Camera/Camera')
 const DeviceStream = () => import('@/views/settings/device/DeviceStream')
 const DeviceOnvif = () => import('@/views/settings/device/DeviceOnvif')
 const DeviceFile = () => import('@/views/settings/device/DeviceFile')
@@ -130,16 +132,6 @@ export default new Router({
 						name:i18n.tc("message.live.liveview"),
 						icon:'iconfont icon-shipin1',
 						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
-					},
-				},{
-					path: 'Camera',
-					name: 'Camera',
-					component: Camera,
-					meta: {
-						title: '/Camera',
-						name:i18n.tc("message.left.camera"),
-						icon:'iconfont icon-jiankong',
-						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
 					path: 'Clouds',
@@ -298,11 +290,30 @@ export default new Router({
 					meta: {
 						title: '/Settings/DeviceStream',
 						name:i18n.tc("message.setting.setting"),
-						icon:'iconfont icon-icon-test1',
+						icon:'iconfont icon-shezhi',
 						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
-					children: [
-						{
+					children: [{
+						path: 'BatchImport',
+						name: 'BatchImport',
+						component: BatchImport,
+						meta: {
+							title: '/BatchImport',
+							name:i18n.tc("message.left.camera"),
+							icon:'iconfont icon-jiankong',
+							type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+						},
+						},{
+							path: 'Camera',
+							name: 'Camera',
+							component: Camera,
+							meta: {
+								title: '/Camera',
+								name:i18n.tc("message.left.camera"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
 							path: 'DeviceStream',
 							name: 'DeviceStream',
 							component: DeviceStream,
