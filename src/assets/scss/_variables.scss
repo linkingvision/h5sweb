@@ -63,6 +63,7 @@ $collapse_header:#E5E5E5;
     .playback{
         .playback_snap_zuo{
             background-color: #FFFFFF;
+            overflow: auto;
             .snap_zuo_input{
                 padding: 10px 10px;
                 .el-input__inner{
@@ -258,6 +259,15 @@ $collapse_header:#E5E5E5;
                         background: none;
                         color: #333333;
                         font-size: 30px;
+                    }
+                }
+                .liveview_butts{
+                    button{
+                        padding: 0;
+                        border: none;
+                        background: none;
+                        color: #333333;
+                        font-size: 24px;
                     }
                 }
             }

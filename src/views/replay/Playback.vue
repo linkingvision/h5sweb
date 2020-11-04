@@ -170,6 +170,8 @@ export default {
                 Name:this.$t("message.table.Name"),
                 Token:this.$t("message.table.Token"),
                 Time:this.$t("message.table.Time"),
+                StartTime:this.$t("message.table.StartTime"),
+                EndTime:this.$t("message.table.EndTime"),
                 Playback:this.$t("message.archive.Playback")
             },
             icon:'icon_start',

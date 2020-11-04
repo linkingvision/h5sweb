@@ -108,23 +108,47 @@
                 <div class="liveview_function">
                     <el-button class="tour_start" size="mini" @click="Playall">{{$t("message.tour.Start")}}</el-button>
                     <el-button class="tour_stop" size="mini" @click="Allpause">{{$t("message.tour.stop")}}</el-button>
-                    <el-select v-model="region" size="mini" style="width:70px" @change="Speed()">
-                        <el-option label="20" value="20"></el-option>
-                        <el-option label="30" value="30"></el-option>
-                        <el-option label="60" value="60"></el-option>
-                    </el-select>
-                    <el-select v-model="streamprofile" size="mini" style="width:120px">
-                        <el-option :label="label.label2" value="main"></el-option>
-                        <el-option :label="label.label3" value="sub"></el-option>
-                    </el-select>
-                    <el-select v-model="proto" size="mini" style="width:120px" @change="changeWS">
-                        <el-option label="WS" value="WS"></el-option>
-                        <el-option label="RTC" value="RTC"></el-option>
-                    </el-select>
+                    
                 </div>
                 <div class="liveview_butt">
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1" data-row="1|1" @click="changePanel($event)"></el-button>
+                    <!-- <el-button type="button" class="iconfont icon-tubiao_huaban1fuben" data-row="1|3" @click="changePanel($event)"></el-button> -->
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben2" data-row="2|2" @click="changePanel($event)"></el-button>
+
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben3" data-row="1|6" @click="changePanel($event)"></el-button>
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben4" data-row="1|7" @click="changePanel($event)"></el-button>
+
                     <el-button type="button" class="iconfont icon-tubiao_huaban1fuben5" data-row="3|3" @click="changePanel($event)"></el-button>
+
+                    
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben6" data-row="1|13" @click="changePanel($event)"></el-button>
+
+                    <el-button type="button" class="iconfont icon-tubiao_huaban1fuben7" data-row="4|4" @click="changePanel($event)"></el-button>
+                    <!-- <el-button type="button" class="iconfont icon-tubiao_huaban1fuben81" data-row="5|5" @click="changePanel($event)"></el-button> -->
                     <el-button type="button" class="iconfont icon-tubiao_huaban1fuben9" @click="panelFullScreen($event)"> </el-button>
+                </div>
+                <div class="liveview_butts">
+                      <el-popover
+                        placement="top-start"
+                        width="200"
+                        trigger="click">
+                        <div class="tour_region">
+                            <el-select v-model="region" size="mini"  @change="Speed()">
+                                <el-option label="20" value="20"></el-option>
+                                <el-option label="30" value="30"></el-option>
+                                <el-option label="60" value="60"></el-option>
+                            </el-select>
+                            <el-select v-model="streamprofile" size="mini" >
+                                <el-option :label="label.label2" value="main"></el-option>
+                                <el-option :label="label.label3" value="sub"></el-option>
+                            </el-select>
+                            <el-select v-model="proto" size="mini" @change="changeWS">
+                                <el-option label="WS" value="WS"></el-option>
+                                <el-option label="RTC" value="RTC"></el-option>
+                            </el-select>
+                        </div>
+                        <el-button slot="reference" class="iconfont icon-shezhi"></el-button>
+                    </el-popover>
                 </div>
 			</div>
 		</div>
@@ -148,7 +172,7 @@ export default {
             },
             activeNames: ['1','2'],//左边
 			rows: 3,
-			cols: 3,
+            cols: 3,
 			selectCol: 1,
 			selectRow: 1,
 			contentHeight: '',
@@ -207,99 +231,61 @@ export default {
             var vid = '';
             var url = root + "/api/v1/GetSrc?getonline=false&session="+ this.$store.state.token;
             
-            //console.log("44",url);
+            // console.log("44",this.rowsxcols,this.rows*this.cols);
+            // return false
             this.$http.get(url).then(result=>{
                 //console.log("a",result);
                 if(result.status == 200){
                     var data =  result.data;
-                    //console.log(data);
+                    console.log(data);
+                    
+                    this.token_index=data.src.length;
                     //return false;
                     for(var i=0; i< data.src.length; i++){
                         token_q.push(data.src[i].strToken);
-                        this.token_index=token_q.length;
-                        if(i<9){
-                            var item = token_q[i];
-                            if (i==0) {
-                                    vid = 'tour' +11;
-                                }else if (i==1) {
-                                    vid = 'tour' +12;
-                                }
-                                else if (i==2) {
-                                    vid = 'tour' +13;
-                                }
-                                else if (i==3) {
-                                    vid = 'tour' +21;
-                                }
-                                else if (i==4) {
-                                    vid = 'tour' +22;
-                                }
-                                else if (i==5) {
-                                    vid = 'tour' +23;
-                                }
-
-                                else if (i==6) {
-                                    vid = 'tour' +31;
-                                }
-                                else if (i==7) {
-                                    vid = 'tour' +32;
-                                }
-                                else if (i==8) {
-                                    vid = 'tour' +33;
-                            }
-                            this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
-                        }
                     }
-                    //console.log("00000000",token_q);
+                    this.$nextTick(()=>{
+                        
+                        for(var i=0; i< data.src.length; i++){
+                            if(i<this.rows*this.cols){
+                                var item = token_q[i];
+                                this.Tranvalue(item,i)
+                                token_q.push(token_q[i]);
+                            }
+                            
+                        }
+                        if(this.token_index>this.rows*this.cols){
+                            token_q.splice(0,this.rows*this.cols);
+                            // console.log("==================11",token_q,this.rows*this.cols);
+                        }else{
+                            token_q.splice(0,this.token_index);
+                            // console.log("==================12",token_q,this.rows*this.cols);
+                        }
+                        // console.log("==================",token_q,this.token_index);
+                    })
                 }
             })
             
             this.timersetInterval=setInterval(function(){
-                for(var l=0; l< token_q.length; l++){
-                    if(l<9){
+                // console.log("==================",token_q);
+                for(var l=0; l< this.token_index; l++){
+                    if(l<this.rows*this.cols){
                         var item = token_q[l];
-                        if (l==0) {
-                                vid = 'tour' +11;
-                            }else if (l==1) {
-                                vid = 'tour' +12;
-                            }
-                            else if (l==2) {
-                                vid = 'tour' +13;
-                            }
-                            else if (l==3) {
-                                vid = 'tour' +21;
-                            }
-                            else if (l==4) {
-                                vid = 'tour' +22;
-                            }
-                            else if (l==5) {
-                                vid = 'tour' +23;
-                            }
-
-                            else if (l==6) {
-                                vid = 'tour' +31;
-                            }
-                            else if (l==7) {
-                                vid = 'tour' +32;
-                            }
-                            else if (l==8) {
-                                vid = 'tour' +33;
-                        }
-                        //console.log("i",vid);
-                        this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
-
-                    }else{
-                        break;
+                        this.Tranvalue(item,l)
+                        token_q.push(item);
+                        // console.log("==================12",token_q,token_q.length);
                     }
-                    token_q.push(token_q[l]);
-                    //console.log("-----------------",token_q[l]);
                 }
-                if(this.token_index>9){
-                    token_q.splice(0,9);
-                }else{
-                    token_q.splice(0,this.token_index);
-                }
-                
-                //console.log("==================",token_q);
+                this.$nextTick(()=>{
+                    if(this.token_index>this.rows*this.cols){
+                        token_q.splice(0,this.rows*this.cols);
+                        // console.log("==================1",token_q);
+                    }else{
+                        token_q.splice(0,this.token_index);
+                        // console.log("==================12",token_q,this.token_index);
+                    }
+                })
+                // console.log("==================",token_q,this.token_index);
 
             }.bind(this),timing)
             this.$once('hook:beforeDestroy', () => {            
@@ -307,6 +293,77 @@ export default {
             })
             
         }, 
+        Tranvalue(item,i){
+            var vid='';
+            if(this.rows*this.cols==1||this.rows*this.cols==6||this.rows*this.cols==7||this.rows*this.cols==13){
+                if (i==0) {
+                    vid = 'tour' +11;
+                }else if (i==1) {
+                    vid = 'tour' +12;
+                }else if (i==2) {
+                    vid = 'tour' +13;
+                }else if (i==3) {
+                    vid = 'tour' +14;
+                }else if (i==4) {
+                    vid = 'tour' +15;
+                }else if (i==5) {
+                    vid = 'tour' +16;
+                }else if (i==6) {
+                    vid = 'tour' +17;
+                }else if (i==7) {
+                    vid = 'tour' +18;
+                }else if (i==8) {
+                    vid = 'tour' +19;
+                }else if (i==9) {
+                    vid = 'tour' +110;
+                }else if (i==10) {
+                    vid = 'tour' +111;
+                }else if (i==11) {
+                    vid = 'tour' +112;
+                }else if (i==12) {
+                    vid = 'tour' +113;
+                }
+                console.log(item,vid)
+                this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
+            }
+            if(this.rows*this.cols==4||this.rows*this.cols==9||this.rows*this.cols==16){
+                if (i==0) {
+                    vid = 'tour' +11;
+                }else if (i==1) {
+                    vid = 'tour' +12;
+                }else if (i==2) {
+                    vid = 'tour' +21;
+                }else if (i==3) {
+                    vid = 'tour' +22;
+                }else if (i==4) {
+                    vid = 'tour' +13;
+                }else if (i==5) {
+                    vid = 'tour' +23;
+                }else if (i==6) {
+                    vid = 'tour' +31;
+                }else if (i==7) {
+                    vid = 'tour' +32;
+                }else if (i==8) {
+                    vid = 'tour' +33;
+                }else if (i==9) {
+                    vid = 'tour' +14;
+                }else if (i==10) {
+                    vid = 'tour' +24;
+                }else if (i==11) {
+                    vid = 'tour' +34;
+                }else if (i==12) {
+                    vid = 'tour' +41;
+                }else if (i==13) {
+                    vid = 'tour' +42;
+                }else if (i==14) {
+                    vid = 'tour' +43;
+                }else if (i==15) {
+                    vid = 'tour' +44;
+                }
+                console.log(item,vid)
+                this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
+            }
+        },
         //全部暂停
         Allpause(){
             this.$root.bus.$emit('liveplaystop');
@@ -351,6 +408,40 @@ export default {
         changePanel(event) {
             let data = $(event.target).data('row');
             let _this = this;
+            window.setTimeout(function() {
+                if(data=='1|6'||data=='1|7'||data=='1|13'){
+                    // console.log("121");
+                    
+                }else{
+                    // console.log("45845454545");
+                    $("#videoPanel .videoColor .palace").removeClass("Seven_Palace");
+                    $("#videoPanel .videoColor .palace").removeClass("Six_Palace");
+                    $("#videoPanel .videoColor .palace").removeClass("videoflexitem");
+                }
+                var list_gong=$(".palace");
+                if(data=='1|6'){
+                    // console.log("23")
+                    list_gong.removeClass("videoflexitem");
+                    list_gong.removeClass("Seven_Palace");
+
+                    list_gong.addClass("Six_Palace");
+                }
+                if(data=='1|7'){
+                    // console.log("234")
+                    list_gong.removeClass("videoflexitem");
+                    list_gong.removeClass("Six_Palace");
+
+                    list_gong.addClass("Seven_Palace");
+                }
+                if(data=='1|13'){
+                    // console.log("2345")
+                    list_gong.removeClass("Six_Palace");
+                    list_gong.removeClass("Seven_Palace");
+
+                    list_gong.addClass("videoflexitem");
+                }
+
+		    }, 50);
             let cols = data.split('|')[1];
             let rows = data.split('|')[0];
             //this.map.clear();
@@ -572,6 +663,74 @@ export default {
                 background-size: 10%;
                 flex: 1 1 10%;
             }
+            /* 六 */
+            .Six_Palace{
+                flex: 1 1 33.33%!important;
+                height: 33.33% !important;
+                &:nth-child(1){
+                    flex: 1 1 66.66% !important;
+                    height: 66.66% !important;
+                }
+                &:nth-child(3){
+                    width: 33.33% !important;
+                    position: absolute;
+                    top: 33.33%;
+                    right: 0;
+                }
+            }
+            /* 十三宫格 */
+            .videoflexitem{
+                flex: 1 1 25% !important;
+                width: 25% !important;
+                height: 25% !important;
+                &:nth-child(6){
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                }
+                &:nth-child(7){
+                    flex: 1 1 50% !important;
+                    height: 50% !important;
+                }
+                &:nth-child(8){
+                    flex: 1 1 25% !important;
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                }
+            }
+            /* 七宫格 */
+            .Seven_Palace{
+                flex: 1 1 33.33%;
+                height: 33.33% !important;
+                &:nth-child(1){
+                    height: 100% !important;
+                }
+                &:nth-child(3){
+                    width: 33.33% !important;
+                    position: absolute;
+                    top: 33.33%;
+                    right: 0;
+                }
+                &:nth-child(2){
+                    width: 33.33% !important;
+                    position: absolute;
+                    top: 33.33%;
+                    right: 33.33%;
+                }
+                &:nth-child(6){
+                    width: 33.33% !important;
+                    position: absolute;
+                    bottom: 0;
+                    right: 33.33%;
+                }
+                &:nth-child(7){
+                    width: 33.33% !important;
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+            }
         }
         div[name='flex'] {
             display: flex;
@@ -592,7 +751,7 @@ export default {
             justify-content: space-between;
             align-items: center;
             .liveview_function{
-                width: 50%;
+                // width: 20%;
                 div{
                     margin: 0 10px;
                 }
@@ -601,11 +760,13 @@ export default {
                     background-color: #3ABCFE;
                     border: none;
                     color: #FFFFFF;
+                    font-size: 14px;
                 }
                 .tour_stop{
                     padding: 8px 15px;
                     background: none;
                     border: 1px solid #3ABCFE;
+                    font-size: 14px;
                     // color: #FFFFFF;
                 }
                 .el-input__inner{
@@ -615,6 +776,13 @@ export default {
             }
             .liveview_butt{
                 width: 50%;
+                display: flex;
+                justify-content: space-around;
+            }
+            .liveview_butts{
+                // width: 20%;
+                font-size: 16px;
+                padding-right: 10px;
             }
         }
     }

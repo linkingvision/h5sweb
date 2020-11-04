@@ -1,7 +1,7 @@
 <template>
     <div class="login_back">
         <div class="Copyrightnotice" id="Copyrightnotice">
-            系统版权将于({{capability}})到期，为了避免您的正常使用，请及时购买许可
+            系统许可将于{{capability}}天后到期，请及时购买许可，避免影响正常使用。
         </div>
         <div class="login_but">
             <router-link :to="{name:'Downloadapp'}">

@@ -124,7 +124,7 @@
 				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben6" data-row="1|13" @click="changePanel($event)"></el-button>
 
 				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben7" data-row="4|4" @click="changePanel($event)"></el-button>
-				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben8" data-row="5|5" @click="changePanel($event)"></el-button>
+				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben81" data-row="5|5" @click="changePanel($event)"></el-button>
 				<el-button type="button" class="iconfont icon-tubiao_huaban1fuben9" @click="panelFullScreen($event)"> </el-button>
 			</div>
 		</div>

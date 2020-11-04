@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9269179",
+      "name": "灯光-开",
+      "font_class": "light-open",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "9269190",
+      "name": "灯光-关",
+      "font_class": "light-close",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "9410230",
+      "name": "关雨刷",
+      "font_class": "guanyushua",
+      "unicode": "e67c",
+      "unicode_decimal": 59004
+    },
+    {
+      "icon_id": "9410246",
+      "name": "开雨刷",
+      "font_class": "kaiyushua",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "8122888",
+      "name": "导入",
+      "font_class": "daoru",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "9744320",
+      "name": "导出",
+      "font_class": "daochu",
+      "unicode": "e6d8",
+      "unicode_decimal": 59096
+    },
+    {
       "icon_id": "17912249",
       "name": "二十五",
       "font_class": "tubiao_huaban1fuben81",

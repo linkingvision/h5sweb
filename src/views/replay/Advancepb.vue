@@ -68,7 +68,7 @@
 							<div>
 								<canvas class="timeline" :id="'timeline'+r+c" style="width:100%;background: #343434;" width="1500" height="80px"
 								 	@mousedown ="timelinndown($event)"
-									@onmouseup="timetz"
+									@mouseup="timetz"
 									ondragstart="return false;">
 								</canvas>
 							</div>
@@ -343,6 +343,7 @@ export default {
 					// 放入视频
 					// return false;
 					var timevalue=new Date(time);
+					console.log(timevalue)
 					var year = timevalue.getFullYear();
 					var month = timevalue.getMonth() + 1;
 					var strDate = timevalue.getDate();
@@ -640,54 +641,57 @@ export default {
 		{
 			var timevalue=new Date();
 			var timedata1=[];
-			if(this.selectRow=="1"&&this.selectCol=="1"){
-				if (this.v1 != undefined)
-				{
-					this.v1.disconnect();
-					delete this.v1;
-					this.v1 = undefined;
-					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
-					
+			this.timersetInterval=setInterval(function(){
+				if(this.selectRow=="1"&&this.selectCol=="1"){
+					if (this.v1 != undefined)
+					{
+						this.v1.disconnect();
+						delete this.v1;
+						this.v1 = undefined;
+						
+						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
+						
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
+					}
+				}else if(this.selectRow=="1"&&this.selectCol=="2"){
+					if (this.v2 != undefined)
+					{
+						this.v2.disconnect();
+						delete this.v2;
+						this.v2 = undefined;
+						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
+						
+					}
+				}else if(this.selectRow=="2"&&this.selectCol=="1"){
+					if (this.v3 != undefined)
+					{
+						this.v3.disconnect();
+						delete this.v3;
+						this.v3 = undefined;
+						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
+						
+					}
+				}else if(this.selectRow=="2"&&this.selectCol=="2"){
+					if (this.v4 != undefined)
+					{
+						this.v4.disconnect();
+						delete this.v4;
+						this.v4 = undefined;
+						this.$.info({
+							title: "Stop successfully"
+						});
+						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
+						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
+						
+					}
 				}
-			}else if(this.selectRow=="1"&&this.selectCol=="2"){
-				if (this.v2 != undefined)
-				{
-					this.v2.disconnect();
-					delete this.v2;
-					this.v2 = undefined;
-					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
-					
-				}
-			}else if(this.selectRow=="2"&&this.selectCol=="1"){
-				if (this.v3 != undefined)
-				{
-					this.v3.disconnect();
-					delete this.v3;
-					this.v3 = undefined;
-					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
-					
-				}
-			}else if(this.selectRow=="2"&&this.selectCol=="2"){
-				if (this.v4 != undefined)
-				{
-					this.v4.disconnect();
-					delete this.v4;
-					this.v4 = undefined;
-					this.$.info({
-						title: "Stop successfully"
-					});
-					$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
-					$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
-					
-				}
-			}
+			}.bind(this),100)
 			
 		},
 		//timeline
@@ -969,7 +973,7 @@ export default {
 							//console.log("录像段时间段颜色2",timeitem["style"].background);
 						}
 						timedata1.push(timeitem);
-						console.log("4545454",timeitem)
+						// console.log("4545454",timeitem)
 						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 					}
 				}

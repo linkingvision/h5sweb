@@ -150,6 +150,16 @@ $collapse_size:#FFFFFF;
                         font-size: 30px;
                     }
                 }
+                .liveview_butts{
+                    button{
+                        padding: 0;
+                        color: #999999;
+                        border: none;
+                        background: none;
+                        color: #999999;
+                        font-size: 24px;
+                    }
+                }
             }
         }
     }
@@ -187,6 +197,25 @@ $collapse_size:#FFFFFF;
     .playback{
         .playback_snap_zuo{
             background-color: #2D2D2D;
+            overflow: auto;
+            &::-webkit-scrollbar {/*滚动条整体样式*/
+                width: 8px;     /*高宽分别对应横竖滚动条的尺寸*/
+                height: 8px;
+                scrollbar-arrow-color:red;
+            }
+            &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+                border-radius: 5px;
+                -webkit-box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+                box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+                background: rgba(218, 218, 218,0.2);
+                scrollbar-arrow-color:red;
+            }
+            &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+                -webkit-box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+                box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+                border-radius: 0;
+                background: rgba(218, 218, 218,0.1);
+            }
             .snap_zuo_input{
                 padding: 10px 10px;
                 .el-input__inner{
@@ -688,6 +717,20 @@ $collapse_size:#FFFFFF;
             } 
             .form_butt{
                 color: #FFF;
+            }
+        }
+        .tour_region{
+            .el-input__inner{
+                background: none;
+                border: 1px solid #9A9A9A;
+                margin-bottom: 5px;
+                color: #FFF;
+            }
+        }
+        .popper__arrow{
+            border-top-color: #494B4E;
+            &::after{
+                border-top-color: #494B4E;
             }
         }
     }

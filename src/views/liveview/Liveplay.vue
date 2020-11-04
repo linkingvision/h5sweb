@@ -21,23 +21,23 @@
         </span>
 
         <div class="information"  style="display:none padding:0px">
-        <div class="information_con">
-            <div class="information1">
-                <div class="information_title">{{$t('message.live.Video')}}</div>
-                <div class="information_content" v-for="(a,index) in informationVideo" :key="index">
-                    <div class="information_content_left">{{a.name}}</div>
-                    <div class="information_content_right">{{a.data}}</div>
+            <div class="information_con">
+                <div class="information1">
+                    <div class="information_title">{{$t('message.live.Video')}}</div>
+                    <div class="information_content" v-for="(a,index) in informationVideo" :key="index">
+                        <div class="information_content_left">{{a.name}}</div>
+                        <div class="information_content_right">{{a.data}}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="information1">
-                <div class="information_title">{{$t('message.live.Audio')}}</div>
-                <div class="information_content" v-for="(a,index) in informationAudio" :key="index">
-                    <div class="information_content_left">{{a.name}}</div>
-                    <div class="information_content_right">{{a.data}}</div>
+                <div class="information1">
+                    <div class="information_title">{{$t('message.live.Audio')}}</div>
+                    <div class="information_content" v-for="(a,index) in informationAudio" :key="index">
+                        <div class="information_content_left">{{a.name}}</div>
+                        <div class="information_content_right">{{a.data}}</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <div class="liveplay_butt">
             <CDropdown
                 class="fw_butt"
@@ -87,29 +87,46 @@
                             <div class="key_but" @mousedown ="PtzActionDown($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionDown($event)" @touchend="PtzActionStop($event)"></div>
                             <div class="key_but" @mousedown ="PtzActionDownright($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionDownright($event)" @touchend="PtzActionStop($event)"></div>
                         </div>
+                        
                     </div>
                     <div class="zoom">
-                        <el-tooltip :enterable="false" :content="content.focusing" placement="top" effect="light">
-                            <button class="iconfont icon-add-focus zoom_add" @mousedown ="PtzActionZoomIn($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionZoomIn($event)" @touchend="PtzActionStop($event)"></button>
-                        </el-tooltip>
-                        <el-tooltip :enterable="false" :content="content.focusing" placement="top" effect="light">
-                            <button class="iconfont icon-reduce-focus zoom_add" @mousedown ="PtzActionZoomOut($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionZoomOut($event)" @touchend="PtzActionStop($event)"></button>
-                        </el-tooltip>
+                            <el-tooltip :enterable="false" :content="content.focusing" placement="top" effect="light">
+                                <button class="iconfont icon-add-focus zoom_add" @mousedown ="PtzActionZoomIn($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionZoomIn($event)" @touchend="PtzActionStop($event)"></button>
+                            </el-tooltip>
+                            <el-tooltip :enterable="false" :content="content.focusing" placement="top" effect="light">
+                                <button class="iconfont icon-reduce-focus zoom_add" @mousedown ="PtzActionZoomOut($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionZoomOut($event)" @touchend="PtzActionStop($event)"></button>
+                            </el-tooltip>
+                        </div>
+                </div>
+                <!-- 聚光等 -->
+                <div class="zoom_g">
+                    <el-tooltip :enterable="false" :content="content.Focus" placement="top" effect="light">
+                        <button class="iconfont icon-jujiao2 zoom_add" @mousedown ="PtzActionfocusing($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionfocusing($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
+                    <el-tooltip :enterable="false" :content="content.Focus" placement="top" effect="light">
+                        <button class="iconfont icon-jujiao1 zoom_add" @mousedown ="PtzActionfocusings($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionfocusings($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
 
-                        <el-tooltip :enterable="false" :content="content.Focus" placement="top" effect="light">
-                            <button class="iconfont icon-jujiao2 zoom_add" @mousedown ="PtzActionfocusing($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionfocusing($event)" @touchend="PtzActionStop($event)"></button>
-                        </el-tooltip>
-                        <el-tooltip :enterable="false" :content="content.Focus" placement="top" effect="light">
-                            <button class="iconfont icon-jujiao1 zoom_add" @mousedown ="PtzActionfocusings($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionfocusings($event)" @touchend="PtzActionStop($event)"></button>
-                        </el-tooltip>
+                    <el-tooltip :enterable="false" :content="content.aperture" placement="top" effect="light">
+                        <button class="iconfont icon-guangquanjia zoom_add" @mousedown ="PtzActionaperture($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionaperture($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
+                    <el-tooltip :enterable="false" :content="content.aperture" placement="top" effect="light">
+                        <button class="iconfont icon-guangquanjian zoom_add"  @mousedown ="PtzActionaperturej" @mouseup="PtzActionStop" @touchstart ="PtzActionaperturej" @touchend="PtzActionStop"></button>
+                    </el-tooltip>
+                    <!-- 后四 -->
+                    <el-tooltip :enterable="false" :content="content.LightON" placement="top" effect="light">
+                        <button class="iconfont icon-light-open zoom_add" @mousedown ="PtzActionlighton($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionfocusing($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
+                    <el-tooltip :enterable="false" :content="content.LightOFF" placement="top" effect="light">
+                        <button class="iconfont icon-light-close zoom_add" @mousedown ="PtzActionlightoff($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionfocusings($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
 
-                        <el-tooltip :enterable="false" :content="content.aperture" placement="top" effect="light">
-                            <button class="iconfont icon-guangquanjia zoom_add" @mousedown ="PtzActionaperture($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionaperture($event)" @touchend="PtzActionStop($event)"></button>
-                        </el-tooltip>
-                        <el-tooltip :enterable="false" :content="content.aperture" placement="top" effect="light">
-                            <button class="iconfont icon-guangquanjian zoom_add"  @mousedown ="PtzActionaperturej" @mouseup="PtzActionStop" @touchstart ="PtzActionaperturej" @touchend="PtzActionStop"></button>
-                        </el-tooltip>
-                    </div>
+                    <el-tooltip :enterable="false" :content="content.WiperON" placement="top" effect="light">
+                        <button class="iconfont icon-kaiyushua zoom_add" @mousedown ="PtzActionwiperon($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionaperture($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
+                    <el-tooltip :enterable="false" :content="content.WiperOFF" placement="top" effect="light">
+                        <button class="iconfont icon-guanyushua zoom_add" @mousedown ="PtzActionwiperoff($event)" @mouseup="PtzActionStop($event)" @touchstart ="PtzActionaperture($event)" @touchend="PtzActionStop($event)"></button>
+                    </el-tooltip>
                 </div>
                 <div class="Preset">
                     <div class="" style="text-align: center;">
@@ -160,7 +177,12 @@ export default {
             content:{
                 focusing:this.$t('message.live.focusing'),
                 Focus:this.$t('message.live.Focus'),
-                aperture:this.$t('message.live.aperture')
+                aperture:this.$t('message.live.aperture'),
+
+                LightON:this.$t('message.live.LightON'),
+                LightOFF:this.$t('message.live.LightOFF'),
+                WiperON:this.$t('message.live.WiperON'),
+                WiperOFF:this.$t('message.live.WiperOFF')
             },//聚焦
 
             spanqualityid:"spanqualityid"+this.h5videoid,
@@ -700,6 +722,8 @@ export default {
                         return false;
                     }else{
                         var data=result.data;
+
+                        console.log(data)
                         for(var i = 0; i < data.preset.length; i++){
                             var newItem ={
                                 strName : data.preset[i].strName,
@@ -724,7 +748,19 @@ export default {
                 this.ptzshow = false;
             }
         },
-        
+
+        PtzActionwiperon(event){
+            this.PtzAction('wiperon');
+        },
+        PtzActionwiperoff(event){
+            this.PtzAction('wiperoff');
+        },
+        PtzActionlighton(event){
+            this.PtzAction('lighton');
+        },
+        PtzActionlightoff(event){
+            this.PtzAction('lightoff');
+        },
         PtzActionfocusing(event){
             this.PtzAction('focusin');
         },
@@ -830,7 +866,7 @@ export default {
             height: 40px;
             line-height: 30px;
             background: url('~@/views/liveview/imgs/liveview_buttback.png') no-repeat;
-            background-size: 320px 35px;
+            background-size: 340px 35px;
             background-position-x:right;
             text-align: right;
             padding: 0 15px;
@@ -892,7 +928,7 @@ export default {
                     align-items: flex-end;
                     .key_zoom{
                         width: 25%;
-                        margin: 0 4% 0 2%;
+                        margin: 0 4% 0 8%;
                         /* position: absolute;
                         bottom: 4%; */
                         .key_flex{
@@ -913,15 +949,15 @@ export default {
                         }
                     }
                     .zoom{
-                        width: 50px;
-                        height: 100px;
-                        /* background-color: #808181; */
+                        width: 20px;
+                        height: 50px;
+                        // background-color: rgba(0, 0, 0, 0.6);
                         display: flex;
                         flex-wrap: wrap;
                         justify-content: space-around;
                         align-content: space-around;
-                        margin-left: 40px
-                        ;
+                        margin-left: 40px;
+                        margin-bottom: 50px;
                         .zoom_add{
                             width: 20px;
                             height: 20px;
@@ -932,8 +968,47 @@ export default {
                             color: #FFFFFF;
                         }
                     }
+                    
                 }
-                
+                .zoom_g{
+                    width: 20px;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    align-content: space-around;
+                    // margin-left: 40px
+                    padding: 0 2px;
+                    ;
+                    .zoom_add{
+                        width: 20px;
+                        height: 20px;
+                        text-align: center;
+                        background: none;
+                        border: 0;
+                        padding: 0;
+                        color: #FFFFFF;
+                        font-size: 14px;
+                        &:nth-child(5){
+                            color: #3ABBFE;
+                            font-size: 18px;
+                        }
+                        &:nth-child(7){
+                            color: #3ABBFE;
+                            font-size: 18px;
+                        }
+                        &:nth-child(6){
+                            font-size: 18px;
+                        }
+                        &:nth-child(8){
+                            font-size: 18px;
+                        }
+                    }
+                }
                 
                 /*  */
                 .Preset{
