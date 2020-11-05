@@ -1,16 +1,33 @@
 <template>
-	<div>
-		<!-- 按钮 -->
-	     <el-upload
-	       class="upload"
-	       action=""
-	       :multiple="false"
-	       :show-file-list="false"
-	       accept="csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-	       :http-request="httpRequest">
-	       <el-button size="small" type="primary">上传</el-button>
-	     </el-upload>
-	     <!-- 按钮 end -->
+	<div class="BatchImport">
+        <div class="BatchImport_flex">
+            <div class="BatchImport_title">
+                批量导入编码设备信息
+            </div>
+            <el-input placeholder="请输入内容" v-model="input">
+                <template slot="append">
+                    <!-- 按钮 -->
+                    <el-upload
+                    class="upload"
+                    action=""
+                    :multiple="false"
+                    :show-file-list="false"
+                    accept="csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    :http-request="httpRequest">
+                    <el-button size="small" class="iconfont icon-wenjianjia" type="primary"></el-button>
+                    </el-upload>
+                </template>
+            </el-input>
+            <div class="BatchImport_up">
+                <div>选择文件后将自动上传并进行数据校验</div>
+                <div>下载文件模版</div>
+            </div>
+            <!-- 按钮 end -->
+            <div class="BatchImport_butt">
+                <el-button size="small" type="primary" @click="cancel">取消</el-button>
+                <el-button size="small" type="primary" @click="Upload">上传</el-button>
+            </div>
+        </div>
      </div>
 </template>
 
@@ -20,15 +37,153 @@ import XLSX from 'xlsx'
 export default {
 	data () {
 		return {
-			tableData: []
+            tableData: [],
+            input:''
 		}
 	},
 	methods: {
+        //取消
+        cancel(){
+            this.input=''
+            this.tableData=[]
+        },
+        //上传
+        Upload(){
+            var root = this.$store.state.IPPORT;
+            if(this.tableData.length==0){
+                return false
+            }else{
+                console.log(this.tableData)
+                var data=this.tableData
+                for(var i=0;i<data.length;i++){
+                    // console.log(data[i].Type)
+                    var from=data[i]
+                    if(data[i].Type=='H5_STREAM'){
+                        console.log('H5_STREAM',from.Type)
+                        var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&audio="+from.Audio+
+                        "&url="+encodeURIComponent(from.URL)+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                    }else if(data[i].Type=='H5_ONVIF'){
+                        console.log('H5_ONVIF',from.Type)
+                        var url = root + "/api/v1/AddSrcONVIF?name="
+                        +encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&audio="+from.Audio+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port)+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                    }else if(data[i].Type=='H5_FILE'){
+                        console.log('H5_FILE',from.Type)
+                        var url = root + "/api/v1/AddSrcFile?name="
+                        +encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&url="+encodeURIComponent(from.URL)+
+                        "&session="+ this.$store.state.token;
+                    }else if(data[i].Type=='H5_DEV_HIK'){
+                        console.log('H5_DEV_HIK',from.Type)
+                        var url = root + "/api/v1/AddDeviceHik?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port)+
+                        "&audio="+from.Audio+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                    }else if(data[i].Type=='H5_DEV_DH'){
+                        var url = root + "/api/v1/AddDeviceDh?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port_dh)+
+                        "&audio="+from.Audio+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                        console.log('H5_DEV_DH',from.Type)
+                    }else if(data[i].Type=='H5_DEV_HIKISC'){
+                        var url = root + "/api/v1/AddDeviceHikISC?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username_isc)+
+                        "&password="+encodeURIComponent(from.Password_isc)+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port_isc)+
+                        "&audio="+from.Audio+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                        console.log('H5_DEV_HIKISC',from.Type)
+                    }else if(data[i].Type=='H5_DEV_TD'){
+                        var url = root + "/api/v1/AddDeviceTd?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port_td)+
+                        "&audio="+from.Audio+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                        console.log('H5_DEV_TD',from.Type)
+                    }else if(data[i].Type=='H5_DEV_UNV'){
+                        var url = root + "/api/v1/AddDeviceUnv?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port_unv)+
+                        "&audio="+from.Audio+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                        console.log('H5_DEV_UNV',from.Type)
+                    }else if(data[i].Type=='H5_DEV_DHDSS'){
+                        var url = root + "/api/v1/AddDeviceDss?name="+encodeURIComponent(from.Name)+
+                        "&token="+encodeURIComponent(from.Token)+
+                        "&user="+encodeURIComponent(from.Username)+
+                        "&password="+encodeURIComponent(from.Password)+
+                        "&ip="+encodeURIComponent(from.IP)+
+                        "&port="+encodeURIComponent(from.Port_DSS)+
+                        "&audio="+from.Audio+
+                        "&session="+ this.$store.state.token;
+                        this.platfromyes(url,from.Type);
+                        console.log('H5_DEV_DHDSS',from.Type)
+                    }else{
+                        console.log(data[i].Type)
+                    }
+                }
+            }
+        },
+        platfromyes(url,Type){
+            var _this=this
+            $.ajax({
+                type: 'get',
+                url: url,  
+                async: false,  
+                success: function(data){ 
+                    console.log("添加人员",data)
+                    if(data.bStatus==true){
+                        console.log('添加成功',Type)
+                    }else{
+                        _this.$message({
+                            message: '添加失败'+Type,
+                            type: 'warning'
+                        });
+                        return false;
+                    }
+                }  
+            });
+        },
+        //导入
 	    httpRequest (e) {
             let file = e.file // 文件信息
             console.log('e: ', e)
             console.log('file: ', e.file)
-
             if (!file) {
                 // 没有文件
                 return false
@@ -37,7 +192,8 @@ export default {
                 this.$message.error('上传格式不正确，请上传xls或者xlsx格式')
                 return false
             }
-
+            
+            this.input=e.file.name
             const fileReader = new FileReader()
             fileReader.onload = (ev) => {
                 try {
@@ -62,3 +218,62 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.BatchImport{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .BatchImport_flex{
+        width: 30%;
+        display: flex;
+        // justify-content: center;
+        flex-wrap: wrap;
+        // align-items: center;
+        margin-top: 10%;
+        .BatchImport_title{
+            font-size: 16px;
+            font-family: PingFang SC;
+            font-weight: 600;
+            margin-bottom: 60px;
+        }
+        .el-input{
+            width: 100%;
+            text-align: right;
+            margin-bottom: 30px;
+            .el-input-group__append{
+                    .el-button{
+                        font-size: 16px;
+                    }
+                }
+        }
+        .BatchImport_up{
+            margin-bottom: 40px;
+            div:nth-child(1){
+                font-family: PingFang SC;
+                font-weight: 400;
+                color: #FFFFFF;
+                opacity: 0.7;
+            }
+            div:nth-child(2){
+                font-family: PingFang SC;
+                font-weight: 600;
+                color: #2CA3FB;
+                cursor:pointer;
+            }
+        }
+        .BatchImport_butt{
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            button:nth-child(1){
+                background: none;
+                border: 1px solid #3ABBFE;
+            }
+            button:nth-child(2){
+                background: #3ABBFE;
+                border: none;
+            }
+        }
+    }
+}
+</style>

@@ -486,14 +486,14 @@ export default {
                             value:devdata.Online,
                             name: this.Online,
                             itemStyle: {
-                                color: '#4C80FA'
+                                color: '#09C08F'
                             }
                         },
                         {
                             value: devdata.Total-devdata.Online,
                             name: this.Offline,
                             itemStyle: {
-                                color: '#09C08F'
+                                color: '#4C80FA'
                             }
                         }
                     ]
@@ -710,12 +710,12 @@ export default {
                     symbol: 'none',
                     sampling: 'average',
                     itemStyle: {
-                        color: '#64C9E1'
+                        color: '#3caef1'
                     },
                     areaStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                                 offset: 0,
-                                color: '#64C9E1'
+                                color: '#2b74ff'
                             },
                             {
                                 offset: 1,
@@ -731,12 +731,12 @@ export default {
                     symbol: 'none',
                     sampling: 'average',
                     itemStyle: {
-                        color: '#3297FC'
+                        color: '#14c7b1'
                     },
                     areaStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                                 offset: 0,
-                                color: '#3297FC'
+                                color: '#5cf4ff'
                             },
                             {
                                 offset: 1,
@@ -836,12 +836,12 @@ export default {
                     symbol: 'none',
                     sampling: 'average',
                     itemStyle: {
-                        color: '#00FFB9'
+                        color: '#0acb97'
                     },
                     areaStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                                 offset: 0,
-                                color: '#00FFB9'
+                                color: '#0acb97'
                             },
                             {
                                 offset: 1,
@@ -1019,13 +1019,13 @@ export default {
                                 width: 15px;
                                 height: 15px;
                                 margin-right: 10px;
-                                background-color: #4C80FA;
+                                background-color: #09C08F;
                             }
                             .beibiao_bg1{
                                 width: 15px;
                                 height: 15px;
                                 margin-right: 10px;
-                                background-color: #09C08F;
+                                background-color: #4C80FA;
                             }
                         }
                         
@@ -1221,7 +1221,7 @@ export default {
                             position: relative;
                         }
                         .sdk_szie{
-                            padding-top: 20%;
+                            padding-top: 35%;
                             width: 100%;
                         }
                     }

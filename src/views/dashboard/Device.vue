@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="flex_beisdk">
-                    <div :id="'devsdk'+index" class="beisdk"></div>
+                    <div :id="'devicesdk'+index" class="beisdk"></div>
                     <div class="tit_sdk" v-if="devdata">
                         <div>{{devdata[index].name}}</div>
                         <div>{{total}}{{devdata[index].Total}}{{ge}}</div>
@@ -115,7 +115,7 @@ export default {
         //海康
         devimage(devdata,leng){
             // console.log(devdata,leng,'devive'+leng);
-            var pieId=document.getElementById("devsdk"+leng)
+            var pieId=document.getElementById("devicesdk"+leng)
             // console.log(pieId,'devsdk'+leng);
             // return false
             if (!pieId){
@@ -171,14 +171,14 @@ export default {
                             value:devdata.Online,
                             name: this.Online,
                             itemStyle: {
-                                color: '#67CFB5'
+                                color: '#09C08F'
                             }
                         },
                         {
                             value: devdata.Total-devdata.Online,
                             name: this.Offline,
                             itemStyle: {
-                                color: '#FFC05D'
+                                color: '#4C80FA'
                             }
                         }
                     ]
@@ -254,13 +254,13 @@ export default {
                     width: 15px;
                     height: 15px;
                     margin-right: 10px;
-                    background-color: #5FBFA7;
+                    background-color: #09C08F;
                 }
                 .beibiao_bg1{
                     width: 15px;
                     height: 15px;
                     margin-right: 10px;
-                    background-color: #FFC15E;
+                    background-color: #4C80FA;
                 }
 
             }

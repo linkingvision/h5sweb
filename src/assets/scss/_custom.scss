@@ -397,6 +397,31 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+    //批量下载
+    .BatchImport{
+        .BatchImport_flex{
+            .BatchImport_title{
+                color: #FFFFFF;
+            }
+            .el-input{
+                width: 100%;
+                text-align: right;
+                margin-bottom: 30px;
+                .el-input__inner{
+                    border: 1px solid #D4D4D4;
+                }
+                .el-input-group__append{
+                    
+                    background: none;
+                    border: 1px solid #D4D4D4;
+                    .el-button{
+                        color: #BABABA;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
     //顶部关于弹窗
     & ~ .plugin_adout{
         .el-dialog{
