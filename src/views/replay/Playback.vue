@@ -181,7 +181,7 @@ export default {
             endvalue: new Date().getTime(),
             startvalue:new Date().getTime() - 3600 * 1000 * 1,
             myModal1:false,
-            region:'0.5',
+            region:'1.0',
             regiondata:[{
                     value: "0.5",
                     label: "0.5"

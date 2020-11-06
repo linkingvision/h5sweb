@@ -1083,14 +1083,14 @@ export default {
                             .cpu_zuo{
                                 font-size:14px;
                                 /* font-family:PingFang SC; */
-                                font-weight:400;
+                                font-weight:600;
                                 margin-right: 8px;
-                                opacity:0.4;
+                                opacity:0.6;
                             }
                             .cpu_you{
                                 font-size:14px;
                                 /* font-family:PingFang SC; */
-                                font-weight:400;
+                                font-weight:500;
                             }
                         }
                     }
@@ -1149,14 +1149,14 @@ export default {
                         .cpu_zuo{
                             font-size:12px;
                             /* font-family:PingFang SC; */
-                            font-weight:400;
+                            font-weight:600;
                             margin-right: 8px;
-                            opacity:0.4;
+                            opacity:0.6;
                         }
                         .cpu_you{
                             font-size:12px;
                             /* font-family:PingFang SC; */
-                            font-weight:400;
+                            font-weight:600;
                         }
                         #foo{
                             border: 0;
@@ -1176,11 +1176,12 @@ export default {
                     align-content: space-between;
                     margin: 10px 10px;
                     .zong_mve{
+                        font-weight: 500;
                         div{
                             margin-bottom: 10px;
                         }
                         div:nth-child(1){
-                            opacity: 0.4;
+                            opacity: 0.6;
                         }
                     } 
                 }
