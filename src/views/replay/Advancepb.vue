@@ -327,6 +327,7 @@ export default {
 			}
         },
 		timetz(){
+			console.log('111')
 			var timevalue=this.xzvalue;
 			var _this=this;
 			_this.timedata=[];
@@ -420,7 +421,7 @@ export default {
 							begintime: timevalues,
 							endtime: timevaluee,
 							autoplay: 'true',
-							showposter:"true", //'true' or 'false' show poster
+							showposter:"false", //'true' or 'false' show poster
 							callback: _this.PlaybackCB,
 							serverpb: _this.Adswitch, 
 							userdata:  _this // user data
@@ -454,7 +455,7 @@ export default {
 							begintime: timevalues,
 							endtime: timevaluee,
 							autoplay: 'true',
-							showposter:"true", //'true' or 'false' show poster
+							showposter:"false", //'true' or 'false' show poster
 							callback: _this.PlaybackCB1,
 							serverpb: _this.Adswitch, 
 							userdata:  _this // user data
@@ -490,7 +491,7 @@ export default {
 							begintime: timevalues,
 							endtime: timevaluee,
 							autoplay: 'true',
-							showposter:"true", //'true' or 'false' show poster
+							showposter:"false", //'true' or 'false' show poster
 							callback: _this.PlaybackCB2,
 							serverpb: _this.Adswitch, 
 							userdata:  _this // user data
@@ -526,7 +527,7 @@ export default {
 							begintime: timevalues,
 							endtime: timevaluee,
 							autoplay: 'true',
-							showposter:"true", //'true' or 'false' show poster
+							showposter:"false", //'true' or 'false' show poster
 							callback: _this.PlaybackCB3,
 							serverpb: _this.Adswitch, 
 							userdata:  _this // user data
@@ -641,7 +642,7 @@ export default {
 		{
 			var timevalue=new Date();
 			var timedata1=[];
-			this.timersetInterval=setInterval(function(){
+			this.timersetInterval=setTimeout(function(){
 				if(this.selectRow=="1"&&this.selectCol=="1"){
 					if (this.v1 != undefined)
 					{
@@ -993,7 +994,7 @@ export default {
 					begintime: timevalues,
 					endtime: timevaluee,
 					autoplay: 'true',
-					showposter:"true", //'true' or 'false' show poster
+					showposter:"false", //'true' or 'false' show poster
 					callback: this.PlaybackCB,
 					serverpb: this.Adswitch, 
 					userdata:  this // user data
@@ -1025,7 +1026,7 @@ export default {
 					begintime: timevalues,
 					endtime: timevaluee,
 					autoplay: 'true',
-					showposter:"true", //'true' or 'false' show poster
+					showposter:"false", //'true' or 'false' show poster
 					callback: this.PlaybackCB1,
 					serverpb: this.Adswitch, 
 					userdata:  this // user data
@@ -1058,7 +1059,7 @@ export default {
 					begintime: timevalues,
 					endtime: timevaluee,
 					autoplay: 'true',
-					showposter:"true", //'true' or 'false' show poster
+					showposter:"false", //'true' or 'false' show poster
 					callback: this.PlaybackCB2,
 					serverpb: this.Adswitch, 
 					userdata:  this // user data
@@ -1090,7 +1091,7 @@ export default {
 					begintime: timevalues,
 					endtime: timevaluee,
 					autoplay: 'true',
-					showposter:"true", //'true' or 'false' show poster
+					showposter:"false", //'true' or 'false' show poster
 					callback: this.PlaybackCB3,
 					serverpb: this.Adswitch, 
 					userdata:  this // user data
