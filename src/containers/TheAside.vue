@@ -29,7 +29,7 @@
 					<div>
 						<el-input
 							class="liveview_left_input"
-							placeholder="输入关键字进行过滤"
+							placeholder="请您输入水印内容"
 							v-model="watermarkstring">
 						</el-input>
 					</div>

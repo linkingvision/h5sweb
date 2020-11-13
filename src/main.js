@@ -52,6 +52,12 @@ router.beforeEach((to, from, next) => {
 					console.log(type,store.state.root,"4");
 					next()  // 确保一定要有next()被调用
 				}else{
+          sessionStorage.removeItem('mcutoken')
+          store.state.token = null
+          sessionStorage.removeItem('mcuuser')
+          store.state.user = null
+          sessionStorage.removeItem('mcuroot')
+          store.state.root = null
 					next('/login')
 				}
 			}

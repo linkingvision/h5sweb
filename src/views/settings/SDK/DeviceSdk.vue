@@ -241,7 +241,21 @@ import uuid from '../../../assets/js/uuid'
             Audio:false
         },
         editform: {
-            Audio:"false"
+            Type: 'H5_DEV_HIK',
+            Name:"Device1",
+            Token:"platform1",
+            Username:"admin",
+            Username_isc:"22936233",
+            Password:"admin12345",
+            Password_isc:"px50TzrNNUiU1uxloJLG",
+            IP:"192.168.1.1",
+            Port:"8000",
+            Port_dh:"37777",
+            Port_isc:"443",
+            Port_td:"3000",
+            Port_unv:"80",
+            Port_DSS:"9000",
+            Audio:false
         },
         edittoken:"",//编辑时要删除的token
         editindex:"",//编辑时所在索引

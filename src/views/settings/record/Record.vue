@@ -47,6 +47,7 @@ export default {
                 if(result.status == 200){
                     // this.input=result.data.nRecordDuration
                     this.$message(result.data.strCode)
+                    this.$root.bus.$emit('webrtc',true);
                 }//wei
             })
         },
