@@ -35,10 +35,10 @@
 				</el-submenu>
 				<el-submenu index="/Settings/BatchImport">
 					<template slot="title">
-						<span>批量导入 </span>
+						<span>{{$t("message.setting.DeviceImport")}}</span>
 					</template>
                     <el-menu-item index="/Settings/BatchImport">
-                        <span class="Setting_tree">BatchImport</span> 
+                        <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
                     </el-menu-item>
 				</el-submenu>
 				

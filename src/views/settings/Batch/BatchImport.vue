@@ -2,9 +2,9 @@
 	<div class="BatchImport">
         <div class="BatchImport_flex">
             <div class="BatchImport_title">
-                批量导入编码设备信息
+                {{lable.Batchimportdevice}}
             </div>
-            <el-input placeholder="请输入内容" v-model="input">
+            <el-input placeholder="请选择文件" v-model="input">
                 <template slot="append">
                     <!-- 按钮 -->
                     <el-upload
@@ -19,13 +19,12 @@
                 </template>
             </el-input>
             <div class="BatchImport_up">
-                <div>选择文件后将自动上传并进行数据校验</div>
-                <div>下载文件模版</div>
+                <a href="/doc/devtemplate.xlsx" download="devtemplate.xlsx" class="waves-effect" > <div>下载文件模版</div></a>
             </div>
             <!-- 按钮 end -->
             <div class="BatchImport_butt">
-                <el-button size="small" type="primary" @click="cancel">取消</el-button>
-                <el-button size="small" type="primary" @click="Upload">上传</el-button>
+                <el-button size="small" type="primary" @click="cancel">{{lable.Cancel}}</el-button>
+                <el-button size="small" type="primary" @click="Upload">{{lable.Import}}</el-button>
             </div>
         </div>
      </div>
@@ -38,7 +37,13 @@ export default {
 	data () {
 		return {
             tableData: [],
-            input:''
+            input:'',
+            lable:{
+                DeviceImport:this.$t("message.setting.DeviceImport"), 
+                Import:this.$t("message.setting.Import"),
+                Batchimportdevice:this.$t("message.setting.Batchimportdevice"),
+                Cancel: this.$t("message.setting.Cancel"),
+            },
 		}
 	},
 	methods: {
@@ -248,13 +253,7 @@ export default {
         }
         .BatchImport_up{
             margin-bottom: 40px;
-            div:nth-child(1){
-                font-family: PingFang SC;
-                font-weight: 400;
-                color: #FFFFFF;
-                opacity: 0.7;
-            }
-            div:nth-child(2){
+            div{
                 font-family: PingFang SC;
                 font-weight: 600;
                 color: #2CA3FB;

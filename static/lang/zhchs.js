@@ -147,6 +147,10 @@ export default {
 		},
 		setting:
 		{
+			DeviceImport:"设备导入", 
+			Import:"导入",
+			Batchimportdevice:"批量导入设备信息",
+			Cancel: "取消",
 
 			Default: "默认",
 			Transcoding: "转码管理",

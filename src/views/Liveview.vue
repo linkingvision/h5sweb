@@ -193,7 +193,7 @@ export default {
             can.height=200;//画布的高度
             can.style.display='none';
             var cans = can.getContext('2d');
-            cans.rotate(-20*Math.PI/180); //画布里面文字的旋转角度
+            cans.rotate(-20*Math.PI/140); //画布里面文字的旋转角度
             cans.font = "16px Microsoft JhengHei"; //画布里面文字的字体
             cans.fillStyle = "rgba(17, 17, 17, 1)";//画布里面文字的颜色
             cans.textAlign = 'left'; //画布里面文字的水平位置

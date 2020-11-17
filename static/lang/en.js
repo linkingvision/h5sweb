@@ -146,6 +146,11 @@ export default {
 		},
 		setting:
 		{
+			DeviceImport:"Device Import", 
+			Import:"Import",
+			Batchimportdevice:"Batch import device",
+			Cancel: "Cancel",
+
 			Default: "Default",
 			Transcoding: "Transcoding",
 			Profile: "Profile",

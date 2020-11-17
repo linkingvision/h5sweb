@@ -66,6 +66,13 @@
 			<div class="c_Docker" id="Docker"></div>
 		</CHeaderNav>
 		<CHeaderNav>
+			<router-link :to="{name:'Event'}">
+				<el-badge :value="gEvvalue" :max="999" class="item" data-toggle="dropdown">
+					<i style="color: #fff;" class="iconfont icon-lingdang" type="primary"></i>
+				</el-badge>
+			</router-link>
+		</CHeaderNav>
+		<CHeaderNav>
 		<div class="use_user" id="rtc_togg">
 			<el-tooltip content="重启" placement="bottom" effect="dark">
 				<el-button @click="Rebootdialog=true" style="border: none;background: none; color:#fff;line-height: 0.9;padding-right: 10px;" >
@@ -154,6 +161,7 @@ export default {
 	name: 'TheHeader',
 	data(){
 		return {
+			gEvvalue: 0,
 			user:this.$store.state.user,
 			Rebootdialog:false,
 			centerDialogVisible:false,
@@ -197,6 +205,14 @@ export default {
 		});
 	},
 	methods:{
+		gEventval() {
+			setInterval(
+				function() {
+				this.gEvvalue = this.EVENT.gEvent.length;
+				}.bind(this),
+				1000
+			);
+		},
 		rtctogg(){
 			$("#rtc_togg").hide();
 		},

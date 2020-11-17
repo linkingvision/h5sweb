@@ -23,6 +23,9 @@ import LangZhCHT from '../static/lang/zhcht'
 Vue.use(VueI18n)
 const bus = new Vue()
 // console.log(store.state.lang,"mian")
+import event from './views/public/event'
+Vue.prototype.EVENT = event
+
 const i18n = new VueI18n({
   locale:"zhchs",
   messages: {

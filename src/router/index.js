@@ -34,6 +34,7 @@ const Tour = () => import('@/views/Tour')
 const Settings = () => import('@/views/Settings')
 const GB = () => import('@/views/GB')
 const Clouds = () => import('@/views/Clouds')
+const Event = () => import('@/views/Event')
 
 const Device = () => import('@/views/dashboard/Device')
 const GPU = () => import('@/views/dashboard/GPU')
@@ -101,6 +102,16 @@ export default new Router({
 						title: 'Dashboard',
 						name:i18n.tc("message.left.dashboard"),
 						icon:'iconfont icon-11111-copy',
+						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
+					},
+				},{
+					path: 'Event',
+					name: 'Event',
+					component: Event,
+					meta: {
+						title: 'Event',
+						name:i18n.tc("message.left.event"),
+						icon:'iconfont icon-lingdang',
 						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
