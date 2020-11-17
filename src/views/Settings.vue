@@ -33,11 +33,11 @@
                         <span class="Setting_tree">H5-DEV</span> 
                     </el-menu-item>
 				</el-submenu>
-				<el-submenu index="/Settings/BatchImport">
+				<el-submenu index="/Settings/DeviceImport">
 					<template slot="title">
 						<span>{{$t("message.setting.DeviceImport")}}</span>
 					</template>
-                    <el-menu-item index="/Settings/BatchImport">
+                    <el-menu-item index="/Settings/DeviceImport">
                         <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
                     </el-menu-item>
 				</el-submenu>

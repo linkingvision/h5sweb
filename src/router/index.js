@@ -49,7 +49,7 @@ const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
 
 
-const BatchImport = () => import('@/views/settings/Batch/BatchImport')
+const DeviceImport = () => import('@/views/settings/Batch/BatchImport')
 const Camera = () => import('@/views/settings/Camera/Camera')
 const DeviceStream = () => import('@/views/settings/device/DeviceStream')
 const DeviceOnvif = () => import('@/views/settings/device/DeviceOnvif')
@@ -305,11 +305,11 @@ export default new Router({
 						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
 					children: [{
-						path: 'BatchImport',
-						name: 'BatchImport',
-						component: BatchImport,
+						path: 'DeviceImport',
+						name: 'DeviceImport',
+						component: DeviceImport,
 						meta: {
-							title: '/BatchImport',
+							title: '/DeviceImport',
 							name:i18n.tc("message.left.camera"),
 							icon:'iconfont icon-jiankong',
 							type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
