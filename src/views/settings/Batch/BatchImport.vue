@@ -64,7 +64,6 @@ export default {
                     // console.log(data[i].Type)
                     var from=data[i]
                     if(data[i].Type=='H5_STREAM'){
-                        console.log('H5_STREAM',from.Type)
                         var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&user="+encodeURIComponent(from.Username)+
@@ -72,9 +71,9 @@ export default {
                         "&audio="+from.Audio+
                         "&url="+encodeURIComponent(from.URL)+
                         "&session="+ this.$store.state.token;
+                        console.log('H5_STREAM',from.Type,url)
                         this.platfromyes(url,from.Type);
                     }else if(data[i].Type=='H5_ONVIF'){
-                        console.log('H5_ONVIF',from.Type)
                         var url = root + "/api/v1/AddSrcONVIF?name="
                         +encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
@@ -85,15 +84,16 @@ export default {
                         "&port="+encodeURIComponent(from.Port)+
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
+                        console.log('H5_ONVIF',from.Type,url)
                     }else if(data[i].Type=='H5_FILE'){
-                        console.log('H5_FILE',from.Type)
                         var url = root + "/api/v1/AddSrcFile?name="
                         +encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&url="+encodeURIComponent(from.URL)+
                         "&session="+ this.$store.state.token;
+                        console.log('H5_FILE',from.Type,url)
+
                     }else if(data[i].Type=='H5_DEV_HIK'){
-                        console.log('H5_DEV_HIK',from.Type)
                         var url = root + "/api/v1/AddDeviceHik?name="+encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&user="+encodeURIComponent(from.Username)+
@@ -102,6 +102,7 @@ export default {
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
                         "&session="+ this.$store.state.token;
+                        console.log('H5_DEV_HIK',from.Type,url)
                         this.platfromyes(url,from.Type);
                     }else if(data[i].Type=='H5_DEV_DH'){
                         var url = root + "/api/v1/AddDeviceDh?name="+encodeURIComponent(from.Name)+
@@ -109,55 +110,55 @@ export default {
                         "&user="+encodeURIComponent(from.Username)+
                         "&password="+encodeURIComponent(from.Password)+
                         "&ip="+encodeURIComponent(from.IP)+
-                        "&port="+encodeURIComponent(from.Port_dh)+
+                        "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
-                        console.log('H5_DEV_DH',from.Type)
+                        console.log('H5_DEV_DH',from.Type,url)
                     }else if(data[i].Type=='H5_DEV_HIKISC'){
                         var url = root + "/api/v1/AddDeviceHikISC?name="+encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&user="+encodeURIComponent(from.Username_isc)+
                         "&password="+encodeURIComponent(from.Password_isc)+
                         "&ip="+encodeURIComponent(from.IP)+
-                        "&port="+encodeURIComponent(from.Port_isc)+
+                        "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
-                        console.log('H5_DEV_HIKISC',from.Type)
+                        console.log('H5_DEV_HIKISC',from.Type,url)
                     }else if(data[i].Type=='H5_DEV_TD'){
                         var url = root + "/api/v1/AddDeviceTd?name="+encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&user="+encodeURIComponent(from.Username)+
                         "&password="+encodeURIComponent(from.Password)+
                         "&ip="+encodeURIComponent(from.IP)+
-                        "&port="+encodeURIComponent(from.Port_td)+
+                        "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
-                        console.log('H5_DEV_TD',from.Type)
+                        console.log('H5_DEV_TD',from.Type,url)
                     }else if(data[i].Type=='H5_DEV_UNV'){
                         var url = root + "/api/v1/AddDeviceUnv?name="+encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&user="+encodeURIComponent(from.Username)+
                         "&password="+encodeURIComponent(from.Password)+
                         "&ip="+encodeURIComponent(from.IP)+
-                        "&port="+encodeURIComponent(from.Port_unv)+
+                        "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
-                        console.log('H5_DEV_UNV',from.Type)
+                        console.log('H5_DEV_UNV',from.Type,url)
                     }else if(data[i].Type=='H5_DEV_DHDSS'){
                         var url = root + "/api/v1/AddDeviceDss?name="+encodeURIComponent(from.Name)+
                         "&token="+encodeURIComponent(from.Token)+
                         "&user="+encodeURIComponent(from.Username)+
                         "&password="+encodeURIComponent(from.Password)+
                         "&ip="+encodeURIComponent(from.IP)+
-                        "&port="+encodeURIComponent(from.Port_DSS)+
+                        "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
-                        console.log('H5_DEV_DHDSS',from.Type)
+                        console.log('H5_DEV_DHDSS',from.Type,url)
                     }else{
                         console.log(data[i].Type)
                     }

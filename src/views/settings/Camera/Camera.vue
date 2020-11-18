@@ -85,7 +85,7 @@
                     <template slot-scope="scope">
                         <div class="button_edi">
                             <el-button @click="handleEdit(scope.$index,scope.row)" type="text" class=" iconfont icon-history"></el-button>
-                            <el-button @click="handledel(scope.$index,scope.row)"  class="iconfont icon-history" type="text"></el-button>
+                            <el-button @click="handledel(scope.$index,scope.row)"  class="iconfont icon-ashbin" type="text"></el-button>
                         </div>
                     </template>
                 </el-table-column>
