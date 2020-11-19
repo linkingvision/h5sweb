@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
     console.log(store.state.root,type)
     
     // 判断该路由是否需要登录权限
-    if (type === 'Administrator'||type === 'Operator') {
+    if (store.state.root!=null) {
         // console.log(type,"1");
 		if (store.state.token) {
 			// console.log(type,"2");
@@ -55,12 +55,12 @@ router.beforeEach((to, from, next) => {
 					console.log(type,store.state.root,"4");
 					next()  // 确保一定要有next()被调用
 				}else{
-          sessionStorage.removeItem('mcutoken')
-          store.state.token = null
-          sessionStorage.removeItem('mcuuser')
-          store.state.user = null
-          sessionStorage.removeItem('mcuroot')
-          store.state.root = null
+					sessionStorage.removeItem('mcutoken')
+					store.state.token = null
+					sessionStorage.removeItem('mcuuser')
+					store.state.user = null
+					sessionStorage.removeItem('mcuroot')
+					store.state.root = null
 					next('/login')
 				}
 			}
@@ -76,6 +76,7 @@ router.beforeEach((to, from, next) => {
 			next('/login')
 		}
     } else {
+		console.log('不需要认证')
 		next()
     }
 })

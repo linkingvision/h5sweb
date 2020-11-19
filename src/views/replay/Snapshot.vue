@@ -186,7 +186,7 @@ export default {
         // 表格归档 下载 刷新
         
         //按钮搜索
-        getCheckedNodes() {
+        async getCheckedNodes() {
             this.tableData1=[];
             console.log("node值",this.$refs.tree.getCheckedNodes());
             var nodes=this.$refs.tree.getCheckedNodes();
@@ -196,11 +196,12 @@ export default {
             for(var i=0 ;i<nodes.length; i++){
                 if(nodes[i].token!=undefined){
                     console.log(nodes[i].token,nodes[i].label)
+                    var label=nodes[i].label
                     // return false
                     var url = this.$store.state.IPPORT + "/api/v1/Search?type=snapshot&token="+nodes[i].token+"&start="+srartdate+"&end="+enddate+"&session="+ this.$store.state.token;
                     console.log(url);
                     //return false;
-                    this.$http.get(url).then(result=>{
+                    await this.$http.get(url).then(result=>{
                         if(result.status == 200){
                             this.$message('Query successful');
                             var data=result.data;
@@ -208,8 +209,8 @@ export default {
                                 var item=data.record[i];
                                 var urlto=item["strPath"].split("/");
                                 var timeitem={
-                                        name: nodes[i].token,
-                                        token: nodes[i].label,
+                                        name: item.strToken,
+                                        token: label,
                                         starf : item['strStartTime'],
                                         percentage:0,
                                         url:item["strPath"],

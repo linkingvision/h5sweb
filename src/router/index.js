@@ -85,9 +85,9 @@ export default new Router({
 	linkActiveClass: 'open active',
 	scrollBehavior: () => ({ y: 0 }),
 	routes: [
+		{path:"/",redirect:'/Login'},
 		{
 			path: '/',
-			redirect: '/Dashboard',
 			name: 'Home',
 			component: TheContainer,
 			meta: {

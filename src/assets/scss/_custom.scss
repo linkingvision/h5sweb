@@ -554,6 +554,9 @@ $collapse_size:#FFFFFF;
             background: none!important;
             color: #FFFFFF;
         }
+        .el-pager li.active {
+            color: #409EFF;
+        }
         button{
             background: none!important;
             color: #FFFFFF!important;

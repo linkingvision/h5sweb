@@ -99,7 +99,8 @@
 					<i class="iconfont icon-yonghuming"></i> {{user}}
 				</template>
 				<CDropdownItem :to="{name:'Logout'}">
-					<div class="about_ab"><i class="iconfont icon-tuichudenglu"></i>退出登录</div>
+					<div class="about_ab" v-if="user==''||user==null"><i class="iconfont icon-shijian-"></i>{{$t("message.header.login")}}</div>
+					<div class="about_ab" v-else><i class="iconfont icon-shijian-"></i>{{$t("message.header.logouts")}}</div>
 				</CDropdownItem>
 			</CDropdown>
 		</CHeaderNav>

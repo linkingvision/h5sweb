@@ -13,6 +13,7 @@ export default {
 			user_name: '用户名',
 			setting: '帐号设置',
 			logout: '退出',
+			logouts: '退出登录',
 			login: '登录',
 			API: "API",
 			goto: "前往下载",

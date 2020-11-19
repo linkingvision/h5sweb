@@ -33,24 +33,24 @@
 					<i class="iconfont icon-bofang1"></i>
 					<span slot="title">{{$t("message.left.playback")}}</span>
 				</el-menu-item>
-				<el-menu-item v-if="this.$store.state.root!='Operator'" index="/Avintercom/Avintercoms">
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Avintercom/Avintercoms">
 					<i class="iconfont icon-shipinhuiyi3"></i>
 					<span slot="title">{{$t("message.Conference.Upload")}}</span>
 				</el-menu-item>
-				<el-menu-item v-if="this.$store.state.root!='Operator'" index="/Tour">
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Tour">
 					<i class="iconfont icon-sigongge"></i>
 					<span slot="title">{{$t("message.left.tour")}}</span>
 				</el-menu-item>
-				<el-menu-item v-if="this.$store.state.root!='Operator'" index="/GB/GB28181">
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/GB/GB28181">
 					<i class="iconfont icon-wendang" style="font-size:18px"></i>
 					<span slot="title">GB</span>
 				</el-menu-item>
 				
-				<el-menu-item v-if="this.$store.state.root!='Operator'" index="/Clouds">
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Clouds">
 					<i class="iconfont icon-yun" style="font-size:14px"></i>
 					<span slot="title">{{$t("message.left.cloud")}}</span>
 				</el-menu-item>
-				<el-menu-item v-if="this.$store.state.root!='Operator'" index="/Settings/DeviceStream">
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Settings/DeviceStream">
 					<i class="iconfont icon-shezhi"></i>
 					<span slot="title">{{$t("message.setting.setting")}}</span>
 				</el-menu-item>

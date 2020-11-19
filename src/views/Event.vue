@@ -3,6 +3,7 @@
         <!-- 头部 -->
         <!--  -->
         <el-table
+            stripe
             :data="tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)"
             style="width: 100%; height: 800px;overflow-y: auto;">
             <el-table-column

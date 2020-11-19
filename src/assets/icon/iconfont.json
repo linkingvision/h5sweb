@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10225247",
+      "name": "电源",
+      "font_class": "shijian-",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
       "icon_id": "9269179",
       "name": "灯光-开",
       "font_class": "light-open",

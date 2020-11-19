@@ -12,6 +12,7 @@ export default {
 			user_name: 'User name',
 			setting: 'Account setting',
 			logout: 'Logout',
+			logouts: 'logout',
 			login: 'Login',
 			API: "API",
 			goto: "Go to download",

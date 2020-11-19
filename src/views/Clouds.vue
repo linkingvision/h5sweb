@@ -5,6 +5,7 @@
             :data="tableData1.slice((currentPage1-1)*pageSize,currentPage1*pageSize)"
             style="width: 100%;">
             <el-table-column
+                :label="label.Index"
                 type="index"
                 width="50">
             </el-table-column>
@@ -39,6 +40,7 @@ export default {
         return {
             activeName: 'cloud',//优先显示选项卡
             label:{
+                Index:this.$t("message.table.Index"),
                 label:this.$t("message.left.cloud"),//选1
                 label1:this.$t("message.GB.name"),
                 Token:this.$t('message.table.Token'),

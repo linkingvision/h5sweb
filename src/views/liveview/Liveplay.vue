@@ -408,6 +408,7 @@ export default {
             }else{
                 console.log(this.$store.state.liveviewrtc)
                 this.h5handler = new H5sPlayerWS(conf);
+                $("#"+this.rtcid).removeClass("rtc_new");
             }
             this.h5handler.connect();
         },
