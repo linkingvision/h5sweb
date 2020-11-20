@@ -3,7 +3,7 @@
     <TheSidebar/>
     <TheAside/>
     <CWrapper>
-      <TheHeader/>
+      <TheHeader v-if="embed == false"/>
       <div class="c-body">
         <main class="c-main">
           <CContainer fluid>
@@ -36,10 +36,17 @@ export default {
 		TheAside
 	},
 	data(){
-		return {}
+		return {
+			embed:false
+		}
 	},
 	mounted(){
 		this.open();
+		const cur_query = this.$route.query || {};
+		console.log(cur_query);
+		if(cur_query['embed'] === 'true'){
+			this.embed = true;
+		}
 	},
 	methods:{
 		open(){
