@@ -168,6 +168,7 @@ export default {
     height: 100%;
     position: fixed;
     background: url('../assets/imgs/login_back.png') no-repeat;
+    background-size: cover;
     .login_but{
         width: 100%;
         display: flex;
