@@ -147,6 +147,7 @@ export default {
 		},
 		setting:
 		{
+			Audio: "Audio",
 			DeviceImport:"Device Import", 
 			Import:"Import",
 			Batchimportdevice:"Batch import device",
@@ -299,6 +300,8 @@ export default {
 			Enable: "Enable",
 			EnableAudio: "EnableAudio",
 			EnableSSRCCheck: "EnableSSRCCheck",
+
+			Stream:"Stream",
 
 			DeleteAll: "DeleteAll",
 			Detail: "Detail",

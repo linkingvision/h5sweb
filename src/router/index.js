@@ -596,6 +596,9 @@ if(sessionStorage.getItem('mcutoken')){
 if(sessionStorage.getItem('mcuuser')){
 	store.state.user=sessionStorage.getItem('mcuuser');
 }
+if(sessionStorage.getItem('Certificatetime')){
+	store.state.Certificatetime=sessionStorage.getItem('Certificatetime');
+}
 
 if(localStorage.getItem('liveviewrtc')){
 	store.state.liveviewrtc=localStorage.getItem('liveviewrtc');

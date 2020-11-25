@@ -3,7 +3,7 @@
     <TheSidebar/>
     <TheAside/>
     <CWrapper>
-      <TheHeader v-if="embed == false"/>
+      <TheHeader/>
       <div class="c-body">
         <main class="c-main">
           <CContainer fluid>
@@ -41,7 +41,7 @@ export default {
 		}
 	},
 	mounted(){
-		this.open();
+		// this.open();
 		const cur_query = this.$route.query || {};
 		console.log(cur_query);
 		if(cur_query['embed'] === 'true'){
@@ -49,7 +49,7 @@ export default {
 		}
 	},
 	methods:{
-		open(){
+		/**open(){
 			var conf1 = {
 				protocol: window.location.protocol, //http: or https:
 				host:this.$store.state.WSROOT, //localhost:8080
@@ -66,7 +66,7 @@ export default {
 		EventCB(event, userdata){
 			var msgevent = JSON.parse(event);
 			// console.log("****消息",msgevent)
-		}
+		}*/
 	}
 }
 </script>

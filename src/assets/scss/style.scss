@@ -10,6 +10,12 @@
 button:focus{
     outline: none !important;
 }
+input:focus{
+    outline: none !important;
+}
+.btn:focus, .btn.focus {
+    box-shadow: none;
+}
 
 /* 自制图标 为啦显示禁用的图标*/
 .camera{

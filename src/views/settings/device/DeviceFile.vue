@@ -287,7 +287,7 @@ import uuid from '../../../assets/js/uuid'
             console.log("form",form);
            
             //return false;
-            var url1 = this.$store.state.IPPORT + "/api/v1/DelSrc?token="+this.edittoken+"&session="+ this.$store.state.token;
+            var url1 = this.$store.state.IPPORT + "/api/v1/DelSrc?token="+this.edittoken+"&edit=true&session="+ this.$store.state.token;
             this.$http.get(url1).then(result=>{
                 console.log("1",result,url1);
                 if(result.status==200){

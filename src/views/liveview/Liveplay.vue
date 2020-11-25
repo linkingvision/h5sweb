@@ -169,7 +169,7 @@ export default {
             h5handler:undefined,//v1
             audioback:undefined,//语音
             currtoken:undefined,//token
-            tokenshou:undefined,
+            tokenshou:null,
             ptzshow: false,
             Preset_value:0.5,//镜头转换速度
             Presetdata:[],//预置位数组
@@ -200,24 +200,44 @@ export default {
     },
     beforeDestroy() {
         this.CloseVideo();
-        // this.$root.bus.$off('liveplay');
+    },
+    computed: {
+        listData() {
+            return this.$store.state.liveplay;
+        }
     },
     mounted(){
         let _this = this;
-        _this.$root.bus.$on('liveplay', function(token,streamprofile,name,label, id)
+        console.log(this.$store.state.liveplay)
+        // this.$root.bus.$off('liveplayr')
+        /**this.$root.bus.$on('liveplay', function(token,streamprofile,name,label, id)
         {
-            console.log("++++++++++++++++++++",name,label,_this.h5videoid,_this.h5id,id)
+            // this.videoname=label;//视频名称
+            console.log("++++++++++++++++++++",id,streamprofile,_this.h5id)
             if (_this.h5id != id)
             {
                 return;
             }
+            
             _this.PlayVideo(token,streamprofile,label,name);
-             _this.tokenshou=token;
-        });
-
+            _this.tokenshou=token;
+            console.log("-----------------",_this.tokenshou)
+        });*/
         $("#"+this.spanqualityid).addClass("spanquality")
         $("#"+this.inputid).addClass("spanpicturequality")
         this. Gettranscod()
+    },
+    watch:{
+        listData(token){
+            console.log(token)
+            if (this.h5id != token.vid)
+            {
+                return;
+            }
+            
+            this.PlayVideo(token.token,token.streamprofile,token.label,token.name);
+            this.tokenshou=token.token;
+        }
     },
     methods:{
         //码率
@@ -358,6 +378,8 @@ export default {
         },
         //播放
         PlayVideo(token,streamprofile,label,name){
+            
+
             if (this.h5handler != undefined)
             {
                 this.h5handler.disconnect();
@@ -384,7 +406,7 @@ export default {
             this.currtoken = token;
             // console.log(streamprofile,"111111111111111111*****")
             if(streamprofile==="sub"){
-                this.valuebutton=this.$t("message.live.mainstream ")
+                this.valuebutton=this.$t("message.live.mainstream")
             } else if(streamprofile==="main"){
                 this.valuebutton=this.$t("message.live.substream")
             }else{
@@ -411,6 +433,13 @@ export default {
                 $("#"+this.rtcid).removeClass("rtc_new");
             }
             this.h5handler.connect();
+            this.$store.state.liveplay={
+                token:null,
+                streamprofile:null,
+                name:null,
+                label:null,
+                vid:null,
+            }
         },
         //关闭
         CloseVideo(){

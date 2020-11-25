@@ -172,7 +172,8 @@ export default {
                 Time:this.$t("message.table.Time"),
                 StartTime:this.$t("message.table.StartTime"),
                 EndTime:this.$t("message.table.EndTime"),
-                Playback:this.$t("message.archive.Playback")
+                Playback:this.$t("message.archive.Playback"),
+                Type:this.$t("message.table.Type")
             },
             icon:'icon_start',
             timelink:0,//滑块

@@ -25,7 +25,7 @@
               <el-form-item :label="label.Port">
                   <el-input v-model="editform.Port"></el-input>
               </el-form-item>
-              <el-form-item label="Audio">
+              <el-form-item :label="label.Audio">
                 <el-switch
                   v-model="editform.Audio">
                 </el-switch>
@@ -62,7 +62,7 @@
               <el-form-item :label="label.Port">
                   <el-input v-model="form.Port"></el-input>
               </el-form-item>
-              <el-form-item label="Audio">
+              <el-form-item :label="label.Audio">
                 <el-switch
                   v-model="form.Audio">
                 </el-switch>
@@ -179,6 +179,7 @@ import uuid from '../../../assets/js/uuid'
             Type:this.$t("message.table.Type"),
             Token:this.$t("message.table.Token"),
             username:this.$t("message.setting.username"),
+            Audio:this.$t("message.setting.Audio"),
             password:this.$t("message.setting.password")
         },
         options: [{
@@ -325,7 +326,7 @@ import uuid from '../../../assets/js/uuid'
             console.log("form",form);
            
             //return false;
-            var url1 = this.$store.state.IPPORT + "/api/v1/DelSrc?token="+this.edittoken+"&session="+ this.$store.state.token;
+            var url1 = this.$store.state.IPPORT + "/api/v1/DelSrc?token="+this.edittoken+"&edit=true&session="+ this.$store.state.token;
             this.$http.get(url1).then(result=>{
                 console.log("1",result,url1);
                 if(result.status==200){

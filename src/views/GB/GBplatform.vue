@@ -9,7 +9,7 @@
                <el-form-item :label="label.label2">
                    <el-input v-model="editform.name"></el-input>
                 </el-form-item>
-                <el-form-item label="Token">
+                <el-form-item :label="label.Token">
                     <el-input v-model="editform.Token"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.label3">
@@ -27,17 +27,11 @@
                 <el-form-item :label="label.label7">
                     <el-input v-model="editform.strGbServerID"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.label8">
-                    <el-input v-model="editform.strGbProto"></el-input>
-                </el-form-item>
                 <el-form-item :label="label.label13">
                     <el-input v-model="editform.strGbDomain"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.label9">
                     <el-input v-model="editform.strGbServerPassword"></el-input>
-                </el-form-item>
-                <el-form-item :label="label.label10">
-                    <el-input v-model="editform.strGbIDChBase"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.label11">
                     <el-input v-model="editform.nGbKeepaliveTime"></el-input>
@@ -45,6 +39,27 @@
                 <el-form-item :label="label.label12">
                     <el-input v-model="editform.nGbRegisterPeriod"></el-input>
                 </el-form-item>
+                <el-collapse v-model="activeNames" class="GBService_active">
+                    <el-collapse-item title="更多设置" name="1" id="headswitch">
+                        <el-form-item :label="label.label10">
+                            <el-input v-model="editform.strGbIDChBase"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="label.label8">
+                            <el-input v-model="editform.strGbProto"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="label.Stream">
+                            <el-select v-model="editform.strStream" placeholder="请选择">
+                                <el-option
+                                    v-for="item in strStream"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                            <!-- <input class="editinput" v-model="editform.bSubAlarm"/> -->
+                        </el-form-item>
+                    </el-collapse-item>
+                </el-collapse>
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
                 <el-button @click="editPopup = false">{{$t("message.setting.Cancel")}}</el-button>
@@ -58,8 +73,8 @@
                 <el-form-item :label="label.label2">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="Token">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item :label="label.Token">
+                    <el-input v-model="form.Token"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.label3">
                     <el-input v-model="form.strGbServerIpAddr"></el-input>
@@ -76,24 +91,41 @@
                 <el-form-item :label="label.label7">
                     <el-input v-model="form.strGbServerID"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.label8">
-                    <el-input v-model="form.strGbProto"></el-input>
-                </el-form-item>
+                
                 <el-form-item :label="label.label13">
                     <el-input v-model="form.strGbDomain"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.label9">
                     <el-input v-model="form.strGbServerPassword"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.label10">
-                    <el-input v-model="form.strGbIDChBase"></el-input>
-                </el-form-item>
+
                 <el-form-item :label="label.label11">
                     <el-input v-model="form.nGbKeepaliveTime"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.label12">
                     <el-input v-model="form.nGbRegisterPeriod"></el-input>
                 </el-form-item>
+                <el-collapse v-model="activeNames" class="GBService_active">
+                    <el-collapse-item title="更多设置" name="1" id="headswitch">
+                        <el-form-item :label="label.label10">
+                            <el-input v-model="form.strGbIDChBase"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="label.label8">
+                            <el-input v-model="form.strGbProto"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="label.Stream">
+                            <el-select v-model="form.strStream" placeholder="请选择">
+                                <el-option
+                                    v-for="item in strStream"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                            <!-- <input class="editinput" v-model="editform.bSubAlarm"/> -->
+                        </el-form-item>
+                    </el-collapse-item>
+                </el-collapse>
                 
             </el-form>
             
@@ -177,6 +209,7 @@ import uuid from '../../assets/js/uuid'
     name:"GB",
     data() {
       return {
+        activeNames: [],//左边
         activeName: "GBPlatform",//优先显示选项卡
         label:{
             label1:this.$t("message.GB.GBPlatform"),//选2
@@ -196,7 +229,8 @@ import uuid from '../../assets/js/uuid'
             label13:this.$t("message.GB.Domain"),
             Online:this.$t("message.table.Online"),
             Index:this.$t("message.table.Index"),
-            Token:this.$t("message.table.Token")
+            Token:this.$t("message.table.Token"),
+            Stream:this.$t("message.GB.Stream"),
         },
         //分页
         search:"",//搜索
@@ -204,6 +238,15 @@ import uuid from '../../assets/js/uuid'
         total1: 0, // 总条数
         pageSize: 10,//一页数量
         dialogFormVisible: false,//添加弹窗
+        strStream:[
+            {
+                value: "main",
+                label: "main"
+            },{
+                value: "sub",
+                label: "sub"
+            }
+        ],
         editPopup:false,//编辑弹窗
         form: {
             name:"Platform1",
@@ -218,7 +261,8 @@ import uuid from '../../assets/js/uuid'
             strGbIDChBase:"34020000001320000001",
             nGbKeepaliveTime:"10",
             nGbRegisterPeriod:"120",
-            nGbLocalPort:"50600"
+            nGbLocalPort:"50600",
+            strStream:'main'
         },
         editform: {
             name:"Platform1",
@@ -233,7 +277,8 @@ import uuid from '../../assets/js/uuid'
             strGbIDChBase:"34020000001320000001",
             nGbKeepaliveTime:"10",
             nGbRegisterPeriod:"120",
-            nGbLocalPort:"50600"
+            nGbLocalPort:"50600",
+            strStream:'main'
         },
         edittoken:"",//编辑时要删除的token
         editindex:"",//编辑时所在索引
@@ -264,6 +309,7 @@ import uuid from '../../assets/js/uuid'
         },
         loadplatforms(itme,bianji,editindex){
             var itme=itme
+            // console.log(itme)
             var _this=this
             var root = this.$store.state.IPPORT;
             for(var i=0;i<itme.length;i++){
@@ -301,6 +347,7 @@ import uuid from '../../assets/js/uuid'
                             _this.tableData.push(tabledata);
                             _this.total1=_this.tableData.length;
                         }
+                        // console.log("编辑",_this.tableData)
                     }
                 })
 
@@ -359,12 +406,15 @@ import uuid from '../../assets/js/uuid'
                         "&gbidchbase="+encodeURIComponent(editform.strGbIDChBase)+
                         "&registerperiod="+encodeURIComponent(editform.nGbRegisterPeriod)+
                         "&keepalivetime="+encodeURIComponent(editform.nGbKeepaliveTime)+
+                        "&stream="+encodeURIComponent(editform.strStream)+
                         "&session="+ this.$store.state.token;
                         //console.log(url);
                         this.$http.get(url).then(result=>{
                             if(result.status==200){
                                 if(result.data.bStatus){
-                                    this.loadplatforms(list,"bianji",this.editindex)
+                                    console.log("添加成功")
+                                    var listarr=[list]
+                                    this.loadplatforms(listarr,"bianji",this.editindex)
                                 }else{
                                     console.log("添加失败")
                                 }
@@ -404,6 +454,7 @@ import uuid from '../../assets/js/uuid'
             "&gbidchbase="+encodeURIComponent(form.strGbIDChBase)+
             "&registerperiod="+encodeURIComponent(form.nGbRegisterPeriod)+
             "&keepalivetime="+encodeURIComponent(form.nGbKeepaliveTime)+
+            "&stream="+encodeURIComponent(form.strStream)+
             "&session="+ this.$store.state.token;
             console.log(url);
             this.$http.get(url).then(result=>{

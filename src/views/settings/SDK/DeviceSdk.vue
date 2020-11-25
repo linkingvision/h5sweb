@@ -15,19 +15,19 @@
                 <el-form-item :label="label.Token">
                     <el-input v-model="editform.Token"></el-input>
                 </el-form-item>
-                <el-form-item label="Username">
+                <el-form-item :label="label.username">
                     <el-input v-model="editform.User"></el-input>
                 </el-form-item>
-                <el-form-item label="Password">
+                <el-form-item :label="label.password">
                     <el-input v-model="editform.Password"></el-input>
                 </el-form-item>
-                <el-form-item label="IP">
+                <el-form-item :label="label.IP">
                     <el-input v-model="editform.IP"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.Port">
                     <el-input v-model="editform.Port"></el-input>
                 </el-form-item>
-                <el-form-item label="Audio">
+                <el-form-item :label="label.Audio">
                     <el-switch
                     v-model="editform.Audio">
                     </el-switch>
@@ -58,10 +58,10 @@
                 <el-form-item :label="label.Token">
                     <el-input v-model="form.Token"></el-input>
                 </el-form-item>
-                <el-form-item label="Username" v-if="form.Type!='H5_DEV_HIKISC'">
+                <el-form-item :label="label.username" v-if="form.Type!='H5_DEV_HIKISC'">
                     <el-input v-model="form.Username"></el-input>
                 </el-form-item>
-                <el-form-item label="Password" v-if="form.Type!='H5_DEV_HIKISC'">
+                <el-form-item :label="label.password" v-if="form.Type!='H5_DEV_HIKISC'">
                     <el-input v-model="form.Password"></el-input>
                 </el-form-item>
                 <!-- lingyige -->
@@ -72,7 +72,7 @@
                     <el-input v-model="form.Password_isc"></el-input>
                 </el-form-item>
 
-                <el-form-item label="IP">
+                <el-form-item :label="label.IP">
                     <el-input v-model="form.IP"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.Port">
@@ -83,7 +83,7 @@
                     <el-input v-if="form.Type=='H5_DEV_UNV'" v-model="form.Port_unv"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_DHDSS'" v-model="form.Port_DSS"></el-input>
                 </el-form-item>
-                <el-form-item label="Audio">
+                <el-form-item :label="label.Audio">
                     <el-switch
                     v-model="form.Audio">
                     </el-switch>
@@ -193,6 +193,10 @@ import uuid from '../../../assets/js/uuid'
             User:this.$t("message.table.User"),
             Online:this.$t("message.table.Online"),
             Type:this.$t("message.table.Type"),
+            Audio:this.$t("message.setting.Audio"),
+            username:this.$t("message.setting.username"),
+            password:this.$t("message.setting.password"),
+            IP:this.$t("message.table.IP"),
             Token:this.$t("message.table.Token")
         },
         options: [{
@@ -415,7 +419,7 @@ import uuid from '../../../assets/js/uuid'
             var form=this.editform;
             console.log("45111111******",form)
             //return false;
-            var url1 = this.$store.state.IPPORT + "/api/v1/DelDevice?token="+encodeURIComponent(this.edittoken)+"&session="+ this.$store.state.token;
+            var url1 = this.$store.state.IPPORT + "/api/v1/DelDevice?token="+encodeURIComponent(this.edittoken)+"&edit=true&session="+ this.$store.state.token;
             console.log("isc------------------------",url1)
             this.$http.get(url1).then(result=>{
                 //console.log("1",result);

@@ -168,7 +168,7 @@
                                 @click="copylink(b.id)" 
                                 style="margin-left: 10px;" 
                                 v-if="b.name=='主机号'||b.name=='Hostid'" 
-                                class="copy iconfont icon-tianjiashijianicon">
+                                class="copy iconfont icon-fuzhi">
                             </i>
                         </div>
                     </div>
@@ -278,9 +278,14 @@ export default {
                 nIndex:"",
                 nvidia:""
             },
-            
+            timerRunInfo: undefined,
+            timerRunInfo1: undefined
 		}
-	},
+    },
+    beforeDestroy() {
+        clearInterval(this.timerRunInfo);
+        clearInterval(this.timerRunInfo1)
+    },
 	mounted(){
         this.GetRunInfo();
         this.GetSystemInfo();
@@ -872,11 +877,7 @@ export default {
                 console.error('Trigger:', e.trigger);
             });
         },
-    },
-    beforeDestroy() {
-        clearInterval(this.timerRunInfo);
-        clearInterval(this.timerRunInfo1)
-    },
+    }
 }
 </script>
 

@@ -14,7 +14,7 @@
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.device")}}</div>
                             <div class="liveview_colltitle">
-                                <div class="liveview_titleicon1"></div>
+                                <div class="liveview_titleicon1" @click.stop="Refresh('device')"></div>
                                 <div @click.stop="headswitch1" class="liveview_titleicon"></div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.Region")}}</div>
                             <div class="liveview_colltitle">
-                                <div class="liveview_titleicon1"></div>
+                                <div class="liveview_titleicon1" @click.stop="Refresh('Region')"></div>
                                 <div @click.stop="headswitch" class="liveview_titleicon"></div>
                             </div>
                         </div>
@@ -96,17 +96,23 @@
 		<!-- 右边视频栏 -->
       	<div class="liveview_right" id="videoPanel">
             <div id="video_hed">
-                <div name='flex' style="position: relative;" class="videoColor"  v-for="r in rows" :key="r">
-                    <div 
+                <div name='flex' style="position: relative;" class="videoColor" v-for="r in rows" :key="r">
+                    <div
+                        @drop="dropTarget($event,r,c)" 
+                        @dragover.prevent="dragover($event)" 
                         class="palace" 
                         name="flex" 
                         v-for="c in cols" 
-                        :key="c" 
                         @contextmenu.prevent="stopVideo($event)" 
-                        @click="videoClick(r,c,$event)"
-                        @drop="dropTarget($event,r,c)" 
-                        @dragover.prevent="dragover($event)" >
-                        <live-play v-bind:id="'h'+r+c" :h5id="'h'+r+c" :rows="rows" :cols="cols" :h5videoid="'hvideo'+r+c"></live-play>
+                        @click="videoClick(r,c,$event)" :key="c">
+                        <v-liveplay 
+                            v-bind:id="'h'+r+c" 
+                            :h5id="'h'+r+c" 
+                            :rows="rows" 
+                            :cols="cols" 
+                            :h5videoid="'hvideo'+r+c"
+                            :canvasid="'canvas'+r+c">
+                        </v-liveplay>
                     </div>
                 </div>
             </div>
@@ -133,12 +139,11 @@
 
 <script>
 import Vue from 'vue'
-import Liveplay from './liveview/Liveplay'
-import {listdatag,listdatagload,listdatag1} from './public/device'
+import liveplay from './liveview/Liveplay'
 export default {
     name: 'Liveview',
     components: {
-        'live-play': Liveplay
+        'v-liveplay': liveplay
     },
 	data(){
 		return{
@@ -151,8 +156,8 @@ export default {
 			contentHeight: '',
             contentWidth: '',
             filterText:"",//搜索框
-            data:listdatag,
-            data1:listdatag1,
+            data:[],
+            data1:[],
             defaultProps: {
                 children: 'children',
                 label: 'label',
@@ -167,12 +172,39 @@ export default {
 		}
     },
 	mounted(){
-        // console.log(listdatag,listdatagload,listdatag1,this.data)
         this.updateUI();
         $('#headswitch1').hide()
-		this.addWaterMarker();
+        this.addWaterMarker();
+        console.log(localStorage.getItem('watermarktoggle'),this.$store.state.Certificatetime)
+		if(localStorage.getItem('watermarktoggle')==null){
+			if(this.$store.state.Certificatetime=="true"){
+				document.getElementById("watermarktoggle").style.display='none';
+			}else if(this.$store.state.Certificatetime=="false"){
+				document.getElementById("watermarktoggle").style.display='block';
+			}
+		}else{
+			document.getElementById("watermarktoggle").style.display=this.watermarktoggle;
+        }
+        this.loadtest();
+        this.loadDevice();
+        this.NumberDevice();
+        this.cloudDevice();
+        this.Regional();
 	},
 	methods:{
+        //刷新
+        Refresh(type){
+            if(type=='device'){
+                this.data=[];
+                this.loadtest();
+                this.loadDevice();
+                this.NumberDevice();
+                this.cloudDevice();
+            }else if(type=='Region'){
+                this.data1=[];
+                this.Regional();
+            }
+        },
         //水印
         addWaterMarker(){
 			if(!document.getElementById("watermarktoggle")){
@@ -203,7 +235,6 @@ export default {
         },
         //树形节点点击
         handleNodeClick(data, checked, indeterminate){
-            console.log(data)
             if(data.streamprofile==undefined){
                 data.streamprofile='main'
             }
@@ -213,31 +244,49 @@ export default {
                 // document.getElementById("icon"+data.token).style.color="#5fbfa7";
                 if (data.token) {
                     let vid = 'h' + _this.$data.selectRow + _this.$data.selectCol;
-                    console.log("----------------------",data.label,vid);
-                    _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
+                    var vdata={
+                        token:data.token,
+                        streamprofile:data.streamprofile,
+                        name:data.name,
+                        label:data.label,
+                        vid:vid,
+                    }
+                    _this.$store.state.liveplay=vdata
+                    console.log("----------------------",vdata,_this.$store.state.liveplay);
+                    // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
                 if (data.strToken) {
                     let vid = 'h' + _this.$data.selectRow + _this.$data.selectCol;
-                    console.log("----------------------",data,vid);
-                    _this.$root.bus.$emit('liveplay', data.strToken, data.streamprofile, data.name,data.strName,vid);
+                    var vdata={
+                        token:data.token,
+                        streamprofile:data.streamprofile,
+                        name:data.name,
+                        label:data.label,
+                        vid:vid,
+                    }
+                    _this.$store.state.liveplay=vdata
+                    console.log("----------------------",vdata,_this.$store.state.liveplay);
+                    // _this.$root.bus.$emit('liveplay', data.strToken, data.streamprofile, data.name,data.strName,vid);
                 }
-                for(var i=1;i<=this.rows;i++){
-                    for(var c=1;c<=this.cols;c++){
-                        var video= document.getElementById("hvideo"+i+c)
-                        console.log('video.paused++++',video.poster);
-                        if(video.poster==""||video.poster=="http://localhost:6080/"||video.poster==_this.$store.state.IPPORT){
-                            this.selectCol = c;
-                            this.selectRow =i;
-                            $(".h5container").removeClass('h5videoh');
-                            $("#h"+this.selectRow+this.selectCol).addClass('h5videoh');
-                            // console.log('video.paused1',video.poster,i,c);
-                            return false
-                        }else{
-                            console.log('video.paused1',video.poster);
+                
+                _this.$nextTick(()=>{
+                    for(var i=1;i<=this.rows;i++){
+                        for(var c=1;c<=this.cols;c++){
+                            var video= document.getElementById("hvideo"+i+c)
+                            console.log('video.paused++++',video.poster);
+                            if(video.poster==""||video.poster=="http://localhost:6080/"||video.poster==_this.$store.state.IPPORT){
+                                this.selectCol = c;
+                                this.selectRow =i;
+                                $(".h5container").removeClass('h5videoh');
+                                $("#h"+this.selectRow+this.selectCol).addClass('h5videoh');
+                                // console.log('video.paused1',video.poster,i,c);
+                                return false
+                            }else{
+                                console.log('video.paused1',video.poster);
+                            }
                         }
                     }
-                }
-                    
+                })
             }else{
                console.log("不可用");
             }
@@ -270,23 +319,34 @@ export default {
                 // document.getElementById("icon"+data.token).style.color="#5fbfa7";
                 if (data.token) {
                     let vid = 'h' + r + c;
-                    _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
+                    var vdata={
+                        token:data.token,
+                        streamprofile:data.streamprofile,
+                        name:data.name,
+                        label:data.label,
+                        vid:vid,
+                    }
+                    _this.$store.state.liveplay=vdata
+                    console.log("----------------------",vdata,_this.$store.state.liveplay);
+                    // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
-                for(var i=1;i<=this.rows;i++){
-                    for(var c=1;c<=this.cols;c++){
-                        var video= document.getElementById("hvideo"+i+c)
-                        // console.log('video.paused',video);
-                        if(video.poster==""||video.poster=="http://localhost:6080/"||video.poster==_this.$store.state.IPPORT){
-                            this.selectCol = c;
-                            this.selectRow =i;
-                            $(".h5container").removeClass('h5videoh');
-                            $("#h"+this.selectRow+this.selectCol).addClass('h5videoh');
-                            return false
-                        }else{
-                            console.log('video.paused1',!video.poster);
+                _this.$nextTick(()=>{
+                    for(var i=1;i<=this.rows;i++){
+                        for(var c=1;c<=this.cols;c++){
+                            var video= document.getElementById("hvideo"+i+c)
+                            // console.log('video.paused',video);
+                            if(video.poster==""||video.poster=="http://localhost:6080/"||video.poster==_this.$store.state.IPPORT){
+                                this.selectCol = c;
+                                this.selectRow =i;
+                                $(".h5container").removeClass('h5videoh');
+                                $("#h"+this.selectRow+this.selectCol).addClass('h5videoh');
+                                return false
+                            }else{
+                                console.log('video.paused1',!video.poster);
+                            }
                         }
                     }
-                }
+                })
                     
             }else{
                console.log("不可用");
@@ -322,6 +382,7 @@ export default {
         },
 		//点击宫格
         changePanel(event) {
+            
             let data = $(event.target).data('row');
             let _this = this;
              window.setTimeout(function() {
@@ -365,6 +426,7 @@ export default {
                 rows: parseInt(rows),
                 cols: parseInt(cols)
             });
+            
             Vue.nextTick(function () {
                 //$('div[name="flex"]').height(($(".content").height() - 50) / rows);
                 $('div[name="flex"]').height(_this.contentHeight / rows);
@@ -453,6 +515,387 @@ export default {
         headswitch1(){
             $('#headswitch1').show()
             $('#headswitch').hide()
+        },
+        //测试机仓
+        loadtest(){
+            var root = this.$store.state.IPPORT;
+            if(this.$store.state.root=="Operator"){
+                return false
+            }
+            var url = root + "/api/v1//GetSrcCamera?session="+ this.$store.state.token;
+            // return falsel;
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    var data =  result.data;
+                    var srcGroup = {children: []};
+                    srcGroup.label=this.$t('message.live.camera');
+                    srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
+                    for(var i=0; i< data.src.length; i++){
+                        var item = data.src[i];
+                        if(item['nOriginalType'] == 'H5_CH_GB'){
+                            continue;
+                        }else{
+                            // 主副流
+                            var node=[{
+                            token : item['strToken'],
+                            streamprofile : "main",
+                            label :this.$t('message.live.mainstream'),
+                            name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                            iconclass : 'mdi mdi-playlist-play fa-fw',
+                            disabled_me:false
+                            },{
+                            token : item['strToken'],
+                            streamprofile : "sub",
+                            label :this.$t('message.live.substream'),
+                            name:item['strName']+"--"+this.$t('message.live.substream'),
+                            iconclass : 'mdi mdi-playlist-play fa-fw',
+                            disabled_me:false
+                            }]
+                            var newItem ={
+                                    token : item['strToken'],
+                                    label : item['strName'],
+                                    iconclass : 'iconfont  icon-kaiqishexiangtou1',
+                                    iconclass2 : 'iconfont  icon-shexiangtou',
+                                    name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                                    children:node,
+                                    disabled_me:false};
+                            
+                            if(!item['bOnline'])
+                                newItem['iconclass'] = 'iconfont icon-kaiqishexiangtou';
+
+                            if(item['nType'] == 'H5_CLOUD')
+                                newItem['iconclass'] = 'mdi mdi-cloud-upload fa-fw';
+                            
+                            if(item['bRec'] == true)
+                                newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+                                
+                        srcGroup.children.push(newItem);
+                        }
+                    }
+                    this.data.push(srcGroup);
+                } 
+            })
+
+        },
+        //写作业
+        loadDevice() {
+            var root = this.$store.state.IPPORT;
+            if(this.$store.state.root=="Operator"){
+                return false
+            }
+            var url = root + "/api/v1/GetDevice?session="+ this.$store.state.token;
+
+            //重组
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    var srcData = [];
+                    var data=result.data;
+                    for(var i = 0; i < data.dev.length; i++){
+                        var item=data.dev[i];
+                        var srclevel=[];
+                        srclevel["strToken"]=item.strToken;
+                        srclevel["strName"]=item.strName;
+                        this.loadSrc(srclevel,srcData);
+                    }
+                }
+            })
+        },
+        loadSrc(srclevel, srcData) {
+            var root = this.$store.state.IPPORT;
+            let _this =this;
+            
+            var url = root + "/api/v1/GetDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+
+            this.$http.get(url).then(result => {
+                if (result.status == 200)
+                {
+                    var data =  result.data;
+                    var srcGroup = {children: []};
+                    srcGroup.label=srclevel.strName;
+                    srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
+                    for(var i=0; i< data.src.length; i++){
+                        var item = data.src[i];
+                        // 主副流
+                        var node=[{
+                        token : item['strToken'],
+                        streamprofile : "main",
+                        label :this.$t('message.live.mainstream'),
+                        name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                        iconclass : 'mdi mdi-playlist-play fa-fw',
+                        disabled_me:false
+                        },{
+                        token : item['strToken'],
+                        streamprofile : "sub",
+                        label :this.$t('message.live.substream'),
+                        name:item['strName']+"--"+this.$t('message.live.substream'),
+                        iconclass : 'mdi mdi-playlist-play fa-fw',
+                        disabled_me:false
+                        }]
+                        for(var l=0; l< node.length; l++){
+                            if(item['bDisable'] == true){
+                                node[l].disabled_me =true;
+                            }
+                        }
+                        
+                        var newItem ={
+                                token : item['strToken'],
+                                label : item['strName'],
+                                iconclass : 'iconfont  icon-kaiqishexiangtou1',
+                                iconclass1 : '',
+                                name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                                children:node,
+                                disabled_me:false};
+
+                        if(!item['bOnline'])
+                            newItem['iconclass'] = 'iconfont icon-kaiqishexiangtou';
+
+                        if(item['nType'] == 'H5_CLOUD')
+                            newItem['iconclass'] = 'mdi mdi-cloud-upload fa-fw';
+
+                        if(item['bRec'] == true)
+                                newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+
+                        if(item['bDisable'] == true){
+                            newItem['disabled_me'] =true;
+                            newItem['iconclass1'] = 'camera';
+                        }
+
+                    srcGroup.children.push(newItem);
+                    }
+                    this.data.push(srcGroup);
+                }
+            }).catch(error => {
+                console.log('GetSrc failed', error);
+            });
+        },
+        //数字仓机
+        NumberDevice() {
+            var root = this.$store.state.IPPORT;
+            if(this.$store.state.root=="Operator"){
+                return false
+            }
+            //url
+            var url = root + "/api/v1/GetGbDevice?session="+ this.$store.state.token;
+
+            //重组
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    var srcData = [];
+                    var data=result.data;
+                    for(var i = 0; i < data.dev.length; i++){
+                        var item=data.dev[i];
+                        var srclevel=[];
+                        srclevel["strToken"]=item.strToken;
+                        srclevel["strName"]=item.strName;
+                        this.NumberSrc(srclevel,srcData);
+                    }
+                }
+            })
+        },
+        NumberSrc(srclevel, srcData) {
+            var root = this.$store.state.IPPORT;
+            let _this =this;
+            var url = root + "/api/v1/GetGbDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+
+            this.$http.get(url).then(result => {
+                if (result.status == 200)
+                {
+                    var data =  result.data;
+                    var srcGroup = {children: []};
+                    srcGroup.label=srclevel.strName;
+                    srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
+                    for(var i=0; i< data.src.length; i++){
+                        var item = data.src[i];
+                        // 主副流
+                        var node=[{
+                        token : item['strToken'],
+                        streamprofile : "main",
+                        label :this.$t('message.live.mainstream'),
+                        name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                        iconclass : 'mdi mdi-playlist-play fa-fw',
+                        disabled_me:false
+                        },{
+                        token : item['strToken'],
+                        streamprofile : "sub",
+                        label :this.$t('message.live.substream'),
+                        name:item['strName']+"--"+this.$t('message.live.substream'),
+                        iconclass : 'mdi mdi-playlist-play fa-fw',
+                        disabled_me:false
+                        }]
+                        var newItem ={
+                                token : item['strToken'],
+                                label : item['strName'],
+                                iconclass : 'iconfont  icon-kaiqishexiangtou1',
+                                name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                                children:node,
+                                disabled_me:false};
+
+                        if(!item['bOnline'])
+                            newItem['iconclass'] = 'iconfont icon-kaiqishexiangtou';
+
+                        if(item['nType'] == 'H5_CLOUD')
+                            newItem['iconclass'] = 'mdi mdi-cloud-upload fa-fw';
+
+                        if(item['bRec'] == true)
+                                newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+
+                    srcGroup.children.push(newItem);
+                    }
+                    this.data.push(srcGroup);
+                }
+            }).catch(error => {
+                console.log('GetSrc failed', error);
+            });
+        },
+        //级联
+        cloudDevice() {
+            var root = this.$store.state.IPPORT;
+            if(this.$store.state.root=="Operator"){
+                return false
+            }
+            var url = root + "/api/v1/GetCloudDevice?session="+ this.$store.state.token;
+
+            //重组
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    var srcData = [];
+                    var data=result.data;
+                    for(var i = 0; i < data.dev.length; i++){
+                        var item=data.dev[i];
+                        var srclevel=[];
+                        srclevel["strToken"]=item.strToken;
+                        srclevel["strName"]=item.strName;
+                        this.cloudSrc(srclevel,srcData);
+                    }
+                }
+            })
+        },
+        cloudSrc(srclevel, srcData) {
+            var root = this.$store.state.IPPORT;
+            var url = root + "/api/v1/GetCloudDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+
+            this.$http.get(url).then(result => {
+                if (result.status == 200)
+                {
+                    var data =  result.data;
+                    var srcGroup = {children: []};
+                    srcGroup.label=srclevel.strName;
+                    srcGroup.iconclass="iconfont icon-kaiqishexiangtou1";
+                    for(var i=0; i< data.src.length; i++){
+                        var item = data.src[i];
+                        // 主副流
+                        var node=[{
+                        token : item['strToken'],
+                        streamprofile : "main",
+                        label :this.$t('message.live.mainstream'),
+                        name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                        iconclass : 'mdi mdi-playlist-play fa-fw',
+                        disabled_me:false
+                        },{
+                        token : item['strToken'],
+                        streamprofile : "sub",
+                        label :this.$t('message.live.substream'),
+                        name:item['strName']+"--"+this.$t('message.live.substream'),
+                        iconclass : 'mdi mdi-playlist-play fa-fw',
+                        disabled_me:false
+                        }]
+                        var newItem ={
+                                token : item['strToken'],
+                                label : item['strName'],
+                                iconclass : 'mdi mdi-video fa-fw',
+                                name:item['strName']+"--"+this.$t('message.live.mainstream'),
+                                children:node,
+                                disabled_me:false};
+
+                        if(!item['bOnline'])
+                            newItem['iconclass'] = 'iconfont icon-kaiqishexiangtou';
+
+                        if(item['nType'] == 'H5_CLOUD')
+                            newItem['iconclass'] = 'iconfont  icon-kaiqishexiangtou1';
+
+                        if(item['bRec'] == true)
+                                newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
+
+                    srcGroup.children.push(newItem);
+                    }
+                    this.data.push(srcGroup);
+                }
+            }).catch(error => {
+                console.log('GetSrc failed', error);
+            });
+        },
+
+        Regional(){
+            var root = this.$store.state.IPPORT;
+            var url = root + "/api/v1/GetRegion?session="+ this.$store.state.token;
+            this.$http.get(url).then(result=>{
+                // console.log(result);
+                var oldarr=result.data.root;
+                var oldarr1=result.data.src;
+                // console.log(oldarr,oldarr1)
+                var dataroot=this.getchild(oldarr,oldarr1);
+                this.data1.push(dataroot);
+            })
+        },
+        getchild(arr,arr1) {
+            
+            for(var i in arr.cam){
+                if(!arr.cam[i].strName){
+                    for(var j in arr1){
+                        if(arr.cam[i].strToken == arr1[j].strToken){
+                            var node1=[{
+                                strToken : arr1[j].strToken,
+                                streamprofile : "main",
+                                strName :this.$t('message.live.mainstream'),
+                                name:arr1[j].strName+"--"+this.$t('message.live.mainstream'),
+                                iconclass : 'mdi mdi-playlist-play fa-fw',
+                                disabled_me:false
+                            },{
+                                strToken : arr1[j].strToken,
+                                streamprofile : "sub",
+                                strName :this.$t('message.live.substream'),
+                                name:arr1[j].strName+"--"+this.$t('message.live.substream'),
+                                iconclass : 'mdi mdi-playlist-play fa-fw',
+                                disabled_me:false
+                            }]
+                            arr.cam[i].node=node1;
+                            arr.cam[i].strName = arr1[j].strName;
+                            arr.cam[i].name=arr1[j].strName+"--"+this.$t('message.live.mainstream')
+                            arr.cam[i].bOnline = arr1[j].bOnline;
+                            arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou1"
+                            arr.cam[i].disabled_me=false
+                            if(!arr1[j].bOnline)
+                                arr.cam[i].iconclass = 'iconfont icon-kaiqishexiangtou';
+
+                            if(arr1[j].nConnectType == 'H5_CLOUD')
+                                arr.cam[i].iconclass = 'iconfont  icon-kaiqishexiangtou1';
+
+                            if(arr1[j].bRec == true)
+                                arr.cam[i].iconclass2  = 'iconfont icon-radioboxfill none';
+
+                            if(arr1[j].bDisable== true){
+                                
+                                arr.cam[i].node[0].disabled_me=true;
+                                arr.cam[i].node[1].disabled_me=true;
+                                arr.cam[i].disabled_me=true;
+                                arr.cam[i].iconclass1= 'camera';
+                            }
+                        }
+                    }
+                }
+            }
+            // var nodecam=[{
+            //     strName:"cam",
+            //     node:arr.cam,
+            // },{
+                
+            // }]
+            if(arr.node && arr.node.length>0){
+                for (var i = 0; i < arr.node.length; i++) {
+                    arr.node[i] = getchild(arr.node[i],arr1);
+                }
+            }
+            return arr;
         },
         //模糊查询
         filterNode(value, data, node) {

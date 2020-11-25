@@ -8,7 +8,7 @@ import '../../assets/js/adapter'
 import {H5sPlayerWS,H5sPlayerHls,H5sPlayerRTC,H5sPlayerAudBack} from '../../assets/js/h5splayer.js'
 import {H5siOS,H5sPlayerCreate} from '../../assets/js/h5splayerhelper.js'
 export default {
-    name:"liveplay",
+    name:"Trueplay",
     props:['h5id', 'h5videoid',"cols","rows"],
     data(){
         return{

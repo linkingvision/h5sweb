@@ -11,6 +11,10 @@ import $ from 'jquery'
 import axios from '@/http';
 Vue.prototype.$http = axios;
 
+//注册到vue原型上
+import clipboard from 'clipboard';
+Vue.prototype.clipboard = clipboard;
+
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
@@ -88,10 +92,10 @@ new Vue({
   store,
   //CIcon component documentation: https://coreui.io/vue/docs/components/icon
   icons,
+  template: '<App/>',
   data: {
     bus
   },
-  template: '<App/>',
   components: {
     App
   }

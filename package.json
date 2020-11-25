@@ -16,6 +16,7 @@
     "@coreui/icons": "^1.0.1",
     "@coreui/vue": "^3.0.5",
     "babel-polyfill": "^6.26.0",
+    "clipboard": "^2.0.6",
     "echarts": "^4.9.0",
     "element-ui": "^2.13.2",
     "qrcodejs2": "0.0.2",

@@ -148,6 +148,7 @@ export default {
 		},
 		setting:
 		{
+			Audio: "音频",
 			DeviceImport:"设备导入", 
 			Import:"导入",
 			Batchimportdevice:"批量导入设备信息",
@@ -299,6 +300,8 @@ export default {
 			Enable: "启用",
 			EnableAudio: "开启音频",
 			EnableSSRCCheck: "SSRC检查",
+
+			Stream:"码流",
 
 
 

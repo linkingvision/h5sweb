@@ -40,12 +40,12 @@
                 <el-table-column
                     prop="token"
                     :label="label.Token"
-                    width="150">
+                    width="230">
                 </el-table-column>
                 <el-table-column
                     prop="name"
                     :label="Name1"
-                    width="150">
+                    width="230">
                 </el-table-column>
                 <el-table-column
                     width="150"
@@ -105,13 +105,9 @@
 
 <script>
 import Vue from 'vue'
-import Liveplay from '../../liveview/Liveplay'
 import {listdatag,listdatagload,listdatag1} from '../../public/device'
 export default {
-    name: 'Liveview',
-    components: {
-        'live-play': Liveplay
-    },
+    name: 'Camera',
 	data(){
 		return{
             filterText:"",//搜索框
@@ -249,6 +245,98 @@ export default {
             }
             this.total=this.tableData.length;
         },
+        //编辑
+        handleEdit(index,row){
+            console.log(index,row,row.gbid.length,row.gbid);
+            var index_xlh=((this.currentPage-1)*10)+index;
+            //return false;
+            var root = this.$store.state.IPPORT
+
+            var url1 = root + "/api/v1/DelCamera?token="+row.token+"&session="+ this.$store.state.token;
+            console.log("-****************",url1);
+            this.$http.get(url1).then(result=>{
+                console.log(result);
+                if(result.status==200){
+                    if(result.data.bStatus==true){
+                        var tabledata={
+                            name:row.name,
+                            token:row.token,
+                            open_close:row.open_close,
+                            gbid:row.gbid,
+                            audio:row.audio,
+                        };
+                        this.tableData.splice(index_xlh, 1,tabledata)
+
+                        var url=""
+                        if(row.gbid==""){
+                            console.log("&&row.open_close==true||row.audio==true");
+                            url = root + "/api/v1/AddCamera?token="+row.token+"&enable="+row.open_close+"&audio="+row.audio+"&session="+ this.$store.state.token;
+                        }else if(row.gbid.length==20){
+                            console.log("222");
+                            url = root + "/api/v1/AddCamera?token="+row.token+"&enable="+row.open_close+"&audio="+row.audio+"&gbid="+row.gbid+"&session="+ this.$store.state.token;
+                        }
+                        
+                        console.log("----------------",url);
+                        this.$http.get(url).then(result=>{
+                            console.log(result);
+                            if(result.status==200){
+                                this.$message({
+                                    message: this.$t('message.camera.Save_successfully'),
+                                    type: 'success'
+                                });
+                            }
+                        })
+
+                        this.editform["name"]=row.name;
+                        this.editform["token"]=row.token;
+                        this.editform["open_close"]=row.open_close;
+                        this.editform["audio"]=row.audio;
+                        this.editform["gbid"]=row.gbid;
+                    }
+                    else{
+                        console.log("保存失败");
+                        // return false;
+                    }
+                }
+            })
+            
+        },
+        //删除
+        handledel(index,row){
+            console.log(index,row);
+            console.log("序列号",((this.currentPage-1)*10)+index);
+            var index_xlh=((this.currentPage-1)*10)+index;
+
+            var root = this.$store.state.IPPORT
+            var url = root + "/api/v1/DelCamera?token="+row.token+"&session="+ this.$store.state.token;
+            console.log("-****************",url);
+            this.$http.get(url).then(result=>{
+                console.log(result);
+                if(result.status==200){
+                    if(result.data.bStatus==true){
+                        var tabledata={
+                            name:row.name,
+                            token:row.token,
+                            open_close:true,
+                            gbid:"",
+                            audio:false,
+                        };
+                        this.tableData.splice(index_xlh, 1,tabledata);
+                        this.$message({
+                            message: this.$t('message.camera.Delete_successful'),
+                            type: 'success'
+                        });
+                    }
+                    else{
+                        this.$message({
+                            message: this.$t('message.camera.Delete_failed'),
+                            type: 'warning'
+                        });
+                        return false;
+                    }
+                }
+            })
+        },
         //测试机仓
         loadtest(){
             let _this =this;
@@ -372,105 +460,7 @@ export default {
                 console.log('GetSrc failed', error);
             });
         },
-        //编辑
-        handleEdit(index,row){
-            console.log(index,row,row.gbid.length,row.gbid);
-            var index_xlh=((this.currentPage-1)*10)+index;
-            //return false;
-            var root = process.env.API_ROOT;
-            if (root == undefined){
-              root = window.location.protocol + '//' + window.location.host + window.location.pathname;
-            }
-            
-
-            var url1 = root + "/api/v1/DelCamera?token="+row.token+"&session="+ this.$store.state.token;
-            console.log("-****************",url1);
-            this.$http.get(url1).then(result=>{
-                console.log(result);
-                if(result.status==200){
-                    if(result.data.bStatus==true){
-                        var tabledata={
-                            name:row.name,
-                            token:row.token,
-                            open_close:row.open_close,
-                            gbid:row.gbid,
-                            audio:row.audio,
-                        };
-                        this.tableData.splice(index_xlh, 1,tabledata)
-
-                        var url=""
-                        if(row.gbid==""){
-                            console.log("&&row.open_close==true||row.audio==true");
-                            url = root + "/api/v1/AddCamera?token="+row.token+"&enable="+row.open_close+"&audio="+row.audio+"&session="+ this.$store.state.token;
-                        }else if(row.gbid.length==20){
-                            console.log("222");
-                            url = root + "/api/v1/AddCamera?token="+row.token+"&enable="+row.open_close+"&audio="+row.audio+"&gbid="+row.gbid+"&session="+ this.$store.state.token;
-                        }
-                        
-                        console.log("----------------",url);
-                        this.$http.get(url).then(result=>{
-                            console.log(result);
-                            if(result.status==200){
-                                this.$message({
-                                    message: this.$t('message.camera.Save_successfully'),
-                                    type: 'success'
-                                });
-                            }
-                        })
-
-                        this.editform["name"]=row.name;
-                        this.editform["token"]=row.token;
-                        this.editform["open_close"]=row.open_close;
-                        this.editform["audio"]=row.audio;
-                        this.editform["gbid"]=row.gbid;
-                    }
-                    else{
-                        console.log("保存失败");
-                        // return false;
-                    }
-                }
-            })
-            
-        },
-        //删除
-        handledel(index,row){
-            console.log(index,row);
-            console.log("序列号",((this.currentPage-1)*10)+index);
-            var index_xlh=((this.currentPage-1)*10)+index;
-
-            var root = process.env.API_ROOT;
-            if (root == undefined){
-              root = window.location.protocol + '//' + window.location.host + window.location.pathname;
-            }
-            var url = root + "/api/v1/DelCamera?token="+row.token+"&session="+ this.$store.state.token;
-            console.log("-****************",url);
-            this.$http.get(url).then(result=>{
-                console.log(result);
-                if(result.status==200){
-                    if(result.data.bStatus==true){
-                        var tabledata={
-                            name:row.name,
-                            token:row.token,
-                            open_close:true,
-                            gbid:"",
-                            audio:false,
-                        };
-                        this.tableData.splice(index_xlh, 1,tabledata);
-                        this.$message({
-                            message: this.$t('message.camera.Delete_successful'),
-                            type: 'success'
-                        });
-                    }
-                    else{
-                        this.$message({
-                            message: this.$t('message.camera.Delete_failed'),
-                            type: 'warning'
-                        });
-                        return false;
-                    }
-                }
-            })
-        },
+        
         //分页
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);

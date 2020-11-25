@@ -162,6 +162,7 @@ export default {
 	name: 'TheHeader',
 	data(){
 		return {
+			timerRunInfo:undefined,
 			gEvvalue: 0,
 			user:this.$store.state.user,
 			Rebootdialog:false,
@@ -196,6 +197,9 @@ export default {
 			this.$root.bus.$emit('skintoggle', a);
 		}
 	},
+	beforeDestroy() {
+        clearInterval(this.timerRunInfo);
+    },
 	mounted(){
 		this.Docker();
 		this.GetSystemInfo();
@@ -204,10 +208,11 @@ export default {
 		_this.$root.bus.$on('webrtc', function(token){
 			$("#rtc_togg").show();
 		});
+		this.gEventval();
 	},
 	methods:{
 		gEventval() {
-			setInterval(
+			this.timerRunInfo= setInterval(
 				function() {
 				this.gEvvalue = this.EVENT.gEvent.length;
 				}.bind(this),

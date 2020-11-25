@@ -53,9 +53,12 @@ export default {
 		return {
 			proto: this.$store.state.liveviewrtc,
 			watermarkstring:this.$store.state.watermarkstring,//水印、
+			watermarktoggle:this.$store.state.watermarktoggle,
 		}
 	},
 	mounted(){
+		// localStorage.removeItem('watermarktoggle')
+		
 	},
 	methods:{
 		//水印

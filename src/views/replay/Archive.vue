@@ -181,6 +181,7 @@ export default {
                 content4:this.$t("message.archive.Playback")
             },
             label:{
+                Type:this.$t("message.table.Type"),
                 Name:this.$t("message.table.Name"),
                 Token:this.$t("message.table.Token"),
                 Time:this.$t("message.table.Time"),

@@ -276,7 +276,7 @@ import uuid from '../../../assets/js/uuid'
             var form=this.editform;
             // console.log("form", form,list);
             //return false;
-            var url1 = root + "/api/v1/DelSrc?token="+this.edittoken+"&session="+ this.$store.state.token;
+            var url1 = root + "/api/v1/DelSrc?token="+this.edittoken+"&edit=true&session="+ this.$store.state.token;
             this.$http.get(url1).then(result=>{
                 //console.log("1",result);
                 if(result.status==200){
@@ -317,7 +317,7 @@ import uuid from '../../../assets/js/uuid'
             
         },
         
-        deleteRow(index, row,rows) {
+        /*deleteRow(index, row,rows) {
             //var form=this.form;
             console.log(this.edittoken);
             console.log("序列号",((this.currentPage1-1)*10)+index);
@@ -341,7 +341,7 @@ import uuid from '../../../assets/js/uuid'
                     }
                 }
             })
-        },
+        },*/
 
         platformyes(){
             this.dialogFormVisible=false;

@@ -12,6 +12,7 @@ const state = {
   tourrtc:"WS",
   watermarkstring:"linkingvision",
   watermarktoggle:"",
+  Certificatetime:null,//证书时间 是否显示水印
   
   lang:"zhchs",
   token:null,
@@ -19,7 +20,14 @@ const state = {
   root:null,
   Adswitch:"false",
   IPPORT:'',
-  WSROOT:''
+  WSROOT:'',
+  liveplay:{
+    token:null,
+    streamprofile:null,
+    name:null,
+    label:null,
+    vid:null,
+  }
 }
 
 const mutations = {

@@ -16,6 +16,12 @@
                         <CCardBody>
                             
                             <CForm novalidate @submit.stop.prevent="login">
+                                <div class="prompt" id="prompt">
+                                    <i class="iconfont icon-ts-caveat"></i> <span>用户名或密码错误，请您重新输入，剩余次数{{frequency}}次。</span>
+                                </div>
+                                <div class="prompt" id="prompt1">
+                                    <i class="iconfont icon-ts-caveat"></i> <span>错误次数过多，账户已锁定 ,请{{lockingdate}}分钟后再试!</span>
+                                </div>
                                 <CInput placeholder="Username" v-model="name">
                                     <template #prepend-content><i class="content_icon iconfont icon-yonghuming"></i> </template>
                                 </CInput>
@@ -81,10 +87,14 @@ export default {
                     label: '简体中文'
                 },
             ],
-            e1:undefined
+            e1:undefined,
+            frequency:0,
+            lockingdate:0
         };
     },
     mounted(){
+        $("#prompt").hide();
+        $("#prompt1").hide();
         this.GetSystemInfo()
         console.log(sessionStorage.getItem('mcutoken'),sessionStorage.getItem('mcuuser'),sessionStorage.getItem('mculang'),sessionStorage.getItem('mcuroot'),this.$store.state.token,this.$store.state.user)
     },
@@ -100,9 +110,14 @@ export default {
                     var date=new Date().getTime()
                     var Timedifference=1000*60*60*24*31
                     if((Enddate-date)<Timedifference){
-                        console.log(date-Enddate,Timedifference);
+                        console.log(date-Enddate,Timedifference,result.data.strEndtime);
                         this.capability=result.data.strEndtime
+                        this.$store.state.Certificatetime='false'
+                        sessionStorage.Certificatetime = 'false'
                         document.getElementById("Copyrightnotice").style.display='block';
+                    }else{
+                        this.$store.state.Certificatetime='true'
+                        sessionStorage.Certificatetime = 'true'
                     }
 
                     console.log(Enddate-date,Timedifference);
@@ -128,6 +143,8 @@ export default {
                 console.log(result)
                 if(result.status == 200){
                     if(result.data.bStatus){
+                        $("#prompt").hide();
+                        $("#prompt1").hide();
                         var data=result.data;
                         console.log(data)
                         this.$store.state.token=data.strSession
@@ -135,6 +152,17 @@ export default {
                         
                         this.loginroot(data.strSession,root)
                     }else{
+                        console.log(result.data)
+                        if(result.data.nFaultTimes<=3){
+                            this.frequency=3-result.data.nFaultTimes;
+                            // console.log("data还能错次拉",3-data.nFaultTimes,_this.frequency);
+                            $("#prompt").show();
+                            $("#prompt1").hide();
+                        }else{
+                            this.lockingdate = Math.floor(data.tLockTimeResidue/60);
+                            $("#prompt1").show();
+                            $("#prompt").hide();
+                        }
                         this.$message(this.$t("message.login.login_status_failed"));
                     }
                 }
@@ -209,6 +237,13 @@ export default {
             .content_beck{
                 background: none;
                 border: none;
+                /*错误提示 */
+                .prompt{
+                    font-size:7px;
+                    font-family:PingFang SC;
+                    font-weight:500;
+                    color:rgba(208,19,19,1);
+                }
                 .form-group{
                     font-size:10px;
                     font-family:PingFang SC;
