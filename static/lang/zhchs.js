@@ -266,6 +266,8 @@ export default {
 			GB28181: "下级域",
 			GBPlatform: "上级域",
 			GBService: "GB服务配置",
+			main:'主码流',
+			sub:'辅码流',
 
 			name: '名字',
 			// GB28181:"国标",

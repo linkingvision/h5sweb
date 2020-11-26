@@ -231,6 +231,8 @@ import uuid from '../../assets/js/uuid'
             Index:this.$t("message.table.Index"),
             Token:this.$t("message.table.Token"),
             Stream:this.$t("message.GB.Stream"),
+            main:this.$t("message.GB.main"),
+            sub:this.$t("message.GB.sub"),
         },
         //分页
         search:"",//搜索
@@ -241,10 +243,10 @@ import uuid from '../../assets/js/uuid'
         strStream:[
             {
                 value: "main",
-                label: "main"
+                label: this.$t("message.GB.main")
             },{
                 value: "sub",
-                label: "sub"
+                label: this.$t("message.GB.sub")
             }
         ],
         editPopup:false,//编辑弹窗
@@ -339,7 +341,8 @@ import uuid from '../../assets/js/uuid'
                             strGbIDChBase:itme[i].strGbIDChBase,
                             nGbRegisterPeriod:itme[i].nGbRegisterPeriod,
                             nGbKeepaliveTime:itme[i].nGbKeepaliveTime,
-                            bRegStatus:data.bRegStatus+""
+                            bRegStatus:data.bRegStatus+"",
+                            strStream:itme[i].strStream
                         };
                         if(bianji=='bianji'){
                             _this.tableData.splice(editindex, 1,tabledata)
@@ -390,6 +393,7 @@ import uuid from '../../assets/js/uuid'
                             nGbRegisterPeriod:editform.nGbRegisterPeriod,
                             nGbKeepaliveTime:editform.nGbKeepaliveTime,
                             strGbDomain:editform.strGbDomain,
+                            strStream:editform.strStream
                         }
                         this.tableData.splice(this.editindex, 1,list)
                         var url = root + "/api/v1/AddGbPlatform?name="
@@ -408,8 +412,9 @@ import uuid from '../../assets/js/uuid'
                         "&keepalivetime="+encodeURIComponent(editform.nGbKeepaliveTime)+
                         "&stream="+encodeURIComponent(editform.strStream)+
                         "&session="+ this.$store.state.token;
-                        //console.log(url);
+                        console.log(url);
                         this.$http.get(url).then(result=>{
+                            console.log(result);
                             if(result.status==200){
                                 if(result.data.bStatus){
                                     console.log("添加成功")
@@ -493,7 +498,8 @@ import uuid from '../../assets/js/uuid'
                 +row.strGbProto+'</div><div>'+this.$t("message.GB.SIPChannelBaseID")+': '
                 +row.strGbIDChBase+'</div><div>'+this.$t("message.GB.RegisterPeriod")+': '
                 +row.nGbRegisterPeriod+'</div><div>'+this.$t("message.GB.KeepaliveTime")+': '
-                +row.nGbKeepaliveTime+'</div>', '详情',{dangerouslyUseHTMLString: true});
+                +row.nGbKeepaliveTime+'</div><div>'+this.$t("message.GB.Stream")+': '
+                +row.strStream+'</div>', '详情',{dangerouslyUseHTMLString: true});
         },
         handleEdit(index,row){
             //console.log(index);
@@ -517,6 +523,7 @@ import uuid from '../../assets/js/uuid'
             this.editform["nGbKeepaliveTime"]=row.nGbKeepaliveTime;
             this.editform["nGbRegisterPeriod"]=row.nGbRegisterPeriod;
             this.editform["nGbLocalPort"]=row.nGbLocalPort;
+            this.editform["strStream"]=row.strStream;
             console.log(this.editform)
             // console.log(this.tableData[index])
             

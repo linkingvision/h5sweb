@@ -65,7 +65,7 @@
 		<CHeaderNav>
 			<div class="c_Docker" id="Docker"></div>
 		</CHeaderNav>
-		<CHeaderNav>
+		<CHeaderNav style="margin-right: 15px;">
 			<router-link :to="{name:'Event'}">
 				<el-badge :value="gEvvalue" :max="999" class="item" data-toggle="dropdown">
 					<i style="color: #fff;" class="iconfont icon-lingdang" type="primary"></i>

@@ -165,6 +165,12 @@ $collapse_size:#FFFFFF;
                     }
                 }
             }
+            .liveview_right_but{
+                .form_butt{
+                    color: #FFFFFF;
+                    border: 1px solid #FFFFFF;
+                }
+            }
         }
     }
     .Aside{
@@ -451,7 +457,16 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+
+
+
     // 组件
+    //铃铛
+    .el-badge{
+        .el-badge__content{
+            border: none;
+        }
+    }
     //顶部下拉
     .dropdown-menu {
         border: none;

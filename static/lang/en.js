@@ -265,6 +265,8 @@ export default {
 			GB28181: "Down Level Domain",
 			GBPlatform: "Up Level Domain",
 			GBService: "GB Service",
+			main:'main',
+			sub:'sub',
 
 
 			name: 'Name',

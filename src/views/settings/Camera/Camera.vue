@@ -33,6 +33,11 @@
 		</div>
 		<!-- 右边视频栏 -->
       	<div class="liveview_right" id="videoPanel">
+            <div class="liveview_right_but">
+                <CButton class="form_butt iconfont icon-duihao" @click="Allon(true)" type="submit">全部开启</CButton>
+                <CButton class="form_butt iconfont icon-jinyong" @click="Alloff(false)" type="submit">全部关闭</CButton>
+                <CButton class="form_butt iconfont icon-baocun" @click="Allsave" type="submit">全部保存</CButton>
+            </div>
             <el-table
                 stripe
                 style="width: 100%"
@@ -146,6 +151,140 @@ export default {
         this.NumberDevice();
 	},
 	methods:{
+        //全部开启
+        async Allon(on){
+            console.log('全部开启',this.tableData)
+            // return
+            var root = this.$store.state.IPPORT
+            var tableData=this.tableData
+            var open_close=on
+            for(var i=0;i<tableData.length;i++){
+                console.log(tableData[i].token)
+                if(tableData[i].disabled){
+                    return
+                }
+                var url1 = root + "/api/v1/DelCamera?token="+tableData[i].token+"&session="+ this.$store.state.token;
+                await this.$http.get(url1).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        if(result.data.bStatus==true){
+                            var tabledata={
+                                name:tableData[i].name,
+                                token:tableData[i].token,
+                                open_close:open_close,
+                                gbid:tableData[i].gbid,
+                                audio:tableData[i].audio,
+                                disabled:tableData[i].disabled
+                            };
+                            this.tableData.splice(i, 1,tabledata)
+                            this.Allpublic(root,
+                                tableData[i].token,
+                                open_close,
+                                tableData[i].gbid,
+                                tableData[i].audio);
+                        }
+                    }
+                })
+            }
+            
+        },
+        //全部关闭
+        async Alloff(off){
+            console.log('全部关闭')
+            // return
+            var root = this.$store.state.IPPORT
+            var tableData=this.tableData
+            var open_close=off
+            for(var i=0;i<tableData.length;i++){
+                console.log(tableData[i].token)
+                if(tableData[i].disabled){
+                    return
+                }
+                var url1 = root + "/api/v1/DelCamera?token="+tableData[i].token+"&session="+ this.$store.state.token;
+                await this.$http.get(url1).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        if(result.data.bStatus==true){
+                            var tabledata={
+                                name:tableData[i].name,
+                                token:tableData[i].token,
+                                open_close:open_close,
+                                gbid:tableData[i].gbid,
+                                audio:tableData[i].audio,
+                                disabled:tableData[i].disabled
+                            };
+                            this.tableData.splice(i, 1,tabledata)
+                            this.Allpublic(root,
+                                tableData[i].token,
+                                open_close,
+                                tableData[i].gbid,
+                                tableData[i].audio);
+                        }
+                    }
+                })
+            }
+        },
+        //全部保存
+        async Allsave(){
+            console.log('全部保存')
+            // return
+            var root = this.$store.state.IPPORT
+            var tableData=this.tableData
+            for(var i=0;i<tableData.length;i++){
+                console.log(tableData[i].token)
+                var url1 = root + "/api/v1/DelCamera?token="+tableData[i].token+"&session="+ this.$store.state.token;
+                await this.$http.get(url1).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        if(result.data.bStatus==true){
+                            var tabledata={
+                                name:tableData[i].name,
+                                token:tableData[i].token,
+                                open_close:tableData[i].open_close,
+                                gbid:tableData[i].gbid,
+                                audio:tableData[i].audio,
+                                disabled:tableData[i].disabled
+                            };
+                            this.tableData.splice(i, 1,tabledata)
+                            console.log(tabledata)
+                            this.Allpublic(root,
+                                tableData[i].token,
+                                tableData[i].open_close,
+                                tableData[i].gbid,
+                                tableData[i].audio);
+                        }
+                    }
+                })
+            }
+        },
+        Allpublic(root,token,open_close,gbid,audio){
+            var url=""
+            if(gbid==""){
+                url = root + "/api/v1/AddCamera?token="+token+"&enable="+open_close+"&audio="+audio+"&session="+ this.$store.state.token;
+            }else if(gbid.length==20){
+                url = root + "/api/v1/AddCamera?token="+token+"&enable="+open_close+"&audio="+audio+"&gbid="+gbid+"&session="+ this.$store.state.token;
+            }else if(gbid.length==7){
+                url = root + "/api/v1/AddCamera?token="+token+"&enable="+open_close+"&audio="+audio+"&session="+ this.$store.state.token;
+            }
+            this.$nextTick(()=>{
+                console.log("----------------",url);
+                this.$http.get(url).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        this.$message({
+                            message: this.$t('message.camera.Save_successfully'),
+                            type: 'success'
+                        });
+                    }
+                })
+            })
+
+            this.editform["name"]=name;
+            this.editform["token"]=token;
+            this.editform["open_close"]=open_close;
+            this.editform["audio"]=audio;
+            this.editform["gbid"]=gbid;
+        },
         //修改后提示
         openchange(){
             this.$message({
@@ -266,7 +405,7 @@ export default {
                             audio:row.audio,
                         };
                         this.tableData.splice(index_xlh, 1,tabledata)
-
+                        console.log(row.gbid.length)
                         var url=""
                         if(row.gbid==""){
                             console.log("&&row.open_close==true||row.audio==true");
@@ -274,6 +413,9 @@ export default {
                         }else if(row.gbid.length==20){
                             console.log("222");
                             url = root + "/api/v1/AddCamera?token="+row.token+"&enable="+row.open_close+"&audio="+row.audio+"&gbid="+row.gbid+"&session="+ this.$store.state.token;
+                        }else if(row.gbid.length==7){
+                            console.log("222");
+                            url = root + "/api/v1/AddCamera?token="+row.token+"&enable="+row.open_close+"&audio="+row.audio+"&session="+ this.$store.state.token;
                         }
                         
                         console.log("----------------",url);
@@ -567,6 +709,21 @@ export default {
     }
     .liveview_right{
         width: 84%;
+        .liveview_right_but{
+            height: 50px;
+            display: flex;
+            align-items: center;
+            .form_butt{
+                background: none;
+                border-radius: 5px;
+                margin-right: 10px;
+                opacity: 0.9;
+                &:hover{
+                    border: 1px solid #3DABFF;
+                    color: #3DABFF;
+                }
+            }
+        }
         .button_edi{
             .el-button{
                 font-size: 20px;
