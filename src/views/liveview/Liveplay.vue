@@ -208,21 +208,7 @@ export default {
     },
     mounted(){
         let _this = this;
-        console.log(this.$store.state.liveplay)
-        // this.$root.bus.$off('liveplayr')
-        /**this.$root.bus.$on('liveplay', function(token,streamprofile,name,label, id)
-        {
-            // this.videoname=label;//视频名称
-            console.log("++++++++++++++++++++",id,streamprofile,_this.h5id)
-            if (_this.h5id != id)
-            {
-                return;
-            }
-            
-            _this.PlayVideo(token,streamprofile,label,name);
-            _this.tokenshou=token;
-            console.log("-----------------",_this.tokenshou)
-        });*/
+        // console.log(this.$store.state.liveplay)
         $("#"+this.spanqualityid).addClass("spanquality")
         $("#"+this.inputid).addClass("spanpicturequality")
         this. Gettranscod()

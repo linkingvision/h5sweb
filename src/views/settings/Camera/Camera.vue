@@ -357,6 +357,7 @@ export default {
         },
         //树形节点点击
         handleNodeClick(data, checked, indeterminate){
+            this.currentPage=1
             this.tableData=[];
             var root = this.$store.state.IPPORT;
             var data =  data.children1;
@@ -403,6 +404,7 @@ export default {
                             open_close:row.open_close,
                             gbid:row.gbid,
                             audio:row.audio,
+                            disabled:row.disabled
                         };
                         this.tableData.splice(index_xlh, 1,tabledata)
                         console.log(row.gbid.length)
