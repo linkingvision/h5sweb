@@ -276,7 +276,8 @@ export default {
 		skin(){
 			this.toggle=this.$store.state.darkMode
 			this.$store.commit('toggle', 'darkMode')
-
+			localStorage.themetoggle=this.$store.state.darkMode
+			console.log(JSON.parse( localStorage.getItem('themetoggle')),this.$store.state.darkMode)
 		},
 	}
 }

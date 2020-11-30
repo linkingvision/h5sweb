@@ -609,6 +609,10 @@ if(localStorage.getItem('watermarktoggle')){
 if(localStorage.getItem('tourrtc')){
 	store.state.tourrtc=localStorage.getItem('tourrtc');
 }
+if(localStorage.getItem('themetoggle')){
+	console.log('主题',JSON.parse(localStorage.getItem('themetoggle')))
+	store.state.darkMode=JSON.parse(localStorage.getItem('themetoggle'));
+}
 
 let root=process.env.VUE_APP_URL;
 if (root == undefined){
