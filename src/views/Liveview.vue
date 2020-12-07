@@ -86,10 +86,50 @@
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>视图</div>
                             <div class="liveview_colltitle">
-                                <div class="liveview_titleicon2"></div>
+                                <div class="liveview_titleicon1" @click.stop="Refresh('view')"></div>
+                                 <el-popover
+                                    placement="right"
+                                    title="标题"
+                                    width="260"
+                                    trigger="click"
+                                    content="保存视图">
+                                    <div class="liveview_popover">
+                                        <div class="liveview_popover_top">
+                                            <div>自定义名称</div>
+                                            <el-input 
+                                                placeholder="输入名称" 
+                                                class="liveview_left_input"
+                                                v-model="viewname"></el-input>
+                                        </div>
+                                        <div class="liveview_popover_but">
+                                            <el-button @click.stop="viewadd">保存</el-button>
+                                        </div>
+                                    </div>
+                                    <div @click.stop="view" slot="reference" class="liveview_titleicon2"></div>
+                                </el-popover>
                             </div>
                         </div>
                     </template>
+                    <el-tree
+                        class="el_tree"
+                        node-key="strName" 
+                        :default-expanded-keys="['root']" 
+                        :data="viewdata" 
+                        @node-click="viewClick"
+                        :props="defaultProps2">
+                        <span slot-scope="{data }" style="width:100%;">
+                            <div style="width:100%;display: flex;justify-content: space-between;">
+                                <span>
+                                    <span :class="data.icon"></span>
+                                    <span style="padding-left: 6px;">{{data.strName}}</span>
+                                </span>
+                                <div style="width:20%;display: flex;justify-content: space-between;">
+                                    <div @click.stop="Delview(data.strToken)" class="iconfont icon-ashbin"></div>
+                                    <div @click.stop="Editview(data)" class="iconfont icon-zhongmingming"></div>
+                                </div>
+                            </div>
+                        </span>
+                    </el-tree>
                 </el-collapse-item>
             </el-collapse>
 		</div>
@@ -140,6 +180,7 @@
 <script>
 import Vue from 'vue'
 import liveplay from './liveview/Liveplay'
+import uuid from '../assets/js/uuid'
 export default {
     name: 'Liveview',
     components: {
@@ -147,6 +188,8 @@ export default {
     },
 	data(){
 		return{
+            viewname:null,//视图名称
+            viewdata:[],//视图数据
             proto: this.$store.state.liveviewrtc,
             activeNames: ['1','2'],//左边
 			rows: 3,
@@ -169,6 +212,9 @@ export default {
                 label: 'strName',
                 cam:"cam"
             },
+            defaultProps2:{
+                label: 'strName',
+            }
 		}
     },
 	mounted(){
@@ -190,8 +236,174 @@ export default {
         this.NumberDevice();
         this.cloudDevice();
         this.Regional();
+        this.srcview();
 	},
 	methods:{
+        //编辑视图
+        Editview(data){
+            console.log(data,this.$store.state.liveviewadd)
+            // return
+            var url = this.$store.state.IPPORT + "/api/v1/DelView?token="+data.strToken+"&session="+ this.$store.state.token;
+            this.$http.get(url).then(result=>{
+                if (result.status === 200) {
+                    this.Editadd(data)
+                }
+            })
+        },
+        Editadd(data){
+            console.log(this.$store.state.liveviewadd);
+            var viewdata={
+                strName:data.strName,
+                strToken:uuid(4, 16).toLowerCase(),
+                strLayoutType:this.rows+'|'+this.cols,
+                src:this.$store.state.liveviewadd
+            }
+            var viewjson=JSON.stringify(viewdata)
+            // console.log(viewjson)
+            // return
+            var url = this.$store.state.IPPORT + "/api/v1/AddView?session="+ this.$store.state.token;
+            this.$http.post(url,viewjson,{headers: {'Content-Type': 'application/json'}}).then(result=>{
+                if (result.status === 200) {
+                    console.log(result,url)
+                    this.Refresh('view')
+                    this.$message({
+                        message: this.$t("message.camera.Save_successfully"),
+                        type: 'warning'
+                    });
+                }
+            })
+        },
+        //删除视图
+        Delview(strToken){
+            var url = this.$store.state.IPPORT + "/api/v1/DelView?token="+strToken+"&session="+ this.$store.state.token;
+            this.$http.get(url).then(result=>{
+                if (result.status === 200) {
+                    console.log(result)
+                    this.$message({
+                        message: this.$t("message.camera.Delete_successful"),
+                        type: 'warning'
+                    });
+                    this.Refresh('view')
+                }
+            })
+        },
+        //播放视图
+        async viewClick(data){
+            // console.log(data)
+            this.$store.state.liveviewadd=[]
+            var _this=this
+            this.changePanel(data,'viewClick')
+            if(data.src.length==0){
+                var vdata={
+                    viewparameter:'viewparameter'
+                }
+                _this.$store.state.liveplay=vdata
+                return
+            }
+            for(var i=0;i<data.src.length;i++){
+                console.log(data.src[i].strToken,data.src[i].strIndex,data)
+                var label=''
+                if(data.src[i].strStream=='main'){
+                    label=data.src[i].strName+"--"+this.$t('message.live.mainstream')
+                }else if(data.src[i].strStream=='sub'){
+                    label=data.src[i].strName+"--"+this.$t('message.live.substream')
+                }
+                console.log(label)
+                var vdata={
+                    token:data.src[i].strToken,
+                    streamprofile:data.src[i].strStream,
+                    name:label,
+                    label:data.src[i].strName,
+                    vid:data.src[i].strIndex,
+                    viewparameter:'viewparameter'
+                }
+                var viewdata={
+                    strIndex:data.src[i].strIndex,
+                    strToken:data.src[i].strToken,
+                    strStream:data.src[i].strStream
+                }
+                _this.$store.state.liveplay=vdata
+                await _this.$store.state.liveviewadd.push(viewdata)
+            }
+        },
+        //保存视图
+        viewadd(){
+            if(this.viewname==null){
+                return
+            }
+            console.log(this.$store.state.liveviewadd);
+            var viewdata={
+                strName:this.viewname,
+                strToken:uuid(4, 16).toLowerCase(),
+                strLayoutType:this.rows+'|'+this.cols,
+                src:this.$store.state.liveviewadd
+            }
+            var viewjson=JSON.stringify(viewdata)
+            // console.log(viewjson)
+            // return
+            var url = this.$store.state.IPPORT + "/api/v1/AddView?session="+ this.$store.state.token;
+            this.$http.post(url,viewjson,{headers: {'Content-Type': 'application/json'}}).then(result=>{
+                if (result.status === 200) {
+                    console.log(result,url)
+                    this.Refresh('view')
+                }
+            })
+            this.viewname=null
+        },
+        srcview(){
+            var url = this.$store.state.IPPORT + "/api/v1/GetView?session="+ this.$store.state.token;
+            this.$http.get(url).then(result=>{
+                if (result.status === 200) {
+                    console.log(result)
+                    var oldarr=result.data.conf;
+                    var oldarr1=result.data.src;
+                    // console.log(oldarr,oldarr1)
+                    
+                    for(var l in oldarr){
+                        var dataroot=this.getview(oldarr[l],oldarr1);
+                        // console.log(dataroot)
+                        this.viewdata.push(dataroot);
+                    }
+                    // console.log(this.viewdata)
+                }
+            })
+        },
+        getview(arr,arr1){
+            if(arr.strLayoutType=='1|1'){
+                arr.icon='iconfont icon-tubiao_huaban11'
+            }else if(arr.strLayoutType=='1|3'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben1'
+            }else if(arr.strLayoutType=='2|2'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben21'
+            }else if(arr.strLayoutType=='1|6'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben31'
+            }else if(arr.strLayoutType=='1|7'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben41'
+            }else if(arr.strLayoutType=='3|3'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben51'
+            }else if(arr.strLayoutType=='1|13'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben61'
+            }else if(arr.strLayoutType=='4|4'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben71'
+            }else if(arr.strLayoutType=='5|5'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben8'
+            }
+            for(var i in arr.src){
+                for(var j in arr1){
+                    if(arr.src[i].strToken == arr1[j].strToken){
+                        arr.src[i].strName = arr1[j].strName;
+                        // console.log(arr.src[i])
+                    }
+                }
+            }
+            // if(arr.src && arr.src.length>0){
+            //     for (var i = 0; i < arr.src.length; i++) {
+            //         arr.src[i] = getview(arr.src[i],arr1);
+            //     }
+            // }
+            return arr;
+        },
+        view(){},
         //刷新
         Refresh(type){
             if(type=='device'){
@@ -203,6 +415,9 @@ export default {
             }else if(type=='Region'){
                 this.data1=[];
                 this.Regional();
+            }else if(type=='view'){
+                this.viewdata=[];
+                this.srcview();
             }
         },
         //水印
@@ -244,14 +459,21 @@ export default {
                 // document.getElementById("icon"+data.token).style.color="#5fbfa7";
                 if (data.token) {
                     let vid = 'h' + _this.$data.selectRow + _this.$data.selectCol;
+                    
                     var vdata={
                         token:data.token,
                         streamprofile:data.streamprofile,
                         name:data.name,
                         label:data.label,
-                        vid:vid,
+                        vid:vid
+                    }
+                    var viewdata={
+                        strIndex:vid,
+                        strToken:data.token,
+                        strStream:data.streamprofile
                     }
                     _this.$store.state.liveplay=vdata
+                    _this.$store.state.liveviewadd.push(viewdata)
                     console.log("----------------------",vdata,_this.$store.state.liveplay);
                     // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
@@ -262,9 +484,15 @@ export default {
                         streamprofile:data.streamprofile,
                         name:data.name,
                         label:data.label,
-                        vid:vid,
+                        vid:vid
+                    }
+                    var viewdata={
+                        strIndex:vid,
+                        strToken:data.token,
+                        strStream:data.streamprofile
                     }
                     _this.$store.state.liveplay=vdata
+                    _this.$store.state.liveviewadd.push(viewdata)
                     console.log("----------------------",vdata,_this.$store.state.liveplay);
                     // _this.$root.bus.$emit('liveplay', data.strToken, data.streamprofile, data.name,data.strName,vid);
                 }
@@ -324,9 +552,15 @@ export default {
                         streamprofile:data.streamprofile,
                         name:data.name,
                         label:data.label,
-                        vid:vid,
+                        vid:vid
+                    }
+                    var viewdata={
+                        strIndex:vid,
+                        strToken:data.token,
+                        strStream:data.streamprofile
                     }
                     _this.$store.state.liveplay=vdata
+                    _this.$store.state.liveviewadd.push(viewdata)
                     console.log("----------------------",vdata,_this.$store.state.liveplay);
                     // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
@@ -381,11 +615,25 @@ export default {
             // }
         },
 		//点击宫格
-        changePanel(event) {
-            
-            let data = $(event.target).data('row');
+        changePanel(event,viewClick) {
+            // console.log(viewClick,event)
+            var data=''
+            if(viewClick=='viewClick'){
+                data=event.strLayoutType
+            }else{
+                data = $(event.target).data('row');
+            }
+            // return
             let _this = this;
-             window.setTimeout(function() {
+            let cols = data.split('|')[1];
+            let rows = data.split('|')[0];
+            //this.map.clear();
+            Object.assign(this.$data, {
+                rows: parseInt(rows),
+                cols: parseInt(cols)
+            });
+            
+            Vue.nextTick(function () {
                 if(data=='1|6'||data=='1|7'||data=='1|13'){
                     // console.log("121");
                     
@@ -417,17 +665,6 @@ export default {
 
                     list_gong.addClass("videoflexitem");
                 }
-
-		    }, 50);
-            let cols = data.split('|')[1];
-            let rows = data.split('|')[0];
-            //this.map.clear();
-            Object.assign(this.$data, {
-                rows: parseInt(rows),
-                cols: parseInt(cols)
-            });
-            
-            Vue.nextTick(function () {
                 //$('div[name="flex"]').height(($(".content").height() - 50) / rows);
                 $('div[name="flex"]').height(_this.contentHeight / rows);
                 var cors=_this.cols*_this.rows;
@@ -972,6 +1209,9 @@ export default {
         .liveview_left_input{
             margin: 10px 0;
         }
+        #headswitch1{
+            display: none;
+        }
         //录像管理
         .black{
             display: none;font-size: 12px;color: #606266; padding-left: 4px;line-height: 26px;color: #f00;
@@ -1106,6 +1346,35 @@ export default {
                 border: none;
                 background: none;
                 font-size: 30px;
+            }
+        }
+    }
+}
+.el-popover.el-popper{
+    .liveview_popover{
+        .liveview_popover_top{
+            display: flex;
+            width: 100%;
+            margin-bottom: 10px;
+            div{
+                width: 35%;
+                line-height: 40px;
+            }
+            .liveview_left_input{
+                width: 65%;
+                .el-input__inner{
+                    width: 100%;
+                    border: none;
+                }
+            }
+        }
+        .liveview_popover_but{
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            button{
+                border-radius: 5px;
+                border: none;
             }
         }
     }

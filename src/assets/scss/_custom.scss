@@ -774,10 +774,34 @@ $collapse_size:#FFFFFF;
                 color: #FFF;
             }
         }
+        .el-popover__title{
+            color: #FFFFFF;
+        }
+        .liveview_popover{
+            .liveview_popover_top{
+                div{
+                    color: #FFFFFF;
+                }
+                .liveview_left_input{
+                    .el-input__inner{
+                        background-color: #3A3A3A;
+                        color: #ffffff;
+                    }
+                }
+            }
+            .liveview_popover_but{
+                button{
+                    background: #3ABBFE;
+                    color: #FFFFFF;
+                }
+            }
+        }
         .popper__arrow{
-            border-top-color: #494B4E;
+            // border-top-color: #494B4E;
+            border-right-color: #494B4E;
             &::after{
-                border-top-color: #494B4E;
+                border-right-color: #494B4E;
+                // border-top-color: #494B4E;
             }
         }
     }

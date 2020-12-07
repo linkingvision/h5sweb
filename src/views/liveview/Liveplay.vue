@@ -70,7 +70,7 @@
             <button class="iconfont icon-radioboxfill" @click="DoManualRecordStop"></button>
             <button class="ptz_id_show iconfont icon-yuntai" @click="PtzControlShow"></button>
             <button class="iconfont icon-full" @click="FullScreen"></button>
-            <button class="iconfont icon-roundclosefill" @click="CloseVideo"></button>
+            <button class="iconfont icon-roundclosefill" @click="CloseVideo('close')"></button>
         </div>
         <div class="liveplay_ptz"  style="display:none padding:0px">
             <div class="flex_content">
@@ -199,7 +199,7 @@ export default {
         }
     },
     beforeDestroy() {
-        this.CloseVideo();
+        this.CloseVideo('close');
     },
     computed: {
         listData() {
@@ -215,14 +215,19 @@ export default {
     },
     watch:{
         listData(token){
-            console.log(token)
-            if (this.h5id != token.vid)
-            {
-                return;
+            if(token.viewparameter=='viewparameter'){
+                this.CloseVideo(token.viewparameter);
             }
-            
-            this.PlayVideo(token.token,token.streamprofile,token.label,token.name);
-            this.tokenshou=token.token;
+            setTimeout(()=>{
+                console.log(token.streamprofile,token.viewparameter)
+                if (this.h5id != token.vid)
+                {
+                    return;
+                }
+                
+                this.PlayVideo(token.token,token.streamprofile,token.label,token.name);
+                this.tokenshou=token.token;
+            },200)
         }
     },
     methods:{
@@ -425,10 +430,21 @@ export default {
                 name:null,
                 label:null,
                 vid:null,
+                viewparameter:null
             }
         },
         //关闭
-        CloseVideo(){
+        CloseVideo(viewparameter){
+            console.log(viewparameter)
+            if(viewparameter==='close'){
+                // console.log(this.$store.state.liveviewadd,this.tokenshou)
+                for(var i=0;i<this.$store.state.liveviewadd.length;i++){
+                    if(this.$store.state.liveviewadd[i].strToken==this.tokenshou){
+                        this.$store.state.liveviewadd.splice(i,1)
+                        console.log(this.$store.state.liveviewadd)
+                    }
+                }
+            }
             clearInterval(this.timerRunInfo);
             //转码
             this.videoname="";
@@ -446,20 +462,21 @@ export default {
             $("#"+this.rtcid).removeClass("rtc_new");
             $("#"+this.spanqualityid).addClass("spanquality")
             $("#"+this.inputid).addClass("spanpicturequality")
-            
-            if (this.h5handler != undefined)
-            {
-                this.h5handler.disconnect();
-                delete this.h5handler;
-                this.h5handler = undefined;
-                $("#" + this.h5videoid).get(0).load();
-                $("#" + this.h5videoid).get(0).poster = '';
-            }
             if (this.audioback != undefined)
             {
                 this.audioback.disconnect();
                 delete this.audioback;
                 this.audioback = undefined;
+            }
+            if (this.h5handler != undefined)
+            {
+                this.h5handler.disconnect();
+                delete this.h5handler;
+                this.h5handler = undefined;
+                if(document.getElementById(this.h5videoid)){
+                    $("#" + this.h5videoid).get(0).poster = '';
+                    $("#" + this.h5videoid).get(0).load();
+                }
             }
             
         },

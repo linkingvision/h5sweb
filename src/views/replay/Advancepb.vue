@@ -683,13 +683,9 @@ export default {
 						this.v4.disconnect();
 						delete this.v4;
 						this.v4 = undefined;
-						this.$.info({
-							title: "Stop successfully"
-						});
 						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).load();
 						$("#gaovideohb"+this.selectRow+this.selectCol).get(0).poster = '';
-						
 					}
 				}
 			}.bind(this),100)

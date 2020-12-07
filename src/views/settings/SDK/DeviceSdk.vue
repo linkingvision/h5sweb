@@ -279,6 +279,7 @@ import uuid from '../../../assets/js/uuid'
             this.$http.get(url).then(result=>{
               if(result.status == 200){
                   var itme=result.data.dev;
+                  this.tableData=[];
                   console.log(result);
                   for(var i=0;i<itme.length;i++){
                       var tabledata={
@@ -300,7 +301,7 @@ import uuid from '../../../assets/js/uuid'
                   this.total2=this.tableData.length;
               }
             })
-          },
+        },
         
         //点击添加时随机获取到token数据
         addto(){
@@ -676,21 +677,34 @@ import uuid from '../../../assets/js/uuid'
         },
         //全选删除
         deleteselect(){
-            var token=this.selectop;
-            console.log(token)
-            //return false;
+            var selectop=this.selectop;
+            console.log(selectop)
+            
+            // return false
             //url
-            for(var i=0;i<token.length;i++){
-                var url = this.$store.state.IPPORT + "/api/v1/DelDevice?token="+encodeURIComponent(token[i].token)+"&session="+ this.$store.state.token;
+            for(var i=selectop.length-1;i>=0;i--){
+                if(selectop[i].type=='duo'){
+                    this.tableData.splice(selectop[i].index, 1);
+                    console.log(selectop[i],i,selectop[i].index,this.currentPage)
+                }
+                console.log(selectop[i],i,selectop[i].index)
+                var url = this.$store.state.IPPORT + "/api/v1/DelDevice?token="+encodeURIComponent(selectop[i].token)+"&session="+ this.$store.state.token;
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     console.log(this.tableData);
                     if(result.status==200){
                         if(result.data.bStatus==true){
-                            this.loadHIK();
+                            if(selectop[0].type=='dan'){
+                                this.tableData=[];
+                                this.loadHIK();
+                            }
+                            this.$message({
+                                message: this.$t("message.camera.Delete_successful"),
+                                type: 'warning'
+                            });
                         }else{
                             this.$message({
-                                message: '删除失败',
+                                message:this.$t("message.camera.Delete_failed"),
                                 type: 'warning'
                             });
                             return false;
@@ -700,25 +714,28 @@ import uuid from '../../../assets/js/uuid'
             }
             
         },
-        selectCall(row){
-            console.log(row);
+        selectCall(row,index){
+            console.log("INDEX",row,index);
             this.selectop=[];
             for(var i=0;i<row.length;i++){
-                console.log(row[i].Token)
                 var selectop={
-                    token:row[i].Token
+                    token:row[i].Token,
+                    index:row[i].index-1,
+                    type:"dan",
                 };
+                
                 this.selectop.push(selectop);
             }
             
         },
         select_Call(row){
-            console.log(row);
             this.selectop=[];
             for(var i=0;i<row.length;i++){
-                console.log(row[i].Token)
                 var selectop={
                     token:row[i].Token,
+                    index:((this.currentPage-1)*10)+i,
+                    type:'duo',
+                    Name:row[i].Name
                 };
                 this.selectop.push(selectop);
             }

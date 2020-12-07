@@ -21,12 +21,14 @@ const state = {
   Adswitch:"false",
   IPPORT:'',
   WSROOT:'',
+  liveviewadd:[],
   liveplay:{
     token:null,
     streamprofile:null,
     name:null,
     label:null,
     vid:null,
+    viewparameter:null
   }
 }
 

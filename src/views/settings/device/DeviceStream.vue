@@ -456,9 +456,13 @@ import uuid from '../../../assets/js/uuid'
                                 this.tableData=[];
                                 this.loadstream();
                             }
+                            this.$message({
+                                message: this.$t("message.camera.Delete_successful"),
+                                type: 'warning'
+                            });
                         }else{
                             this.$message({
-                                message: '删除失败',
+                                message:this.$t("message.camera.Delete_failed"),
                                 type: 'warning'
                             });
                             return false;
