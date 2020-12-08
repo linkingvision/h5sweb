@@ -110,6 +110,10 @@ export default {
 		},
 		live:
 		{
+			View:'View',
+			NewView:'New View',
+			ViewName:'View Name',
+
 			LightON: "Light ON",
 			LightOFF: "Light OFF",
 			WiperON: "Wiper ON",

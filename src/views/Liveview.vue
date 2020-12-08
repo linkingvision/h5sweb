@@ -84,25 +84,24 @@
                 <el-collapse-item name="2" >
                     <template slot="title">
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
-                            <div>视图</div>
+                            <div>{{$t("message.live.View")}}</div>
                             <div class="liveview_colltitle">
                                 <div class="liveview_titleicon1" @click.stop="Refresh('view')"></div>
                                  <el-popover
                                     placement="right"
-                                    title="标题"
+                                    :title="NewView"
                                     width="260"
-                                    trigger="click"
-                                    content="保存视图">
+                                    trigger="click">
                                     <div class="liveview_popover">
                                         <div class="liveview_popover_top">
-                                            <div>自定义名称</div>
+                                            <div>{{ViewName}}</div>
                                             <el-input 
                                                 placeholder="输入名称" 
                                                 class="liveview_left_input"
                                                 v-model="viewname"></el-input>
                                         </div>
                                         <div class="liveview_popover_but">
-                                            <el-button @click.stop="viewadd">保存</el-button>
+                                            <el-button @click.stop="viewadd">{{$t("message.camera.save")}}</el-button>
                                         </div>
                                     </div>
                                     <div @click.stop="view" slot="reference" class="liveview_titleicon2"></div>
@@ -188,6 +187,9 @@ export default {
     },
 	data(){
 		return{
+            NewView:this.$t("message.live.NewView"),
+            ViewName:this.$t("message.live.ViewName"),
+            
             viewname:null,//视图名称
             viewdata:[],//视图数据
             proto: this.$store.state.liveviewrtc,
@@ -275,6 +277,12 @@ export default {
         },
         //删除视图
         Delview(strToken){
+            for(var i=0;i<this.viewdata.length;i++){
+                if(this.viewdata[i].strToken==strToken){
+                    this.viewdata.splice(i,1)
+                    console.log(this.viewdata,strToken)
+                }
+            }
             var url = this.$store.state.IPPORT + "/api/v1/DelView?token="+strToken+"&session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
                 if (result.status === 200) {
@@ -283,7 +291,7 @@ export default {
                         message: this.$t("message.camera.Delete_successful"),
                         type: 'warning'
                     });
-                    this.Refresh('view')
+                    // this.Refresh('view')
                 }
             })
         },
@@ -339,13 +347,33 @@ export default {
                 src:this.$store.state.liveviewadd
             }
             var viewjson=JSON.stringify(viewdata)
+            if(viewdata.strLayoutType=='1|1'){
+                viewdata.icon='iconfont icon-tubiao_huaban11'
+            }else if(viewdata.strLayoutType=='1|3'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben1'
+            }else if(viewdata.strLayoutType=='2|2'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben21'
+            }else if(viewdata.strLayoutType=='1|6'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben31'
+            }else if(viewdata.strLayoutType=='1|7'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben41'
+            }else if(viewdata.strLayoutType=='3|3'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben51'
+            }else if(viewdata.strLayoutType=='1|13'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben61'
+            }else if(viewdata.strLayoutType=='4|4'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben71'
+            }else if(viewdata.strLayoutType=='5|5'){
+                viewdata.icon='iconfont icon-tubiao_huaban1fuben8'
+            }
             // console.log(viewjson)
             // return
             var url = this.$store.state.IPPORT + "/api/v1/AddView?session="+ this.$store.state.token;
             this.$http.post(url,viewjson,{headers: {'Content-Type': 'application/json'}}).then(result=>{
                 if (result.status === 200) {
                     console.log(result,url)
-                    this.Refresh('view')
+                    // this.Refresh('view')
+                    this.viewdata.push(viewdata)
                 }
             })
             this.viewname=null

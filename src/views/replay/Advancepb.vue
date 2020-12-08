@@ -472,7 +472,7 @@ export default {
 						};
 						
 						_this.$nextTick (()=>{
-							_this.v2 = new H5sPlayerRTC(conf);
+							_this.v2 = new H5sPlayerRTC(conf2);
 							//return false;
 							_this.v2.connect();
 							_this.icon="iconfont icon-zantingtingzhi";
@@ -508,7 +508,7 @@ export default {
 						};
 						
 						_this.$nextTick (()=>{
-							_this.v3 = new H5sPlayerRTC(conf);
+							_this.v3 = new H5sPlayerRTC(conf3);
 							//return false;
 							_this.v3.connect();
 							_this.icon="iconfont icon-zantingtingzhi";
@@ -543,7 +543,7 @@ export default {
 							session: _this.$store.state.token
 						};
 						_this.$nextTick (()=>{
-							_this.v4 = new H5sPlayerRTC(conf);
+							_this.v4 = new H5sPlayerRTC(conf4);
 							//return false;
 							_this.v4.connect();
 							_this.icon="iconfont icon-zantingtingzhi";

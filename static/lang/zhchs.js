@@ -110,6 +110,10 @@ export default {
 		},
 		live:
 		{
+			View:'视图',
+			NewView:'新建视图',
+			ViewName:'视图名称',
+
 			LightON:"灯光开",
 			LightOFF:"灯光关",
 			WiperON:"雨刷开",

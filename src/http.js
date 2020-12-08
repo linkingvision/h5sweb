@@ -6,7 +6,6 @@
 import axios from 'axios'
 import store from './store'
 import router from '@/router'
-
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
