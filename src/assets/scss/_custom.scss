@@ -623,6 +623,12 @@ $collapse_size:#FFFFFF;
         background: none !important;
         color: $collapse_size;
         font-size: 14px;
+        .el-tree-node{
+            overflow: auto;
+            &::-webkit-scrollbar{
+                display: none;
+            }
+        }
         .el-tree-node.is-current>.el-tree-node__content{
             background: none !important;
             color: #3ABBFE;

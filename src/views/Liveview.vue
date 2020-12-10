@@ -506,9 +506,10 @@ export default {
                     // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
                 if (data.strToken) {
+                    console.log(data.strToken)
                     let vid = 'h' + _this.$data.selectRow + _this.$data.selectCol;
                     var vdata={
-                        token:data.token,
+                        token:data.strToken,
                         streamprofile:data.streamprofile,
                         name:data.name,
                         label:data.label,
@@ -516,7 +517,7 @@ export default {
                     }
                     var viewdata={
                         strIndex:vid,
-                        strToken:data.token,
+                        strToken:data.strToken,
                         strStream:data.streamprofile
                     }
                     _this.$store.state.liveplay=vdata
@@ -702,6 +703,7 @@ export default {
                     $('.info_id_show').hide()
                     $('.ptzcontrols').hide()
                     $('.information').hide()
+                    $('.liveplay_ptz').hide()
                 }
                 if(cors<=9){
                     $('.ptz_id_show').show()
@@ -1157,7 +1159,7 @@ export default {
             // }]
             if(arr.node && arr.node.length>0){
                 for (var i = 0; i < arr.node.length; i++) {
-                    arr.node[i] = getchild(arr.node[i],arr1);
+                    arr.node[i] = this.getchild(arr.node[i],arr1);
                 }
             }
             return arr;
