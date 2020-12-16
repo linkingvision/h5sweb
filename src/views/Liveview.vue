@@ -855,31 +855,41 @@ export default {
             //重组
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
-                    var srcData = [];
-                    var data=result.data;
-                    for(var i = 0; i < data.dev.length; i++){
-                        var item=data.dev[i];
-                        var srclevel=[];
-                        srclevel["strToken"]=item.strToken;
-                        srclevel["strName"]=item.strName;
-                        this.loadSrc(srclevel,srcData);
+                    const deviceArr=result.data.dev;
+                    if(Array.isArray(deviceArr)){
+
+                        deviceArr.sort((a,b)=>{
+                            if(a.strName === b.strName) return 0;
+
+                            return a.strName > b.strName? 1:-1;
+                        })
+
+                        this.data = deviceArr.map(src =>{
+                            return {
+                                label: src.strName,
+                                iconclass:"iconfont  icon-kaiqishexiangtou1",
+                                children:[]
+                            }
+                        })
+                        for(let i = 0; i < deviceArr.length; i++){
+                            const item=deviceArr[i];
+                            this.loadSrc(item.strToken,i);
+                        }
                     }
                 }
             })
         },
-        loadSrc(srclevel, srcData) {
+        loadSrc(srcToken, dataIndex) {
             var root = this.$store.state.IPPORT;
             let _this =this;
             
-            var url = root + "/api/v1/GetDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+            const url = root + "/api/v1/GetDeviceSrc?token="+ srcToken + "&session=" + this.$store.state.token;
 
             this.$http.get(url).then(result => {
                 if (result.status == 200)
                 {
-                    var data =  result.data;
-                    var srcGroup = {children: []};
-                    srcGroup.label=srclevel.strName;
-                    srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
+                    const data =  result.data;
+                    let curChildren = [];
                     for(var i=0; i< data.src.length; i++){
                         var item = data.src[i];
                         // 主副流
@@ -927,9 +937,9 @@ export default {
                             newItem['iconclass1'] = 'camera';
                         }
 
-                    srcGroup.children.push(newItem);
+                        curChildren.push(newItem);
                     }
-                    this.data.push(srcGroup);
+                    this.data[dataIndex].children = curChildren;
                 }
             }).catch(error => {
                 console.log('GetSrc failed', error);
