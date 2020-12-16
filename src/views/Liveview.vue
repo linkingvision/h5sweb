@@ -233,12 +233,15 @@ export default {
 		}else{
 			document.getElementById("watermarktoggle").style.display=this.watermarktoggle;
         }
+        
         this.loadtest();
-        this.loadDevice();
-        this.NumberDevice();
-        this.cloudDevice();
-        this.Regional();
-        this.srcview();
+        this.$nextTick(()=>{
+            this.loadDevice();
+            this.NumberDevice();
+            this.cloudDevice();
+            this.Regional();
+            this.srcview();
+        })
 	},
 	methods:{
         //编辑视图
@@ -855,31 +858,43 @@ export default {
             //重组
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
-                    var srcData = [];
-                    var data=result.data;
-                    for(var i = 0; i < data.dev.length; i++){
-                        var item=data.dev[i];
-                        var srclevel=[];
-                        srclevel["strToken"]=item.strToken;
-                        srclevel["strName"]=item.strName;
-                        this.loadSrc(srclevel,srcData);
+                    // var srcData = [];
+                    var data=result.data.dev;
+                    console.log(data)
+                    if(Array.isArray(data)){
+                        data.sort((a,b)=>{
+                            if(a.strName===b.strName) return 0;
+
+                            return a.strName > b.strName? 1:-1 
+                        })
+                        for(var i=0; i<data.length; i++){
+                            var item=data[i];
+
+                            this.data.push({
+                                token:item.strToken,
+                                label:item.strName,
+                                iconclass:"iconfont icon-kaiqishexiangtou1",
+                                children:[]
+                            })
+                            this.loadSrc(item.strToken)
+                        }
+                        console.log(this.data)
                     }
                 }
             })
         },
-        loadSrc(srclevel, srcData) {
+        loadSrc(strToken) {
             var root = this.$store.state.IPPORT;
             let _this =this;
             
-            var url = root + "/api/v1/GetDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+            var url = root + "/api/v1/GetDeviceSrc?token="+ strToken + "&session=" + this.$store.state.token;
 
             this.$http.get(url).then(result => {
+                console.log(result.data)
                 if (result.status == 200)
                 {
                     var data =  result.data;
-                    var srcGroup = {children: []};
-                    srcGroup.label=srclevel.strName;
-                    srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
+                    var srcGroup = [];
                     for(var i=0; i< data.src.length; i++){
                         var item = data.src[i];
                         // 主副流
@@ -927,9 +942,13 @@ export default {
                             newItem['iconclass1'] = 'camera';
                         }
 
-                    srcGroup.children.push(newItem);
+                        srcGroup.push(newItem);
                     }
-                    this.data.push(srcGroup);
+                    var srcData = this.data.find(item => item.token === strToken)
+                    console.log(srcData)
+                    if(srcData){
+                        srcData.children=srcGroup
+                    }
                 }
             }).catch(error => {
                 console.log('GetSrc failed', error);
@@ -947,19 +966,31 @@ export default {
             //重组
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
-                    var srcData = [];
-                    var data=result.data;
-                    for(var i = 0; i < data.dev.length; i++){
-                        var item=data.dev[i];
-                        var srclevel=[];
-                        srclevel["strToken"]=item.strToken;
-                        srclevel["strName"]=item.strName;
-                        this.NumberSrc(srclevel,srcData);
+                    var data=result.data.dev;
+                    console.log(data)
+                    if(Array.isArray(data)){
+                        data.sort((a,b)=>{
+                            if(a.strName===b.strName) return 0;
+
+                            return a.strName > b.strName? 1:-1 
+                        })
+                        for(var i=0; i<data.length; i++){
+                            var item=data[i];
+
+                            this.data.push({
+                                token:item.strToken,
+                                label:item.strName,
+                                iconclass:"iconfont icon-kaiqishexiangtou1",
+                                children:[]
+                            })
+                            this.NumberSrc(item.strToken)
+                        }
+                        console.log(this.data)
                     }
                 }
             })
         },
-        NumberSrc(srclevel, srcData) {
+        NumberSrc(strToken) {
             var root = this.$store.state.IPPORT;
             let _this =this;
             var url = root + "/api/v1/GetGbDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
@@ -968,9 +999,7 @@ export default {
                 if (result.status == 200)
                 {
                     var data =  result.data;
-                    var srcGroup = {children: []};
-                    srcGroup.label=srclevel.strName;
-                    srcGroup.iconclass="iconfont  icon-kaiqishexiangtou1";
+                    var srcGroup = [];
                     for(var i=0; i< data.src.length; i++){
                         var item = data.src[i];
                         // 主副流
@@ -1006,9 +1035,13 @@ export default {
                         if(item['bRec'] == true)
                                 newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
 
-                    srcGroup.children.push(newItem);
+                    srcGroup.push(newItem);
                     }
-                    this.data.push(srcGroup);
+                    var srcData = this.data.find(item => item.token === strToken)
+                    console.log(srcData)
+                    if(srcData){
+                        srcData.children=srcGroup
+                    }
                 }
             }).catch(error => {
                 console.log('GetSrc failed', error);
@@ -1025,19 +1058,31 @@ export default {
             //重组
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
-                    var srcData = [];
-                    var data=result.data;
-                    for(var i = 0; i < data.dev.length; i++){
-                        var item=data.dev[i];
-                        var srclevel=[];
-                        srclevel["strToken"]=item.strToken;
-                        srclevel["strName"]=item.strName;
-                        this.cloudSrc(srclevel,srcData);
+                    var data=result.data.dev;
+                    console.log(data)
+                    if(Array.isArray(data)){
+                        data.sort((a,b)=>{
+                            if(a.strName===b.strName) return 0;
+
+                            return a.strName > b.strName? 1:-1 
+                        })
+                        for(var i=0; i<data.length; i++){
+                            var item=data[i];
+
+                            this.data.push({
+                                token:item.strToken,
+                                label:item.strName,
+                                iconclass:"iconfont icon-kaiqishexiangtou1",
+                                children:[]
+                            })
+                            this.cloudSrc(item.strToken)
+                        }
+                        console.log(this.data)
                     }
                 }
             })
         },
-        cloudSrc(srclevel, srcData) {
+        cloudSrc(strToken) {
             var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/GetCloudDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
 
@@ -1045,9 +1090,7 @@ export default {
                 if (result.status == 200)
                 {
                     var data =  result.data;
-                    var srcGroup = {children: []};
-                    srcGroup.label=srclevel.strName;
-                    srcGroup.iconclass="iconfont icon-kaiqishexiangtou1";
+                    var srcGroup = [];
                     for(var i=0; i< data.src.length; i++){
                         var item = data.src[i];
                         // 主副流
@@ -1083,9 +1126,13 @@ export default {
                         if(item['bRec'] == true)
                                 newItem['iconclass2'] = 'iconfont icon-radioboxfill none';
 
-                    srcGroup.children.push(newItem);
+                    srcGroup.push(newItem);
                     }
-                    this.data.push(srcGroup);
+                    var srcData = this.data.find(item => item.token === strToken)
+                    console.log(srcData)
+                    if(srcData){
+                        srcData.children=srcGroup
+                    }
                 }
             }).catch(error => {
                 console.log('GetSrc failed', error);

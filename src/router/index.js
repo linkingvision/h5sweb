@@ -48,7 +48,8 @@ const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
 
-
+const Map = () => import('@/views/settings/Map/Map')
+const Mapmanagement = () => import('@/views/settings/Map/Mapmanagement')
 const DeviceImport = () => import('@/views/settings/Batch/BatchImport')
 const Camera = () => import('@/views/settings/Camera/Camera')
 const DeviceStream = () => import('@/views/settings/device/DeviceStream')
@@ -313,7 +314,27 @@ export default new Router({
 							name:i18n.tc("message.left.camera"),
 							icon:'iconfont icon-jiankong',
 							type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
-						},
+						}
+						},{
+							path: 'Map',
+							name: 'Map',
+							component: Map,
+							meta: {
+								title: '/Map',
+								name:i18n.tc("message.left.camera"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Mapmanagement',
+							name: 'Mapmanagement',
+							component: Mapmanagement,
+							meta: {
+								title: '/Mapmanagement',
+								name:i18n.tc("message.left.camera"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
 						},{
 							path: 'Camera',
 							name: 'Camera',

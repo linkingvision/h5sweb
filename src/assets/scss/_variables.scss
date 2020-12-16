@@ -316,6 +316,40 @@ $collapse_header:#E5E5E5;
             }
         }
     }
+    .Map{
+        //弹出框
+        .el-dialog{
+            border-radius: 5px;
+            margin-top: 18vh !important;
+            .el-dialog__body{
+                padding: 10px 5px;
+                color: $header_size;
+            }
+            .el-form-item__label{
+                color: #FFFFFF;
+            }
+        }
+        .el-tree{
+            color: #FFFFFF;
+        }
+        .el_tree .el-tree-node__content{
+            min-height: 24px;
+            height: auto;
+        }
+        .Map_Region{
+            .el-collapse{
+                min-width: 240px;
+                .el-collapse-item__header{
+                    background-color: RGBA(0, 0, 0, 0.7);
+                }
+                .el-collapse-item__wrap{
+                    min-height: 400px;
+                    background: RGBA(0, 0, 0, 0.7);
+                    border-bottom: none;
+                }
+            }
+        }
+    }
     //批量下载
     .BatchImport{
         .BatchImport_flex{
@@ -394,6 +428,39 @@ $collapse_header:#E5E5E5;
         }
     }
     //组件
+    .el-timeline {
+        .el-timeline-item{
+            padding: 0;
+            .el-timeline-item__tail {
+                position: absolute;
+                left: 4px;
+                height: 100%;
+                border-left: 2px solid #E4E7ED;
+                margin-top: 7px;
+            }
+            .el-timeline-item__node--normal {
+                left: -1px;
+                width: 12px;
+                height: 12px;
+                margin-top: 7px;
+            }
+            .el-timeline-item__wrapper{
+                .el-timeline-item__timestamp.is-top{
+                    margin: 0;
+                }
+                .el-timeline-item__content{
+                    .el-card{
+                        border: 0px;
+                        background: none;
+                        .el-card__body{
+                            display: block;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
     //铃铛
     .el-badge{
         .el-badge__content{

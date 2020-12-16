@@ -365,7 +365,38 @@ $collapse_size:#FFFFFF;
             }
         }
     }
-
+    //地图
+    .Map{
+        //弹出框
+        .el-dialog{
+            border-radius: 5px;
+            margin-top: 18vh !important;
+            .el-dialog__body{
+                padding: 10px 5px;
+                color: $header_size;
+            }
+            .el-form-item__label{
+                color: #FFFFFF;
+            }
+        }
+        .el_tree .el-tree-node__content{
+            min-height: 24px;
+            height: auto;
+        }
+        .Map_Region{
+            .el-collapse{
+                min-width: 240px;
+                .el-collapse-item__header{
+                    background-color: RGBA(0, 0, 0, 0.7);
+                }
+                .el-collapse-item__wrap{
+                    min-height: 400px;
+                    background: RGBA(0, 0, 0, 0.7);
+                    border-bottom: none;
+                }
+            }
+        }
+    }
     //选项卡
     .top_el_menu{
         .el-menu.el-menu--horizontal{

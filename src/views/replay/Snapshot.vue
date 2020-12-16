@@ -87,7 +87,7 @@
                     <el-table-column
                         fixed="right">
                         <template slot-scope="scope">
-                            <div class="button_edi">
+                            <div class="snap_you_lable_butt">
                                 <a :href="scope.row.url" :download="scope.row.urlto"><button type="button" style="margin-right: 40px;" class="iconfont icon-download"></button></a>
                                 <button type="button" class="iconfont icon-play" @click="Refresh1(scope.$index, scope.row)" data-toggle="modal" data-target="#myModal"></button>
                             </div>
@@ -324,6 +324,15 @@ export default {
                 margin-right: 40px;
                 button:last-child{
                     margin-right: 0;
+                }
+            }
+            .snap_you_lable_butt{
+                width: 100%;
+                display: flex;
+                button{
+                    background: none;
+                    border: none;
+                    font-size: 24px;
                 }
             }
         }
