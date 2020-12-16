@@ -3,7 +3,7 @@
     <TheSidebar/>
     <TheAside/>
     <CWrapper>
-      <TheHeader/>
+      <TheHeader v-if="embed==false"/>
       <div class="c-body">
         <main class="c-main">
           <CContainer fluid>
