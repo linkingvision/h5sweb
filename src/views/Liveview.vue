@@ -993,7 +993,7 @@ export default {
         NumberSrc(strToken) {
             var root = this.$store.state.IPPORT;
             let _this =this;
-            var url = root + "/api/v1/GetGbDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+            var url = root + "/api/v1/GetGbDeviceSrc?token="+ strToken + "&session=" + this.$store.state.token;
 
             this.$http.get(url).then(result => {
                 if (result.status == 200)
@@ -1084,7 +1084,7 @@ export default {
         },
         cloudSrc(strToken) {
             var root = this.$store.state.IPPORT;
-            var url = root + "/api/v1/GetCloudDeviceSrc?token="+ srclevel.strToken + "&session=" + this.$store.state.token;
+            var url = root + "/api/v1/GetCloudDeviceSrc?token="+ strToken + "&session=" + this.$store.state.token;
 
             this.$http.get(url).then(result => {
                 if (result.status == 200)
