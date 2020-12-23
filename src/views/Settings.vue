@@ -153,7 +153,7 @@
                     </el-menu-item>
 				</el-submenu>
 
-				<!-- <el-submenu index="/Settings/Map">
+				<el-submenu index="/Settings/Map">
 					<template slot="title">
 						<span>地图 </span>
 					</template>
@@ -163,7 +163,7 @@
                     <el-menu-item index="/Settings/Map">
                         <span class="Setting_tree">Map</span> 
                     </el-menu-item>
-				</el-submenu> -->
+				</el-submenu>
 
 				<el-submenu index="/Settings/Docker">
 					<template slot="title">

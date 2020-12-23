@@ -22,6 +22,7 @@ const state = {
   IPPORT:'',
   WSROOT:'',
   liveviewadd:[],
+  Mapurl:null,
   liveplay:{
     token:null,
     streamprofile:null,

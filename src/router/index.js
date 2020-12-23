@@ -621,6 +621,9 @@ if(sessionStorage.getItem('Certificatetime')){
 	store.state.Certificatetime=sessionStorage.getItem('Certificatetime');
 }
 
+if(localStorage.getItem('Mapurl')){
+	store.state.Mapurl=localStorage.getItem('Mapurl');
+}
 if(localStorage.getItem('liveviewrtc')){
 	store.state.liveviewrtc=localStorage.getItem('liveviewrtc');
 }
