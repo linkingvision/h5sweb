@@ -156,6 +156,16 @@ export default new Router({
 						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 					},
 				},{
+					path: 'Map',
+					name: 'Map',
+					component: Map,
+					meta: {
+						title: '/Map',
+						name:i18n.tc("message.left.Map"),
+						icon:'iconfont icon-ditu',
+						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+					},
+				},{
 					path: 'Tour',
 					name: 'Tour',
 					component: Tour,
@@ -315,16 +325,6 @@ export default new Router({
 							icon:'iconfont icon-jiankong',
 							type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 						}
-						},{
-							path: 'Map',
-							name: 'Map',
-							component: Map,
-							meta: {
-								title: '/Map',
-								name:i18n.tc("message.left.camera"),
-								icon:'iconfont icon-jiankong',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
-							},
 						},{
 							path: 'Mapmanagement',
 							name: 'Mapmanagement',

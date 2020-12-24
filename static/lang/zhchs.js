@@ -38,7 +38,9 @@ export default {
 			cloud: '云视频',
 			logout: '退出',
 			camera: "监控点",
-			VideoConference: "视频会议"
+			VideoConference: "视频会议",
+			MapManagement:"地图管理",
+			Map:"地图"
 		},
 		login:
 		{

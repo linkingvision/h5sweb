@@ -155,14 +155,14 @@
 
 				<el-submenu index="/Settings/Map">
 					<template slot="title">
-						<span>地图 </span>
+						<span>{{$t("message.left.Map")}}</span>
 					</template>
 					<el-menu-item index="/Settings/Mapmanagement">
-                        <span class="Setting_tree">Mapmanagement</span> 
+                        <span class="Setting_tree">{{$t("message.left.MapManagement")}}</span> 
                     </el-menu-item>
-                    <el-menu-item index="/Settings/Map">
+                    <!-- <el-menu-item index="/Settings/Map">
                         <span class="Setting_tree">Map</span> 
-                    </el-menu-item>
+                    </el-menu-item> -->
 				</el-submenu>
 
 				<el-submenu index="/Settings/Docker">

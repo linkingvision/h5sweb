@@ -37,7 +37,9 @@ export default {
 			logout: 'Logout',
 			tour: "Tour",
 			camera: "Camera",
-			VideoConference: "Video Conference"
+			VideoConference: "Video Conference",
+			MapManagement:"Map Management",
+			Map:"Map"
 		},
 		login:
 		{

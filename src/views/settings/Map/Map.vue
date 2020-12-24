@@ -1,6 +1,7 @@
 <template>
     <div class="Map">
         <div id="map" ref="rootmap" @drop="dropTarget($event)" @dragover.prevent="dragover($event)" >
+			<div class="Map_core iconfont icon-target-lock" @click="Mapcore"></div>
 			<div class="Map_functionbut">
 				<div>
 					<CButton @click="Mapbox" class="map_boxbut" type="submit">
@@ -104,7 +105,7 @@
 					<div class="playback_function">
 						<div></div>
 						<div class="playback_function_icon">
-							<div class="iconfont icon-yuntai"></div>
+							<!-- <div class="iconfont icon-yuntai"></div> -->
 							<div class="iconfont icon-full"></div>
 						</div>
 					</div>
@@ -120,6 +121,7 @@ import '../../../assets/js/adapter'
 import {H5sPlayerWS,H5sPlayerHls,H5sPlayerRTC,H5sPlayerAudBack} from '../../../assets/js/h5splayer.js'
 import {H5siOS,H5sPlayerCreate} from '../../../assets/js/h5splayerhelper.js'
 import "ol/ol.css";
+
 import OSM from "ol/source/OSM";
 
 import TileLayer from 'ol/layer/Tile'
@@ -153,6 +155,8 @@ export default {
 			boxbut:true,//框选
 			boxclick:true,//点击框选
 			videoname:null,//视频名称
+			setcore:null,//设置中心点
+			setzoom:null,//设置中心点
 			data1:[],
 			Maptoken:undefined,
 			activeNames:[],//设备
@@ -195,6 +199,13 @@ export default {
 		},200)
 	},
 	methods:{
+		//回到中心点
+		Mapcore(){
+			var _this=this
+			let view = _this.map.getView();
+			view.setZoom(_this.setzoom);
+			view.setCenter(_this.setcore);
+		},
 		//删除
 		async Delcam(boxarr,all){
 			console.log(boxarr)
@@ -297,7 +308,7 @@ export default {
 			var zoom = this.map.getView().getZoom();  //获取当前地图的缩放级别getCenter
 			var center = this.map.getView().getCenter()
 			console.log(zoom,center)
-			// return
+			return
 			var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/SetMapConf?zoom="+zoom+"&longitude="+center[0]+"&latitude="+center[1]+"&session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
@@ -387,77 +398,74 @@ export default {
         },
 		//创建地图
 		initPointMap() {
-			var resolutions = []
-			for(var i=0; i<19; i++){
-				resolutions[i]=Math.pow(2,18-i);
-			}
-			var tilegrid = new TileGrid({
-				origin:[0,0],
-				resolutions:resolutions
-			})
-			var baidu_source=new TileImage({
-				porjectuon:"'EPSG:3857'",
-				tileGrid:tilegrid,
-				tileUrlFunction:function(tileCoord,pixelRatio,porj){
-					console.log(tileCoord,pixelRatio,porj)
-					if(!tileCoord){
-						return "";
-					}
-					var z=tileCoord[0];
-					var x=tileCoord[1];
-					var y=-tileCoord[2];
-					if(x<0){
-						x='M'+(-x)
-					}
-					if(y<0){
-						y='M'+(-y)
-					}
-					return "http://online2.map.bdimg.com/tile/?qt=tile&x=" + x + "&y=" + y + "&z=" + z + "&styles=pl&udt=20200630&scaler=1";
-				}
-			})
+			
 			var Mapurl=JSON.parse(this.$store.state.Mapurl);
 			console.log(Mapurl)
 			var _this=this
 			var tileLayer=''
-			if(Mapurl[0].name=="高德"){
-				tileLayer=[new TileLayer({
-					source: new XYZ({
-						title:Mapurl[0].name,
-						url:Mapurl[0].url
-					})
-				})]
-			}else if(Mapurl[0].name=="谷歌"){
-				tileLayer=[new TileLayer({
-					source: new XYZ({
-						title:Mapurl[0].name,
-						url:Mapurl[0].url
-					})
-				})]
-			}else if(Mapurl[0].name=="天地"){
-				tileLayer=[new TileLayer({
-					source: new XYZ({
-						title:Mapurl[0].name,
-						url:Mapurl[0].url
-					})
-				}),new TileLayer({
-					source: new XYZ({
-						title:Mapurl[1].name,
-						url:Mapurl[1].url
-					})
-				})]
-			}else{
+			var overviewMap=''
+			if(!Mapurl){
 				tileLayer=[new TileLayer({
 					source: new XYZ({
 						title:'高德',
 						url:'http://wprd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}'
 					})
 				})]
+				overviewMap=[new TileLayer({
+					source: new XYZ({
+						title:'高德',
+						url:'http://wprd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}'
+					})
+				})]
+			}else{
+				if(Mapurl[0].name=="高德"){
+					tileLayer=[new TileLayer({
+						source: new XYZ({
+							title:Mapurl[0].name,
+							url:Mapurl[0].url
+						})
+					})]
+					overviewMap=[new TileLayer({
+						source: new XYZ({
+							title:Mapurl[0].name,
+							url:Mapurl[0].url
+						})
+					})]
+				}else if(Mapurl[0].name=="谷歌"){
+					tileLayer=[new TileLayer({
+						source: new XYZ({
+							title:Mapurl[0].name,
+							url:Mapurl[0].url
+						})
+					})]
+					overviewMap=[new TileLayer({
+						source: new XYZ({
+							title:Mapurl[0].name,
+							url:Mapurl[0].url
+						})
+					})]
+				}else{
+					tileLayer=[new TileLayer({
+						source: new XYZ({
+							title:'高德',
+							url:'http://wprd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}'
+						})
+					})]
+					overviewMap=[new TileLayer({
+					source: new XYZ({
+						title:'高德',
+						url:'http://wprd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}'
+					})
+				})]
+				}
 			}
 			var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/GetMapConf?session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
 				if(result.status == 200){
 					console.log(result)
+					this.setcore=[result.data.center.strLongitude, result.data.center.strLatitude];
+					this.setzoom=result.data.strZoom;
 					this.map = new Map({
 						target: "map",
 						layers: tileLayer,
@@ -468,15 +476,9 @@ export default {
 								collapsed: false,
 								view: new View({
 									projection: "EPSG:4326",
-									center: [112.87, 28.23],
+									center: [result.data.center.strLongitude, result.data.center.strLatitude],
 								}),
-								layers: [
-									new TileLayer({
-										source: new XYZ({
-											url:'http://wprd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&style=7&x={x}&y={y}&z={z}'
-										})
-									})
-								]
+								layers: overviewMap
 							}),
 							// 添加比例尺
 							new ScaleLine({
@@ -870,11 +872,10 @@ export default {
 
 <style lang="scss" scoped>
 .Map{
-	width: 100%;
-	height: 100%;
 	position: relative;
 	#map{
-		height:100%;
+		width: 100%;
+		height: 90vh;
 		.ol-popup {
 			width: 200px;
 			min-height: 150px;
@@ -947,6 +948,14 @@ export default {
 				}
 			}
 		}
+	}
+	.Map_core{
+		position: absolute;
+		bottom: 60px !important;
+    	right: 0.35em;
+		z-index: 10;
+		color: #000;
+    	font-size: 24px;
 	}
 	.Map_Region{
 		position: absolute;

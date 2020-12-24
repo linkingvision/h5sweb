@@ -50,6 +50,12 @@
 					<i class="iconfont icon-yun" style="font-size:14px"></i>
 					<span slot="title">{{$t("message.left.cloud")}}</span>
 				</el-menu-item>
+
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Map">
+					<i class="iconfont icon-ditu" style="font-size:14px"></i>
+					<span slot="title">{{$t("message.left.Map")}}</span>
+				</el-menu-item>
+
 				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Settings/DeviceStream">
 					<i class="iconfont icon-shezhi"></i>
 					<span slot="title">{{$t("message.setting.setting")}}</span>

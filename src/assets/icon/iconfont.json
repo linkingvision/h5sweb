@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5311962",
+      "name": "定位",
+      "font_class": "target-lock",
+      "unicode": "e755",
+      "unicode_decimal": 59221
+    },
+    {
+      "icon_id": "15597602",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
       "icon_id": "823191",
       "name": "显示",
       "font_class": "xianshi",
