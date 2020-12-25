@@ -315,6 +315,16 @@ $collapse_header:#E5E5E5;
                 color: #000;
             }
         }
+        .tow_node{
+            .Root_node{
+                .deleteselectcam{
+                    color:#000;
+                }
+                .Root_node_butt1{
+                    color:#000;
+                }
+            }
+        }
     }
     .Map{
         //弹出框
@@ -392,6 +402,11 @@ $collapse_header:#E5E5E5;
         .BatchImport_flex{
             .BatchImport_title{
                 color: #000000;
+            }
+            .BatchImport_butt{
+                button{
+                    color: #000;
+                }
             }
         }
     }

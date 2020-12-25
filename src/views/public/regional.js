@@ -312,20 +312,30 @@ function getchild(arr,arr1) {
                         arr.cam[i].disabled_me=true;
                         arr.cam[i].iconclass1= 'camera';
                     }
-                }else{
-                    arr.cam[i].strName = '设备暂时不可用';
-                    arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
-                    console.log(arr.cam[i].strToken)
                 }
             }
         }
     }
-    // var nodecam=[{
-    //     strName:"cam",
-    //     node:arr.cam,
-    // },{
-        
-    // }]
+    
+    var camarr=[]
+    var camarr1=[]
+    for(var i in arr.cam){
+        camarr.push(arr.cam[i].strToken)
+    }
+    for(var i in arr1){
+        camarr1.push(arr1[i].strToken)
+    }
+    let diff = camarr.filter(item => !new Set(camarr1).has(item))
+    console.log(diff)
+    for(var i in arr.cam){
+        for(var j in diff){
+            if(arr.cam[i].strToken == diff[j]){
+                arr.cam[i].strName = '设备暂时不可用';
+                arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
+            }
+        }
+    }
+
     if(arr.node && arr.node.length>0){
         for (var i = 0; i < arr.node.length; i++) {
             arr.node[i] = getchild(arr.node[i],arr1);

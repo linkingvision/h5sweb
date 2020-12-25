@@ -59,12 +59,11 @@
                             </div>
                             <div v-if="data.iconclass=='iconfont icon-quyu'">
                                 <div @click="deleteselectcam(node)"
-                                style="font-size:20px;font-weight:500; 
-                                color:#FFF;" class="iconfont icon-ashbin"></div>
+                                style="font-size:20px;font-weight:500;" class="deleteselectcam iconfont icon-ashbin"></div>
                             </div>
                             <div v-else>
                                 <div @click="deleteselectcam1(node)"
-                                style="font-size:20px;font-weight:500; color:#FFF;" class="iconfont icon-ashbin"></div>
+                                style="font-size:20px;font-weight:500;" class="deleteselectcam iconfont icon-ashbin"></div>
                             </div>
                         </div>
                     </span>
@@ -148,10 +147,24 @@
                             arr.cam[i].index=i
                             if(!arr1[j].bOnline)
                                 arr.cam[i].iconclass = 'iconfont icon-kaiqishexiangtou';
-                        }else{
+                        }
+                    }
+                }
+                var camarr=[]
+                var camarr1=[]
+                for(var i in arr.cam){
+                    camarr.push(arr.cam[i].strToken)
+                }
+                for(var i in arr1){
+                    camarr1.push(arr1[i].strToken)
+                }
+                let diff = camarr.filter(item => !new Set(camarr1).has(item))
+                console.log(diff)
+                for(var i in arr.cam){
+                    for(var j in diff){
+                        if(arr.cam[i].strToken == diff[j]){
                             arr.cam[i].strName = '设备暂时不可用';
-							arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
-							console.log(arr.cam[i].strToken)
+                            arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
                         }
                     }
                 }
@@ -184,13 +197,27 @@
                                 arr.cam[i].index=i
                                 if(!arr1[j].bOnline)
                                     arr.cam[i].iconclass = 'iconfont icon-kaiqishexiangtou';
-							}else{
-                                arr.cam[i].strName = '设备暂时不可用';
-                                arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
-                                console.log(arr.cam[i].strToken)
-                            }
+							}
 						}
 					}
+                }
+                var camarr=[]
+                var camarr1=[]
+                for(var i in arr.cam){
+                    camarr.push(arr.cam[i].strToken)
+                }
+                for(var i in arr1){
+                    camarr1.push(arr1[i].strToken)
+                }
+                let diff = camarr.filter(item => !new Set(camarr1).has(item))
+                console.log(diff)
+                for(var i in arr.cam){
+                    for(var j in diff){
+                        if(arr.cam[i].strToken == diff[j]){
+                            arr.cam[i].strName = '设备暂时不可用';
+                            arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
+                        }
+                    }
                 }
                 if(arr.node && arr.node.length>0){
 					for (var i = 0; i < arr.node.length; i++) {
@@ -417,7 +444,6 @@
                 width: 100%;
                 font-size:40px;
                 font-weight:600;
-                color:#FFFFFF;
             }
             .button_addpv{
                 width: 100%;

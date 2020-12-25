@@ -364,6 +364,16 @@ $collapse_size:#FFFFFF;
                 color: #FFF;
             }
         }
+        .tow_node{
+            .Root_node{
+                .deleteselectcam{
+                    color:#FFF;
+                }
+            }
+            .Root_node_butt1{
+                color:#000;
+            }
+        }
     }
     //地图
     .Map{
@@ -496,6 +506,11 @@ $collapse_size:#FFFFFF;
                         color: #BABABA;
                         font-size: 16px;
                     }
+                }
+            }
+            .BatchImport_butt{
+                button{
+                    color: #FFFFFF;
                 }
             }
         }
