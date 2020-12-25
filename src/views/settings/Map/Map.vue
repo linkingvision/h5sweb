@@ -308,7 +308,6 @@ export default {
 			var zoom = this.map.getView().getZoom();  //获取当前地图的缩放级别getCenter
 			var center = this.map.getView().getCenter()
 			console.log(zoom,center)
-			return
 			var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/SetMapConf?zoom="+zoom+"&longitude="+center[0]+"&latitude="+center[1]+"&session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
@@ -687,11 +686,12 @@ export default {
 		 * 设置Style
 		 */
 		getStyls (feature) {
+			console.log(this.$store.state.IPPORT)
 			let Styles = []
 			Styles.push(
 				new Style({
 					image: new Icon({
-						src: 'http://localhost:8080/img/dev.png',
+						src: this.$store.state.IPPORT+'/img/dev.png',
 						anchor: [0.5, 1]
 					}),
 				})
@@ -770,6 +770,7 @@ export default {
                 if(!arr.cam[i].strName){
                     for(var j in arr1){
                         if(arr.cam[i].strToken == arr1[j].strToken){
+							console.log(arr.cam[i].strToken)
                             arr.cam[i].strName = arr1[j].strName;
                             arr.cam[i].name=arr1[j].strName+"--"+this.$t('message.live.mainstream')
                             arr.cam[i].bOnline = arr1[j].bOnline;
@@ -788,7 +789,11 @@ export default {
                                 arr.cam[i].disabled_me=true;
                                 arr.cam[i].iconclass1= 'camera';
                             }
-                        }
+                        }else{
+							arr.cam[i].strName = '设备暂时不可用';
+							arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
+							console.log(arr.cam[i].strToken)
+						}
                     }
                 }
             }

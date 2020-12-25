@@ -148,6 +148,10 @@
                             arr.cam[i].index=i
                             if(!arr1[j].bOnline)
                                 arr.cam[i].iconclass = 'iconfont icon-kaiqishexiangtou';
+                        }else{
+                            arr.cam[i].strName = '设备暂时不可用';
+							arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
+							console.log(arr.cam[i].strToken)
                         }
                     }
                 }
@@ -180,7 +184,11 @@
                                 arr.cam[i].index=i
                                 if(!arr1[j].bOnline)
                                     arr.cam[i].iconclass = 'iconfont icon-kaiqishexiangtou';
-							}
+							}else{
+                                arr.cam[i].strName = '设备暂时不可用';
+                                arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
+                                console.log(arr.cam[i].strToken)
+                            }
 						}
 					}
                 }

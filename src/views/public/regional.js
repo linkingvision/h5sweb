@@ -312,6 +312,10 @@ function getchild(arr,arr1) {
                         arr.cam[i].disabled_me=true;
                         arr.cam[i].iconclass1= 'camera';
                     }
+                }else{
+                    arr.cam[i].strName = '设备暂时不可用';
+                    arr.cam[i].iconclass="iconfont  icon-kaiqishexiangtou"
+                    console.log(arr.cam[i].strToken)
                 }
             }
         }
