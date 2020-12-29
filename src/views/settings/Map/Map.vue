@@ -531,6 +531,7 @@ export default {
 						console.log('创建',result)
 						if(result.data.bStatus){
 							this.MapAddCam(_that.x,_that.y)
+							this.getcam();
 						}
 					}
 				})
@@ -603,6 +604,7 @@ export default {
 						"EPSG:3857",
 						"EPSG:4326"
 					);
+					console.log(_that.camsrc)
 					for(var i=0; i<_that.camsrc.length; i++){
 						
 						if(feature[0].id_==_that.camsrc[i].strToken){

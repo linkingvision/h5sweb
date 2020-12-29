@@ -14,6 +14,7 @@ $liveview_lback:#2D2D2D;
 $collapse_header:#292929;
 $collapse_size:#FFFFFF;
 .c-app.c-dark-theme{
+    background-color: $G_back;
     //设备页面
     .Dashboard_Device{
         .container_co{
@@ -42,7 +43,6 @@ $collapse_size:#FFFFFF;
             background: rgba(218, 218, 218,0.1);
         }
     }
-    background-color: $G_back;
     //左侧栏
     .c-sidebar{
         background-color: $sidebar_back;
@@ -371,7 +371,7 @@ $collapse_size:#FFFFFF;
                 }
             }
             .Root_node_butt1{
-                color:#000;
+                color:#FFFFFF;
             }
         }
     }
