@@ -196,6 +196,7 @@ export default {
             videoname:"",//视频名称
             picturequality:'',//画质名称
             rtcid:"rtc"+this.h5videoid,
+            streamprofileInformation:null,//码流区分
         }
     },
     beforeDestroy() {
@@ -227,6 +228,7 @@ export default {
                 
                 this.PlayVideo(token.token,token.streamprofile,token.label,token.name);
                 this.tokenshou=token.token;
+                this.streamprofileInformation=token.streamprofile
             },200)
         }
     },
@@ -262,7 +264,7 @@ export default {
         Informationdate(){
             var root = this.$store.state.IPPORT;
             //url
-            var url = root + "/api/v1/GetVidStreamStatus?token="+this.tokenshou+"&stream=main&session="+ this.$store.state.token;
+            var url = root + "/api/v1/GetVidStreamStatus?token="+this.tokenshou+"&stream="+this.streamprofileInformation+"&session="+ this.$store.state.token;
             //重组
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
