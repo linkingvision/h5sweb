@@ -15,7 +15,7 @@
                 <el-form-item :label="label.Token">
                     <el-input v-model="editform.Token"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.username">
+                <el-form-item :label="label.User">
                     <el-input v-model="editform.User"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.password">
@@ -248,7 +248,7 @@ import uuid from '../../../assets/js/uuid'
             Type: 'H5_DEV_HIK',
             Name:"Device1",
             Token:"platform1",
-            Username:"admin",
+            User:"admin",
             Username_isc:"22936233",
             Password:"admin12345",
             Password_isc:"px50TzrNNUiU1uxloJLG",
