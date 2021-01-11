@@ -371,6 +371,13 @@ export default {
 			Hang: "Hang",
 			JoinConference: "Join Conference",
 			Nickname: "Nickname cannot be empty!"
+		},
+		cluster:{
+			NodeName:'Node Name',
+			NodeID:"Node ID",
+			RedisServerIP:"Redis Server IP",
+			RedisServerPort:"Redis Server Port",
+			LocalIP:"Local IP"
 		}
 	}
 }

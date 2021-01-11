@@ -372,6 +372,13 @@ export default {
 			Hang: "挂断",
 			JoinConference: "加入会议",
 			Nickname: "昵称不能为空!"
+		},
+		cluster:{
+			NodeName:'节点名',
+			NodeID:"节点编号",
+			RedisServerIP:"Redis 服务器地址",
+			RedisServerPort:"Redis 服务端口",
+			LocalIP:"本机服务器IP地址"
 		}
 	}
 }

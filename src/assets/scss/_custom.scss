@@ -515,6 +515,36 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+    //集群管理
+    .Cluster{
+        .Cluster_block{
+            .Cluster_block_title{
+                color: #FFFFFF;
+            }
+            .Cluster_block_content{
+                background-color: #1D1D1D;
+                .Cluster_form{
+                    .el-form-item{
+                        .el-form-item__label{
+                            color: #FFFFFF;
+                        }
+                        .el-form-item__content{
+                            .el-input{
+                                .el-input__inner{
+                                    border: 2px solid #494A4C;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .Cluster_but{
+            button{
+                color: #FFFFFF;
+            }
+        }
+    }
     //顶部关于弹窗
     & ~ .plugin_adout{
         .el-dialog{

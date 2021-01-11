@@ -410,6 +410,37 @@ $collapse_header:#E5E5E5;
             }
         }
     }
+    //集群管理
+    .Cluster{
+        .Cluster_block{
+            .Cluster_block_title{
+                color: #000000;
+            }
+            .Cluster_block_content{
+                background-color: #FFFFFF;
+                .Cluster_form{
+                    .el-form-item{
+                        .el-form-item__label{
+                            color: #000000;
+                        }
+                        .el-form-item__content{
+                            .el-input{
+                                .el-input__inner{
+                                    border: 1px solid #494A4C;
+                                    color: #333333;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .Cluster_but{
+            button{
+                color: #FFFFFF;
+            }
+        }
+    }
     //选项卡
     .top_el_menu{
         .el-menu.el-menu--horizontal{

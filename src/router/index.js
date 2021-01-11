@@ -48,6 +48,7 @@ const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
 
+const Cluster = () => import('@/views/settings/cluster/Cluster')
 const Map = () => import('@/views/settings/Map/Map')
 const Mapmanagement = () => import('@/views/settings/Map/Mapmanagement')
 const DeviceImport = () => import('@/views/settings/Batch/BatchImport')
@@ -325,6 +326,16 @@ export default new Router({
 							icon:'iconfont icon-jiankong',
 							type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 						}
+						},{
+							path: 'Cluster',
+							name: 'Cluster',
+							component: Cluster,
+							meta: {
+								title: '/Cluster',
+								name:i18n.tc("message.dashboard.cluster"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
 						},{
 							path: 'Mapmanagement',
 							name: 'Mapmanagement',

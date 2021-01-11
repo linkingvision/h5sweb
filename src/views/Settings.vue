@@ -165,6 +165,18 @@
                     </el-menu-item> -->
 				</el-submenu>
 
+				<el-submenu index="/Settings/Cluster">
+					<template slot="title">
+						<span>{{$t("message.dashboard.cluster")}}</span>
+					</template>
+					<el-menu-item index="/Settings/Cluster">
+                        <span class="Setting_tree">{{$t("message.dashboard.cluster")}}</span> 
+                    </el-menu-item>
+                    <!-- <el-menu-item index="/Settings/Map">
+                        <span class="Setting_tree">Map</span> 
+                    </el-menu-item> -->
+				</el-submenu>
+
 				<el-submenu index="/Settings/Docker">
 					<template slot="title">
 						<span>Docker</span>
