@@ -43,7 +43,7 @@ export default {
 	mounted(){
 		// this.open();
 		const cur_query = this.$route.query || {};
-		console.log(cur_query);
+		// console.log(cur_query);
 		if(cur_query['embed'] === 'true'){
 			this.embed = true;
 		}

@@ -347,7 +347,8 @@ export default {
 		},
 		tour: {
 			Start: "开始",
-			stop: "停止"
+			stop: "停止",
+			Startall:'全部开始'
 		},
 		camera: {
 			Save_successfully: "保存成功！",

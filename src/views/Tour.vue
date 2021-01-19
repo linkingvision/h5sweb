@@ -13,8 +13,8 @@
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.device")}}</div>
                             <div class="liveview_colltitle">
-                                <div class="liveview_titleicon1"></div>
-                                <div @click.stop="headswitch1" class="liveview_titleicon"></div>
+                                <!-- <div class="liveview_titleicon1"></div> -->
+                                <!-- <div @click.stop="headswitch1" class="liveview_titleicon"></div> -->
                             </div>
                         </div>
                     </template>
@@ -22,7 +22,6 @@
                         :data="data"
                         node-key="id"
                         :filter-node-method="filterNode"
-                        ref="tree"
                         :props="defaultProps">
                         <span slot-scope="{ data }" style="width:100%;">
                             <div style="width:100%;display: flex;justify-content: space-between;">
@@ -39,53 +38,29 @@
                         </span>
                     </el-tree>
                 </el-collapse-item>
-                <el-collapse-item name="1" id="headswitchtour1">
-                    <template slot="title">
-                        <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
-                            <div>{{$t("message.live.Region")}}</div>
-                            <div class="liveview_colltitle">
-                                <div class="liveview_titleicon1"></div>
-                                <div @click.stop="headswitch" class="liveview_titleicon"></div>
-                            </div>
-                        </div>
-                    </template>
-                    <el-tree
-                        class="el_tree"
-                        node-key="strName" 
-                        :default-expanded-keys="['root']" 
-                        :data="data1" 
-                        :props="defaultProps1">
-                        <span slot-scope="{data }" style="width:100%;">
-                            <span>
-                                <span class="iconfont icon-quyu"></span>
-                                <span :class="data.iconclass1" style="padding-left: 4px;">{{data.strName}}</span>
-                            </span>
-                            <div v-if="data.cam.length!=0">
-                                <el-tree class="el_tree1" :data="data.cam" :props="defaultProps1">
-                                    <span slot-scope="{ data }" style="width:100%;">
-                                        <div style="width:100%;display: flex;justify-content: space-between;">
-                                            <span  
-                                                draggable="true" >
-                                                <span style="font-size: 12px;" :class="data.iconclass" :id="'icon'+data.strToken"></span>
-                                                <span :class="data.iconclass1" style="padding-left: 4px;">{{data.strName}}</span>
-                                            </span>
-                                            <span :class="data.iconclass2" class="black" style="">{{$t("message.live.Videorecording")}}</span>
-                                        </div>
-                                    </span>
-                                </el-tree>
-                            </div>
-                        </span>
-                    </el-tree>
-                </el-collapse-item>
                 <el-collapse-item name="2" >
                     <template slot="title">
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
-                            <div>视图</div>
-                            <div class="liveview_colltitle">
-                                <div class="liveview_titleicon2"></div>
-                            </div>
+                            <div>{{$t("message.live.View")}}</div>
                         </div>
                     </template>
+                    <el-tree
+                        show-checkbox
+                        ref="tree"
+                        class="el_tree"
+                        node-key="strName" 
+                        :default-expanded-keys="['root']" 
+                        :data="viewdata"
+                        :props="defaultProps2">
+                        <span slot-scope="{data }" style="width:100%;">
+                            <div style="width:100%;display: flex;justify-content: space-between;">
+                                <span>
+                                    <span :class="data.icon"></span>
+                                    <span style="padding-left: 6px;">{{data.strName}}</span>
+                                </span>
+                            </div>
+                        </span>
+                    </el-tree>
                 </el-collapse-item>
             </el-collapse>
 		</div>
@@ -106,7 +81,8 @@
             </div>
 			<div class="liveview_group blocks">
                 <div class="liveview_function">
-                    <el-button class="tour_start" size="mini" @click="Playall">{{$t("message.tour.Start")}}</el-button>
+                    <el-button class="tour_start" size="mini" @click="Play('all')">{{$t("message.tour.Startall")}}</el-button>
+                    <el-button class="tour_start" size="mini" @click="Play('part')">{{$t("message.tour.Start")}}</el-button>
                     <el-button class="tour_stop" size="mini" @click="Allpause">{{$t("message.tour.stop")}}</el-button>
                     
                 </div>
@@ -133,12 +109,12 @@
                         width="200"
                         trigger="click">
                         <div class="tour_region">
-                            <el-select v-model="region" size="mini"  @change="Speed()">
+                            <el-select v-model="region" size="mini"  @change="changeWS">
                                 <el-option label="20" value="20"></el-option>
                                 <el-option label="30" value="30"></el-option>
                                 <el-option label="60" value="60"></el-option>
                             </el-select>
-                            <el-select v-model="streamprofile" size="mini" >
+                            <el-select v-model="streamprofile" size="mini" @change="changeWS">
                                 <el-option :label="label.label2" value="main"></el-option>
                                 <el-option :label="label.label3" value="sub"></el-option>
                             </el-select>
@@ -180,16 +156,16 @@ export default {
             filterText:"",//搜索框
             data:listdatag,
             data1:listdatag1,
+            viewdata:[],//视图数据
+            Getsredata:[],//全部数据
             defaultProps: {
                 children: 'children',
                 label: 'label',
                 token:"token",
                 iconclass:"iconclass"
             },
-            defaultProps1: {
-                children: 'node',
+            defaultProps2:{
                 label: 'strName',
-                cam:"cam"
             },
 
             drawer: false,//右侧栏
@@ -197,7 +173,7 @@ export default {
             title:this.$t("message.live.setting"),
             region:20,//几秒钟更换
             streamprofile:"main",//码流
-            proto: this.$store.state.tourrtc,//协议
+            proto: "WS",//协议
             h5playev1:[],//内容
             timersetInterval:"",//定时器
             token_index:""//删除个数
@@ -207,90 +183,161 @@ export default {
         clearInterval(this.timersetInterval);
     },
 	mounted(){
-        // console.log(listdatag,listdatagload,listdatag1,this.data)
+        var storage=JSON.parse(localStorage.getItem("TourStorage"));
+        console.log(storage)
+        this.proto=storage.proto
+        this.region=storage.region
+        this.streamprofile=storage.streamprofile
         this.updateUI();
         $('#headswitchtour1').hide()
+        this.srcview();
+        this.GetSrc();
 	},
 	methods:{
         //ws rtc
         changeWS(event) {
             //this.proto = "WS";
-            console.log(this.proto);
-            var proto=this.proto;
-            this.$store.state.tourrtc=proto
-            localStorage.setItem("tourrtc",proto);
+            var tourStorage={
+                proto:this.proto,
+                streamprofile:this.streamprofile,
+                region:this.region
+            }
+            tourStorage=JSON.stringify(tourStorage)
+            console.log(tourStorage);
+            // this.$store.state.tourrtc=proto
+            localStorage.setItem("TourStorage",tourStorage);
         },
-        //全部开始
-        Playall(){
-            this.Allpause();
+        //开始
+        Play(value){
+            // this.Allpause();
             var timing=this.region*1000;
-            var root = this.$store.state.IPPORT;
-			var wsroot = this.$store.state.WSROOT;
             //url
             var token_q=[];
             var vid = '';
-            var url = root + "/api/v1/GetSrc?getonline=false&session="+ this.$store.state.token;
+            var data='';
+            console.log(value)
+            if(value==='all'){
+                data=this.Getsredata
+            }else if(value==="part"){
+                data=this.$refs.tree.getCheckedNodes()
+            }
+            for(var i=0; i< data.length; i++){
+                for(var l=0; l< data[i].src.length; l++){
+                    token_q.push(data[i].src[l].strToken);
+                }
+            }
+            var token_lenght=token_q.length
+            console.log(token_q,token_q.length)
+            this.$nextTick(()=>{
+                
+                for(var i=0; i< token_lenght; i++){
+                    if(i<this.rows*this.cols){
+                        var item = token_q[i];
+                        this.Tranvalue(item,i)
+                        console.log(item,i)
+                        token_q.push(token_q[i]);
+                    }
+                    
+                }
+                if(token_lenght>this.rows*this.cols){
+                    token_q.splice(0,this.rows*this.cols);
+                }else{
+                    token_q.splice(0,token_lenght);
+                }
+            })
+            // return false
+                
+            this.timersetInterval=setInterval(function(){
+                for(var l=0; l< token_lenght; l++){
+                    if(l<this.rows*this.cols){
+                        var item = token_q[l];
+                        this.Tranvalue(item,l)
+                        token_q.push(item);
+                    }
+                }
+                this.$nextTick(()=>{
+                    if(token_lenght>this.rows*this.cols){
+                        token_q.splice(0,this.rows*this.cols);
+                    }else{
+                        token_q.splice(0,token_lenght);
+                    }
+                })
+
+            }.bind(this),timing)
+            this.$once('hook:beforeDestroy', () => {            
+                clearInterval(this.timersetInterval);                                    
+            })
+        },
+        //视图数据
+        srcview(){
+            var url = this.$store.state.IPPORT + "/api/v1/GetView?session="+ this.$store.state.token;
+            this.$http.get(url).then(result=>{
+                if (result.status === 200) {
+                    console.log(result)
+                    var oldarr=result.data.conf;
+                    var oldarr1=result.data.src;
+                    // console.log(oldarr,oldarr1)
+                    
+                    for(var l in oldarr){
+                        var dataroot=this.getview(oldarr[l],oldarr1);
+                        // console.log(dataroot)
+                        this.viewdata.push(dataroot);
+                    }
+                    // console.log(this.viewdata)
+                }
+            })
+        },
+        getview(arr,arr1){
+            if(arr.strLayoutType=='1|1'){
+                arr.icon='iconfont icon-tubiao_huaban11'
+            }else if(arr.strLayoutType=='1|3'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben1'
+            }else if(arr.strLayoutType=='2|2'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben21'
+            }else if(arr.strLayoutType=='1|6'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben31'
+            }else if(arr.strLayoutType=='1|7'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben41'
+            }else if(arr.strLayoutType=='3|3'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben51'
+            }else if(arr.strLayoutType=='1|13'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben61'
+            }else if(arr.strLayoutType=='4|4'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben71'
+            }else if(arr.strLayoutType=='5|5'){
+                arr.icon='iconfont icon-tubiao_huaban1fuben8'
+            }
+            for(var i in arr.src){
+                for(var j in arr1){
+                    if(arr.src[i].strToken == arr1[j].strToken){
+                        arr.src[i].strName = arr1[j].strName;
+                        // console.log(arr.src[i])
+                    }
+                }
+            }
+            // if(arr.src && arr.src.length>0){
+            //     for (var i = 0; i < arr.src.length; i++) {
+            //         arr.src[i] = getview(arr.src[i],arr1);
+            //     }
+            // }
+            return arr;
+        },
+        GetSrc(){
             
-            // console.log("44",this.rowsxcols,this.rows*this.cols);
+            var root = this.$store.state.IPPORT;
+
+            var url = root + "/api/v1/GetSrc?getonline=false&session="+ this.$store.state.token;
             // return false
             this.$http.get(url).then(result=>{
                 //console.log("a",result);
                 if(result.status == 200){
                     var data =  result.data;
                     console.log(data);
+                    this.Getsredata.push(result.data);
                     
-                    this.token_index=data.src.length;
-                    //return false;
-                    for(var i=0; i< data.src.length; i++){
-                        token_q.push(data.src[i].strToken);
-                    }
-                    this.$nextTick(()=>{
-                        
-                        for(var i=0; i< data.src.length; i++){
-                            if(i<this.rows*this.cols){
-                                var item = token_q[i];
-                                this.Tranvalue(item,i)
-                                token_q.push(token_q[i]);
-                            }
-                            
-                        }
-                        if(this.token_index>this.rows*this.cols){
-                            token_q.splice(0,this.rows*this.cols);
-                            // console.log("==================11",token_q,this.rows*this.cols);
-                        }else{
-                            token_q.splice(0,this.token_index);
-                            // console.log("==================12",token_q,this.rows*this.cols);
-                        }
-                        // console.log("==================",token_q,this.token_index);
-                    })
                 }
             })
             
-            this.timersetInterval=setInterval(function(){
-                // console.log("==================",token_q);
-                for(var l=0; l< this.token_index; l++){
-                    if(l<this.rows*this.cols){
-                        var item = token_q[l];
-                        this.Tranvalue(item,l)
-                        token_q.push(item);
-                        // console.log("==================12",token_q,token_q.length);
-                    }
-                }
-                this.$nextTick(()=>{
-                    if(this.token_index>this.rows*this.cols){
-                        token_q.splice(0,this.rows*this.cols);
-                        // console.log("==================1",token_q);
-                    }else{
-                        token_q.splice(0,this.token_index);
-                        // console.log("==================12",token_q,this.token_index);
-                    }
-                })
-                // console.log("==================",token_q,this.token_index);
-
-            }.bind(this),timing)
-            this.$once('hook:beforeDestroy', () => {            
-                clearInterval(this.timersetInterval);                                    
-            })
             
         }, 
         Tranvalue(item,i){
@@ -369,11 +416,6 @@ export default {
             this.$root.bus.$emit('liveplaystop');
             clearInterval(this.timersetInterval);
             //console.log("b");
-        },
-        //快换时间
-        Speed(){
-            console.log( this.region);
-            //this.v1.speed(this.region);
         },
 
 		//点击宫格

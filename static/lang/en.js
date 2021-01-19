@@ -346,7 +346,8 @@ export default {
 		},
 		tour: {
 			Start: "Start",
-			stop: "Stop"
+			stop: "Stop",
+			Startall:'Start all'
 		},
 		camera: {
 			Save_successfully: "Save successfully!",

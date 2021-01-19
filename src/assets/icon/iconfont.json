@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "19412512",
+      "name": "jingyin",
+      "font_class": "jingyin",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "4182366",
+      "name": "AK-MN声音_fill",
+      "font_class": "mn_shengyin_fill",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "5311962",
       "name": "定位",
       "font_class": "target-lock",

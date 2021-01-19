@@ -41,28 +41,12 @@
                         <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
                     </el-menu-item>
 				</el-submenu>
-				
 				<el-submenu index="/Settings/RtmpPush">
 					<template slot="title">
 						<span>{{$t("message.setting.devicertmppush")}} </span>
 					</template>
                     <el-menu-item index="/Settings/RtmpPush">
                         <span class="Setting_tree">{{$t("message.setting.devicertmppush")}}</span> 
-                    </el-menu-item>
-				</el-submenu>
-
-				<el-submenu index="/Settings/User">
-					<template slot="title">
-						<span>{{$t("message.setting.user")}}</span>
-					</template>
-                    <el-menu-item index="/Settings/User">
-                        <span class="Setting_tree">{{this.$t("message.setting.user")}}</span> 
-                    </el-menu-item>
-                    <el-menu-item index="/Settings/Role">
-                         <span class="Setting_tree">{{this.$t("message.setting.Rolemanagement")}}</span> 
-                    </el-menu-item>
-					<el-menu-item index="/Settings/CyberSecurity">
-                         <span class="Setting_tree">{{this.$t("message.setting.CyberSecurity")}}</span> 
                     </el-menu-item>
 				</el-submenu>
 				
@@ -108,49 +92,108 @@
                     </el-menu-item>
 				</el-submenu>
 
-				<el-submenu index="/Settings/CloudMode">
+				<!-- 系统 -->
+				<el-submenu index="System">
 					<template slot="title">
-						<span>WEBRTC</span>
+						<span>{{$t("message.dashboard.system_info")}} </span>
 					</template>
-                    <el-menu-item index="/Settings/CloudMode">
-                        <span class="Setting_tree">{{this.$t("message.setting.CloudMode")}}</span> 
-                    </el-menu-item>
-					<el-menu-item index="/Settings/RelayMode">
-                        <span class="Setting_tree">{{this.$t("message.setting.RelayMode")}}</span> 
-                    </el-menu-item>
-					<el-menu-item index="/Settings/TURNServer">
-                        <span class="Setting_tree">{{this.$t("message.setting.TURNServer")}}</span> 
-                    </el-menu-item>
-				</el-submenu>
-				
-				<el-submenu index="/Settings/System">
-					<template slot="title">
-						<span>{{$t("message.setting.System")}} </span>
-					</template>
-                    <el-menu-item index="/Settings/System">
-                        <span class="Setting_tree">{{this.$t("message.setting.System")}}</span> 
-                    </el-menu-item>
+					<!-- 系统 -->
+					<el-submenu index="/Settings/System">
+						<template slot="title">
+							<span>{{$t("message.setting.System")}} </span>
+						</template>
+						<el-menu-item index="/Settings/System">
+							<span class="Setting_tree">{{this.$t("message.setting.System")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/License">
+							<span class="Setting_tree">授权管理</span> 
+						</el-menu-item>
+					</el-submenu>
+					<!-- User -->
+					<el-submenu index="/Settings/User">
+						<template slot="title">
+							<span>{{$t("message.setting.user")}}</span>
+						</template>
+						<el-menu-item index="/Settings/User">
+							<span class="Setting_tree">{{this.$t("message.setting.user")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/Role">
+							<span class="Setting_tree">{{this.$t("message.setting.Rolemanagement")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/CyberSecurity">
+							<span class="Setting_tree">{{this.$t("message.setting.CyberSecurity")}}</span> 
+						</el-menu-item>
+					</el-submenu>
+					<!-- Docker -->
+					<el-submenu index="/Settings/Docker">
+						<template slot="title">
+							<span>Docker</span>
+						</template>
+						<el-menu-item index="/Settings/Docker">
+							<span class="Setting_tree">Docker</span> 
+						</el-menu-item>
+					</el-submenu>
+					<!-- log -->
+					<el-submenu index="/Settings/LogLevel">
+						<template slot="title">
+							<span>{{$t("message.setting.Log")}} </span>
+						</template>
+						<el-menu-item index="/Settings/LogLevel">
+							<span class="Setting_tree">{{this.$t("message.setting.LogLevel")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/LogRotating">
+							<span class="Setting_tree">{{this.$t("message.setting.LogRotating")}}</span> 
+						</el-menu-item>
+					</el-submenu>
+
+					<a href='/mediastore'>
+						<el-menu-item >
+							<!-- <i class="iconfont icon-wenjianjia" style="font-size:20px"></i> -->
+							<span slot="title">{{$t("message.left.screenshots")}}</span>
+						</el-menu-item>
+					</a>
 				</el-submenu>
 
-				<el-submenu index="/Settings/LogLevel">
-					<template slot="title">
-						<span>{{$t("message.setting.Log")}} </span>
-					</template>
-                    <el-menu-item index="/Settings/LogLevel">
-                        <span class="Setting_tree">{{this.$t("message.setting.LogLevel")}}</span> 
-                    </el-menu-item>
-					<el-menu-item index="/Settings/LogRotating">
-                        <span class="Setting_tree">{{this.$t("message.setting.LogRotating")}}</span> 
-                    </el-menu-item>
-				</el-submenu>
-
-				<el-submenu index="/Settings/RTSP">
+				<el-submenu index="协议">
 					<template slot="title">
 						<span>{{$t("message.setting.Protocol")}} </span>
 					</template>
-                    <el-menu-item index="/Settings/RTSP">
-                        <span class="Setting_tree">RTSP</span> 
-                    </el-menu-item>
+					<!-- 协议 rtsp -->
+                    <el-submenu index="/Settings/RTSP">
+						<template slot="title">
+							<span>{{$t("message.setting.Protocol")}} </span>
+						</template>
+						<el-menu-item index="/Settings/RTSP">
+							<span class="Setting_tree">RTSP</span> 
+						</el-menu-item>
+					</el-submenu>
+					<!-- WEBRTC -->
+					<el-submenu index="/Settings/CloudMode">
+						<template slot="title">
+							<span>WEBRTC</span>
+						</template>
+						<el-menu-item index="/Settings/CloudMode">
+							<span class="Setting_tree">{{this.$t("message.setting.CloudMode")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/RelayMode">
+							<span class="Setting_tree">{{this.$t("message.setting.RelayMode")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/TURNServer">
+							<span class="Setting_tree">{{this.$t("message.setting.TURNServer")}}</span> 
+						</el-menu-item>
+					</el-submenu>
+					<!-- HTTP -->
+					<el-submenu index="HTTP">
+						<template slot="title">
+							<span>HTTP</span>
+						</template>
+						<el-menu-item index="/Settings/Configure">
+							<span class="Setting_tree">配置</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/Domainlist">
+							<span class="Setting_tree">域名表</span> 
+						</el-menu-item>
+					</el-submenu>
 				</el-submenu>
 
 				<el-submenu index="/Settings/Map">
@@ -176,25 +219,12 @@
                         <span class="Setting_tree">Map</span> 
                     </el-menu-item> -->
 				</el-submenu>
-
-				<el-submenu index="/Settings/Docker">
-					<template slot="title">
-						<span>Docker</span>
-					</template>
-                    <el-menu-item index="/Settings/Docker">
-                        <span class="Setting_tree">Docker</span> 
-                    </el-menu-item>
-				</el-submenu>
+				
 				<el-menu-item index="/Settings/Camera">
 					<!-- <i class="iconfont icon-jiankong" style="font-size:18px"></i> -->
 					<span slot="title">{{$t("message.left.camera")}}</span>
 				</el-menu-item>
-				<a href='/mediastore'>
-					<el-menu-item >
-						<!-- <i class="iconfont icon-wenjianjia" style="font-size:20px"></i> -->
-						<span slot="title">{{$t("message.left.screenshots")}}</span>
-					</el-menu-item>
-				</a>
+				
 			</el-menu>
 		</div>
 		<div class="setting_you">
@@ -215,7 +245,7 @@ export default {
 	methods:{
 		menuList(){ 
             let path = this.$route.path
-			console.log(path,this.$route)
+			// console.log(path,this.$route)
             this.activemenu = path
         }
 		

@@ -19,7 +19,9 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </span>
-
+        <div id="Audio_slider" class="Audio_slider">
+            <el-slider :step='0.1' :show-tooltip="false" :max='1' @input='Audiochange' v-model="Audioslider"></el-slider>
+        </div>
         <div class="information"  style="display:none padding:0px">
             <div class="information_con">
                 <div class="information1">
@@ -62,6 +64,7 @@
                     </div>
                 </div>
             </CDropdown>
+            <button class="info_id_show iconfont" :class="(Audioslider==0)?'icon-jingyin':'icon-mn_shengyin_fill'" @click="Audiosetup"></button>
             <button class="info_id_show iconfont icon-liuliang" @click="Information"></button>
             <button class="iconfont" :class="Shoutwheatclass" @click="Shoutwheat"></button>
             <button class="iconfont icon-picfill" @click="DoSnapshotWeb"></button>
@@ -161,6 +164,7 @@ export default {
     props:['h5id', 'h5videoid',"cols","rows"],
     data(){
         return{
+            Audioslider:0,//音频
             informationshow: false,
             informationAudio:[],
             informationVideo:[],
@@ -171,6 +175,7 @@ export default {
             currtoken:undefined,//token
             tokenshou:null,
             ptzshow: false,
+            audioshow: false,
             Preset_value:0.5,//镜头转换速度
             Presetdata:[],//预置位数组
             Shoutwheatclass:"icon-voicefill1",//语音图标
@@ -233,6 +238,20 @@ export default {
         }
     },
     methods:{
+        //音频
+        Audiosetup(){
+            if (this.audioshow == false){
+                $("#Audio_slider").css("display", "block");
+                this.audioshow = true;
+            }else{
+                $("#Audio_slider").css("display", "none");
+                this.audioshow = false;
+            }
+        },
+        Audiochange(){
+            console.log(this.Audioslider)
+            document.getElementById(this.videoid).volume=this.Audioslider
+        },
         //码率
         Information(){
             console.log('124')
@@ -892,6 +911,18 @@ export default {
         &:hover .liveplay_butt{
             display: block;
         }
+        // 音频
+        .Audio_slider{
+            display: none;
+            width: 100px;
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            z-index:1012;
+            .el-slider__runway{
+                height: 4px;
+            }
+        }
         .liveplay_butt{
             position: absolute;
             display: none;
@@ -901,7 +932,7 @@ export default {
             height: 40px;
             line-height: 30px;
             background: url('~@/views/liveview/imgs/liveview_buttback.png') no-repeat;
-            background-size: 340px 35px;
+            background-size: 360px 35px;
             background-position-x:right;
             text-align: right;
             padding: 0 15px;

@@ -48,6 +48,10 @@ const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
 
+const Configure = () => import('@/views/settings/https/Configure')
+const Domainlist = () => import('@/views/settings/https/Domainlist')
+
+const License = () => import('@/views/settings/license/License')
 const Cluster = () => import('@/views/settings/cluster/Cluster')
 const Map = () => import('@/views/settings/Map/Map')
 const Mapmanagement = () => import('@/views/settings/Map/Mapmanagement')
@@ -334,6 +338,36 @@ export default new Router({
 								title: '/Cluster',
 								name:i18n.tc("message.dashboard.cluster"),
 								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Configure',
+							name: 'Configure',
+							component: Configure,
+							meta: {
+								title: '/Configure',
+								name:i18n.tc("message.dashboard.cluster"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Domainlist',
+							name: 'Domainlist',
+							component: Domainlist,
+							meta: {
+								title: '/Domainlist',
+								name:i18n.tc("message.dashboard.cluster"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'License',
+							name: 'License',
+							component: License,
+							meta: {
+								title: '/License',
+								name:"授权管理",
+								icon:'iconfont icon-11111-copy',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						},{
@@ -641,11 +675,11 @@ if(localStorage.getItem('liveviewrtc')){
 if(localStorage.getItem('watermarktoggle')){
 	store.state.watermarktoggle=localStorage.getItem('watermarktoggle');
 }
-if(localStorage.getItem('tourrtc')){
-	store.state.tourrtc=localStorage.getItem('tourrtc');
-}
+// if(localStorage.getItem('tourrtc')){
+// 	store.state.tourrtc=localStorage.getItem('tourrtc');
+// }
 if(localStorage.getItem('themetoggle')){
-	console.log('主题',JSON.parse(localStorage.getItem('themetoggle')))
+	// console.log('主题',JSON.parse(localStorage.getItem('themetoggle')))
 	store.state.darkMode=JSON.parse(localStorage.getItem('themetoggle'));
 }
 
@@ -653,13 +687,15 @@ let root=process.env.VUE_APP_URL;
 if (root == undefined){
 	root = window.location.protocol + '//' + window.location.host + window.location.pathname;
 }
-console.log(root)
+// console.log(root)
 store.state.IPPORT=root
+
+console.log("host",window.location.hostname,window.location.host,window.location.href)
 
 var wsroot = process.env.VUE_APP_PORT;
 if (wsroot == undefined)
 {
 	wsroot = window.location.host;
 }
-console.log(wsroot)
+// console.log(wsroot)
 store.state.WSROOT=wsroot

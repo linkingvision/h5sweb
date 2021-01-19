@@ -266,7 +266,7 @@ export default {
 			var url = this.$store.state.IPPORT + "/api/v1/GetEnableLinkagent?session="+ this.$store.state.token;
 			this.$http.get(url).then(result=>{
 				if(result.status==200){
-					console.log(result)
+					// console.log(result)
 					if(result.data.enable){
 						document.getElementById('Docker').style.display='block'
 					}

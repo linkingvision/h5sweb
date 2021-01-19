@@ -89,7 +89,7 @@ export default {
 	methods:{
 		menuList(){ 
 			let path = this.$route.matched[1].meta.title
-			console.log(this.$route)
+			// console.log(this.$route)
             this.activeIndex = path
         }
 	}

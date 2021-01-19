@@ -279,6 +279,21 @@ $collapse_header:#E5E5E5;
             }
         }
     }
+    .liveplay{
+        // 音频
+        .Audio_slider{
+            .el-slider__runway{
+                height: 4px;
+                .el-slider__button-wrapper{
+                    .el-slider__button{
+                        width: 10px;
+                        height: 10px;
+                        border: 1px solid #409EFF;
+                    }
+                }
+            }
+        }
+    }
     .Aside{
         .c-sidebar{
             .c-sidebar-brand{
@@ -400,6 +415,18 @@ $collapse_header:#E5E5E5;
     //批量下载
     .BatchImport{
         .BatchImport_flex{
+            .el-collapse{
+                .el-collapse-item__header{
+                    background: none;
+                    color:  rgba(58, 187, 254, 1);
+                    i{
+                        color: #000000;
+                    }
+                    .el-collapse-item__arrow{
+                        margin: 0 0 0 10px;
+                    }
+                }
+            }
             .BatchImport_title{
                 color: #000000;
             }

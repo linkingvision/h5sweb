@@ -68,6 +68,7 @@
 							<div>
 								<canvas class="timeline" :id="'timeline'+r+c" style="width:100%;background: #343434;" width="1500" height="80px"
 								 	@mousedown ="timelinndown($event)"
+									@mouseout="mouseoutcanvas"
 									@mouseup="timetz"
 									ondragstart="return false;">
 								</canvas>
@@ -304,6 +305,11 @@ export default {
 			console.log("play",this.SGtoken,"token",this.Gtoken);
 			// return false;
 			this.Play(data);
+		},
+		mouseoutcanvas(){
+			console.log("11111");
+			return
+
 		},
 		//拉播
 		timelinndown(err){

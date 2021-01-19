@@ -14,7 +14,7 @@ export default {
         return{
             videoid: this.h5videoid,
             h5handler:undefined,//v1
-            proto: this.$store.state.tourrtc,
+            proto: "WS",
         }
     },
     beforeDestroy() {
@@ -24,7 +24,8 @@ export default {
         let _this = this;
         this.$root.bus.$on('livetour', function(token,streamprofile, id)
         {
-            console.log(token)
+            var storage=JSON.parse(localStorage.getItem("TourStorage"));
+            _this.proto=storage.proto
             if (_this.h5id != id)
             {
                 return;
@@ -70,7 +71,7 @@ export default {
                 hlsver: 'v1', //v1 is for ts, v2 is for fmp4
                 session: this.$store.state.token //session got from login
             };
-            if (this.$store.state.tourrtc == 'RTC' || (H5siOS() === true)){
+            if (this.proto == 'RTC' || (H5siOS() === true)){
                 this.h5handler = new H5sPlayerRTC(conf);
             }else{
                 this.h5handler = new H5sPlayerWS(conf);
