@@ -716,13 +716,14 @@ export default {
             display: flex;
             align-items: center;
             .form_butt{
+                font-size: 12px;
                 background: none;
                 border-radius: 5px;
                 margin-right: 10px;
                 opacity: 0.9;
                 &:hover{
-                    border: 1px solid #3DABFF;
-                    color: #3DABFF;
+                    border: 1px solid #3DABFF!important;
+                    color: #3DABFF!important;
                 }
             }
         }

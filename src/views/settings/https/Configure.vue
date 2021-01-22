@@ -58,6 +58,7 @@ export default {
                 console.log("SetHTTPConf",result);
                 if(result.status == 200){
                     if(result.data.bStatus){
+                        this.$root.bus.$emit('webrtc',true);
                         this.$message({
                             message: result.data.strCode,
                             type: 'success'

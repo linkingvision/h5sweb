@@ -30,6 +30,11 @@ const state = {
     label:null,
     vid:null,
     viewparameter:null
+  },
+  trueplay:{
+    token:null,
+    streamprofile:null,
+    vid:null,
   }
 }
 

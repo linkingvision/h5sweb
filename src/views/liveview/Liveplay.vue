@@ -240,11 +240,13 @@ export default {
     methods:{
         //音频
         Audiosetup(){
+            var $container = $("#"+this.h5id);
+            var $controlsin = $container.children(".Audio_slider");
             if (this.audioshow == false){
-                $("#Audio_slider").css("display", "block");
+                $controlsin.css("display", "block");
                 this.audioshow = true;
             }else{
-                $("#Audio_slider").css("display", "none");
+                $controlsin.css("display", "none");
                 this.audioshow = false;
             }
         },

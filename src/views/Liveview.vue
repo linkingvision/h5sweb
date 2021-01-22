@@ -530,6 +530,7 @@ export default {
                 }
                 
                 _this.$nextTick(()=>{
+                    setTimeout(()=>{
                     for(var i=1;i<=this.rows;i++){
                         for(var c=1;c<=this.cols;c++){
                             var video= document.getElementById("hvideo"+i+c)
@@ -546,6 +547,7 @@ export default {
                             }
                         }
                     }
+                    },300)
                 })
             }else{
                console.log("不可用");
@@ -597,6 +599,7 @@ export default {
                     // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
                 _this.$nextTick(()=>{
+                    setTimeout(()=>{
                     for(var i=1;i<=this.rows;i++){
                         for(var c=1;c<=this.cols;c++){
                             var video= document.getElementById("hvideo"+i+c)
@@ -612,6 +615,7 @@ export default {
                             }
                         }
                     }
+                    },300)
                 })
                     
             }else{

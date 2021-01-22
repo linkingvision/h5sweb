@@ -13,13 +13,13 @@
 						<span>{{$t("message.setting.device")}} </span>
 					</template>
                     <el-menu-item index="/Settings/DeviceStream">
-                        <span class="Setting_tree">H5_STREAM</span> 
+                        <span class="Setting_tree">{{$t("message.setting.RTSPRTMP")}}</span> 
                     </el-menu-item>
                     <el-menu-item index="/Settings/DeviceOnvif">
-                         <span class="Setting_tree">H5_ONVIF</span> 
+                         <span class="Setting_tree">{{$t("message.setting.ONVIF")}}</span> 
                     </el-menu-item>
 					<el-menu-item index="/Settings/DeviceFile">
-                         <span class="Setting_tree">H5_FILE</span> 
+                         <span class="Setting_tree">{{$t("message.setting.File")}}</span> 
                     </el-menu-item>
 					<el-menu-item index="/Settings/DeviceAll">
                          <span class="Setting_tree">{{$t("message.setting.all")}}</span> 
@@ -27,10 +27,10 @@
 				</el-submenu>
 				<el-submenu index="/Settings/DeviceSdk">
 					<template slot="title">
-						<span>{{$t("message.setting.devicesdk")}} </span>
+						<span>{{$t("message.setting.devicesdk")}}</span>
 					</template>
                     <el-menu-item index="/Settings/DeviceSdk">
-                        <span class="Setting_tree">H5-DEV</span> 
+                        <span class="Setting_tree">{{$t("message.setting.devicesdk")}}</span> 
                     </el-menu-item>
 				</el-submenu>
 				<el-submenu index="/Settings/DeviceImport">

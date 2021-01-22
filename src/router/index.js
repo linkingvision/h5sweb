@@ -105,7 +105,7 @@ export default new Router({
 					name: 'Dashboard',
 					component: Dashboard,
 					meta: {
-						title: 'Dashboard',
+						title: '/Dashboard',
 						name:i18n.tc("message.left.dashboard"),
 						icon:'iconfont icon-11111-copy',
 						type: 'Operator'  // 是否需要判断是否登录,这里是需要判断

@@ -153,6 +153,10 @@ export default {
 		},
 		setting:
 		{
+			RTSPRTMP:"RTSP/RTMP",
+			ONVIF:"ONVIF",
+			File:"File",
+
 			Audio: "Audio",
 			DeviceImport:"Device Import", 
 			Import:"Import",

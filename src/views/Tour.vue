@@ -81,8 +81,19 @@
             </div>
 			<div class="liveview_group blocks">
                 <div class="liveview_function">
-                    <el-button class="tour_start" size="mini" @click="Play('all')">{{$t("message.tour.Startall")}}</el-button>
-                    <el-button class="tour_start" size="mini" @click="Play('part')">{{$t("message.tour.Start")}}</el-button>
+                    <el-select 
+                        v-model="regionchoice" 
+                        size="mini" 
+                        style="width:70px;margin-right: 20px;"
+                        @change="changeWS">
+                        <el-option
+                            v-for="item in regiondata"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <el-button class="tour_start" size="mini" @click="Play(regionchoice)">{{$t("message.tour.Start")}}</el-button>
                     <el-button class="tour_stop" size="mini" @click="Allpause">{{$t("message.tour.stop")}}</el-button>
                     
                 </div>
@@ -127,6 +138,7 @@
                     </el-popover>
                 </div>
 			</div>
+            <div class="liveview_Tips">选择巡更模式</div>
 		</div>
     </div>
 </template>
@@ -176,7 +188,16 @@ export default {
             proto: "WS",//协议
             h5playev1:[],//内容
             timersetInterval:"",//定时器
-            token_index:""//删除个数
+            token_index:"",//删除个数
+
+            regionchoice:"设备",//选择
+            regiondata:[{
+                    value: "设备",
+                    label: "设备"
+                },{
+                    value: "视图",
+                    label: "视图"
+                }],
 		}
     },
     beforeDestroy() {
@@ -185,9 +206,12 @@ export default {
 	mounted(){
         var storage=JSON.parse(localStorage.getItem("TourStorage"));
         console.log(storage)
-        this.proto=storage.proto
-        this.region=storage.region
-        this.streamprofile=storage.streamprofile
+        if(storage!=null){
+            this.proto=storage.proto
+            this.region=storage.region
+            this.streamprofile=storage.streamprofile
+            this.regionchoice=storage.regionchoice
+        }
         this.updateUI();
         $('#headswitchtour1').hide()
         this.srcview();
@@ -200,7 +224,8 @@ export default {
             var tourStorage={
                 proto:this.proto,
                 streamprofile:this.streamprofile,
-                region:this.region
+                region:this.region,
+                regionchoice:this.regionchoice
             }
             tourStorage=JSON.stringify(tourStorage)
             console.log(tourStorage);
@@ -209,18 +234,21 @@ export default {
         },
         //开始
         Play(value){
-            // this.Allpause();
+            // this.Allpause()
+            console.log(value)
+            // return false
+            if(value==='设备'){
+                this.Playall();
+            }else if(value==="视图"){
+                this.Playview();
+            }
+            
+        },
+        Playall(){
             var timing=this.region*1000;
             //url
             var token_q=[];
-            var vid = '';
-            var data='';
-            console.log(value)
-            if(value==='all'){
-                data=this.Getsredata
-            }else if(value==="part"){
-                data=this.$refs.tree.getCheckedNodes()
-            }
+            var data=this.Getsredata;
             for(var i=0; i< data.length; i++){
                 for(var l=0; l< data[i].src.length; l++){
                     token_q.push(data[i].src[l].strToken);
@@ -251,6 +279,7 @@ export default {
                 for(var l=0; l< token_lenght; l++){
                     if(l<this.rows*this.cols){
                         var item = token_q[l];
+                        console.log(item)
                         this.Tranvalue(item,l)
                         token_q.push(item);
                     }
@@ -267,6 +296,35 @@ export default {
             this.$once('hook:beforeDestroy', () => {            
                 clearInterval(this.timersetInterval);                                    
             })
+        },
+        Playview(){
+            var _this=this
+            _this.$root.bus.$emit('liveplaystop');
+            var timing=this.region*1000;
+            var data=this.$refs.tree.getCheckedNodes();
+            if(data.length==0){
+                return
+            }
+            // console.log(data,timing)
+            this.changePanel(data[0],'viewClick')
+            for(var i=0;i<data[0].src.length;i++){
+                var item = data[0].src[i].strToken;
+                this.Tranvalue(item,i)
+            }
+            data.push(data[0])
+            data.shift()
+            // console.log(data[0].strToken)
+            this.timersetInterval=setInterval(function(){
+                _this.$root.bus.$emit('liveplaystop');
+                _this.changePanel(data[0],'viewClick')
+                for(var i=0;i<data[0].src.length;i++){
+                    var item = data[0].src[i].strToken;
+                    _this.Tranvalue(item,i)
+                }
+                data.push(data[0])
+                data.shift()
+                // console.log(data[0].strToken)
+            },timing)
         },
         //视图数据
         srcview(){
@@ -371,7 +429,15 @@ export default {
                     vid = 'tour' +113;
                 }
                 console.log(item,vid)
-                this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
+                setTimeout(()=>{
+                    var vdata={
+                        token:item,
+                        streamprofile:this.streamprofile,
+                        vid:vid
+                    }
+                    console.log(vdata)
+                },200)
+                // this.$store.state.trueplay=vdata
             }
             if(this.rows*this.cols==4||this.rows*this.cols==9||this.rows*this.cols==16){
                 if (i==0) {
@@ -407,8 +473,17 @@ export default {
                 }else if (i==15) {
                     vid = 'tour' +44;
                 }
-                console.log(item,vid)
-                this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
+                // console.log(item,vid)
+                setTimeout(()=>{
+                    var vdata={
+                        token:item,
+                        streamprofile:this.streamprofile,
+                        vid:vid
+                    }
+                    console.log(vdata)
+                    this.$store.state.trueplay=vdata
+                },200)
+                // this.$root.bus.$emit('livetour', item ,this.streamprofile, vid);
             }
         },
         //全部暂停
@@ -447,8 +522,13 @@ export default {
             // }
         },
 		//点击宫格
-        changePanel(event) {
-            let data = $(event.target).data('row');
+        changePanel(event,viewClick) {
+            var data=''
+            if(viewClick=='viewClick'){
+                data=event.strLayoutType
+            }else{
+                data = $(event.target).data('row');
+            }
             let _this = this;
             window.setTimeout(function() {
                 if(data=='1|6'||data=='1|7'||data=='1|13'){
@@ -788,7 +868,7 @@ export default {
         }
         .liveview_group{
             width: 100%;
-            padding: 20px 0;
+            padding: 20px 0 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -798,14 +878,14 @@ export default {
                     margin: 0 10px;
                 }
                 .tour_start{
-                    padding: 8px 15px;
+                    padding: 5px 15px;
                     background-color: #3ABCFE;
                     border: none;
                     color: #FFFFFF;
                     font-size: 14px;
                 }
                 .tour_stop{
-                    padding: 8px 15px;
+                    padding: 5px 15px;
                     background: none;
                     border: 1px solid #3ABCFE;
                     font-size: 14px;
@@ -826,6 +906,14 @@ export default {
                 font-size: 16px;
                 padding-right: 10px;
             }
+        }
+        .liveview_Tips{
+            margin: 5px 0 0 20px;
+            font-size: 12px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: #FFFFFF;
+            line-height: 11px;
         }
     }
 }

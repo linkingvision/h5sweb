@@ -136,6 +136,7 @@ export default {
                 if (result.status == 200) {
                     if(result.data.bStatus){
                         this.GetSystemInfo()
+                        this.$root.bus.$emit('webrtc',true);
                         this.$message({
                             message: result.data.strCode,
                             type: 'success'

@@ -20,6 +20,11 @@ export default {
     beforeDestroy() {
         this.CloseVideo();
     },
+    computed: {
+        listDatas() {
+            return this.$store.state.trueplay;
+        }
+    },
     mounted(){
         let _this = this;
         this.$root.bus.$on('livetour', function(token,streamprofile, id)
@@ -33,11 +38,28 @@ export default {
             _this.PlayVideo(token,streamprofile);
             _this.tokenshou=token;
         });
+        
         this.$root.bus.$on('liveplaystop', function()
         {
             _this.PlayVideostop();
         });
 
+    },
+    watch:{
+        listDatas(token){
+            console.log(token)
+            var _this=this
+            var storage=JSON.parse(localStorage.getItem("TourStorage"));
+            _this.proto=storage.proto
+            setTimeout(()=>{
+                if (_this.h5id != token.vid)
+                {
+                    return;
+                }
+                _this.PlayVideo(token.token,token.streamprofile);
+                _this.tokenshou=token;
+            },200)
+        }
     },
     methods:{
         PlayVideostop(){
@@ -54,7 +76,7 @@ export default {
             }
         },
         //播放
-        PlayVideo(token,streamprofile,label,name){
+        PlayVideo(token,streamprofile){
             if (this.h5handler != undefined)
             {
                 this.h5handler.disconnect();
@@ -77,6 +99,11 @@ export default {
                 this.h5handler = new H5sPlayerWS(conf);
             }
             this.h5handler.connect();
+            this.$store.state.trueplay={
+                token:null,
+                streamprofile:null,
+                vid:null,
+            }
         },
         //关闭
         CloseVideo(){

@@ -431,16 +431,19 @@ export default {
 						})
 					})]
 				}else if(Mapurl[0].name=="谷歌"){
+					console.log(Mapurl[0])
 					tileLayer=[new TileLayer({
 						source: new XYZ({
 							title:Mapurl[0].name,
-							url:Mapurl[0].url
+							url:Mapurl[0].url,
+							wrapX:false
 						})
 					})]
 					overviewMap=[new TileLayer({
 						source: new XYZ({
 							title:Mapurl[0].name,
-							url:Mapurl[0].url
+							url:Mapurl[0].url,
+							wrapX:false
 						})
 					})]
 				}else{

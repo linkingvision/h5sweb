@@ -22,9 +22,7 @@
                 </el-form-item>
                 <el-form-item label="Audio">
                     <el-switch
-                    v-model="editform.Audio"
-                    active-text="ON"
-                    inactive-text="OFF">
+                    v-model="editform.Audio">
                     </el-switch>
                 </el-form-item>
               
@@ -55,9 +53,7 @@
                 </el-form-item>
                 <el-form-item label="Audio">
                     <el-switch
-                        v-model="form.Audio"
-                        active-text="ON"
-                        inactive-text="OFF">
+                        v-model="form.Audio">
                     </el-switch>
                 </el-form-item>
             </el-form>
