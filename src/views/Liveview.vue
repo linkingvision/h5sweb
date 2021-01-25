@@ -300,7 +300,7 @@ export default {
         },
         //播放视图
         async viewClick(data){
-            // console.log(data)
+            console.log(data)
             this.$store.state.liveviewadd=[]
             var _this=this
             this.changePanel(data,'viewClick')
@@ -342,13 +342,13 @@ export default {
             if(this.viewname==null){
                 return
             }
-            console.log(this.$store.state.liveviewadd);
             var viewdata={
                 strName:this.viewname,
                 strToken:uuid(4, 16).toLowerCase(),
                 strLayoutType:this.rows+'|'+this.cols,
                 src:this.$store.state.liveviewadd
             }
+            console.log(viewdata)
             var viewjson=JSON.stringify(viewdata)
             if(viewdata.strLayoutType=='1|1'){
                 viewdata.icon='iconfont icon-tubiao_huaban11'

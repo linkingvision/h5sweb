@@ -42,6 +42,9 @@
                     <template slot="title">
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.View")}}</div>
+                            <div class="liveview_colltitle">
+                                <div class="liveview_titleicon1" @click.stop="Refresh('view')"></div>
+                            </div>
                         </div>
                     </template>
                     <el-tree
@@ -218,6 +221,13 @@ export default {
         this.GetSrc();
 	},
 	methods:{
+        //刷新
+        Refresh(type){
+            if(type=='view'){
+                this.viewdata=[];
+                this.srcview();
+            }
+        },
         //ws rtc
         changeWS(event) {
             //this.proto = "WS";
@@ -305,7 +315,8 @@ export default {
             if(data.length==0){
                 return
             }
-            // console.log(data,timing)
+            console.log(data)
+            // return
             this.changePanel(data[0],'viewClick')
             for(var i=0;i<data[0].src.length;i++){
                 var item = data[0].src[i].strToken;
@@ -400,7 +411,7 @@ export default {
         }, 
         Tranvalue(item,i){
             var vid='';
-            if(this.rows*this.cols==1||this.rows*this.cols==6||this.rows*this.cols==7||this.rows*this.cols==13){
+            if(this.rows*this.cols==1||this.rows*this.cols==3||this.rows*this.cols==6||this.rows*this.cols==7||this.rows*this.cols==13){
                 if (i==0) {
                     vid = 'tour' +11;
                 }else if (i==1) {
@@ -436,8 +447,8 @@ export default {
                         vid:vid
                     }
                     console.log(vdata)
+                    this.$store.state.trueplay=vdata
                 },200)
-                // this.$store.state.trueplay=vdata
             }
             if(this.rows*this.cols==4||this.rows*this.cols==9||this.rows*this.cols==16){
                 if (i==0) {
