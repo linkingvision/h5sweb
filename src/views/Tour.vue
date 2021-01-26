@@ -614,10 +614,11 @@ export default {
                         document.msExitFullscreen();
                     }
                     console.log("========  updateUIExitFullScreen");
+                    this.contentHeight = $(document.body).height()*0.82;
                     this.updateUIExitFullScreen();
                 } else {
-                     console.log('panelFullScreen3');
-
+                     console.log('panelFullScreen3',window.screen.height);
+                    this.contentHeight = window.screen.height
                     if (elem.requestFullscreen) {
                         elem.requestFullscreen();
                     } else if (elem.webkitRequestFullscreen) {
@@ -641,12 +642,15 @@ export default {
             }
         },
         updateUIEnterFullScreen(){
-
+            console.log("--------------1")
             $('div[name="flex"]').height(screen.height / this.rows);
         },
         updateUIExitFullScreen(){
+            console.log("--------------2")
             if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement)
             {
+                this.contentHeight = $(document.body).height()*0.82;
+                console.log("--------------3",this.contentHeight)
                 $('div[name="flex"]').height(this.contentHeight / this.rows);
             }
         },
