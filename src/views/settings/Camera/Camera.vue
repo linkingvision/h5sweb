@@ -36,12 +36,16 @@
             <div class="liveview_right_but">
                 <CButton class="form_butt iconfont icon-duihao" @click="Allon(true)" type="submit">全部开启</CButton>
                 <CButton class="form_butt iconfont icon-jinyong" @click="Alloff(false)" type="submit">全部关闭</CButton>
+                <CButton class="form_butt iconfont icon-jinyong" @click="Allpart(false)" type="submit">禁用离线</CButton>
                 <CButton class="form_butt iconfont icon-baocun" @click="Allsave" type="submit">全部保存</CButton>
             </div>
             <el-table
                 stripe
                 style="width: 100%"
-                :data="tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)">
+                :data="tableData1.filter
+                (data => !search || data.name.toLowerCase().includes(search.toLowerCase())|| data.token.toLowerCase().includes(search.toLowerCase()))
+                .slice((currentPage-1)*pageSize,currentPage*pageSize)"
+                >
                 <el-table-column
                     prop="token"
                     :label="label.Token"
@@ -85,8 +89,14 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                    fixed="right"
-                    :label="save">
+                    fixed="right">
+                    <template slot="header" slot-scope="scope">
+                        <el-input
+                        v-model="search"
+                        @change="handlechange(scope.$index,scope.row)"
+                        size="mini"
+                        placeholder="输入关键字"/>
+                    </template>
                     <template slot-scope="scope">
                         <div class="button_edi">
                             <el-button @click="handleEdit(scope.$index,scope.row)" type="text" class=" iconfont icon-history"></el-button>
@@ -109,12 +119,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import {listdatag,listdatagload,listdatag1} from '../../public/device'
 export default {
     name: 'Camera',
 	data(){
 		return{
+            search: '',//搜索
             filterText:"",//搜索框
             activeNames: ['1'],//左边
             open_Close:this.$t('message.camera.open_Close'),
@@ -151,7 +160,48 @@ export default {
         this.NumberDevice();
 	},
 	methods:{
-        //全部开启
+        //禁用离线
+        async Allpart(off){
+            // return
+            var root = this.$store.state.IPPORT
+            var tableData=this.tableData
+            console.log('全部关闭',tableData)
+
+            var open_close=off
+            for(var i=0;i<tableData.length;i++){
+                console.log(tableData[i].bOnline)
+                // return
+                if(tableData[i].disabled){
+                    return
+                }
+                if(!tableData[i].bOnline){
+                    var url1 = root + "/api/v1/DelCamera?token="+tableData[i].token+"&session="+ this.$store.state.token;
+                    await this.$http.get(url1).then(result=>{
+                        console.log(result);
+                        if(result.status==200){
+                            if(result.data.bStatus==true){
+                                var tabledata={
+                                    name:tableData[i].name,
+                                    token:tableData[i].token,
+                                    open_close:open_close,
+                                    gbid:tableData[i].gbid,
+                                    audio:tableData[i].audio,
+                                    disabled:tableData[i].disabled
+                                };
+                                this.tableData.splice(i, 1,tabledata)
+                                this.Allpublic(root,
+                                    tableData[i].token,
+                                    open_close,
+                                    tableData[i].gbid,
+                                    tableData[i].audio);
+                            }
+                        }
+                    })
+                    
+                }
+            }
+        },
+        //全部开启 
         async Allon(on){
             console.log('全部开启',this.tableData)
             // return
@@ -171,6 +221,7 @@ export default {
                             var tabledata={
                                 name:tableData[i].name,
                                 token:tableData[i].token,
+                                bOnline:tableData[i].bOnline,
                                 open_close:open_close,
                                 gbid:tableData[i].gbid,
                                 audio:tableData[i].audio,
@@ -208,6 +259,7 @@ export default {
                             var tabledata={
                                 name:tableData[i].name,
                                 token:tableData[i].token,
+                                bOnline:tableData[i].bOnline,
                                 open_close:open_close,
                                 gbid:tableData[i].gbid,
                                 audio:tableData[i].audio,
@@ -240,6 +292,7 @@ export default {
                             var tabledata={
                                 name:tableData[i].name,
                                 token:tableData[i].token,
+                                bOnline:tableData[i].bOnline,
                                 open_close:tableData[i].open_close,
                                 gbid:tableData[i].gbid,
                                 audio:tableData[i].audio,
@@ -298,9 +351,8 @@ export default {
             var root = this.$store.state.IPPORT;
           //url
             var url = root + "/api/v1/GetSrc?session="+ this.$store.state.token;
-            console.log("url111",url)
             this.$http.get(url).then(result=>{
-              //console.log("a",result.data.src);
+              console.log("a",result);
               if(result.status == 200){
                 var itme=result.data.src;
                 var tabledata={};
@@ -327,12 +379,14 @@ export default {
             
         },
         loadSrc(tabledata,token){
+            console.log(token)
             var data=tabledata;
             var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/GetCamera?token="+token+"&session="+ this.$store.state.token;
             // console.log(url);
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
+                    console.log(result)
                     if(result.data.bStatus==false){
                     }else{
                         var itme=result.data.cam;
@@ -357,19 +411,18 @@ export default {
         },
         //树形节点点击
         handleNodeClick(data, checked, indeterminate){
+            console.log(data)
             this.currentPage=1
             this.tableData=[];
             var root = this.$store.state.IPPORT;
             var data =  data.children1;
             var tabledata={};
             for(var i=0; i< data.length; i++){
-                console.log(data[i].nType)
-                console.log(data[i].token)
-                console.log(data[i].label)
                 // return false;
                 tabledata={
                     name:data[i].label,
                     token:data[i].token,
+                    bOnline:data[i].bOnline,
                     open_close:true,
                     gbid:"",
                     audio:false,
@@ -502,7 +555,9 @@ export default {
                             var newItem ={
                                     token : item['strToken'],
                                     label : item['strName'],
-                                    nType : item['nType']};
+                                    nType : item['nType'],
+                                    bOnline:item['bOnline']};
+                                    
                             srcGroup.children1.push(newItem);
                         }
                     }
@@ -548,7 +603,8 @@ export default {
                         var newItem ={
                                 token : item['strToken'],
                                 label : item['strName'],
-                                nType : item['nType']};
+                                nType : item['nType'],
+                                bOnline:item['bOnline']};
                        srcGroup.children1.push(newItem);
                     }
                     this.data.push(srcGroup);
@@ -595,8 +651,9 @@ export default {
                         var newItem ={
                                 token : item['strToken'],
                                 label : item['strName'],
-                                nType : item['nType']};
-                       srcGroup.children1.push(newItem);
+                                nType : item['nType'],
+                                bOnline:item['bOnline']};
+                        srcGroup.children1.push(newItem);
                     }
                     this.data.push(srcGroup);
                 }
@@ -615,39 +672,12 @@ export default {
             console.log(`当前页: ${val}`);
             this.currentPage = val;
         },
+        //搜索
+        handlechange(){},
         //模糊查询
-        filterNode(value, data, node) {
-            // 如果什么都没填就直接返回
+        filterNode(value, data) {
             if (!value) return true;
-            // 如果传入的value和data中的label相同说明是匹配到了
-            if (data.label.indexOf(value) !== -1) {
-            return true;
-            }
-            // 否则要去判断它是不是选中节点的子节点
-            return this.checkBelongToChooseNode(value, data, node);
-        },
-        // 判断传入的节点是不是选中节点的子节点
-        checkBelongToChooseNode(value, data, node) {
-            const level = node.level;
-            // 如果传入的节点本身就是一级节点就不用校验了
-            if (level === 1) {
-            return false;
-            }
-            // 先取当前节点的父节点
-            let parentData = node.parent;
-            // 遍历当前节点的父节点
-            let index = 0;
-            while (index < level - 1) {
-            // 如果匹配到直接返回
-            if (parentData.data.label.indexOf(value) !== -1) {
-                return true;
-            }
-            // 否则的话再往上一层做匹配
-            parentData = parentData.parent;
-            index ++;
-            }
-            // 没匹配到返回false
-            return false;
+            return data.label.indexOf(value) !== -1;
         }
     },
     //模糊查询
@@ -716,13 +746,14 @@ export default {
             display: flex;
             align-items: center;
             .form_butt{
+                font-size: 12px;
                 background: none;
                 border-radius: 5px;
                 margin-right: 10px;
                 opacity: 0.9;
                 &:hover{
-                    border: 1px solid #3DABFF;
-                    color: #3DABFF;
+                    border: 1px solid #3DABFF!important;
+                    color: #3DABFF!important;
                 }
             }
         }
