@@ -119,8 +119,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import {listdatag,listdatagload,listdatag1} from '../../public/device'
 export default {
     name: 'Camera',
 	data(){

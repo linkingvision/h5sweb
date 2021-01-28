@@ -31,6 +31,14 @@
 				</div>
 			</div>
 			<div class="Map_Region">
+				<el-input
+					prefix-icon="iconfont icon-sousuo"
+					suffix-icon="iconfont icon-shoucang"
+					class="liveview_left_input_search"
+					placeholder="请输入定位"
+					@change="Mapsearch"
+					v-model="search">
+				</el-input>
 				<el-collapse v-model="activeNames">
 					<el-collapse-item name="1" id="headswitch1">
 						<template slot="title">
@@ -152,6 +160,7 @@ import CircleStyle from 'ol/style/Circle';
 export default {
 	data() {
 		return {
+			search:"",//搜索
 			boxbut:true,//框选
 			boxclick:true,//点击框选
 			videoname:null,//视频名称
@@ -194,11 +203,25 @@ export default {
 		this.Regional();
 	},
 	mounted() {
+		// this.Mapsearch()
 		setTimeout(()=>{
 			this.initPointMap();
 		},200)
 	},
 	methods:{
+		//搜索
+		Mapsearch(){
+			var _this=this
+			let view = _this.map.getView();
+			var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
+			placeSearch.search(this.search, function(status, result) {
+				if (status === 'complete' && result.info === 'OK') {
+					var poiArr = result.poiList.pois;
+					// console.log(poiArr[0])
+					view.setCenter([poiArr[0].location.M,poiArr[0].location.O]);
+				}
+			})
+		},
 		//回到中心点
 		Mapcore(){
 			var _this=this
