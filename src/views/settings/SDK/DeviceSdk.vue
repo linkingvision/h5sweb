@@ -82,6 +82,7 @@
                     <el-input v-if="form.Type=='H5_DEV_TD'" v-model="form.Port_td"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_UNV'" v-model="form.Port_unv"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_DHDSS'" v-model="form.Port_DSS"></el-input>
+                    <el-input v-if="form.Type=='H5_DEV_IVS1800'" v-model="form.Port_1800"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.Audio">
                     <el-switch
@@ -203,6 +204,9 @@ import uuid from '../../../assets/js/uuid'
                 value: 'H5_DEV_HIK',
                 label: 'H5_DEV_HIK'
             }, {
+                value: 'H5_DEV_IVS1800',
+                label: 'H5_DEV_IVS1800'
+            }, {
                 value: 'H5_DEV_DH',
                 label: 'H5_DEV_DH'
             }
@@ -242,6 +246,7 @@ import uuid from '../../../assets/js/uuid'
             Port_td:"3000",
             Port_unv:"80",
             Port_DSS:"9000",
+            Port_1800:"18531",
             Audio:false
         },
         editform: {
@@ -259,6 +264,7 @@ import uuid from '../../../assets/js/uuid'
             Port_td:"3000",
             Port_unv:"80",
             Port_DSS:"9000",
+            Port_1800:"18531",
             Audio:false
         },
         edittoken:"",//编辑时要删除的token
@@ -395,6 +401,21 @@ import uuid from '../../../assets/js/uuid'
                 })
             }else if(form.Type=="H5_DEV_DHDSS"){
                 var url = this.$store.state.IPPORT + "/api/v1/AddDeviceDss?&name="+encodeURIComponent(form.Name)+
+                "&token="+encodeURIComponent(form.Token)+
+                "&user="+encodeURIComponent(form.User)+
+                "&password="+encodeURIComponent(form.Password)+
+                "&ip="+encodeURIComponent(form.IP)+
+                "&port="+encodeURIComponent(form.Port)+
+                "&audio="+form.Audio+
+                "&session="+ this.$store.state.token;
+                console.log("yushi****************************",url);
+                this.$http.get(url).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                    }
+                })
+            }else if(form.Type=="H5_DEV_IVS1800"){
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs1800?&name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
                 "&user="+encodeURIComponent(form.User)+
                 "&password="+encodeURIComponent(form.Password)+
@@ -602,6 +623,32 @@ import uuid from '../../../assets/js/uuid'
                 "&password="+encodeURIComponent(form.Password)+
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_DSS)+
+                "&audio="+form.Audio+
+                "&session="+ this.$store.state.token;
+                console.log(url);
+                this.$http.get(url).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                        }else{
+                            this.$message({
+                                message: '添加失败',
+                                type: 'warning'
+                            });
+                            return false;
+                        }
+                    }
+                })
+            }else if(form.Type=="H5_DEV_IVS1800"){
+                console.log(form.Type)
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs1800?&name="+encodeURIComponent(form.Name)+
+                "&token="+encodeURIComponent(form.Token)+
+                "&user="+encodeURIComponent(form.Username)+
+                "&password="+encodeURIComponent(form.Password)+
+                "&ip="+encodeURIComponent(form.IP)+
+                "&port="+encodeURIComponent(form.Port_1800)+
                 "&audio="+form.Audio+
                 "&session="+ this.$store.state.token;
                 console.log(url);

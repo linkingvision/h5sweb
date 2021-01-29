@@ -449,9 +449,9 @@ export default {
                             Total:data.nHikIscDevTotal,
                             Online:data.nHikIscDevOnline
                         },{
-                            name:"天地SDK",
-                            Total:data.nTdDevTotal,
-                            Online:data.nTdDevOnline
+                            name:"IVS1800",
+                            Total:data.nIvs1800DevTotal,
+                            Online:data.nIvs1800DevOnline
                         },{
                             name:"GB",
                             Total:data.nGbDevTotal,

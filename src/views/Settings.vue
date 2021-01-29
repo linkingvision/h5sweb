@@ -18,37 +18,41 @@
                     <el-menu-item index="/Settings/DeviceOnvif">
                          <span class="Setting_tree">{{$t("message.setting.ONVIF")}}</span> 
                     </el-menu-item>
+					<el-menu-item index="/Settings/DeviceSdk">
+                        <span class="Setting_tree">{{$t("message.setting.devicesdk")}}</span> 
+                    </el-menu-item>
+					<el-menu-item index="/Settings/RtmpPush">
+                        <span class="Setting_tree">{{$t("message.setting.devicertmppush")}}</span> 
+                    </el-menu-item>
 					<el-menu-item index="/Settings/DeviceFile">
                          <span class="Setting_tree">{{$t("message.setting.File")}}</span> 
                     </el-menu-item>
 					<el-menu-item index="/Settings/DeviceAll">
                          <span class="Setting_tree">{{$t("message.setting.all")}}</span> 
                     </el-menu-item>
+					<el-menu-item index="/Settings/DeviceImport">
+                        <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
+                    </el-menu-item>
 				</el-submenu>
-				<el-submenu index="/Settings/DeviceSdk">
+				
+				<!-- <el-submenu index="/Settings/DeviceSdk">
 					<template slot="title">
 						<span>{{$t("message.setting.devicesdk")}}</span>
 					</template>
-                    <el-menu-item index="/Settings/DeviceSdk">
-                        <span class="Setting_tree">{{$t("message.setting.devicesdk")}}</span> 
-                    </el-menu-item>
+                    
 				</el-submenu>
 				<el-submenu index="/Settings/DeviceImport">
 					<template slot="title">
 						<span>{{$t("message.setting.DeviceImport")}}</span>
 					</template>
-                    <el-menu-item index="/Settings/DeviceImport">
-                        <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
-                    </el-menu-item>
+                    
 				</el-submenu>
 				<el-submenu index="/Settings/RtmpPush">
 					<template slot="title">
 						<span>{{$t("message.setting.devicertmppush")}} </span>
 					</template>
-                    <el-menu-item index="/Settings/RtmpPush">
-                        <span class="Setting_tree">{{$t("message.setting.devicertmppush")}}</span> 
-                    </el-menu-item>
-				</el-submenu>
+                    
+				</el-submenu> -->
 				
 				<el-submenu index="/Settings/Record">
 					<template slot="title">

@@ -415,6 +415,18 @@ $collapse_size:#FFFFFF;
             height: auto;
         }
         .Map_Region{
+            .liveview_left_input_search{
+                margin-bottom: 20px;
+                .el-input__inner{
+                    background-color:RGBA(0, 0, 0, 0.8) !important;
+                    border: none !important;
+                    border-radius: 0;
+                    color: #ffffff !important;
+                }
+                .el-input__suffix-inner{
+                    color: #ffffff !important;
+                }
+            }
             .el-collapse{
                 min-width: 240px;
                 .el-collapse-item__header{

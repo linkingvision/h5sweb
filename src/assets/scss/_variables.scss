@@ -362,15 +362,27 @@ $collapse_header:#E5E5E5;
             height: auto;
         }
         .Map_Region{
+            .liveview_left_input_search{
+                margin-bottom: 20px;
+                .el-input__inner{
+                    background-color: RGBA(0, 0, 0, 0.8) !important;
+                    border: none !important;
+                    border-radius: 0;
+                    color: #ffffff !important;
+                }
+                .el-input__suffix-inner{
+                    color: #ffffff !important;
+                }
+            }
             .el-collapse{
                 min-width: 240px;
                 .el-collapse-item__header{
                     color: #FFFFFF;
-                    background-color: RGBA(0, 0, 0, 0.7);
+                    background-color: RGBA(0, 0, 0, 0.8);
                 }
                 .el-collapse-item__wrap{
                     height: 400px;
-                    background: RGBA(0, 0, 0, 0.7);
+                    background: RGBA(0, 0, 0, 0.8);
                     border-bottom: none;
                     overflow-y: auto;
                     // &::-webkit-scrollbar{

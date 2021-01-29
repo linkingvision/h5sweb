@@ -1,9 +1,11 @@
 <template>
     <div class="Dashboard_Device">
         <div class="container_co">
-            <div class="container" v-for="(a,index) in 7" :key="index">
+            <div class="container" v-for="(a,index) in 8" :key="index">
                 <div class="flex_beibiao">
-                    <div class="beibiao_zi">
+                    <div class="beibiao_zi" v-if="devdata">
+                        <img src="../imgs/Dashboard_icon.png"/>
+                        <span>{{devdata[index].name}}</span>
                     </div>
                     <div style="display: flex;">
                         <div class="beibiao_zi1">{{Online}}</div>
@@ -102,6 +104,10 @@ export default {
                             name:"DSS",
                             Total:data.nDssDevTotal,
                             Online:data.nDssDevOnline
+                        },{
+                            name:"IVS1800",
+                            Total:data.nIvs1800DevTotal,
+                            Online:data.nIvs1800DevOnline
                     }];
                     
                     this.devdata=devdata
@@ -216,6 +222,7 @@ export default {
 .Dashboard_Device{
     min-height: 860px;
     .container_co{
+        margin-top: 10px;
         width: 100%;
         /* display: flex; */
         /* flex-wrap: wrap;
@@ -223,8 +230,8 @@ export default {
         padding: 0 10px;
         box-sizing: border-box;
         .container{
-            width: 32.7%;
-            padding: 30px 30px;
+            width: 24%;
+            padding: 10px 10px 30px 10px;
             display: flex;
             display: inline-block;
             flex-wrap: wrap;
@@ -237,7 +244,7 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 flex-wrap: wrap;
-                padding: 10px 10px;
+                padding: 10px 0;
                 .beibiao_zi{
                     font-size:16px;
                     font-weight:400;
@@ -273,6 +280,7 @@ export default {
                 .beisdk{
                     width: 50%;
                     height: 200px;
+                    min-width: 160px;
                 }
                 .tit_sdk{
                     width: 50%;

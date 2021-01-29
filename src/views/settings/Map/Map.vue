@@ -37,6 +37,7 @@
 					class="liveview_left_input_search"
 					placeholder="请输入定位"
 					@change="Mapsearch"
+					@keyup.enter.native="Mapsearch"
 					v-model="search">
 				</el-input>
 				<el-collapse v-model="activeNames">
@@ -217,7 +218,7 @@ export default {
 			placeSearch.search(this.search, function(status, result) {
 				if (status === 'complete' && result.info === 'OK') {
 					var poiArr = result.poiList.pois;
-					// console.log(poiArr[0])
+					console.log(poiArr[0])
 					view.setCenter([poiArr[0].location.M,poiArr[0].location.O]);
 				}
 			})
