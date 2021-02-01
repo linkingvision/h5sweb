@@ -153,6 +153,10 @@ export default {
 		},
 		setting:
 		{
+			RTSPRTMP:"RTSP/RTMP",
+			ONVIF:"ONVIF",
+			File:"File",
+
 			Audio: "Audio",
 			DeviceImport:"Device Import", 
 			Import:"Import",
@@ -346,7 +350,8 @@ export default {
 		},
 		tour: {
 			Start: "Start",
-			stop: "Stop"
+			stop: "Stop",
+			Startall:'Start all'
 		},
 		camera: {
 			Save_successfully: "Save successfully!",
@@ -371,6 +376,13 @@ export default {
 			Hang: "Hang",
 			JoinConference: "Join Conference",
 			Nickname: "Nickname cannot be empty!"
+		},
+		cluster:{
+			NodeName:'Node Name',
+			NodeID:"Node ID",
+			RedisServerIP:"Redis Server IP",
+			RedisServerPort:"Redis Server Port",
+			LocalIP:"Local IP"
 		}
 	}
 }

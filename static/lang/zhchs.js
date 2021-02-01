@@ -154,6 +154,10 @@ export default {
 		},
 		setting:
 		{
+			RTSPRTMP:"RTSP/RTMP",
+			ONVIF:"ONVIF",
+			File:"文件",
+
 			Audio: "音频",
 			DeviceImport:"设备导入", 
 			Import:"导入",
@@ -347,7 +351,8 @@ export default {
 		},
 		tour: {
 			Start: "开始",
-			stop: "停止"
+			stop: "停止",
+			Startall:'全部开始'
 		},
 		camera: {
 			Save_successfully: "保存成功！",
@@ -372,6 +377,13 @@ export default {
 			Hang: "挂断",
 			JoinConference: "加入会议",
 			Nickname: "昵称不能为空!"
+		},
+		cluster:{
+			NodeName:'节点名',
+			NodeID:"节点编号",
+			RedisServerIP:"Redis 服务器地址",
+			RedisServerPort:"Redis 服务端口",
+			LocalIP:"本机服务器IP地址"
 		}
 	}
 }
