@@ -62,39 +62,14 @@
                             <span>{{this.$t("message.dashboard.DiskMemory")}}</span>
                         </div>
                         <div class="nr_mory">
-                            <div class="nr_mory1">
-                                <el-progress
-                                v-if="strRunTime"
-                                type="dashboard" 
-                                :width='100'
-                                :stroke-width="5"
-                                color="#4C80FA"
-                                :percentage="Number(Math.round((strRunTime.nTotalSpaceByte-strRunTime.nFreeSpaceByte)/strRunTime.nTotalSpaceByte*100))"></el-progress> 
-                                <div>{{this.$t("message.dashboard.free_space")}}</div>
-                                <div>({{((strRunTime.nFreeSpaceByte)/1024/1024/1024).toFixed(1)}}G)</div>
+                            <div id="nodepopup_number" class="nr_mory1">
+                                <canvas width="150" height="150"></canvas>
                             </div>
-                            <div class="nr_mory1">
-                                <el-progress
-                                type="dashboard"
-                                :width='100'
-                                :stroke-width="5"
-                                v-if="strRunTime"
-                                color="#FFF025"
-                                :percentage="Number(strRunTime.nMemoryUsage)"></el-progress>
-                                <div>{{this.$t("message.dashboard.memory")}}</div>
-                                <!-- {{this.$t("message.dashboard.TotalMemory")}}:  -->
-                                <div>({{(strRunTime.nTotalMemoryByte/1024/1024/1024).toFixed(1)}}G)</div>
+                            <div id="nodepopup_number1" class="nr_mory1">
+                                <canvas width="150" height="150"></canvas>
                             </div>
-                            <div class="nr_mory1">
-                                <el-progress
-                                    type="dashboard"
-                                    :width='100'
-                                    :stroke-width="5"
-                                    v-if="strRunTime"
-                                    color="#FF3FE5"
-                                    :percentage="Number(Math.round((strRunTime.nRecordTotalSpaceByte-strRunTime.nRecordFreeSpaceByte)/strRunTime.nRecordTotalSpaceByte*100))"></el-progress>
-                                <div>{{this.$t("message.dashboard.Storage")}}</div>
-                                <div>({{(strRunTime.nRecordTotalSpaceByte/1024/1024/1024).toFixed(1)}}G)</div>
+                            <div id="nodepopup_number2" class="nr_mory1">
+                                <canvas width="150" height="150"></canvas>
                             </div>
                             
                         </div>
@@ -306,6 +281,63 @@ export default {
         });
 	},
 	methods:{
+        //内存圆环
+		Monitoringdetails(canvasObj,colorValue,name,percentage,value){
+			canvasObj.height=canvasObj.height;  
+			var ctx = canvasObj.getContext("2d");
+			var circle = {
+				x : 75,    //圆心的x轴坐标值
+				y : 80,    //圆心的y轴坐标值
+				r : 60      //圆的半径
+			};
+
+			//画扇形
+			//ctx.sector(circle.x,circle.y,circle.r,1.5*Math.PI,(1.5+rate*2)*Math.PI);
+			//ctx.fillStyle = colorValue;
+			//ctx.fill();
+
+			ctx.beginPath();
+			ctx.arc(circle.x,circle.y,circle.r,0,Math.PI*2)
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = '#FFFFFF';
+			ctx.stroke();
+			ctx.closePath();
+
+			ctx.beginPath();
+			ctx.arc(circle.x,circle.y,circle.r,1.5*Math.PI,(1.5+percentage*2)*Math.PI)
+			ctx.lineWidth = 8;
+			ctx.lineCap = 'round';
+			var colors=''
+			if(colorValue=='0'){
+				colors=ctx.createLinearGradient(0,0,170,0);
+				colors.addColorStop("0","#3184E9");
+				colors.addColorStop("0.4","#0FCFA8");
+				colors.addColorStop("1.0","#3184E9");
+			}else if(colorValue=='1'){
+				colors=ctx.createLinearGradient(0,0,170,0);
+				colors.addColorStop("0","#EAC344");
+				colors.addColorStop("0.4","#ECE72E");
+				colors.addColorStop("1.0","#EAC344");
+			}else if(colorValue=='2'){
+				colors=ctx.createLinearGradient(0,0,170,0);
+				colors.addColorStop("0","#A63DEC");
+				colors.addColorStop("0.4","#E745E9");
+				colors.addColorStop("1.0","#A63DEC");
+			}
+			ctx.strokeStyle = colors;
+			ctx.stroke();
+			ctx.closePath();
+			ctx.textAlign = 'center' 
+			ctx.fillStyle = '#FFFFFF';
+			ctx.font = '20px Calibri';
+			var ratedata=Math.round(percentage*100)
+			ctx.fillText(ratedata+'%',circle.x,circle.y-12);
+
+			ctx.font = '10px Calibri';
+			ctx.fillText(name,circle.x,circle.y+6);
+			ctx.font = '12px Calibri';
+			ctx.fillText(value,circle.x,circle.y+25);
+		},
         //GPU
         Gpu(){
             var url = this.$store.state.IPPORT  + "/api/v1/GetGPUInfo?session=" + this.$store.state.token;
@@ -594,6 +626,13 @@ export default {
         },
         // 流量和cpu 运行时间
         GetRunInfo() {
+            var clusterid=$("#nodepopup_number canvas").get(0)
+			var clusterid1=$("#nodepopup_number1 canvas").get(0)
+            var clusterid2=$("#nodepopup_number2 canvas").get(0)
+            if (!clusterid&&!clusterid1&&!clusterid2){
+				return false;
+            }
+            var _this=this
             //url
             var url = this.$store.state.IPPORT + "/api/v1/GetRunInfo?session="+ this.$store.state.token;
 
@@ -601,6 +640,7 @@ export default {
             this.$http.get(url).then(result=>{
                 if (result.status == 200) {
                     this.strRunTime=result.data
+                    var byte=result.data
                     this.data.push(result.data.nNetworkInK)
                     this.data1.push(result.data.nNetworkOutK);
                     this.data2.push(result.data.nCPUUsage);
@@ -622,6 +662,31 @@ export default {
                     }
                     this.liunv(myChart);
                     this.cpunv(myChart1);
+
+                    //圆环
+                    var nodedatafor=[{
+						id:clusterid,
+						name:this.$t("message.dashboard.free_space"),
+						percentage:Number(((byte.nTotalSpaceByte-byte.nFreeSpaceByte)/byte.nTotalSpaceByte).toFixed(2)),
+						value:((byte.nFreeSpaceByte)/1024/1024/1024).toFixed(1)+"G"
+					},{
+						id:clusterid1,
+						name:this.$t("message.dashboard.memory"),
+						percentage:Number((byte.nMemoryUsage/100).toFixed(2)),
+						value:(byte.nTotalMemoryByte/1024/1024/1024).toFixed(1)+"G"
+					},{
+						id:clusterid2,
+						name:this.$t("message.dashboard.Storage"),
+						percentage:Number(((byte.nRecordTotalSpaceByte-byte.nRecordFreeSpaceByte)/byte.nRecordTotalSpaceByte).toFixed(2)),
+						value:(byte.nRecordTotalSpaceByte/1024/1024/1024).toFixed(1)+"G"
+                    }]
+                    for(var i=0; i<nodedatafor.length; i++){
+						_this.Monitoringdetails(nodedatafor[i].id,
+						i,
+						nodedatafor[i].name,
+						nodedatafor[i].percentage,
+						nodedatafor[i].value)
+					}
                 }
             })
         },
@@ -952,7 +1017,7 @@ export default {
             justify-content: space-between;
             // background-color: aqua;
             .dasboard_one_left{
-                width: 78%;
+                width: 76%;
                 height: 100%;
                 display: flex;
                 flex-wrap: wrap;
@@ -1048,7 +1113,7 @@ export default {
                 }
             }
             .dasboard_one_right{
-                width: 21.7%;
+                width: 23.7%;
                 height: 100%;
                 display: flex;
                 flex-wrap: wrap;
@@ -1061,10 +1126,14 @@ export default {
                         height: 80%;
                         display: flex;
                         width: 100%;
-                        padding: 0 20px;
+                        // padding: 0 20px;
                         justify-content: space-between;
                         align-items: center;
                         text-align: center;
+                        .nr_mory1{
+                            width: 33%;
+                            text-align: center;
+                        }
                     }
                 }
                 .dasboard_one_rin{
