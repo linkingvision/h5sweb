@@ -394,7 +394,7 @@ import uuid from '../../../assets/js/uuid'
                     }
                 })
             }else if(form.Type=="H5_DEV_DHDSS"){
-                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceUnv?&name="+encodeURIComponent(form.Name)+
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceDss?&name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
                 "&user="+encodeURIComponent(form.User)+
                 "&password="+encodeURIComponent(form.Password)+
