@@ -82,7 +82,7 @@
                     <el-input v-if="form.Type=='H5_DEV_TD'" v-model="form.Port_td"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_UNV'" v-model="form.Port_unv"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_DHDSS'" v-model="form.Port_DSS"></el-input>
-                    <el-input v-if="form.Type=='H5_DEV_IVS1800'" v-model="form.Port_1800"></el-input>
+                    <el-input v-if="form.Type=='H5_DEV_IVS'" v-model="form.Port_1800"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.Audio">
                     <el-switch
@@ -204,8 +204,8 @@ import uuid from '../../../assets/js/uuid'
                 value: 'H5_DEV_HIK',
                 label: 'H5_DEV_HIK'
             }, {
-                value: 'H5_DEV_IVS1800',
-                label: 'H5_DEV_IVS1800'
+                value: 'H5_DEV_IVS',
+                label: 'H5_DEV_IVS'
             }, {
                 value: 'H5_DEV_DH',
                 label: 'H5_DEV_DH'
@@ -414,8 +414,8 @@ import uuid from '../../../assets/js/uuid'
                     if(result.status==200){
                     }
                 })
-            }else if(form.Type=="H5_DEV_IVS1800"){
-                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs1800?&name="+encodeURIComponent(form.Name)+
+            }else if(form.Type=="H5_DEV_IVS"){
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs?&name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
                 "&user="+encodeURIComponent(form.User)+
                 "&password="+encodeURIComponent(form.Password)+
@@ -641,9 +641,9 @@ import uuid from '../../../assets/js/uuid'
                         }
                     }
                 })
-            }else if(form.Type=="H5_DEV_IVS1800"){
+            }else if(form.Type=="H5_DEV_IVS"){
                 console.log(form.Type)
-                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs1800?&name="+encodeURIComponent(form.Name)+
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs?&name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
                 "&user="+encodeURIComponent(form.Username)+
                 "&password="+encodeURIComponent(form.Password)+

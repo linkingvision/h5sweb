@@ -223,7 +223,7 @@ export default {
         this.updateUI();
         $('#headswitch1').hide()
         this.addWaterMarker();
-        console.log(localStorage.getItem('watermarktoggle'),this.$store.state.Certificatetime)
+        // console.log(localStorage.getItem('watermarktoggle'),this.$store.state.Certificatetime)
 		if(localStorage.getItem('watermarktoggle')==null){
 			if(this.$store.state.Certificatetime=="true"){
 				document.getElementById("watermarktoggle").style.display='none';
@@ -385,7 +385,7 @@ export default {
             var url = this.$store.state.IPPORT + "/api/v1/GetView?session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
                 if (result.status === 200) {
-                    console.log(result)
+                    // console.log(result)
                     var oldarr=result.data.conf;
                     var oldarr1=result.data.src;
                     // console.log(oldarr,oldarr1)
@@ -484,6 +484,8 @@ export default {
             if(data.streamprofile==undefined){
                 data.streamprofile='main'
             }
+            console.log(data)
+            // var a=data.token.replace(/#/g,"%23")
             // return false;
             let _this =this;
             if(data.disabled_me==false){
@@ -799,6 +801,7 @@ export default {
             var url = root + "/api/v1//GetSrcCamera?session="+ this.$store.state.token;
             // return falsel;
             this.$http.get(url).then(result=>{
+                console.log(result)
                 if(result.status == 200){
                     var data =  result.data;
                     var srcGroup = {children: []};
@@ -864,7 +867,7 @@ export default {
                 if(result.status == 200){
                     // var srcData = [];
                     var data=result.data.dev;
-                    console.log(data)
+                    // console.log(data)
                     if(Array.isArray(data)){
                         data.sort((a,b)=>{
                             if(a.strName===b.strName) return 0;
@@ -882,7 +885,7 @@ export default {
                             })
                             this.loadSrc(item.strToken)
                         }
-                        console.log(this.data)
+                        // console.log(this.data)
                     }
                 }
             })
@@ -894,7 +897,7 @@ export default {
             var url = root + "/api/v1/GetDeviceSrc?token="+ strToken + "&session=" + this.$store.state.token;
 
             this.$http.get(url).then(result => {
-                console.log(result.data)
+                // console.log(result.data)
                 if (result.status == 200)
                 {
                     var data =  result.data;
@@ -949,7 +952,7 @@ export default {
                         srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)
-                    console.log(srcData)
+                    // console.log(srcData)
                     if(srcData){
                         srcData.children=srcGroup
                     }
@@ -971,7 +974,7 @@ export default {
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
                     var data=result.data.dev;
-                    console.log(data)
+                    // console.log(data)
                     if(Array.isArray(data)){
                         data.sort((a,b)=>{
                             if(a.strName===b.strName) return 0;
@@ -989,7 +992,7 @@ export default {
                             })
                             this.NumberSrc(item.strToken)
                         }
-                        console.log(this.data)
+                        // console.log(this.data)
                     }
                 }
             })
@@ -1042,7 +1045,7 @@ export default {
                     srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)
-                    console.log(srcData)
+                    // console.log(srcData)
                     if(srcData){
                         srcData.children=srcGroup
                     }
@@ -1063,7 +1066,7 @@ export default {
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
                     var data=result.data.dev;
-                    console.log(data)
+                    // console.log(data)
                     if(Array.isArray(data)){
                         data.sort((a,b)=>{
                             if(a.strName===b.strName) return 0;
@@ -1081,7 +1084,7 @@ export default {
                             })
                             this.cloudSrc(item.strToken)
                         }
-                        console.log(this.data)
+                        // console.log(this.data)
                     }
                 }
             })
@@ -1133,7 +1136,7 @@ export default {
                     srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)
-                    console.log(srcData)
+                    // console.log(srcData)
                     if(srcData){
                         srcData.children=srcGroup
                     }
@@ -1212,7 +1215,7 @@ export default {
 				camarr1.push(arr1[i].strToken)
 			}
 			let diff = camarr.filter(item => !new Set(camarr1).has(item))
-			console.log(diff)
+			// console.log(diff)
 			for(var i in arr.cam){
 				for(var j in diff){
 					if(arr.cam[i].strToken == diff[j]){

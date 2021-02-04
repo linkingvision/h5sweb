@@ -449,9 +449,9 @@ export default {
                             Total:data.nHikIscDevTotal,
                             Online:data.nHikIscDevOnline
                         },{
-                            name:"IVS1800",
-                            Total:data.nIvs1800DevTotal,
-                            Online:data.nIvs1800DevOnline
+                            name:"IVS",
+                            Total:data.nIvsDevTotal,
+                            Online:data.nIvsDevOnline
                         },{
                             name:"GB",
                             Total:data.nGbDevTotal,

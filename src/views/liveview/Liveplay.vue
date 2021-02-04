@@ -143,7 +143,7 @@
                                     <div class="preset_bgc">
                                         <input type="text" class="preset_input" :value="Pre.strName"/>
                                         <button type="button" class="iconfont icon-RectangleCopy1" @click="preset_Jump(Pre.strToken)"></button>
-                                        <button type="button" class="iconfont icon-icon-test" @click="preset_set(Pre.strToken,$event)"></button>
+                                        <button type="button" class="iconfont icon-icon-test1" @click="preset_set(Pre.strToken,$event)"></button>
                                     </div>
                                 </el-card>
                             </el-timeline-item>
@@ -225,7 +225,7 @@ export default {
                 this.CloseVideo(token.viewparameter);
             }
             setTimeout(()=>{
-                console.log(token.streamprofile,token.viewparameter)
+                console.log(token.token)
                 if (this.h5id != token.vid)
                 {
                     return;
@@ -251,7 +251,7 @@ export default {
             }
         },
         Audiochange(){
-            console.log(this.Audioslider)
+            // console.log(this.Audioslider)
             document.getElementById(this.videoid).volume=this.Audioslider
         },
         //码率
@@ -458,7 +458,7 @@ export default {
         },
         //关闭
         CloseVideo(viewparameter){
-            console.log(viewparameter)
+            // console.log(viewparameter)
             if(viewparameter==='close'){
                 // console.log(this.$store.state.liveviewadd,this.tokenshou)
                 for(var i=0;i<this.$store.state.liveviewadd.length;i++){

@@ -16,10 +16,10 @@
 				<div>{{$t("message.live.protocol")}}: {{proto}}</div>
 				<div class="up_you_but">
 					<div>
-						<el-button @click="changeWS" class="button_addpv" type="success"  size="mini">WEBSOCKET</el-button>
+						<el-button @click="changeWS" :class="(wsrtccolor)?'button_addpv':'button_addpv1'" type="success"  size="mini">WEBSOCKET</el-button>
 					</div>
 					<div>
-						<el-button @click="changeRTC" class="button_addpv1" type="success"  size="mini">WEBRTC</el-button>
+						<el-button @click="changeRTC" :class="(!wsrtccolor)?'button_addpv':'button_addpv1'"  type="success"  size="mini">WEBRTC</el-button>
 					</div>
 				</div>
 			</div>
@@ -34,10 +34,10 @@
 						</el-input>
 					</div>
 					<div>
-						<el-button @click="waterprintoff($event)" class="button_addpv" type="success"  size="mini">打开水印</el-button>
+						<el-button @click="waterprintoff($event)" :class="(waterprintcolor)?'button_addpv':'button_addpv1'" type="success"  size="mini">打开水印</el-button>
 					</div>
 					<div>
-						<el-button @click="waterprintno($event)" class="button_addpv1" type="success"  size="mini">关闭水印</el-button>
+						<el-button @click="waterprintno($event)" :class="(!waterprintcolor)?'button_addpv':'button_addpv1'" type="success"  size="mini">关闭水印</el-button>
 					</div>
 				</div>
 			</div>
@@ -51,6 +51,8 @@ export default {
 	name: 'TheAside',
 	data () {
 		return {
+			wsrtccolor:true,
+			waterprintcolor:true,
 			proto: this.$store.state.liveviewrtc,
 			watermarkstring:this.$store.state.watermarkstring,//水印、
 			watermarktoggle:this.$store.state.watermarktoggle,
@@ -63,6 +65,7 @@ export default {
 	methods:{
 		//水印
         waterprintoff(){
+			this.waterprintcolor=true
             this.watermarktoggle = "block";
             var watermarktoggle=this.watermarktoggle;
 			localStorage.setItem("watermarktoggle",watermarktoggle);
@@ -73,7 +76,7 @@ export default {
         }, 
         waterprintno(){
             // console.log(this.watermarktoggle);
-
+			this.waterprintcolor=false
             this.watermarktoggle = "none";
             var watermarktoggle=this.watermarktoggle;
             localStorage.setItem("watermarktoggle",watermarktoggle);
@@ -108,12 +111,14 @@ export default {
         },
 		//ws rtc
 		changeWS(event) {
+			this.wsrtccolor=true
             this.proto = "WS";
 			var proto=this.proto;
 			this.$store.state.liveviewrtc=proto
 			localStorage.setItem("liveviewrtc",proto);
         },
         changeRTC(event) {
+			this.wsrtccolor=false
             this.proto = "RTC";
             var proto=this.proto;
             this.$store.state.liveviewrtc=proto
@@ -151,16 +156,14 @@ export default {
 		width: 100%;
 		text-align: center;
 		line-height: 50px;
-		button{
+		.button_addpv{
 			font-size: 16px;
 			width: 70%;
 			padding: 10px 10px;
 			background-color: #3ABCFE;
 			border: none;
 		}
-	}
-	& div:nth-child(2){
-		button{
+		.button_addpv1{
 			
 			font-size: 16px;
 			width: 70%;

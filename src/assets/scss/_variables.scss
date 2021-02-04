@@ -510,7 +510,7 @@ $collapse_header:#E5E5E5;
         .el-dialog{
             background: url('~@/assets/imgs/Header_on1.png') center no-repeat;
             min-height: 326px;
-            background-size: 100%;
+            background-size:cover;
             .el-dialog__body{
                 .about_flex{
                     min-height: 226px;

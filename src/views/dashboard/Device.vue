@@ -105,9 +105,9 @@ export default {
                             Total:data.nDssDevTotal,
                             Online:data.nDssDevOnline
                         },{
-                            name:"IVS1800",
-                            Total:data.nIvs1800DevTotal,
-                            Online:data.nIvs1800DevOnline
+                            name:"IVS",
+                            Total:data.nIvsDevTotal,
+                            Online:data.nIvsDevOnline
                     }];
                     
                     this.devdata=devdata
