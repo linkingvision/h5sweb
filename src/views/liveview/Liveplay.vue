@@ -468,11 +468,23 @@ export default {
                     }
                 }
             }
+            var $container = $("#"+this.h5id);
+            //音频
+            var $controlsinAudio = $container.children(".Audio_slider");
+            $controlsinAudio.css("display", "none");
+            this.audioshow = false;
+            //码流
+            var $controlsininformation = $container.children(".information");
+            $controlsininformation.css("display", "none");
+            this.informationshow = false;
             clearInterval(this.timerRunInfo);
+            //ptz
+            var $controlsptz = $container.children(".liveplay_ptz");
+            $controlsptz.css("display", "none");
+            this.ptzshow = false;
             //转码
             this.videoname="";
             this.valuebutton='';
-            var $container = $("#"+this.h5id);
             var $ptzcontrols = $container.children(".ptzcontrols");
             
             // var valueId=document.getElementById('inputid ')
