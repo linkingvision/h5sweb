@@ -43,7 +43,7 @@ const GB28181 = () => import('@/views/GB/GB28181')
 const GBplatform = () => import('@/views/GB/GBplatform')
 const GBService = () => import('@/views/GB/GBService')
 
-const Advancepb = () => import('@/views/replay/Advancepb')
+const Advancepb = () => import('@/views/replay/Advancepbs')
 const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
@@ -51,6 +51,7 @@ const Snapshot = () => import('@/views/replay/Snapshot')
 const Configure = () => import('@/views/settings/https/Configure')
 const Domainlist = () => import('@/views/settings/https/Domainlist')
 
+const Client = () => import('@/views/settings/Client/Client')
 const License = () => import('@/views/settings/license/License')
 const Cluster = () => import('@/views/settings/cluster/Cluster')
 const Map = () => import('@/views/settings/Map/Map')
@@ -336,6 +337,16 @@ export default new Router({
 							component: Cluster,
 							meta: {
 								title: '/Cluster',
+								name:i18n.tc("message.dashboard.cluster"),
+								icon:'iconfont icon-jiankong',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Client',
+							name: 'Client',
+							component: Client,
+							meta: {
+								title: '/Client',
 								name:i18n.tc("message.dashboard.cluster"),
 								icon:'iconfont icon-jiankong',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
@@ -653,6 +664,9 @@ export default new Router({
 })
 
 
+if(sessionStorage.getItem('Adswitch')){
+	store.state.Adswitch=sessionStorage.getItem('Adswitch');
+}
 if(sessionStorage.getItem('mcuroot')){
 	store.state.root=sessionStorage.getItem('mcuroot');
 }

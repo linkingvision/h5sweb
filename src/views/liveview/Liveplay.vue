@@ -251,8 +251,9 @@ export default {
             }
         },
         Audiochange(){
-            // console.log(this.Audioslider)
-            document.getElementById(this.videoid).volume=this.Audioslider
+            //要打开音频设置
+            console.log("要打开音频设置",this.Audioslider)
+            document.getElementById(this.h5videoid).volume=this.Audioslider
         },
         //码率
         Information(){
@@ -435,7 +436,9 @@ export default {
                 rootpath: '/', // '/'
                 token: token,
                 hlsver: 'v1', //v1 is for ts, v2 is for fmp4
-                session: this.$store.state.token //session got from login
+                rtcengine: localStorage.getItem('H5sRtcengine'),
+                session: this.$store.state.token, //session got from login
+                consolelog: 'true'
             };
             if (this.$store.state.liveviewrtc == 'RTC' || (H5siOS() === true)){
                 console.log(this.$store.state.liveviewrtc)

@@ -223,7 +223,8 @@ export default {
         this.updateUI();
         $('#headswitch1').hide()
         this.addWaterMarker();
-        // console.log(localStorage.getItem('watermarktoggle'),this.$store.state.Certificatetime)
+        // document.getElementById("watermarktoggle").style.display=this.$store.state.watermarktoggle;
+        console.log(localStorage.getItem('H5sRtcengine'))
 		if(localStorage.getItem('watermarktoggle')==null){
 			if(this.$store.state.Certificatetime=="true"){
 				document.getElementById("watermarktoggle").style.display='none';
@@ -231,7 +232,7 @@ export default {
 				document.getElementById("watermarktoggle").style.display='block';
 			}
 		}else{
-			document.getElementById("watermarktoggle").style.display=this.watermarktoggle;
+			document.getElementById("watermarktoggle").style.display=this.$store.state.watermarktoggle;
         }
         
         this.loadtest();

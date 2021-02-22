@@ -3,11 +3,11 @@
         <div class="Copyrightnotice" id="Copyrightnotice">
             系统许可将于{{capability}}天后到期，请及时购买许可，避免影响正常使用。
         </div>
-        <div class="login_but">
+        <!-- <div class="login_but">
             <router-link :to="{name:'Downloadapp'}">
                 <el-button class="but_jump" plain>{{this.$t("message.archive.Download")}}</el-button>
             </router-link>
-        </div>
+        </div> -->
         <div class="login_head">
             <div class="login_title"></div>
             <div class="login_content">
@@ -221,7 +221,7 @@ export default {
     }
     .login_head{
         text-align: center;
-        margin: 6% auto 0;
+        margin: 12% auto 0;
         .login_title{
             height: 70px;
             margin-bottom: 30px;

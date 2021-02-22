@@ -154,6 +154,8 @@ export default {
 		},
 		setting:
 		{
+			RTCENGINE:"RTC引擎",
+
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"文件",

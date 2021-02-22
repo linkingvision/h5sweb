@@ -24,98 +24,84 @@
             </el-tree>
         </div>
         <div class="playback_snap_you">
+            <div id="video_hed">
+                <div name='flex' style="position: relative;" class="videoColor" v-for="r in rows" :key="r">
+                    <div
+                        @click="videoClick(r,c)"
+                        class="palace" 
+                        name="flex" 
+                        v-for="c in cols"
+                        :key="c">
+                        <v-Avintercomsplay 
+                            v-bind:id="'h'+r+c" 
+                            :h5id="'h'+r+c" 
+                            :h5videoid="'payback'+r+c"
+                            :rows="rows" 
+                            :cols="cols" >
+                        </v-Avintercomsplay>
+                    </div>
+                </div>
+            </div>
+            <div class="caveat_butt" style="">
+                <button @click="aaa" class="mr-1" type="button"></button>{{$t("message.archive.ManualRecord")}}
+                <button class="mr-2" type="button"></button>{{$t("message.archive.AlarmRecord")}}
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import {listdatagload,listdatag} from '../public/regional'
 import '../../assets/js/adapter'
-import {H5sPlayerWS,H5sPlayerHls,H5sPlayerRTC,H5sPlayerAudBack} from '../../assets/js/h5splayer.js'
+import {listdatag} from '../public/regional'
+import Avintercomsplay from './Avintercoms/Avintercomsplay'
 export default {
-    
     name:"Advancepbs",
+    components: {
+        'v-Avintercomsplay': Avintercomsplay
+    },
     data() {
         return {
+            rows: 3,
+			cols: 3,
             v1:undefined,
-            icon:'icon_start',
-            timelink:0,//滑块
-            max:0,//滑块最大值
             value: '',
-            endvalue: new Date().getTime(),
-            startvalue:new Date().getTime() - 3600 * 1000 * 1,
-            myModal1:false,
-            region:'1.0',
-            regiondata:[{
-                    value: "0.5",
-                    label: "0.5"
-                }, {
-                    value: "1.0",
-                    label: "1.0"
-                }, {
-                    value: "2.0",
-                    label: "2.0"
-                }, {
-                    value: "4.0",
-                    label: "4.0"
-                }, {
-                    value: "8.0",
-                    label: "8.0"
-                }, {
-                    value: "16.0",
-                    label: "16.0"
-            }],
-            selectdate: [{
-                    value: (new Date().getTime() - 3600 * 1000 * 1),
-                    label: this.$t("message.archive.Onehour")
-                }, {
-                    value: (new Date().getTime() - 3600 * 1000 * 24),
-                    label: this.$t("message.archive.Oneday")
-                }, {
-                    value: (new Date().getTime() - 3600 * 1000 * 24 * 7),
-                    label: this.$t("message.archive.Oneweek")
-                }, {
-                    value: (new Date().getTime() - 3600 * 1000 * 24 * 30),
-                    label: this.$t("message.archive.Onemonth")
-            }],
             defaultProps: {
                 children: 'children',
                 label: 'label',
                 token:"token",
                 iconclass:"iconclass"
             },
-            search: '',
             filterText: '',
             data: listdatag,
-            tableData1: [],
+            selectCol: 1,
+			selectRow: 1,
         }
     },
-    beforeDestroy() {
-        this.handleClose();
-        // this.$root.bus.$off('liveplay');
-    },
     mounted(){
+        this.updateUI();
     },
     methods:{
-        //关闭
-        handleClose(){
-            if (this.v1 != undefined){
-                console.log('关闭')
-                this.myModal1=false
-                this.v1.disconnect();
-                delete this.v1;
-                this.v1 = undefined;
+        
+        aaa(){
+            let vid = 'h' + this.$data.selectRow + this.$data.selectCol;
+            this.$root.bus.$emit('playback',vid);
+        },
+        //点击宫格
+		videoClick(r, c) {
+            this.selectCol = c;
+            this.selectRow = r;
+            console.log(r, c);
+        },
+        // ui宽度
+		updateUI() {
+            if($(document.body).width() < 768)
+            {
+                this.contentHeight = $(document.body).height()*0.4;
+            }else
+            {
+                this.contentHeight = $(document.body).height()*0.72;
             }
-        },
-        //分页
-        handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
-            this.currentPage = 1;
-            this.pageSize = val;
-        },
-        handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
-            this.currentPage = val;
+            $('div[name="flex"]').height(this.contentHeight / this.rows);
         },
         //模糊查询
         filterNode(value, data) {
@@ -152,6 +138,49 @@ export default {
     .playback_snap_you{
         width: 82%;
         height: 87vh;
+        #video_hed{
+            border-bottom: 1px solid black;
+            .videoColor {
+                .palace{
+                    background-size: 10%;
+                    flex: 1 1 10%;
+                    border: 1px solid black;
+                }
+            }
+            div[name='flex'] {
+                display: flex;
+                flex-wrap: wrap;
+                border-bottom: 0px !important;
+                :hover {
+                    /*background-color: #3c8dbc;*/
+                    cursor: pointer;
+                }
+                +[name='flex'] {
+                    border-left: 0px !important;
+                }
+            }
+        }
+        .caveat_butt{
+            display: flex;align-items:center;width:11%;min-width: 180px;
+            .mr-1{
+                width: 15px;
+                height: 15px;
+                border-radius: 50px;
+                border: 0;
+                margin: 0 5px;
+                vertical-align:middle;
+                background-color: rgb(60,196,60);
+            }
+            .mr-2{
+                width: 15px;
+                height:15px;
+                border-radius: 50px;
+                border: 0;
+                margin: 0 5px;
+                vertical-align:middle;
+                background-color: rgb(238,17,17);
+            }
+        }
     }
 }
 

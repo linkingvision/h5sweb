@@ -195,32 +195,16 @@ $collapse_size:#FFFFFF;
         }
     }
     .Aside{
-        .c-sidebar{
-            background-color: #2D2D2D;
-            .c-sidebar-brand{
-                background: none;
-                .Aside_title{
-                    color: #FFFFFF;
-                    opacity: 0.4;
+        .up_you_but{
+            .liveview_left_input{
+                .el-input__inner{
+                    background: rgba(73, 74, 76, 0.2) !important;
+                    border-radius: 20px;
+                    border: none;
                 }
             }
-            .Aside_content_buttom{
-                .liveview_left_input{
-                    .el-input__inner{
-                        width: 70%;
-                        border: none;
-                        background-color: #494A4C;
-                        border-radius: 50px;
-                        color: #ffffff;
-                    }
-                }
-            }
-            .up_you_but{
-                & div:nth-child(2){
-                    button{
-                        color: #FFFFFF;
-                    }
-                }
+            button{
+                color: #FFFFFF !important;
             }
         }
     }

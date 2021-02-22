@@ -53,7 +53,14 @@
 					</template>
                     
 				</el-submenu> -->
-				
+				<el-submenu index="/Settings/Client">
+					<template slot="title">
+						<span>客户端配置</span>
+					</template>
+                    <el-menu-item index="/Settings/Client">
+                        <span class="Setting_tree">客户端配置</span> 
+                    </el-menu-item>
+				</el-submenu>
 				<el-submenu index="/Settings/Record">
 					<template slot="title">
 						<span>{{$t("message.setting.record")}} </span>

@@ -18,6 +18,16 @@ export default {
             videoid: this.h5videoid,
         }
     },
+    mounted(){
+        var _this=this
+        this.$root.bus.$on("playback",function(vid){
+            // console.log(vid,_this.h5id)
+            if(_this.h5id!=vid){
+                return
+            }
+            console.log("vid",vid)
+        })
+    },
     methods:{
         CloseVideo(){
 

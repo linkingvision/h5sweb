@@ -153,6 +153,8 @@ export default {
 		},
 		setting:
 		{
+			RTCENGINE:"RTCENGINE",
+
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"File",

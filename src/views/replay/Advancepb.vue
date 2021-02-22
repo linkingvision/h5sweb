@@ -253,14 +253,14 @@ export default {
 			this.Adswitch=open;
             console.log(open,"111")
             this.$store.state.Adswitch=open
-            sessionStorage.mcuroot=this.$store.state.Adswitch
+            sessionStorage.Adswitch=this.$store.state.Adswitch
 		},
 		Adswitchs1(){
 			var open="false";
 			this.Adswitch=open;
 			console.log(open,"222")
 			this.$store.state.Adswitch=open
-            sessionStorage.mcuroot=this.$store.state.Adswitch
+            sessionStorage.Adswitch=this.$store.state.Adswitch
 		},
 		//显示第一个数轴
 		functlist(){

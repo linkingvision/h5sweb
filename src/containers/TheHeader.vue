@@ -133,7 +133,7 @@
 					{{this.$route.matched[1].meta.name}}
 				</div>
 			</CHeaderNav>
-			<CHeaderNav v-if="this.$route.matched[1].meta.icon=='iconfont icon-shipin1'">
+			<!-- <CHeaderNav v-if="this.$route.matched[1].meta.icon=='iconfont icon-shipin1'">
 				<CHeaderNavItem>
 					<button
 					in-header
@@ -147,7 +147,7 @@
 						alt="CoreUI Logo"/>
 					</button>
 				</CHeaderNavItem>
-			</CHeaderNav>
+			</CHeaderNav> -->
 		<!-- <CBreadcrumbRouter class="border-0 mb-0"/> -->
 		</CSubheader>
 		
