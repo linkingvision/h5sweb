@@ -43,7 +43,7 @@ const GB28181 = () => import('@/views/GB/GB28181')
 const GBplatform = () => import('@/views/GB/GBplatform')
 const GBService = () => import('@/views/GB/GBService')
 
-const Advancepb = () => import('@/views/replay/Advancepbs')
+const Advancepb = () => import('@/views/replay/Advancepb')
 const Archive = () => import('@/views/replay/Archive')
 const Playback = () => import('@/views/replay/Playback')
 const Snapshot = () => import('@/views/replay/Snapshot')
