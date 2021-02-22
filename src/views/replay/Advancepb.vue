@@ -68,6 +68,7 @@
 							<div>
 								<canvas class="timeline" :id="'timeline'+r+c" style="width:100%;background: #343434;" width="1500" height="80px"
 								 	@mousedown ="timelinndown($event)"
+									@mouseout="mouseoutcanvas"
 									@mouseup="timetz"
 									ondragstart="return false;">
 								</canvas>
@@ -252,14 +253,14 @@ export default {
 			this.Adswitch=open;
             console.log(open,"111")
             this.$store.state.Adswitch=open
-            sessionStorage.mcuroot=this.$store.state.Adswitch
+            sessionStorage.Adswitch=this.$store.state.Adswitch
 		},
 		Adswitchs1(){
 			var open="false";
 			this.Adswitch=open;
 			console.log(open,"222")
 			this.$store.state.Adswitch=open
-            sessionStorage.mcuroot=this.$store.state.Adswitch
+            sessionStorage.Adswitch=this.$store.state.Adswitch
 		},
 		//显示第一个数轴
 		functlist(){
@@ -304,6 +305,11 @@ export default {
 			console.log("play",this.SGtoken,"token",this.Gtoken);
 			// return false;
 			this.Play(data);
+		},
+		mouseoutcanvas(){
+			console.log("11111");
+			return
+
 		},
 		//拉播
 		timelinndown(err){
