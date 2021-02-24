@@ -25,8 +25,6 @@ import TheFooter from './TheFooter'
 import TheAside from './TheAside'
 
 import '../assets/js/adapter'
-import {H5sEvent} from '../assets/js/h5sevent.js'
-
 export default {
 	name: 'TheContainer',
 	components: {
@@ -70,6 +68,7 @@ export default {
 	}
 }
 </script>
+
 <style lang="scss" scoped>
 .c-main{
   padding-top: 0px;

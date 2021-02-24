@@ -19,6 +19,25 @@
                 </el-form>
             </div>
         </div>
+        <div class="Cluster_block">
+            <div class="Cluster_block_title">{{$t("message.setting.ForceHTTPS")}}</div>
+            <div class="Cluster_block_content">
+                <el-form class="Cluster_form" label-position="left" label-width="140px" :model="form">
+            
+                    <el-form-item :label="label.ForceHTTPS">
+                        <el-switch active-color="#13ce66" v-model="form.bForceHTTPS" @change='Together("bForceHTTPS",form.bForceHTTPS)'></el-switch>
+                    </el-form-item>
+                    <el-form-item label="DocumentRoot">
+                        <el-switch active-color="#13ce66" v-model="form.bEnableDomain" @change='Together("bEnableDomain",form.bEnableDomain)'></el-switch>
+                    </el-form-item>
+                    <el-form-item label="EnableDomain">
+                        <el-input v-model="form.strDocumentRoot"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
         <div class="Cluster_but">
             <button @click="SetHTTPConf">{{$t("message.camera.save")}}</button>
         </div>
@@ -31,13 +50,16 @@ export default {
         return {
             label:{
                 open_Close:this.$t("message.camera.open_Close"),
+                ForceHTTPS:this.$t("message.setting.ForceHTTPS"),
             },
             form: {
                 nHTTPPort:"8080",
                 nHTTPSPort:"8443",
                 strSSLCertificateFile:"server.pem",
+                bForceHTTPS:false,
+                bEnableDomain:false,
+                strDocumentRoot:"www/"
             }
-
         }
     },
     mounted(){
@@ -45,6 +67,14 @@ export default {
 
     },
     methods:{
+        Together(value,data){
+            console.log(value,data)
+            if(value=='bForceHTTPS'){
+                this.form.bEnableDomain=data
+            }else{
+                this.form.bForceHTTPS=data
+            }
+        },
         SetHTTPConf(){
             console.log(this.ruleForm,this.form)
             // return
@@ -52,7 +82,10 @@ export default {
             var form=_this.form
             var url = this.$store.state.IPPORT + "/api/v1/SetHTTPConf?http="+form.nHTTPPort+
             "&https="+form.nHTTPSPort+
-            "&sslcertificatefile="+form.strSSLCertificateFile+"&session="+ this.$store.state.token;
+            "&sslcertificatefile="+form.strSSLCertificateFile+
+            "&forcehttps="+form.bForceHTTPS+
+            "&enabledomain="+form.bEnableDomain+
+            "&documentroot="+form.strDocumentRoot+"&session="+ this.$store.state.token;
 
             this.$http.get(url).then(result=>{
                 console.log("SetHTTPConf",result);

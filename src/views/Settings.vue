@@ -55,10 +55,10 @@
 				</el-submenu> -->
 				<el-submenu index="/Settings/Client">
 					<template slot="title">
-						<span>客户端配置</span>
+						<span>{{$t("message.setting.ClientConfiguration")}}</span>
 					</template>
                     <el-menu-item index="/Settings/Client">
-                        <span class="Setting_tree">客户端配置</span> 
+                        <span class="Setting_tree">{{$t("message.setting.ClientConfiguration")}}</span> 
                     </el-menu-item>
 				</el-submenu>
 				<el-submenu index="/Settings/Record">
@@ -199,10 +199,10 @@
 							<span>HTTP</span>
 						</template>
 						<el-menu-item index="/Settings/Configure">
-							<span class="Setting_tree">配置</span> 
+							<span class="Setting_tree">{{$t("message.setting.Configuration")}}</span> 
 						</el-menu-item>
 						<el-menu-item index="/Settings/Domainlist">
-							<span class="Setting_tree">域名表</span> 
+							<span class="Setting_tree">{{$t("message.setting.Domainlist")}}</span> 
 						</el-menu-item>
 					</el-submenu>
 				</el-submenu>

@@ -154,6 +154,10 @@ export default {
 		},
 		setting:
 		{
+			ClientConfiguration:"客户端配置",
+			Domainlist:"域列表",
+			ForceHTTPS:"强制HTTPS",
+
 			RTCENGINE:"RTC引擎",
 
 			RTSPRTMP:"RTSP/RTMP",
@@ -385,7 +389,8 @@ export default {
 			NodeID:"节点编号",
 			RedisServerIP:"Redis 服务器地址",
 			RedisServerPort:"Redis 服务端口",
-			LocalIP:"本机服务器IP地址"
+			LocalIP:"本机服务器IP地址",
+			PleaseHTTP:"请开启HTTP域 !"
 		}
 	}
 }

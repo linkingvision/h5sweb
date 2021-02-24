@@ -38,6 +38,9 @@
         <div class="Cluster_but">
             <button @click="SetRedis">{{$t("message.camera.save")}}</button>
         </div>
+        <el-dialog width="25%" :visible.sync="editPopup">
+            <div class="Cluster_dialog">{{$t("message.cluster.PleaseHTTP")}}</div>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -45,6 +48,7 @@ export default {
     name:"Cluster",
     data(){
         return {
+            editPopup:false,
             label:{
                 NodeName:this.$t("message.cluster.NodeName"),
                 NodeID:this.$t("message.cluster.NodeID"),
@@ -106,6 +110,7 @@ export default {
                 if(result.status == 200){
                     if(result.data.bStatus){
                         this.$root.bus.$emit('webrtc',true);
+                        this.editPopup=true
                         this.$message({
                             message: result.data.strCode,
                             type: 'success'
@@ -144,7 +149,12 @@ export default {
 
 <style lang="scss" scoped>
 .Cluster{
+    
     padding: 40px;
+    .Cluster_dialog{
+        text-align: center;
+        margin-bottom: 20px;
+    }
     .Cluster_block{
         margin-bottom: 40px;
         .Cluster_block_title{

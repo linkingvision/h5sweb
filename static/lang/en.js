@@ -153,7 +153,11 @@ export default {
 		},
 		setting:
 		{
-			RTCENGINE:"RTCENGINE",
+			ClientConfiguration:"Client Configuration",
+			Domainlist:"Domain list",
+			ForceHTTPS:"Force HTTPS",
+
+			RTCENGINE:"RTC Engine",
 
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
@@ -384,7 +388,8 @@ export default {
 			NodeID:"Node ID",
 			RedisServerIP:"Redis Server IP",
 			RedisServerPort:"Redis Server Port",
-			LocalIP:"Local IP"
+			LocalIP:"Local IP",
+			PleaseHTTP:"Please enable HTTP domain !"
 		}
 	}
 }
