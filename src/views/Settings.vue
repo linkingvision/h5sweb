@@ -34,26 +34,10 @@
                         <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
                     </el-menu-item>
 				</el-submenu>
+
 				
-				<!-- <el-submenu index="/Settings/DeviceSdk">
-					<template slot="title">
-						<span>{{$t("message.setting.devicesdk")}}</span>
-					</template>
-                    
-				</el-submenu>
-				<el-submenu index="/Settings/DeviceImport">
-					<template slot="title">
-						<span>{{$t("message.setting.DeviceImport")}}</span>
-					</template>
-                    
-				</el-submenu>
-				<el-submenu index="/Settings/RtmpPush">
-					<template slot="title">
-						<span>{{$t("message.setting.devicertmppush")}} </span>
-					</template>
-                    
-				</el-submenu> -->
-				
+
+
 				<el-submenu index="/Settings/Record">
 					<template slot="title">
 						<span>{{$t("message.setting.record")}} </span>
@@ -118,6 +102,21 @@
                     <el-menu-item index="/Settings/System">
                         <span class="Setting_tree">{{this.$t("message.setting.System")}}</span> 
                     </el-menu-item>
+					<!-- User -->
+					<el-submenu index="/Settings/User">
+						<template slot="title">
+							<span>{{$t("message.setting.user")}}</span>
+						</template>
+						<el-menu-item index="/Settings/User">
+							<span class="Setting_tree">{{this.$t("message.setting.user")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/Role">
+							<span class="Setting_tree">{{this.$t("message.setting.Rolemanagement")}}</span> 
+						</el-menu-item>
+						<el-menu-item index="/Settings/CyberSecurity">
+							<span class="Setting_tree">{{this.$t("message.setting.CyberSecurity")}}</span> 
+						</el-menu-item>
+					</el-submenu>
 				</el-submenu>
 
 				<el-submenu index="/Settings/LogLevel">
