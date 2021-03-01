@@ -112,17 +112,17 @@
             </el-table-column>
             <el-table-column
             prop="strRoleToken"
-            label="日期"
+            :label="label.roleuser"
             width="180">
             </el-table-column>
             <el-table-column
             prop="bConfig"
-            label="姓名"
+            :label="label.Confroot"
             width="180">
             </el-table-column>
             <el-table-column
             prop="bOperate"
-            label="地址">
+            :label="label.operroot">
             </el-table-column>
             <el-table-column
                 min-width="50"
