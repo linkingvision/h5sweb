@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5203279",
+      "name": "前进",
+      "font_class": "qianjin",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "947139",
+      "name": "警告",
+      "font_class": "jinggao",
+      "unicode": "e6aa",
+      "unicode_decimal": 59050
+    },
+    {
+      "icon_id": "18769656",
+      "name": "节点",
+      "font_class": "node",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
       "icon_id": "19412512",
       "name": "jingyin",
       "font_class": "jingyin",
@@ -14,7 +35,7 @@
     },
     {
       "icon_id": "4182366",
-      "name": "AK-MN声音_fill",
+      "name": "AK-MN_声音_fill",
       "font_class": "mn_shengyin_fill",
       "unicode": "e602",
       "unicode_decimal": 58882

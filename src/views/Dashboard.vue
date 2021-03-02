@@ -328,7 +328,11 @@ export default {
 			ctx.stroke();
 			ctx.closePath();
 			ctx.textAlign = 'center' 
-			ctx.fillStyle = '#FFFFFF';
+            if(this.$store.state.darkMode){
+                ctx.fillStyle = '#FFFFFF';
+            }else{
+                ctx.fillStyle = '#000000';
+            }
 			ctx.font = '20px Calibri';
 			var ratedata=Math.round(percentage*100)
 			ctx.fillText(ratedata+'%',circle.x,circle.y-12);

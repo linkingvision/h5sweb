@@ -7,6 +7,8 @@ export default {
 		},
 		header:
 		{
+			Systemdoes:"系统没有配置快照，请添加配置快照",
+
 			alarm: '报警',
 			see_alarm: '查看所有报警',
 			search: '搜索',

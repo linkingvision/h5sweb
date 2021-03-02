@@ -958,6 +958,12 @@ $collapse_size:#FFFFFF;
                 border-right-color: #494B4E;
             }
         }
+        &[x-placement^=bottom] .popper__arrow{
+            border-bottom-color: #494B4E;
+            &::after{
+                border-bottom-color: #494B4E;
+            }
+        }
     }
     //更多设置
     .GBService_active {

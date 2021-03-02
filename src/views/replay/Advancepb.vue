@@ -96,7 +96,7 @@
 										placeholder="选择日期时间"
 										default-time="00:00:00">
 									</el-date-picker>
-                                    <el-select v-if="r=='1'&&c=='1'" v-model="region" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select filterable v-if="r=='1'&&c=='1'" v-model="region" size="mini" style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -104,7 +104,7 @@
                                             :value="item.value">
                                         </el-option>
                                     </el-select>
-                                    <el-select v-if="r=='1'&&c=='2'" v-model="region1" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select filterable v-if="r=='1'&&c=='2'" v-model="region1" size="mini" style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -112,7 +112,7 @@
                                             :value="item.value">
                                         </el-option>
                                     </el-select>
-                                    <el-select v-if="r=='2'&&c=='1'" v-model="region2" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select filterable v-if="r=='2'&&c=='1'" v-model="region2" size="mini" style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -120,7 +120,7 @@
                                             :value="item.value">
                                         </el-option>
                                     </el-select>
-                                    <el-select v-if="r=='2'&&c=='2'" v-model="region3" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select filterable v-if="r=='2'&&c=='2'" v-model="region3" size="mini" style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"

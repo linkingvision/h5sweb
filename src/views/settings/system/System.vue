@@ -59,6 +59,7 @@ export default {
                 if(result.status == 200){
                     if(result.data.bStatus){
                         this.$message('保存成功')
+                        this.$root.bus.$emit('System',true);
                     }
                 }
             })

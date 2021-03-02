@@ -6,6 +6,7 @@ export default {
 		},
 		header:
 		{
+			Systemdoes:"System does not have configuration snapshot, please add a snapshot. ",
 			alarm: 'New alarms',
 			see_alarm: 'See all alarms',
 			search: 'Search',
