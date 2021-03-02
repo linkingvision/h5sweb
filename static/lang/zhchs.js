@@ -7,6 +7,8 @@ export default {
 		},
 		header:
 		{
+			Systemdoes:"系统没有配置快照，请添加配置快照",
+
 			alarm: '报警',
 			see_alarm: '查看所有报警',
 			search: '搜索',
@@ -154,6 +156,12 @@ export default {
 		},
 		setting:
 		{
+			ClientConfiguration:"客户端配置",
+			Domainlist:"域列表",
+			ForceHTTPS:"强制HTTPS",
+
+			RTCENGINE:"RTC引擎",
+
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"文件",
@@ -383,7 +391,8 @@ export default {
 			NodeID:"节点编号",
 			RedisServerIP:"Redis 服务器地址",
 			RedisServerPort:"Redis 服务端口",
-			LocalIP:"本机服务器IP地址"
+			LocalIP:"本机服务器IP地址",
+			PleaseHTTP:"请开启HTTP域 !"
 		}
 	}
 }

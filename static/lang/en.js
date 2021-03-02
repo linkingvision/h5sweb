@@ -6,6 +6,7 @@ export default {
 		},
 		header:
 		{
+			Systemdoes:"System does not have configuration snapshot, please add a snapshot. ",
 			alarm: 'New alarms',
 			see_alarm: 'See all alarms',
 			search: 'Search',
@@ -153,6 +154,12 @@ export default {
 		},
 		setting:
 		{
+			ClientConfiguration:"Client Configuration",
+			Domainlist:"Domain list",
+			ForceHTTPS:"Force HTTPS",
+
+			RTCENGINE:"RTC Engine",
+
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"File",
@@ -382,7 +389,8 @@ export default {
 			NodeID:"Node ID",
 			RedisServerIP:"Redis Server IP",
 			RedisServerPort:"Redis Server Port",
-			LocalIP:"Local IP"
+			LocalIP:"Local IP",
+			PleaseHTTP:"Please enable HTTP domain !"
 		}
 	}
 }
