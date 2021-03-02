@@ -61,6 +61,30 @@
 			height="26"
 			alt="H5S Logo"/>
 		</CHeaderNav>
+		<!-- 快照 -->
+		<CHeaderNav>
+			<!-- <div class="system" id="system_togg">
+				<el-tooltip content="快照" placement="bottom" effect="dark">
+					<el-button style="border: none;background: none; color:#fff;line-height: 0.9;padding-right: 20px;" >
+						<i style=" font-size: 18px;color:#ea5252;font-weight: 500;" class="iconfont icon-jinggao"></i>
+					</el-button>
+				</el-tooltip>
+			</div> -->
+			<div class="system" id="system_togg" style="display: none;padding-right: 20px;">
+				<el-popover
+					placement="bottom"
+					trigger="click">
+					<template slot="reference">
+						<i style=" font-size: 18px;color:#ea5252;font-weight: 500;" class="iconfont icon-jinggao"></i>
+					</template>
+					<div>{{$t("message.header.Systemdoes")}}
+						<router-link :to="{name:'System'}">
+							<div style="color:rgba(58, 161, 255, 1); text-align: right;margin-top: 10px;">前往快照<i class="iconfont icon-qianjin"></i> </div>
+						</router-link>
+					</div>
+				</el-popover>
+			</div>
+		</CHeaderNav>
 
 		<CHeaderNav>
 			<div class="c_Docker" id="Docker"></div>
@@ -120,7 +144,7 @@
 					<div class="about_ab"><i class="iconfont icon-huanfu"></i>主题</div>
 				</CDropdownItem>
 				<CDropdownItem @click="Rebootdialog=true">
-					<div class="about_ab"><i class="iconfont icon-zhongqi"></i>重启</div>
+					<div class="about_ab"><i class="iconfont icon-zhongqi"></i>{{$t("message.header.Reboot")}}</div>
 				</CDropdownItem>
 			</CDropdown>
 		</CHeaderNav>
@@ -209,8 +233,26 @@ export default {
 			$("#rtc_togg").show();
 		});
 		this.gEventval();
+		this.System()
+		_this.$root.bus.$on('System', function(token){
+			_this.System()
+		});
 	},
 	methods:{
+		System(){
+			var url = this.$store.state.IPPORT + "/api/v1/GetSnapshotList?session="+ this.$store.state.token;
+            // console.log(url)
+            this.$http.get(url).then(result=>{
+                console.log(result,result.data.strName.length)
+                if(result.status == 200){
+					if(result.data.strName.length<=0){
+						$("#system_togg").show()
+					}else{
+						$("#system_togg").hide()
+					}
+                }
+            })
+		},
 		gEventval() {
 			this.timerRunInfo= setInterval(
 				function() {
