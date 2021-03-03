@@ -32,6 +32,11 @@
                     v-model="editform.Audio">
                     </el-switch>
                 </el-form-item>
+                <el-form-item :label="label.Sandbox">
+                    <el-switch
+                    v-model="editform.bSandbox">
+                    </el-switch>
+                </el-form-item>
                 
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
@@ -89,6 +94,11 @@
                     v-model="form.Audio">
                     </el-switch>
                 </el-form-item>
+                <el-form-item :label="label.Sandbox">
+                    <el-switch
+                    v-model="form.bSandbox">
+                    </el-switch>
+                </el-form-item>
                 
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
@@ -96,11 +106,42 @@
                 <el-button class="form_butt" type="primary" @click="platformyes">{{$t("message.setting.OK")}}</el-button>
             </div>
         </el-dialog>
-        <div class="button_edi">
-            <CButton class="form_butt" @click="addto" type="submit">添加</CButton>
-            <CButton class="form_butt1" @click="deleteselect" type="submit">删除</CButton>
+        <el-dialog width="25%" :title="eltitle" :visible.sync="settingSandbox">
+            <el-form class="el_form" ref="form" label-position='left' size="small " :model="settingform">
+            
+                <el-form-item :label="label.Sandbox">
+                    <el-select v-model="settingform.nSandboxMode" placeholder="请选择">
+                    <el-option
+                        v-for="item in opnSandboxMode"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item :label="label.LoadAllChannel">
+                    <el-switch
+                        v-model="settingform.bEnableLoadAllChannel">
+                    </el-switch>
+                </el-form-item>
+                
+            </el-form>
+            <div slot="footer" class="dialog-footer button_table">
+                <el-button class="form_butt1" @click="settingSandbox = false">{{$t("message.setting.Cancel")}}</el-button>
+                <el-button class="form_butt" type="primary" @click="SetDeviceConf">{{$t("message.setting.OK")}}</el-button>
+            </div>
+        </el-dialog>
+        <!-- 按钮 -->
+        <div class="sdk_button">
+            <div class="button_edi">
+                <CButton class="form_butt" @click="addto" type="submit">添加</CButton>
+                <CButton class="form_butt1" @click="deleteselect" type="submit">删除</CButton>
+            </div>
+            <div class="sdk_setting">
+                <CButton type="submit"  @click="settingto"><i class="iconfont icon-shezhi" ></i> {{$t("message.setting.setting")}}</CButton>
+            </div>
         </div>
-            <!-- 表格 -->
+        <!-- 表格 -->
         <el-table
             :data="tableData.filter(data => !search || data.Name.toLowerCase().includes(search.toLowerCase())).slice((currentPage1-1)*pageSize,currentPage1*pageSize)"
             @select='selectCall'
@@ -187,6 +228,9 @@ import uuid from '../../../assets/js/uuid'
         label:{
             label:"H5_DEV",//选1
 
+            LoadAllChannel:this.$t("message.setting.LoadAllChannel"),
+            Sandbox:this.$t("message.setting.Sandbox"),
+
             Index:this.$t("message.table.Index"),
             Name:this.$t("message.table.Name"),
             IP:this.$t("message.table.IP"),
@@ -231,6 +275,22 @@ import uuid from '../../../assets/js/uuid'
         total2: 0, // 总条数 1
         dialogFormVisible: false,//添加弹窗
         editPopup:false,//编辑弹窗
+        settingSandbox:false,//设置弹窗
+        settingform:{
+            bEnableLoadAllChannel: true,
+            nSandboxMode: "H5_SANDBOX_AUTO"
+        },
+        opnSandboxMode: [{
+                value: 'H5_SANDBOX_AUTO',
+                label: 'H5_SANDBOX_AUTO'
+            },{
+                value: 'H5_SANDBOX_ALL',
+                label: 'H5_SANDBOX_ALL'
+            }, {
+                value: 'H5_SANDBOX_DISABLE',
+                label: 'H5_SANDBOX_DISABLE'
+            }
+        ],
         form: {
             Type: 'H5_DEV_HIK',
             Name:"Device1",
@@ -247,7 +307,8 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
-            Audio:false
+            Audio:false,
+            bSandbox: false
         },
         editform: {
             Type: 'H5_DEV_HIK',
@@ -265,7 +326,8 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
-            Audio:false
+            Audio:false,
+            bSandbox:false
         },
         edittoken:"",//编辑时要删除的token
         editindex:"",//编辑时所在索引
@@ -275,8 +337,40 @@ import uuid from '../../../assets/js/uuid'
     },
     mounted(){
         this.loadHIK();
+        this.GetDeviceConf();
     },
     methods:{
+        settingto(){
+            this.settingSandbox=true
+            this.GetDeviceConf();
+        },
+        //获取沙盒数据
+        GetDeviceConf(){
+            var url = this.$store.state.IPPORT + "/api/v1/GetDeviceConf?session="+ this.$store.state.token;
+            //   console.log("***********************",url)
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    this.settingform.bEnableLoadAllChannel=result.data.bEnableLoadAllChannel
+                    this.settingform.nSandboxMode=result.data.nSandboxMode
+                }
+            })
+        },
+        //设置沙盒数据
+        SetDeviceConf(){
+            var form=this.settingform;
+            var url = this.$store.state.IPPORT + "/api/v1/SetDeviceConf?loadallchannel="+form.bEnableLoadAllChannel+"&sandboxmode="+form.nSandboxMode+"&session="+ this.$store.state.token;
+            //   console.log("***********************",url)
+            this.$http.get(url).then(result=>{
+                if(result.status == 200){
+                    if(result.data.bStatus){
+                        this.$message({
+                            message: '设置成功',
+                            type: 'success'
+                        });
+                    }
+                }
+            })
+        },
         //第一个表格的数据
         loadHIK(){
           //url
@@ -299,7 +393,8 @@ import uuid from '../../../assets/js/uuid'
                           Port:itme[i].strDevPort,
                           Audio :itme[i].bEnableAudio,
                           Online:itme[i].bOnline+"",
-                          bPasswdEncrypt:itme[i].bPasswdEncrypt
+                          bPasswdEncrypt:itme[i].bPasswdEncrypt,
+                          bSandbox: itme[i].bSandbox,
                       };
                       this.tableData.push(tabledata);
                       //console.log(tabledata);
@@ -329,6 +424,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -345,6 +441,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -361,6 +458,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log("isc****************************",url);
                 this.$http.get(url).then(result=>{
@@ -377,6 +475,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log("td****************************",url);
                 this.$http.get(url).then(result=>{
@@ -392,6 +491,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log("yushi****************************",url);
                 this.$http.get(url).then(result=>{
@@ -407,6 +507,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log("yushi****************************",url);
                 this.$http.get(url).then(result=>{
@@ -422,6 +523,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log("yushi****************************",url);
                 this.$http.get(url).then(result=>{
@@ -458,7 +560,8 @@ import uuid from '../../../assets/js/uuid'
                             Port:form.Port,
                             Audio :form.Audio,
                             Online:form.Online+"",
-                            bPasswdEncrypt:form.bPasswdEncrypt
+                            bPasswdEncrypt:form.bPasswdEncrypt,
+                            bSandbox: form.bSandbox,
                             }
                         this.tableData.splice(this.editindex, 1,list)
                         
@@ -493,6 +596,7 @@ import uuid from '../../../assets/js/uuid'
               "&ip="+encodeURIComponent(form.IP)+
               "&port="+encodeURIComponent(form.Port)+
               "&audio="+form.Audio+
+              "&sandbox="+form.bSandbox+
               "&session="+ this.$store.state.token;
               console.log(url);
               this.$http.get(url).then(result=>{
@@ -520,6 +624,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_dh)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -546,6 +651,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_isc)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -572,6 +678,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_td)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -598,6 +705,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_unv)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -624,6 +732,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_DSS)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -650,6 +759,7 @@ import uuid from '../../../assets/js/uuid'
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_1800)+
                 "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -690,6 +800,7 @@ import uuid from '../../../assets/js/uuid'
             this.editform["Audio"]=row.Audio;
             this.editform["Online"]=row.Online;
             this.editform["bPasswdEncrypt"]=row.bPasswdEncrypt;
+            this.editform["bSandbox"]=row.bSandbox;
             // console.log(this.editform)
             // console.log(this.tableData[index])
             
@@ -803,3 +914,15 @@ import uuid from '../../../assets/js/uuid'
     },
   };
 </script>
+
+<style lang="scss" scoped>
+.sdk_button{
+    display: flex;
+    justify-content: space-between;
+    .sdk_setting{
+        button{
+            color: rgba(58, 187, 254, 1);
+        }
+    }
+}
+</style>

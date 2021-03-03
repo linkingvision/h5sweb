@@ -156,6 +156,9 @@ export default {
 		},
 		setting:
 		{
+			LoadAllChannel:'加载所有通道',
+			Sandbox:"沙盒",
+
 			ClientConfiguration:"客户端配置",
 			Domainlist:"域列表",
 			ForceHTTPS:"强制HTTPS",

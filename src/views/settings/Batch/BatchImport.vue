@@ -101,6 +101,7 @@ export default {
                         "&ip="+encodeURIComponent(from.IP)+
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
+                        "&sandbox=false"
                         "&session="+ this.$store.state.token;
                         console.log('H5_DEV_HIK',from.Type,url)
                         this.platfromyes(url,from.Type);
@@ -112,6 +113,7 @@ export default {
                         "&ip="+encodeURIComponent(from.IP)+
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
+                        "&sandbox=false"
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
                         console.log('H5_DEV_DH',from.Type,url)
@@ -123,6 +125,7 @@ export default {
                         "&ip="+encodeURIComponent(from.IP)+
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
+                        "&sandbox=false"
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
                         console.log('H5_DEV_HIKISC',from.Type,url)
@@ -134,6 +137,7 @@ export default {
                         "&ip="+encodeURIComponent(from.IP)+
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
+                        "&sandbox=false"
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
                         console.log('H5_DEV_TD',from.Type,url)
@@ -145,6 +149,7 @@ export default {
                         "&ip="+encodeURIComponent(from.IP)+
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
+                        "&sandbox=false"
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
                         console.log('H5_DEV_UNV',from.Type,url)
@@ -156,6 +161,7 @@ export default {
                         "&ip="+encodeURIComponent(from.IP)+
                         "&port="+encodeURIComponent(from.Port)+
                         "&audio="+from.Audio+
+                        "&sandbox=false"
                         "&session="+ this.$store.state.token;
                         this.platfromyes(url,from.Type);
                         console.log('H5_DEV_DHDSS',from.Type,url)

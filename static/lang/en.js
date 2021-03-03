@@ -154,6 +154,9 @@ export default {
 		},
 		setting:
 		{
+			LoadAllChannel:'Load All Channel',
+			Sandbox:"Sandbox",
+
 			ClientConfiguration:"Client Configuration",
 			Domainlist:"Domain list",
 			ForceHTTPS:"Force HTTPS",

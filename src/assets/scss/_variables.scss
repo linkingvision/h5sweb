@@ -295,11 +295,15 @@ $collapse_header:#E5E5E5;
         }
     }
     .Aside{
+        .Aside_title{
+            color: #000000;
+        }
+        .Aside_content{
+            color: #000000;
+        }
         .up_you_but{
-            & div{
-                button{
-                    color: #000;
-                }
+            button{
+                color: #000000;
             }
         }
     }

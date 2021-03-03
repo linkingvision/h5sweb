@@ -153,7 +153,6 @@ export default {
         font-size: 24px;
         font-family: PingFang SC;
         font-weight: bold;
-        color: #FFFFFF;
         margin-bottom: 30px;
     }
     .Aside_content{
@@ -161,7 +160,6 @@ export default {
             font-size: 18px;
             font-family: PingFang SC;
             font-weight: bold;
-            color: #FFFFFF;
             margin-bottom: 15px;
         }
         .up_you_but{
