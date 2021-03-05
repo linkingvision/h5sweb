@@ -17,20 +17,15 @@
                     <el-form-item>
                     </el-form-item>
                 </el-form>
-            </div>
-        </div>
-        <div class="Cluster_block">
-            <div class="Cluster_block_title">{{$t("message.setting.ForceHTTPS")}}</div>
-            <div class="Cluster_block_content">
                 <el-form class="Cluster_form" label-position="left" label-width="140px" :model="form">
             
                     <el-form-item :label="label.ForceHTTPS">
                         <el-switch active-color="#13ce66" v-model="form.bForceHTTPS" @change='Together("bForceHTTPS",form.bForceHTTPS)'></el-switch>
                     </el-form-item>
-                    <el-form-item label="DocumentRoot">
+                    <el-form-item :label="label.EnableDomain">
                         <el-switch active-color="#13ce66" v-model="form.bEnableDomain" @change='Together("bEnableDomain",form.bEnableDomain)'></el-switch>
                     </el-form-item>
-                    <el-form-item label="EnableDomain">
+                    <el-form-item :label="label.DocumentRoot">
                         <el-input v-model="form.strDocumentRoot"></el-input>
                     </el-form-item>
                     <el-form-item>
@@ -38,6 +33,12 @@
                 </el-form>
             </div>
         </div>
+        <!-- <div class="Cluster_block">
+            <div class="Cluster_block_title">{{$t("message.setting.ForceHTTPS")}}</div>
+            <div class="Cluster_block_content">
+                
+            </div>
+        </div> -->
         <div class="Cluster_but">
             <button @click="SetHTTPConf">{{$t("message.camera.save")}}</button>
         </div>
@@ -51,6 +52,8 @@ export default {
             label:{
                 open_Close:this.$t("message.camera.open_Close"),
                 ForceHTTPS:this.$t("message.setting.ForceHTTPS"),
+                EnableDomain:this.$t("message.setting.EnableDomain"),
+                DocumentRoot:this.$t("message.setting.DocumentRoot"),
             },
             form: {
                 nHTTPPort:"8080",
@@ -69,10 +72,14 @@ export default {
     methods:{
         Together(value,data){
             console.log(value,data)
-            if(value=='bForceHTTPS'){
-                this.form.bEnableDomain=data
-            }else{
-                this.form.bForceHTTPS=data
+            if(value=='bEnableDomain'){
+                if(data){
+                    this.form.bForceHTTPS=data
+                }
+            }else if(value=='bForceHTTPS'){
+                if(!data){
+                    this.form.bEnableDomain=data
+                }
             }
         },
         SetHTTPConf(){

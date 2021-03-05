@@ -160,6 +160,8 @@ export default {
 			ClientConfiguration:"Client Configuration",
 			Domainlist:"Domain list",
 			ForceHTTPS:"Force HTTPS",
+			EnableDomain:"Enable Domain",
+			DocumentRoot:"Document Root",
 
 			RTCENGINE:"RTC Engine",
 

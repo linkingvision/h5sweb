@@ -162,6 +162,8 @@ export default {
 			ClientConfiguration:"客户端配置",
 			Domainlist:"域列表",
 			ForceHTTPS:"强制HTTPS",
+			EnableDomain:"开启域",
+			DocumentRoot:"文件目录",
 
 			RTCENGINE:"RTC引擎",
 
