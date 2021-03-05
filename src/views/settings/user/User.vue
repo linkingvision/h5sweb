@@ -9,13 +9,13 @@
                     <el-input disabled v-model="editform.strUser"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.olPassword">
-                    <el-input v-model="editform.strPasswd"></el-input>
+                    <el-input type="password" v-model="editform.strPasswd"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.nePassword">
-                    <el-input v-model="editform.Newpassword"></el-input>
+                    <el-input type="password" v-model="editform.Newpassword"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.confirmpass1">
-                    <el-input v-model="editform.Newpassword1"></el-input>
+                    <el-input type="password" v-model="editform.Newpassword1"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
