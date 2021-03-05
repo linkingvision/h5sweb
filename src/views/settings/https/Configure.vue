@@ -26,7 +26,7 @@
                         <el-switch active-color="#13ce66" v-model="form.bEnableDomain" @change='Together("bEnableDomain",form.bEnableDomain)'></el-switch>
                     </el-form-item>
                     <el-form-item :label="label.DocumentRoot">
-                        <el-input v-model="form.strDocumentRoot"></el-input>
+                        <el-input v-model="form.strDocumentRoot" @change='Document(form.strDocumentRoot)'></el-input>
                     </el-form-item>
                     <el-form-item>
                     </el-form-item>
@@ -70,6 +70,16 @@ export default {
 
     },
     methods:{
+        //判断不能为空
+        Document(data){
+            console.log(data,this.form.strDocumentRoot)
+            if(data==''){
+                this.$message({
+                    message: '文件目录不能为空',
+                    type: 'warning'
+                });
+            }
+        },
         Together(value,data){
             console.log(value,data)
             if(value=='bEnableDomain'){
@@ -85,6 +95,13 @@ export default {
         SetHTTPConf(){
             console.log(this.ruleForm,this.form)
             // return
+            if(this.form.strDocumentRoot==''){
+                this.$message({
+                    message: '文件目录不能为空',
+                    type: 'warning'
+                });
+                return
+            }
             var _this=this
             var form=_this.form
             var url = this.$store.state.IPPORT + "/api/v1/SetHTTPConf?http="+form.nHTTPPort+
