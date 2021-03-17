@@ -209,6 +209,7 @@
 
 .icon-ashbin:before {
   content: "\e744";
+  font-size: 22px;
 }
 
 .icon-add:before {

@@ -4,6 +4,7 @@ import CoreuiVue from '@coreui/vue/src'
 import App from './App'
 import router from './router/index'
 import { iconsSet as icons } from './assets/icons/icons.js'
+import {message} from './assets/js/resetMessage';
 import store from './store'
 import './assets/icon/iconfont.css'//字体
 import $ from 'jquery'
@@ -29,7 +30,7 @@ const bus = new Vue()
 // console.log(store.state.lang,"mian")
 import event from './views/public/event'
 Vue.prototype.EVENT = event
-
+Vue.prototype.$message = message;
 const i18n = new VueI18n({
   locale:"zhchs",
   messages: {
