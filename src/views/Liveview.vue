@@ -96,7 +96,7 @@
                                         <div class="liveview_popover_top">
                                             <div>{{ViewName}}</div>
                                             <el-input 
-                                                placeholder="输入名称" 
+                                                placeholder="请输入名称" 
                                                 class="liveview_left_input"
                                                 v-model="viewname"></el-input>
                                         </div>
