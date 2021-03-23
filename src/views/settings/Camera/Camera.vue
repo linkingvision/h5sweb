@@ -40,6 +40,9 @@
                 <CButton class="form_butt iconfont icon-baocun" @click="Allsave" type="submit">全部保存</CButton>
             </div>
             <el-table
+                v-loading="loading"
+                element-loading-text="正在保存中"
+                element-loading-background="rgba(0, 0, 0, 0)"
                 stripe
                 style="width: 100%"
                 :data="tableData1.filter
@@ -99,7 +102,7 @@
                     </template>
                     <template slot-scope="scope">
                         <div class="button_edi">
-                            <el-button @click="handleEdit(scope.$index,scope.row)" type="text" class=" iconfont icon-history"></el-button>
+                            <el-button @click="handleEdit(scope.$index,scope.row)" type="text" class=" iconfont icon-baocun"></el-button>
                             <el-button @click="handledel(scope.$index,scope.row)"  class="iconfont icon-ashbin" type="text"></el-button>
                         </div>
                     </template>
@@ -151,7 +154,9 @@ export default {
                 open_close:false,
                 audio:false
             },
-            searchTableInfo:""
+            searchTableInfo:"",
+            tokenflag:'',
+            loading:false
 		}
     },
 	mounted(){
@@ -170,6 +175,8 @@ export default {
             var open_close=off
             for(var i=0;i<tableData.length;i++){
                 console.log(tableData[i].bOnline)
+                var numindex=tableData.length-1
+                this.tokenflag=tableData[numindex].token
                 // return
                 if(tableData[i].disabled){
                     return
@@ -210,6 +217,8 @@ export default {
             var open_close=on
             for(var i=0;i<tableData.length;i++){
                 console.log(tableData[i].token)
+                var numindex=tableData.length-1
+                this.tokenflag=tableData[numindex].token
                 if(tableData[i].disabled){
                     return
                 }
@@ -248,6 +257,8 @@ export default {
             var open_close=off
             for(var i=0;i<tableData.length;i++){
                 console.log(tableData[i].token)
+                var numindex=tableData.length-1
+                this.tokenflag=tableData[numindex].token
                 if(tableData[i].disabled){
                     return
                 }
@@ -284,6 +295,8 @@ export default {
             var tableData=this.tableData
             for(var i=0;i<tableData.length;i++){
                 console.log(tableData[i].token)
+                var numindex=tableData.length-1
+                this.tokenflag=tableData[numindex].token
                 var url1 = root + "/api/v1/DelCamera?token="+tableData[i].token+"&session="+ this.$store.state.token;
                 await this.$http.get(url1).then(result=>{
                     console.log(result);
@@ -323,7 +336,8 @@ export default {
                 console.log("----------------",url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
-                    if(result.status==200){
+                    if(result.status==200&&token==this.tokenflag){
+                        this.loading=false
                         this.$message({
                             message: this.$t('message.camera.Save_successfully'),
                             type: 'success'
@@ -758,9 +772,16 @@ export default {
             }
         }
         .button_edi{
+            position: relative;
             .el-button{
                 font-size: 20px;
                 padding: 0;
+            }
+            .el-button:nth-child(2){
+                position: absolute;
+                top: 2px;
+                left:15px
+
             }
         }
     }
