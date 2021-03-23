@@ -26,7 +26,15 @@
                   v-model="editform.Audio">
                 </el-switch>
               </el-form-item>
-              
+               <el-form-item label="辅码流" v-if="form.Type!='H5_FILE'">
+                    <el-switch
+                    v-model="editform.enablesub">
+                    </el-switch>
+                </el-form-item>
+                 <el-form-item v-if="editform.enablesub">
+                    <span slot="label">{{$t("message.setting.Stremlang")}}</span>
+                    <el-input v-model="editform.SUBURL"></el-input>
+                </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer button_table">
               <el-button class="form_butt1" @click="editPopup = false">{{$t("message.setting.Cancel")}}</el-button>
@@ -60,7 +68,15 @@
                         v-model="form.Audio">
                     </el-switch>
                 </el-form-item>
-                
+                <el-form-item label='辅码流' v-if="form.Type!='H5_FILE'">
+                    <el-switch
+                    v-model="form.enablesub">
+                    </el-switch>
+                </el-form-item>
+                 <el-form-item v-if="form.enablesub" label="SUBURL">
+                    <span slot="label">{{$t("message.setting.Stremlang")}}</span>
+                    <el-input v-model="form.SUBURL"></el-input>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
                 <el-button class="form_butt1" @click="dialogFormVisible = false">{{$t("message.setting.Cancel")}}</el-button>
@@ -198,17 +214,21 @@ import uuid from '../../../assets/js/uuid'
             Username:"admin",
             Password:"12345",
             URL:"rtsp://192.168.1.1/stream",
+            SUBURL:'rtsp://192.168.1.1/stream2',
             Audio:"false",
+            enablesub:"false",
             IP:"192.168.1.1",
             Port:"80"
         },
         editform: {
             Audio:"false",
+            enablesub:"false",
             Name:"",
             Token:"",
             Username:"",
             Password:"",
             URL:"",
+            SUBURL:'',
             Audio:"",
             IP:"",
             Port:""
@@ -223,7 +243,7 @@ import uuid from '../../../assets/js/uuid'
       };
     },
     mounted(){
-        this.loadstream();
+      this.loadstream();
     },
     methods:{
         
@@ -236,6 +256,7 @@ import uuid from '../../../assets/js/uuid'
               //console.log("a",result);
               if(result.status == 200){
                   var itme=result.data.src;
+                  console.log(itme)
                   this.tableData=[];
                   for(var i=0;i<itme.length;i++){
                       var tabledata={
@@ -249,7 +270,9 @@ import uuid from '../../../assets/js/uuid'
                           Port:itme[i].strSrcPort,
                           Audio :itme[i].bEnableAudio,
                           Online:itme[i].bOnline+"",
+                          enablesub:itme[i].bEnableUrlSub,
                           strUrl:itme[i].strUrl,
+                          strUrlSub:itme[i].strUrlSub,
                           bPasswdEncrypt:itme[i].bPasswdEncrypt
                       };
                       this.tableData.push(tabledata);
@@ -264,9 +287,9 @@ import uuid from '../../../assets/js/uuid'
         Success(){
             this.editPopup = false;
             var root = this.$store.state.IPPORT;
-            
             //url
             var form=this.editform;
+            var suburl=form.SUBURL
             var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
             "&user="+encodeURIComponent(form.Username)+
@@ -275,6 +298,9 @@ import uuid from '../../../assets/js/uuid'
             "&url="+encodeURIComponent(form.URL)+
             "&session="+ this.$store.state.token;
             console.log("++++++++++++++++",url);
+            if(form.enablesub){
+             var url=url+"&enablesub="+'true'+"&suburl="+suburl
+            }
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
@@ -343,6 +369,9 @@ import uuid from '../../../assets/js/uuid'
             var form=this.form;
             
             var root = this.$store.state.IPPORT;
+            console.log(form.enablesub)
+            var suburl=form.SUBURL
+            console.log('辅码流',suburl)
             //console.log(form.Type)
             console.log("stream",form.Audio);
             var url = root + "/api/v1/AddSrcRTSP?&name="+encodeURIComponent(form.Name)+
@@ -351,8 +380,11 @@ import uuid from '../../../assets/js/uuid'
             "&password="+encodeURIComponent(form.Password)+
             "&audio="+form.Audio+
             "&url="+encodeURIComponent(form.URL)+
-            "&session="+ this.$store.state.token;
-            console.log("---------------------",url);
+            "&session="+ this.$store.state.token
+            if(form.enablesub){
+             var url=url+"&enablesub="+'true'+"&suburl="+suburl
+            }
+            console.log("-",url);
             this.$http.get(url).then(result=>{
             //console.log(result);
             if(result.status==200){
@@ -367,15 +399,14 @@ import uuid from '../../../assets/js/uuid'
                     });
                     return false;
                 }
-                
-            }
-            })
+              }
+           })
         },
         //编辑
         
         handleEdit(index,row){
             console.log(index,row);
-            console.log(row.Audio,row.strUrl);
+            console.log(row.Audio,row.strUrl,row.strUrlSub);
             var index_xlh="";
             //return false;
                 index_xlh=((this.currentPage-1)*10)+index;
@@ -394,7 +425,9 @@ import uuid from '../../../assets/js/uuid'
             this.editform["IP"]=row.IP;
             this.editform["Port"]=row.Port;
             this.editform["URL"]=row.strUrl;
+            this.editform["SUBURL"]=row.strUrlSub;
             this.editform["Audio"]=row.Audio;
+            this.editform["enablesub"]=row.enablesub;
             this.editform["Online"]=row.Online;
             this.editform["bPasswdEncrypt"]=row.bPasswdEncrypt;
             console.log(this.editform)
@@ -404,6 +437,7 @@ import uuid from '../../../assets/js/uuid'
         addto(){
             this.dialogFormVisible=true;
             this.form["Token"] = uuid(4, 16).toLowerCase();
+            // this.form.SUBURL=this.$store.state.RTMPROOT+'/'+encodeURIComponent(this.form.Token)+'$$sub'
         },
         //点击删除
         deleteRow(index, row,rows) {
