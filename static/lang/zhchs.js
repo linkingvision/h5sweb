@@ -165,6 +165,7 @@ export default {
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"文件",
+			Stremlang:'辅码流URL',
 
 			Audio: "音频",
 			DeviceImport:"设备导入", 

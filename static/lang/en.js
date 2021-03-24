@@ -163,6 +163,7 @@ export default {
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"File",
+			Stremlang:'sub URL',
 
 			Audio: "Audio",
 			DeviceImport:"Device Import", 
