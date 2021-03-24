@@ -285,21 +285,44 @@ import uuid from '../../../assets/js/uuid'
         
         //  编辑  添加 的确定键
         Success(){
-            this.editPopup = false;
+               this.editPopup = false;
             var root = this.$store.state.IPPORT;
             //url
             var form=this.editform;
+            var urlone=form.URL
             var suburl=form.SUBURL
+             
+            var suburlparam=suburl.split('&')
+            var urloneparam=urlone.split('&')
+
+            var suburlarr=suburlparam.splice(1)
+            var urlonearr=urloneparam.splice(1)
+
+            var suburldat=suburlarr.join(encodeURIComponent('%26'))
+            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+            var urloneyu=urlone.split('')
+            if(urloneyu.indexOf('&')>-1){
+                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+            }else{
+                var urloneparam=urlone
+            }
+
             var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
             "&user="+encodeURIComponent(form.Username)+
             "&password="+encodeURIComponent(form.Password)+
             "&audio="+form.Audio+
-            "&url="+encodeURIComponent(form.URL)+
+            "&url="+urloneparam+
             "&session="+ this.$store.state.token;
             console.log("++++++++++++++++",url);
             if(form.enablesub){
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
+             var suburlyu=suburl.split('')
+                console.log(suburlyu.indexOf("&"),suburlyu)
+                if(suburlyu.indexOf("&")>-1){
+                    var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                }else{
+                    var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                }
             }
             this.$http.get(url).then(result=>{
                 //console.log(result);
@@ -363,26 +386,48 @@ import uuid from '../../../assets/js/uuid'
             
         },
         platformyes(){
-            this.dialogFormVisible=false;
+           this.dialogFormVisible=false;
             //console.log(this.form)
             //return false;
             var form=this.form;
             
             var root = this.$store.state.IPPORT;
             console.log(form.enablesub)
+            var urlone=form.URL
             var suburl=form.SUBURL
-            console.log('辅码流',suburl)
-            //console.log(form.Type)
+            var suburlparam=suburl.split('&')
+            var urloneparam=urlone.split('&')
+
+            var suburlarr=suburlparam.splice(1)
+            var urlonearr=urloneparam.splice(1)
+
+            var suburldat=suburlarr.join(encodeURIComponent('%26'))
+            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+            var urloneyu=urlone.split('')
+            if(urloneyu.indexOf('&')>-1){
+                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+            }else{
+                var urloneparam=urlone
+            }
+
+            console.log('辅码流',suburldat)
             console.log("stream",form.Audio);
             var url = root + "/api/v1/AddSrcRTSP?&name="+encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
             "&user="+encodeURIComponent(form.Username)+
             "&password="+encodeURIComponent(form.Password)+
             "&audio="+form.Audio+
-            "&url="+encodeURIComponent(form.URL)+
+            "&url="+urloneparam+
             "&session="+ this.$store.state.token
             if(form.enablesub){
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                var suburlyu=suburl.split('')
+                console.log(suburlyu.indexOf("&"),suburlyu)
+                if(suburlyu.indexOf("&")>-1){
+                    var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                }else{
+                    var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                }
+                
             }
             console.log("-",url);
             this.$http.get(url).then(result=>{

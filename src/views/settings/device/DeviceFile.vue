@@ -2,7 +2,7 @@
 <template>
     <div>
       <!-- 编辑弹窗 -->
-        <el-dialog width="25%" :title="eltitle" :visible.sync="editPopup">
+        <el-dialog :title="eltitle" :visible.sync="editPopup">
           <el-form class="el_form" ref="form" label-position='left' label-width="100px" size="small " :model="editform">
               <el-form-item :label="label.Type">
                 <el-input v-model="editform.Type"></el-input>
@@ -32,7 +32,7 @@
           </div>
         </el-dialog>
         <!-- 添加的弹窗 -->
-        <el-dialog width="25%" :title="eltitle" :visible.sync="dialogFormVisible">
+        <el-dialog :title="eltitle" :visible.sync="dialogFormVisible">
             <el-form class="el_form" ref="form" label-position='left' label-width="100px" size="small " :model="form">
                 <el-form-item :label="label.Type">
                     <el-input v-model="form.Type"></el-input>
@@ -266,26 +266,35 @@ import uuid from '../../../assets/js/uuid'
             //url
             var form=this.editform;
             var suburl=form.SUBURL
-            var list = {
-                index:form.index,
-                Type:form.Type,
-                Name:form.Name,
-                Token:form.Token,
-                User:form.Username,
-                Password:form.Password,
-                IP:form.IP,
-                Port:form.Port,
-                Audio :form.Audio,
-                Online:form.Online+"",
-                bPasswdEncrypt:form.bPasswdEncrypt
+            var urlone=form.URL
+           
+            var suburlparam=suburl.split('&')
+            var urloneparam=urlone.split('&')
+
+            var suburlarr=suburlparam.splice(1)
+            var urlonearr=urloneparam.splice(1)
+
+             var suburldat=suburlarr.join(encodeURIComponent('%26'))
+            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+            var urloneyu=urlone.split('')
+             if(urloneyu.indexOf('&')>-1){
+                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+            }else{
+                var urloneparam=urlone
             }
+           
             var url = root + "/api/v1/AddSrcFile?&name="
             +encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
-            "&url="+encodeURIComponent(form.URL)+
+            "&url="+urloneparam+
             "&session="+ this.$store.state.token;
              if(form.enablesub){
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                var suburlyu=suburl.split('')
+                if(suburlyu.indexOf("&")>-1){
+                   var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                }else{
+                  var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                }
             }
             console.log(url);
             this.$http.get(url).then(result=>{
@@ -336,19 +345,41 @@ import uuid from '../../../assets/js/uuid'
             
         },
         platformyes(){
-            this.dialogFormVisible=false;
+             this.dialogFormVisible=false;
             var form=this.form;
             var root = this.$store.state.IPPORT;
-             var suburl=form.SUBURL
+            var urlone=form.URL
+            var suburl=form.SUBURL
+
+            var suburlparam=suburl.split('&')
+            var urloneparam=urlone.split('&')
+
+            var suburlarr=suburlparam.splice(1)
+            var urlonearr=urloneparam.splice(1)
+
+             var suburldat=suburlarr.join(encodeURIComponent('%26'))
+            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+            var urloneyu=urlone.split('')
+             if(urloneyu.indexOf('&')>-1){
+                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+            }else{
+                var urloneparam=urlone
+            }
+            
             console.log("H5_FILE",form.Audio);
             var url = root + "/api/v1/AddSrcFile?&name="
             +encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
-            "&url="+encodeURIComponent(form.URL)+
+            "&url="+urloneparam+
             "&session="+ this.$store.state.token;
             console.log(form.enablesub);
              if(form.enablesub){
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                var suburlyu=suburl.split('')
+                if(suburlyu.indexOf("&")>-1){
+                   var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                }else{
+                  var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                }
             }
             console.log(url);
             this.$http.get(url).then(result=>{
