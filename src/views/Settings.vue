@@ -170,14 +170,17 @@
 						<span>{{$t("message.setting.Protocol")}} </span>
 					</template>
 					<!-- 协议 rtsp -->
-                    <el-submenu index="/Settings/RTSP">
+                    <!-- <el-submenu index="/Settings/RTSP">
 						<template slot="title">
 							<span>{{$t("message.setting.Protocol")}} </span>
 						</template>
 						<el-menu-item index="/Settings/RTSP">
 							<span class="Setting_tree">RTSP</span> 
 						</el-menu-item>
-					</el-submenu>
+					</el-submenu> -->
+					<el-menu-item index="/Settings/RTSP">
+						<span class="Setting_tree">RTSP</span> 
+					</el-menu-item>
 					<!-- WEBRTC -->
 					<el-submenu index="/Settings/CloudMode">
 						<template slot="title">
