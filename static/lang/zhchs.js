@@ -156,15 +156,21 @@ export default {
 		},
 		setting:
 		{
+			LoadAllChannel:'加载所有通道',
+			Sandbox:"沙盒",
+
 			ClientConfiguration:"客户端配置",
 			Domainlist:"域列表",
 			ForceHTTPS:"强制HTTPS",
+			EnableDomain:"开启域",
+			DocumentRoot:"文件目录",
 
 			RTCENGINE:"RTC引擎",
 
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"文件",
+			Stremlang:'辅码流URL',
 
 			Audio: "音频",
 			DeviceImport:"设备导入", 

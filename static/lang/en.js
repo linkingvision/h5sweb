@@ -154,21 +154,28 @@ export default {
 		},
 		setting:
 		{
+			LoadAllChannel:'Load All Channel',
+			Sandbox:"Sandbox",
+
 			ClientConfiguration:"Client Configuration",
 			Domainlist:"Domain list",
 			ForceHTTPS:"Force HTTPS",
+			EnableDomain:"Enable Domain",
+			DocumentRoot:"Document Root",
 
 			RTCENGINE:"RTC Engine",
 
 			RTSPRTMP:"RTSP/RTMP",
 			ONVIF:"ONVIF",
 			File:"File",
+			Stremlang:'sub URL',
 
 			Audio: "Audio",
 			DeviceImport:"Device Import", 
 			Import:"Import",
 			Batchimportdevice:"Batch import device",
 			Cancel: "Cancel",
+
 
 			Default: "Default",
 			Transcoding: "Transcoding",
