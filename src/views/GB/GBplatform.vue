@@ -345,6 +345,24 @@ import uuid from '../../assets/js/uuid'
                             strStream:itme[i].strStream
                         };
                         if(bianji=='bianji'){
+                            var tabledata={
+                                    index:editindex+1,
+                                    Token:itme[i].strToken,
+                                    name:itme[i].strName,
+                                    strGbServerIpAddr:itme[i].strGbServerIpAddr,
+                                    nGbServerPort:itme[i].nGbServerPort,
+                                    nGbLocalPort:itme[i].nGbLocalPort,
+                                    strGbID:itme[i].strGbID,
+                                    strGbDomain:itme[i].strGbDomain,
+                                    strGbServerID:itme[i].strGbServerID,
+                                    strGbServerPassword:itme[i].strGbServerPassword,
+                                    strGbProto:itme[i].strGbProto,
+                                    strGbIDChBase:itme[i].strGbIDChBase,
+                                    nGbRegisterPeriod:itme[i].nGbRegisterPeriod,
+                                    nGbKeepaliveTime:itme[i].nGbKeepaliveTime,
+                                    bRegStatus:data.bRegStatus+"",
+                                    strStream:itme[i].strStream
+                                };
                             _this.tableData.splice(editindex, 1,tabledata)
                         }else{
                             _this.tableData.push(tabledata);
@@ -421,7 +439,13 @@ import uuid from '../../assets/js/uuid'
                                     var listarr=[list]
                                     this.loadplatforms(listarr,"bianji",this.editindex)
                                 }else{
-                                    console.log("添加失败")
+                                     console.log("添加失败")
+                                     this.platformyes('bianji')
+                                     this.$message({
+                                            message: this.$t("message.setting.Editorfailure"),
+                                            type: 'warning'
+                                      });
+                                     return false;
                                 }
                             }
                         })
@@ -438,11 +462,17 @@ import uuid from '../../assets/js/uuid'
             
             
         },
-        platformyes(){
+        platformyes(status){
             this.dialogFormVisible=false;
-            
+             var listdata=JSON.parse(localStorage.getItem('tabeldata'))
             //return false;
-            var form=this.form;
+            if(status=='bianji'){
+                var form=listdata
+                console.log(form)
+            }else{
+                var form=this.form;  
+            }
+            //return false;
             var root =this.$store.state.IPPORT;
             console.log(form);
             var url = root + "/api/v1/AddGbPlatform?name="
@@ -525,6 +555,7 @@ import uuid from '../../assets/js/uuid'
             this.editform["nGbLocalPort"]=row.nGbLocalPort;
             this.editform["strStream"]=row.strStream;
             console.log(this.editform)
+            localStorage.setItem('tabeldata',JSON.stringify(this.editform))
             // console.log(this.tableData[index])
             
             

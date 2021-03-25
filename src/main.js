@@ -17,6 +17,7 @@ import clipboard from 'clipboard';
 Vue.prototype.clipboard = clipboard;
 
 import ElementUI from 'element-ui'
+ElementUI.Dialog.props.closeOnClickModal.default=false;
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
