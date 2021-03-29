@@ -61,7 +61,7 @@ export default {
 			proto: this.$store.state.liveviewrtc,
 			watermarkstring:this.$store.state.watermarkstring,//水印、
 			watermarktoggle:this.$store.state.watermarktoggle,
-			devicemarktoggle:sessionStorage.devicemarktoggle,
+			devicemarktoggle:"",
             options: [{
                 value: 'v1',
                 label: 'v1'
@@ -77,14 +77,12 @@ export default {
         if(localStorage.getItem('H5sRtcengine')){
            this.value=localStorage.getItem('H5sRtcengine') 
         }
-        if(typeof(localStorage.devicemarktoggle)=="undefined"){
-           localStorage.devicemarktoggle = "none"
+        if(typeof(sessionStorage.devicemarktoggle) == 'undefined'){
+           this.devicemarktoggle='block'
+        }else{
+            this.devicemarktoggle = sessionStorage.devicemarktoggle; 
+            
         }
-        if(this.deviceprintcolor=true){
-            this.devicemarktoggle = "block";
-             
-        }
-		
 	},
 	methods:{
         Rtcengine(){
@@ -126,13 +124,11 @@ export default {
             sessionStorage.devicemarktoggle = "block";
             this.devicemarktoggle = sessionStorage.devicemarktoggle;
             this.$store.state.devicemarktoggle=sessionStorage.devicemarktoggle;
-            // console.log(this.$store.state.devicemarktoggle,1111111111111);
         }, 
         deviceprintno(){
 			this.deviceprintcolor=false
             sessionStorage.devicemarktoggle = "none";
             this.devicemarktoggle = sessionStorage.devicemarktoggle;
-            // console.log(this.devicemarktoggle,11111111111);
             this.$store.state.devicemarktoggle=sessionStorage.devicemarktoggle
         },
 
