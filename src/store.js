@@ -9,6 +9,7 @@ const state = {
   asideShow: false,
   asideShows:false,
   liveviewrtc:'WS',
+  deviceprintcolor:'block',
   // tourrtc:"WS",
   watermarkstring:"linkingvision",
   watermarktoggle:"",

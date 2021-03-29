@@ -949,7 +949,9 @@ export default {
                             newItem['disabled_me'] =true;
                             newItem['iconclass1'] = 'camera';
                         }
-
+                        if(item['bDisable'] == true&&this.$store.state.devicemarktoggle=='none'){
+                            continue;
+                        }
                         srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)

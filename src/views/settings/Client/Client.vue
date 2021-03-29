@@ -38,6 +38,15 @@
                     </el-select>
 				</div>
 			</div>
+            <div class="Aside_content_buttom">
+				<div class="Aside_content_title">显示禁用</div>
+				<div class="up_you_but">
+					<div>
+						<el-button @click="deviceprintoff($event)" :class="(devicemarktoggle=='block')?'button_addpv':'button_addpv1'" type="success"  size="mini">显示</el-button>
+						<el-button @click="deviceprintno($event)" :class="(devicemarktoggle=='none')?'button_addpv':'button_addpv1'" type="success"  size="mini">隐藏</el-button>
+					</div>
+				</div>
+			</div>
 		</div>
 </div>
 </template>
@@ -48,9 +57,11 @@ export default {
 	data () {
 		return {
 			waterprintcolor:true,
+            deviceprintcolor:true,
 			proto: this.$store.state.liveviewrtc,
 			watermarkstring:this.$store.state.watermarkstring,//水印、
 			watermarktoggle:this.$store.state.watermarktoggle,
+			devicemarktoggle:sessionStorage.devicemarktoggle,
             options: [{
                 value: 'v1',
                 label: 'v1'
@@ -65,6 +76,13 @@ export default {
 		// localStorage.removeItem('watermarktoggle')
         if(localStorage.getItem('H5sRtcengine')){
            this.value=localStorage.getItem('H5sRtcengine') 
+        }
+        if(typeof(localStorage.devicemarktoggle)=="undefined"){
+           localStorage.devicemarktoggle = "none"
+        }
+        if(this.deviceprintcolor=true){
+            this.devicemarktoggle = "block";
+             
         }
 		
 	},
@@ -102,6 +120,22 @@ export default {
             this.$store.state.watermarktoggle="none";
             // document.getElementById("watermarktoggle").style.display=this.watermarktoggle;
         },
+        //显示禁用
+        deviceprintoff(){
+			this.deviceprintcolor=true
+            sessionStorage.devicemarktoggle = "block";
+            this.devicemarktoggle = sessionStorage.devicemarktoggle;
+            this.$store.state.devicemarktoggle=sessionStorage.devicemarktoggle;
+            // console.log(this.$store.state.devicemarktoggle,1111111111111);
+        }, 
+        deviceprintno(){
+			this.deviceprintcolor=false
+            sessionStorage.devicemarktoggle = "none";
+            this.devicemarktoggle = sessionStorage.devicemarktoggle;
+            // console.log(this.devicemarktoggle,11111111111);
+            this.$store.state.devicemarktoggle=sessionStorage.devicemarktoggle
+        },
+
         addWaterMarker(){
 			if(!document.getElementById("watermarktoggle")){
 				return
