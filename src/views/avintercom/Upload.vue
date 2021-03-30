@@ -156,7 +156,7 @@ export default {
                 protocol: window.location.protocol, //http: or https:
                 host:wsroot, //localhost:8080
                 rootpath:'/', // {string} - path of the app running
-                user:this.$store.state.users, // {string} - user name
+                user:this.$store.state.user, // {string} - user name
                 type:'media', // {string} - media or sharing
                 audio: audioout,
                 callback: null, //Callback for the event
