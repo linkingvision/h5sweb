@@ -9,7 +9,8 @@ const state = {
   asideShow: false,
   asideShows:false,
   liveviewrtc:'WS',
-  tourrtc:"WS",
+  deviceprintcolor:'',
+  // tourrtc:"WS",
   watermarkstring:"linkingvision",
   watermarktoggle:"",
   Certificatetime:null,//证书时间 是否显示水印
@@ -30,6 +31,11 @@ const state = {
     label:null,
     vid:null,
     viewparameter:null
+  },
+  trueplay:{
+    token:null,
+    streamprofile:null,
+    vid:null,
   }
 }
 

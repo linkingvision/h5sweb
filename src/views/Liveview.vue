@@ -96,7 +96,7 @@
                                         <div class="liveview_popover_top">
                                             <div>{{ViewName}}</div>
                                             <el-input 
-                                                placeholder="输入名称" 
+                                                placeholder="请输入名称" 
                                                 class="liveview_left_input"
                                                 v-model="viewname"></el-input>
                                         </div>
@@ -110,6 +110,7 @@
                         </div>
                     </template>
                     <el-tree
+                        id="viewclis"
                         class="el_tree"
                         node-key="strName" 
                         :default-expanded-keys="['root']" 
@@ -221,9 +222,15 @@ export default {
     },
 	mounted(){
         this.updateUI();
-        $('#headswitch1').hide()
+        if(this.$store.state.root=="Operator"){
+                $('#headswitch').hide()
+                $('#viewclis').hide()
+            }else{
+                $('#headswitch1').hide()
+            }
         this.addWaterMarker();
-        console.log(localStorage.getItem('watermarktoggle'),this.$store.state.Certificatetime)
+        // document.getElementById("watermarktoggle").style.display=this.$store.state.watermarktoggle;
+        console.log(localStorage.getItem('H5sRtcengine'))
 		if(localStorage.getItem('watermarktoggle')==null){
 			if(this.$store.state.Certificatetime=="true"){
 				document.getElementById("watermarktoggle").style.display='none';
@@ -231,7 +238,7 @@ export default {
 				document.getElementById("watermarktoggle").style.display='block';
 			}
 		}else{
-			document.getElementById("watermarktoggle").style.display=this.watermarktoggle;
+			document.getElementById("watermarktoggle").style.display=this.$store.state.watermarktoggle;
         }
         
         this.loadtest();
@@ -300,7 +307,7 @@ export default {
         },
         //播放视图
         async viewClick(data){
-            // console.log(data)
+            console.log(data)
             this.$store.state.liveviewadd=[]
             var _this=this
             this.changePanel(data,'viewClick')
@@ -342,13 +349,13 @@ export default {
             if(this.viewname==null){
                 return
             }
-            console.log(this.$store.state.liveviewadd);
             var viewdata={
                 strName:this.viewname,
                 strToken:uuid(4, 16).toLowerCase(),
                 strLayoutType:this.rows+'|'+this.cols,
                 src:this.$store.state.liveviewadd
             }
+            console.log(viewdata)
             var viewjson=JSON.stringify(viewdata)
             if(viewdata.strLayoutType=='1|1'){
                 viewdata.icon='iconfont icon-tubiao_huaban11'
@@ -385,7 +392,7 @@ export default {
             var url = this.$store.state.IPPORT + "/api/v1/GetView?session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
                 if (result.status === 200) {
-                    console.log(result)
+                    // console.log(result)
                     var oldarr=result.data.conf;
                     var oldarr1=result.data.src;
                     // console.log(oldarr,oldarr1)
@@ -484,6 +491,8 @@ export default {
             if(data.streamprofile==undefined){
                 data.streamprofile='main'
             }
+            console.log(data)
+            // var a=data.token.replace(/#/g,"%23")
             // return false;
             let _this =this;
             if(data.disabled_me==false){
@@ -530,6 +539,7 @@ export default {
                 }
                 
                 _this.$nextTick(()=>{
+                    setTimeout(()=>{
                     for(var i=1;i<=this.rows;i++){
                         for(var c=1;c<=this.cols;c++){
                             var video= document.getElementById("hvideo"+i+c)
@@ -546,6 +556,7 @@ export default {
                             }
                         }
                     }
+                    },300)
                 })
             }else{
                console.log("不可用");
@@ -597,6 +608,7 @@ export default {
                     // _this.$root.bus.$emit('liveplay', data.token, data.streamprofile, data.name,data.label,vid);
                 }
                 _this.$nextTick(()=>{
+                    setTimeout(()=>{
                     for(var i=1;i<=this.rows;i++){
                         for(var c=1;c<=this.cols;c++){
                             var video= document.getElementById("hvideo"+i+c)
@@ -612,6 +624,7 @@ export default {
                             }
                         }
                     }
+                    },300)
                 })
                     
             }else{
@@ -795,6 +808,7 @@ export default {
             var url = root + "/api/v1//GetSrcCamera?session="+ this.$store.state.token;
             // return falsel;
             this.$http.get(url).then(result=>{
+                console.log(result)
                 if(result.status == 200){
                     var data =  result.data;
                     var srcGroup = {children: []};
@@ -860,7 +874,7 @@ export default {
                 if(result.status == 200){
                     // var srcData = [];
                     var data=result.data.dev;
-                    console.log(data)
+                    // console.log(data)
                     if(Array.isArray(data)){
                         data.sort((a,b)=>{
                             if(a.strName===b.strName) return 0;
@@ -878,7 +892,7 @@ export default {
                             })
                             this.loadSrc(item.strToken)
                         }
-                        console.log(this.data)
+                        // console.log(this.data)
                     }
                 }
             })
@@ -890,7 +904,7 @@ export default {
             var url = root + "/api/v1/GetDeviceSrc?token="+ strToken + "&session=" + this.$store.state.token;
 
             this.$http.get(url).then(result => {
-                console.log(result.data)
+                // console.log(result.data)
                 if (result.status == 200)
                 {
                     var data =  result.data;
@@ -941,11 +955,13 @@ export default {
                             newItem['disabled_me'] =true;
                             newItem['iconclass1'] = 'camera';
                         }
-
+                        if(item['bDisable'] == true&&this.$store.state.devicemarktoggle=='none'){
+                            continue;
+                        }
                         srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)
-                    console.log(srcData)
+                    // console.log(srcData)
                     if(srcData){
                         srcData.children=srcGroup
                     }
@@ -967,7 +983,7 @@ export default {
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
                     var data=result.data.dev;
-                    console.log(data)
+                    // console.log(data)
                     if(Array.isArray(data)){
                         data.sort((a,b)=>{
                             if(a.strName===b.strName) return 0;
@@ -985,7 +1001,7 @@ export default {
                             })
                             this.NumberSrc(item.strToken)
                         }
-                        console.log(this.data)
+                        // console.log(this.data)
                     }
                 }
             })
@@ -1038,7 +1054,7 @@ export default {
                     srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)
-                    console.log(srcData)
+                    // console.log(srcData)
                     if(srcData){
                         srcData.children=srcGroup
                     }
@@ -1059,7 +1075,7 @@ export default {
             this.$http.get(url).then(result=>{
                 if(result.status == 200){
                     var data=result.data.dev;
-                    console.log(data)
+                    // console.log(data)
                     if(Array.isArray(data)){
                         data.sort((a,b)=>{
                             if(a.strName===b.strName) return 0;
@@ -1077,7 +1093,7 @@ export default {
                             })
                             this.cloudSrc(item.strToken)
                         }
-                        console.log(this.data)
+                        // console.log(this.data)
                     }
                 }
             })
@@ -1129,7 +1145,7 @@ export default {
                     srcGroup.push(newItem);
                     }
                     var srcData = this.data.find(item => item.token === strToken)
-                    console.log(srcData)
+                    // console.log(srcData)
                     if(srcData){
                         srcData.children=srcGroup
                     }
@@ -1208,7 +1224,7 @@ export default {
 				camarr1.push(arr1[i].strToken)
 			}
 			let diff = camarr.filter(item => !new Set(camarr1).has(item))
-			console.log(diff)
+			// console.log(diff)
 			for(var i in arr.cam){
 				for(var j in diff){
 					if(arr.cam[i].strToken == diff[j]){
@@ -1300,9 +1316,9 @@ export default {
         .liveview_left_input{
             margin: 10px 0;
         }
-        #headswitch1{
-            display: none;
-        }
+        // #headswitch1{
+        //     display: none;
+        // }
         //录像管理
         .black{
             display: none;font-size: 12px;color: #606266; padding-left: 4px;line-height: 26px;color: #f00;
