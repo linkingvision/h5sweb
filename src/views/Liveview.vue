@@ -110,6 +110,7 @@
                         </div>
                     </template>
                     <el-tree
+                        id="viewclis"
                         class="el_tree"
                         node-key="strName" 
                         :default-expanded-keys="['root']" 
@@ -221,7 +222,12 @@ export default {
     },
 	mounted(){
         this.updateUI();
-        $('#headswitch1').hide()
+        if(this.$store.state.root=="Operator"){
+                $('#headswitch').hide()
+                $('#viewclis').hide()
+            }else{
+                $('#headswitch1').hide()
+            }
         this.addWaterMarker();
         // document.getElementById("watermarktoggle").style.display=this.$store.state.watermarktoggle;
         console.log(localStorage.getItem('H5sRtcengine'))
@@ -1310,9 +1316,9 @@ export default {
         .liveview_left_input{
             margin: 10px 0;
         }
-        #headswitch1{
-            display: none;
-        }
+        // #headswitch1{
+        //     display: none;
+        // }
         //录像管理
         .black{
             display: none;font-size: 12px;color: #606266; padding-left: 4px;line-height: 26px;color: #f00;
