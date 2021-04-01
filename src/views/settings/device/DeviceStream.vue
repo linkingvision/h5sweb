@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- 编辑弹窗 -->
-        <el-dialog width="25%" :title="eltitle" :visible.sync="editPopup">
+        <el-dialog :title="eltitle" :visible.sync="editPopup">
           <el-form class="el_form" ref="form" label-position='left' label-width="100px" size="small " :model="editform">
               <el-form-item :label="label.Type">
                 <el-input v-model="editform.Type"></el-input>
