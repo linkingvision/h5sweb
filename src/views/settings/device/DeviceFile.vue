@@ -266,36 +266,30 @@ import uuid from '../../../assets/js/uuid'
             //url
             var form=this.editform;
             var suburl=form.SUBURL
-<<<<<<< HEAD
             var urlone=form.URL
            
-            var suburlparam=suburl.split('&')
-            var urloneparam=urlone.split('&')
-
-            var suburlarr=suburlparam.splice(1)
-            var urlonearr=urloneparam.splice(1)
-
-             var suburldat=suburlarr.join(encodeURIComponent('%26'))
-            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
-            var urloneyu=urlone.split('')
-             if(urloneyu.indexOf('&')>-1){
-                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-            }else{
-                var urloneparam=urlone
-=======
-            var list = {
-                index:form.index,
-                Type:form.Type,
-                Name:form.Name,
-                Token:form.Token,
-                User:form.Username,
-                Password:form.Password,
-                IP:form.IP,
-                Port:form.Port,
-                Audio :form.Audio,
-                Online:form.Online+"",
-                bPasswdEncrypt:form.bPasswdEncrypt
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
+            if(suburl!==undefined){
+                var suburlparam=suburl.split('&')
+                var suburlarr=suburlparam.splice(1)
+                var suburldat=suburlarr.join(encodeURIComponent('%26'))
+                var suburlyu=suburl.split('')
+                if(suburlyu.indexOf("&")>-1){
+                     var addsuburl="&enablesub="+form.enablesub+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                }else{
+                     var addsuburl="&enablesub="+'true'+"&suburl="+suburl
+                }
+            }
+            if(urlone!==undefined){
+                console.log('jjj')
+                 var urloneparam=urlone.split('&')
+                 var urlonearr=urloneparam.splice(1)
+                 var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+                 var urloneyu=urlone.split('')
+                 if(urloneyu.indexOf('&')>-1){
+                    var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+                 }else{
+                    var urloneparam=urlone
+                 }
             }
            
             var url = root + "/api/v1/AddSrcFile?&name="
@@ -303,19 +297,14 @@ import uuid from '../../../assets/js/uuid'
             "&token="+encodeURIComponent(form.Token)+
             "&url="+urloneparam+
             "&session="+ this.$store.state.token;
-             if(form.enablesub){
-<<<<<<< HEAD
-                var suburlyu=suburl.split('')
-                if(suburlyu.indexOf("&")>-1){
-                   var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+            if(form.enablesub){
+                if(suburl!==undefined){
+                   var url=url+addsuburl
                 }else{
-                  var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                   var url=url
                 }
-=======
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
-            }
-            console.log(url);
+            }else{console.log(url)}
+           
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
@@ -367,7 +356,6 @@ import uuid from '../../../assets/js/uuid'
              this.dialogFormVisible=false;
             var form=this.form;
             var root = this.$store.state.IPPORT;
-<<<<<<< HEAD
             var urlone=form.URL
             var suburl=form.SUBURL
 
@@ -386,9 +374,6 @@ import uuid from '../../../assets/js/uuid'
                 var urloneparam=urlone
             }
             
-=======
-             var suburl=form.SUBURL
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
             console.log("H5_FILE",form.Audio);
             var url = root + "/api/v1/AddSrcFile?&name="
             +encodeURIComponent(form.Name)+
@@ -397,16 +382,12 @@ import uuid from '../../../assets/js/uuid'
             "&session="+ this.$store.state.token;
             console.log(form.enablesub);
              if(form.enablesub){
-<<<<<<< HEAD
                 var suburlyu=suburl.split('')
                 if(suburlyu.indexOf("&")>-1){
                    var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
                 }else{
                   var url=url+"&enablesub="+'true'+"&suburl="+suburl
                 }
-=======
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
             }
             console.log(url);
             this.$http.get(url).then(result=>{
