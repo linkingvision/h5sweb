@@ -268,19 +268,28 @@ import uuid from '../../../assets/js/uuid'
             var suburl=form.SUBURL
             var urlone=form.URL
            
-            var suburlparam=suburl.split('&')
-            var urloneparam=urlone.split('&')
-
-            var suburlarr=suburlparam.splice(1)
-            var urlonearr=urloneparam.splice(1)
-
-             var suburldat=suburlarr.join(encodeURIComponent('%26'))
-            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
-            var urloneyu=urlone.split('')
-             if(urloneyu.indexOf('&')>-1){
-                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-            }else{
-                var urloneparam=urlone
+            if(suburl!==undefined){
+                var suburlparam=suburl.split('&')
+                var suburlarr=suburlparam.splice(1)
+                var suburldat=suburlarr.join(encodeURIComponent('%26'))
+                var suburlyu=suburl.split('')
+                if(suburlyu.indexOf("&")>-1){
+                     var addsuburl="&enablesub="+form.enablesub+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                }else{
+                     var addsuburl="&enablesub="+'true'+"&suburl="+suburl
+                }
+            }
+            if(urlone!==undefined){
+                console.log('jjj')
+                 var urloneparam=urlone.split('&')
+                 var urlonearr=urloneparam.splice(1)
+                 var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+                 var urloneyu=urlone.split('')
+                 if(urloneyu.indexOf('&')>-1){
+                    var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+                 }else{
+                    var urloneparam=urlone
+                 }
             }
            
             var url = root + "/api/v1/AddSrcFile?&name="
@@ -288,15 +297,14 @@ import uuid from '../../../assets/js/uuid'
             "&token="+encodeURIComponent(form.Token)+
             "&url="+urloneparam+
             "&session="+ this.$store.state.token;
-             if(form.enablesub){
-                var suburlyu=suburl.split('')
-                if(suburlyu.indexOf("&")>-1){
-                   var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+            if(form.enablesub){
+                if(suburl!==undefined){
+                   var url=url+addsuburl
                 }else{
-                  var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                   var url=url
                 }
-            }
-            console.log(url);
+            }else{console.log(url)}
+           
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
