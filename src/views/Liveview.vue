@@ -81,7 +81,7 @@
                         </span>
                     </el-tree>
                 </el-collapse-item>
-                <el-collapse-item name="2" >
+                <el-collapse-item name="2" id="viewclis">
                     <template slot="title">
                         <div style="display: flex;justify-content: space-between;width: 85%; align-items: center;">
                             <div>{{$t("message.live.View")}}</div>
@@ -110,7 +110,6 @@
                         </div>
                     </template>
                     <el-tree
-                        id="viewclis"
                         class="el_tree"
                         node-key="strName" 
                         :default-expanded-keys="['root']" 
