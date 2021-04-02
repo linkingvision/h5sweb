@@ -667,8 +667,8 @@ export default new Router({
 if(sessionStorage.getItem('Adswitch')){
 	store.state.Adswitch=sessionStorage.getItem('Adswitch');
 }
-if(sessionStorage.getItem('deviceprintcolor')){
-	store.state.devicemarktoggle=sessionStorage.getItem('devicemarktoggle');
+if(sessionStorage.devicemarktoggle){
+	store.state.devicemarktoggle=sessionStorage.devicemarktoggle;
 }
 if(sessionStorage.getItem('mcuroot')){
 	store.state.root=sessionStorage.getItem('mcuroot');
