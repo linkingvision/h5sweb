@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- 编辑弹窗 -->
-        <el-dialog width="25%" :title="eltitle" :visible.sync="editPopup">
+        <el-dialog :title="eltitle" :visible.sync="editPopup">
           <el-form class="el_form" ref="form" label-position='left' label-width="100px" size="small " :model="editform">
               <el-form-item :label="label.Type">
                 <el-input v-model="editform.Type"></el-input>
@@ -289,49 +289,47 @@ import uuid from '../../../assets/js/uuid'
             var root = this.$store.state.IPPORT;
             //url
             var form=this.editform;
-<<<<<<< HEAD
             var urlone=form.URL
             var suburl=form.SUBURL
-             
-            var suburlparam=suburl.split('&')
-            var urloneparam=urlone.split('&')
-
-            var suburlarr=suburlparam.splice(1)
-            var urlonearr=urloneparam.splice(1)
-
-            var suburldat=suburlarr.join(encodeURIComponent('%26'))
-            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
-            var urloneyu=urlone.split('')
-            if(urloneyu.indexOf('&')>-1){
-                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-            }else{
-                var urloneparam=urlone
-            }
-
-=======
-            var suburl=form.SUBURL
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
-            var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(form.Name)+
-            "&token="+encodeURIComponent(form.Token)+
-            "&user="+encodeURIComponent(form.Username)+
-            "&password="+encodeURIComponent(form.Password)+
-            "&audio="+form.Audio+
-            "&url="+urloneparam+
-            "&session="+ this.$store.state.token;
-            console.log("++++++++++++++++",url);
-            if(form.enablesub){
-<<<<<<< HEAD
-             var suburlyu=suburl.split('')
-                console.log(suburlyu.indexOf("&"),suburlyu)
+            if(suburl!==undefined){
+                var suburlparam=suburl.split('&')
+                var suburlarr=suburlparam.splice(1)
+                var suburldat=suburlarr.join(encodeURIComponent('%26'))
+                var suburlyu=suburl.split('')
                 if(suburlyu.indexOf("&")>-1){
-                    var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
+                     var addsuburl="&enablesub="+form.enablesub+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
                 }else{
-                    var url=url+"&enablesub="+'true'+"&suburl="+suburl
+                     var addsuburl="&enablesub="+'true'+"&suburl="+suburl
                 }
-=======
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
             }
+            if(urlone!==undefined){
+                console.log('jjj')
+                 var urloneparam=urlone.split('&')
+                 var urlonearr=urloneparam.splice(1)
+                 var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+                 var urloneyu=urlone.split('')
+                 if(urloneyu.indexOf('&')>-1){
+                    var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
+                 }else{
+                    var urloneparam=urlone
+                 }
+            }
+            var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(form.Name)+
+                "&token="+encodeURIComponent(form.Token)+
+                "&user="+encodeURIComponent(form.Username)+
+                "&password="+encodeURIComponent(form.Password)+
+                "&audio="+form.Audio+
+                "&url="+urloneparam+
+                "&session="+ this.$store.state.token;
+                console.log("++++++++++++++++",url);
+            if(form.enablesub){
+                if(suburl!==undefined){
+                   var url=url+addsuburl
+                }else{
+                   var url=url
+                }
+            }else{console.log(url)}
+            
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
@@ -401,7 +399,6 @@ import uuid from '../../../assets/js/uuid'
             
             var root = this.$store.state.IPPORT;
             console.log(form.enablesub)
-<<<<<<< HEAD
             var urlone=form.URL
             var suburl=form.SUBURL
             var suburlparam=suburl.split('&')
@@ -420,18 +417,12 @@ import uuid from '../../../assets/js/uuid'
             }
 
             console.log('辅码流',suburldat)
-=======
-            var suburl=form.SUBURL
-            console.log('辅码流',suburl)
-            //console.log(form.Type)
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
             console.log("stream",form.Audio);
             var url = root + "/api/v1/AddSrcRTSP?&name="+encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
             "&user="+encodeURIComponent(form.Username)+
             "&password="+encodeURIComponent(form.Password)+
             "&audio="+form.Audio+
-<<<<<<< HEAD
             "&url="+urloneparam+
             "&session="+ this.$store.state.token
             if(form.enablesub){
@@ -443,12 +434,6 @@ import uuid from '../../../assets/js/uuid'
                     var url=url+"&enablesub="+'true'+"&suburl="+suburl
                 }
                 
-=======
-            "&url="+encodeURIComponent(form.URL)+
-            "&session="+ this.$store.state.token
-            if(form.enablesub){
-             var url=url+"&enablesub="+'true'+"&suburl="+suburl
->>>>>>> 68e469b1c59e931ceb8ca7e73101624300bed0e8
             }
             console.log("-",url);
             this.$http.get(url).then(result=>{

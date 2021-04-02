@@ -34,9 +34,14 @@
                         <span class="Setting_tree">{{$t("message.setting.DeviceImport")}}</span> 
                     </el-menu-item>
 				</el-submenu>
-
-				
-
+                 <el-submenu index="/Settings/Client">
+					<template slot="title">
+						<span>{{$t("message.setting.ClientConfiguration")}}</span>
+					</template>
+                    <el-menu-item index="/Settings/Client">
+                        <span class="Setting_tree">{{$t("message.setting.ClientConfiguration")}}</span> 
+                    </el-menu-item>
+				</el-submenu>
 
 				<el-submenu index="/Settings/Record">
 					<template slot="title">
