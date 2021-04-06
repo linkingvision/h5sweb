@@ -51,7 +51,7 @@ const Snapshot = () => import('@/views/replay/Snapshot')
 const Configure = () => import('@/views/settings/https/Configure')
 const Domainlist = () => import('@/views/settings/https/Domainlist')
 
-const Client = () => import('@/views/settings/Client/Client')
+// const Client = () => import('@/views/settings/Client/Client')
 const License = () => import('@/views/settings/license/License')
 const Cluster = () => import('@/views/settings/cluster/Cluster')
 const Map = () => import('@/views/settings/Map/Map')
