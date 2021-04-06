@@ -342,16 +342,6 @@ export default new Router({
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
 							},
 						},{
-							path: 'Client',
-							name: 'Client',
-							component: Client,
-							meta: {
-								title: '/Client',
-								name:i18n.tc("message.dashboard.cluster"),
-								icon:'iconfont icon-jiankong',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
-							},
-						},{
 							path: 'Configure',
 							name: 'Configure',
 							component: Configure,
