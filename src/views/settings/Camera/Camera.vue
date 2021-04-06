@@ -772,9 +772,10 @@ export default {
             }
         }
         .button_edi{
+            line-height: 27px;
             position: relative;
             .el-button{
-                font-size: 20px;
+                // font-size: 20px;
                 padding: 0;
             }
             .el-button:nth-child(2){
