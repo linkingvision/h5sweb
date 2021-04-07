@@ -141,6 +141,9 @@
 				<CDropdownItem href="doc/api.html">
 					<div class="about_ab"><i class="iconfont icon-category"></i>API</div>
 				</CDropdownItem>
+				<CDropdownItem href="doc/H5S视频平台用户手册-zh.chm">
+					<div class="about_ab"><i class="iconfont icon-category"></i>手册</div>
+				</CDropdownItem>
 				<CDropdownItem @click="skin">
 					<div class="about_ab"><i class="iconfont icon-huanfu"></i>主题</div>
 				</CDropdownItem>

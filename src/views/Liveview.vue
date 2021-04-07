@@ -220,7 +220,9 @@ export default {
 		}
     },
 	mounted(){
-        this.updateUI();
+        setTimeout(() => {
+            this.updateUI();
+        }, 1000);
         if(this.$store.state.root=="Operator"){
                 $('#headswitch').hide()
                 $('#viewclis').hide()
