@@ -20,6 +20,9 @@
                     <el-form-item :label="label.RedisServerPort">
                         <el-input v-model="form.nServerPort"></el-input>
                     </el-form-item>
+                    <el-form-item label="SSL协议">
+                        <el-switch active-color="#13ce66" v-model="ruleForm.ssl"></el-switch>
+                    </el-form-item>
                     <el-form-item>
                     </el-form-item>
                 </el-form>
@@ -65,15 +68,15 @@ export default {
                 nServerPort:"6379",
             },
             ruleForm:{
-                switch:null
-            }
+                switch:null,
+                ssl:null
+            },
 
         }
     },
     mounted(){
         this.GetRedisConf()
         this.GetEnableRedis()
-
     },
     methods:{
         SetRedis(){
@@ -86,7 +89,9 @@ export default {
             +form.strNodeId+"&nodename="
             +form.strNodeName+"&nodeip="
             +form.strNodeIp+"&serverip="
-            +form.strServerIp+"&session="+ this.$store.state.token;
+            +form.strServerIp+"&session="+ this.$store.state.token
+            +'&ssl='+this.ruleForm.ssl;
+            console.log(url ,111111111111);
             var url1 = this.$store.state.IPPORT + "/api/v1/SetEnableRedis?enable="+_this.ruleForm.switch+"&session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
                 console.log("SetRedisConf",result);
@@ -140,6 +145,7 @@ export default {
                 console.log("GetEnableRedis",result);
                 if(result.status == 200){
                     this.ruleForm["switch"]=result.data.enable
+                    this.ruleForm["ssl"]=result.data.bSSL
                 }
             })
         },
