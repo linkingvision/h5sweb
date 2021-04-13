@@ -136,6 +136,7 @@ export default {
                 console.log("GetRedisConf",result);
                 if(result.status == 200){
                     this.form=result.data
+					this.ruleForm["ssl"]=result.data.bSSL
                 }
             })
         },
@@ -145,7 +146,6 @@ export default {
                 console.log("GetEnableRedis",result);
                 if(result.status == 200){
                     this.ruleForm["switch"]=result.data.enable
-                    this.ruleForm["ssl"]=result.data.bSSL
                 }
             })
         },
