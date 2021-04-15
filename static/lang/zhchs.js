@@ -158,6 +158,8 @@ export default {
 		{
 			LoadAllChannel:'加载所有通道',
 			Sandbox:"沙盒",
+			Maxichannels:"最大值通道数",
+			Maxinit:'0表示所有通道',
 
 			ClientConfiguration:"客户端配置",
 			Domainlist:"域列表",

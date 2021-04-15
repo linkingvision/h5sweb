@@ -156,6 +156,8 @@ export default {
 		{
 			LoadAllChannel:'Load All Channel',
 			Sandbox:"Sandbox",
+			Maxichannels:'Maxichannels',
+			Maxinit:'0 represents all channels',
 
 			ClientConfiguration:"Client Configuration",
 			Domainlist:"Domain list",

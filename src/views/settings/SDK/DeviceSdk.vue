@@ -37,7 +37,11 @@
                     v-model="editform.bSandbox">
                     </el-switch>
                 </el-form-item>
-                
+                <!-- 编辑通道数 -->
+                <el-form-item :label="label.Maxichannels">
+                    <el-input v-model="editform.Maxichannels" ></el-input>
+                    <p class="maxnum">({{$t('message.setting.Maxinit')}})</p>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
                 <el-button class="form_butt1" @click="editPopup = false">{{$t("message.setting.Cancel")}}</el-button>
@@ -99,7 +103,11 @@
                     v-model="form.bSandbox">
                     </el-switch>
                 </el-form-item>
-                
+                 <!-- 添加通道数 -->
+                 <el-form-item :label="label.Maxichannels">
+                    <el-input v-model="form.Maxichannels" ></el-input>
+                    <p class="maxnum">({{$t('message.setting.Maxinit')}})</p>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
                 <el-button class="form_butt1" @click="dialogFormVisible = false">{{$t("message.setting.Cancel")}}</el-button>
@@ -230,7 +238,8 @@ import uuid from '../../../assets/js/uuid'
 
             LoadAllChannel:this.$t("message.setting.LoadAllChannel"),
             Sandbox:this.$t("message.setting.Sandbox"),
-
+            Maxichannels:this.$t("message.setting.Maxichannels"),
+            
             Index:this.$t("message.table.Index"),
             Name:this.$t("message.table.Name"),
             IP:this.$t("message.table.IP"),
@@ -308,7 +317,8 @@ import uuid from '../../../assets/js/uuid'
             Port_DSS:"9000",
             Port_1800:"18531",
             Audio:false,
-            bSandbox: false
+            bSandbox: false,
+            Maxichannels:'0'
         },
         editform: {
             Type: 'H5_DEV_HIK',
@@ -327,7 +337,8 @@ import uuid from '../../../assets/js/uuid'
             Port_DSS:"9000",
             Port_1800:"18531",
             Audio:false,
-            bSandbox:false
+            bSandbox:false,
+            Maxichannels:'0'
         },
         edittoken:"",//编辑时要删除的token
         editindex:"",//编辑时所在索引
@@ -377,6 +388,7 @@ import uuid from '../../../assets/js/uuid'
           var url = this.$store.state.IPPORT + "/api/v1/GetDevice?getonline=true&session="+ this.$store.state.token;
           //   console.log("***********************",url)
             this.$http.get(url).then(result=>{
+            console.log(result)
               if(result.status == 200){
                   var itme=result.data.dev;
                   this.tableData=[];
@@ -395,6 +407,7 @@ import uuid from '../../../assets/js/uuid'
                           Online:itme[i].bOnline+"",
                           bPasswdEncrypt:itme[i].bPasswdEncrypt,
                           bSandbox: itme[i].bSandbox,
+                          Maxchannel:itme[i].nMaxChannel
                       };
                       this.tableData.push(tabledata);
                       //console.log(tabledata);
@@ -425,11 +438,22 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
+                      if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
                     }
                 })
             }else if(form.Type=="H5_DEV_DH"){
@@ -442,12 +466,23 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
-                    }
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
+                   }
                 })
             }else if(form.Type=="H5_DEV_HIKISC"){
                 console.log(form.Type)
@@ -459,11 +494,22 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log("isc****************************",url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
+                       if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
                     }
                 })
             }else if(form.Type=="H5_DEV_TD"){
@@ -476,11 +522,22 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log("td****************************",url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
                     }
                 })
             }else if(form.Type=="H5_DEV_UNV"){
@@ -492,11 +549,22 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log("yushi****************************",url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
                     }
                 })
             }else if(form.Type=="H5_DEV_DHDSS"){
@@ -508,11 +576,22 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log("yushi****************************",url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
                     }
                 })
             }else if(form.Type=="H5_DEV_IVS"){
@@ -524,11 +603,22 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log("yushi****************************",url);
                 this.$http.get(url).then(result=>{
                     console.log(result);
                     if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                       }else{
+                         this.$message({
+                            message: '添加失败',
+                            type: 'warning'
+                        });
+                        return false;
+                      }
                     }
                 })
             }
@@ -546,7 +636,7 @@ import uuid from '../../../assets/js/uuid'
             var url1 = this.$store.state.IPPORT + "/api/v1/DelDevice?token="+encodeURIComponent(this.edittoken)+"&edit=true&session="+ this.$store.state.token;
             console.log("isc------------------------",url1)
             this.$http.get(url1).then(result=>{
-                //console.log("1",result);
+                console.log("1",result);
                 if(result.status==200){
                     if(result.data.bStatus==true){
                         var list = {
@@ -562,9 +652,10 @@ import uuid from '../../../assets/js/uuid'
                             Online:form.Online+"",
                             bPasswdEncrypt:form.bPasswdEncrypt,
                             bSandbox: form.bSandbox,
+                            Maxichannels:form.Maxichannels
                             }
                         this.tableData.splice(this.editindex, 1,list)
-                        
+                        console.log('123')
                         this.Success();
             
                         
@@ -597,6 +688,7 @@ import uuid from '../../../assets/js/uuid'
               "&port="+encodeURIComponent(form.Port)+
               "&audio="+form.Audio+
               "&sandbox="+form.bSandbox+
+              "&maxchannel="+form.Maxichannels+
               "&session="+ this.$store.state.token;
               console.log(url);
               this.$http.get(url).then(result=>{
@@ -625,6 +717,7 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port_dh)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -652,6 +745,7 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port_isc)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -679,6 +773,7 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port_td)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -706,6 +801,7 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port_unv)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -733,6 +829,7 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port_DSS)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -760,6 +857,7 @@ import uuid from '../../../assets/js/uuid'
                 "&port="+encodeURIComponent(form.Port_1800)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
                 "&session="+ this.$store.state.token;
                 console.log(url);
                 this.$http.get(url).then(result=>{
@@ -801,12 +899,9 @@ import uuid from '../../../assets/js/uuid'
             this.editform["Online"]=row.Online;
             this.editform["bPasswdEncrypt"]=row.bPasswdEncrypt;
             this.editform["bSandbox"]=row.bSandbox;
+            this.editform["Maxichannels"]=row.Maxchannel
             // console.log(this.editform)
             // console.log(this.tableData[index])
-            
-            
-            
-            
         },
         //删除
         deleteRow(index, row,rows) {
@@ -916,6 +1011,9 @@ import uuid from '../../../assets/js/uuid'
 </script>
 
 <style lang="scss" scoped>
+.el-dialog__body{
+    padding-bottom:0 !important;
+}
 .sdk_button{
     display: flex;
     justify-content: space-between;
@@ -924,5 +1022,11 @@ import uuid from '../../../assets/js/uuid'
             color: rgba(58, 187, 254, 1);
         }
     }
+}
+.maxnum{
+    font-size: 12px;
+    line-height:2;
+    margin: 0;
+    padding:0;
 }
 </style>
