@@ -285,51 +285,65 @@ import uuid from '../../../assets/js/uuid'
         
         //  编辑  添加 的确定键
         Success(){
-               this.editPopup = false;
+            this.editPopup = false;
             var root = this.$store.state.IPPORT;
             //url
             var form=this.editform;
             var urlone=form.URL
             var suburl=form.SUBURL
+            console.log(suburl)
+            var urloneyu=urlone.split('')
+            var suburlyu=suburl.split('')
             if(suburl!==undefined){
-                var suburlparam=suburl.split('&')
-                var suburlarr=suburlparam.splice(1)
-                var suburldat=suburlarr.join(encodeURIComponent('%26'))
-                var suburlyu=suburl.split('')
-                if(suburlyu.indexOf("&")>-1){
-                     var addsuburl="&enablesub="+form.enablesub+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
-                }else{
-                     var addsuburl="&enablesub="+'true'+"&suburl="+suburl
+                 // 辅码流
+                 var containSpecial =new RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/) (\<)(\>)(\?)(\)]+/);
+                if(containSpecial.test(suburlyu)){
+                    for(var i=0;i<suburlyu.length;i++){
+                        if(suburlyu[i]=='%'){
+                            suburlyu[i]=encodeURIComponent('%25')
+                        }
+                        if(suburlyu[i]=='&'){
+                            suburlyu[i]=encodeURIComponent('%26')
+                        }
+                    }   
                 }
+                console.log(suburlyu)
+                var addsuburl= suburlyu.join('')
+                console.log(addsuburl)
             }
             if(urlone!==undefined){
-                console.log('jjj')
-                 var urloneparam=urlone.split('&')
-                 var urlonearr=urloneparam.splice(1)
-                 var urlonedat=urlonearr.join(encodeURIComponent('%26'))
-                 var urloneyu=urlone.split('')
-                 if(urloneyu.indexOf('&')>-1){
-                    var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-                 }else{
-                    var urloneparam=urlone
-                 }
+                var containSpecial =new RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/) (\<)(\>)(\?)(\)]+/);
+                if(containSpecial.test(urloneyu)){
+                    for(var i=0;i<urloneyu.length;i++){
+                        if(urloneyu[i]=='%'){
+                            urloneyu[i]=encodeURIComponent('%25')
+                        }
+                        if(urloneyu[i]=='&'){
+                            urloneyu[i]=encodeURIComponent('%26')
+                        }
+                    }   
+                }
+                var urlfirst= urloneyu.join('')
+                console.log(urlfirst)
             }
             var url = root + "/api/v1/AddSrcRTSP?name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
                 "&user="+encodeURIComponent(form.Username)+
                 "&password="+encodeURIComponent(form.Password)+
                 "&audio="+form.Audio+
-                "&url="+urloneparam+
+                "&url="+urlfirst+
                 "&session="+ this.$store.state.token;
                 console.log("++++++++++++++++",url);
             if(form.enablesub){
+                 console.log(addsuburl)
                 if(suburl!==undefined){
+                    console.log(addsuburl)
                    var url=url+addsuburl
                 }else{
                    var url=url
                 }
             }else{console.log(url)}
-            
+            console.log(url)
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
@@ -401,39 +415,47 @@ import uuid from '../../../assets/js/uuid'
             console.log(form.enablesub)
             var urlone=form.URL
             var suburl=form.SUBURL
-            var suburlparam=suburl.split('&')
-            var urloneparam=urlone.split('&')
-
-            var suburlarr=suburlparam.splice(1)
-            var urlonearr=urloneparam.splice(1)
-
-            var suburldat=suburlarr.join(encodeURIComponent('%26'))
-            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
+            
             var urloneyu=urlone.split('')
-            if(urloneyu.indexOf('&')>-1){
-                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-            }else{
-                var urloneparam=urlone
+            var suburlyu=suburl.split('')
+            var containSpecial =new RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/) (\<)(\>)(\?)(\)]+/);
+            if(containSpecial.test(urloneyu)){
+                for(var i=0;i<urloneyu.length;i++){
+                    if(urloneyu[i]=='%'){
+                         urloneyu[i]=encodeURIComponent('%25')
+                    }
+                    if(urloneyu[i]=='&'){
+                         urloneyu[i]=encodeURIComponent('%26')
+                    }
+                }   
             }
-
-            console.log('辅码流',suburldat)
+            var urlfirst= urloneyu.join('')
+            console.log(urlfirst)
+            // 辅码流
+             if(containSpecial.test(suburlyu)){
+                for(var i=0;i<suburlyu.length;i++){
+                    if(suburlyu[i]=='%'){
+                         suburlyu[i]=encodeURIComponent('%25')
+                    }
+                    if(suburlyu[i]=='&'){
+                         suburlyu[i]=encodeURIComponent('%26')
+                    }
+                }   
+            }
+            
+            var urlsub= suburlyu.join('')
+            console.log(urlsub)
             console.log("stream",form.Audio);
             var url = root + "/api/v1/AddSrcRTSP?&name="+encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
             "&user="+encodeURIComponent(form.Username)+
             "&password="+encodeURIComponent(form.Password)+
             "&audio="+form.Audio+
-            "&url="+urloneparam+
+            "&url="+urlfirst+
             "&session="+ this.$store.state.token
+           
             if(form.enablesub){
-                var suburlyu=suburl.split('')
-                console.log(suburlyu.indexOf("&"),suburlyu)
-                if(suburlyu.indexOf("&")>-1){
-                    var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
-                }else{
-                    var url=url+"&enablesub="+'true'+"&suburl="+suburl
-                }
-                
+                var url=url+"&enablesub="+'true'+"&suburl="+urlsub    
             }
             console.log("-",url);
             this.$http.get(url).then(result=>{
