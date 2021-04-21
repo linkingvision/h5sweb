@@ -289,6 +289,7 @@ import uuid from '../../../assets/js/uuid'
             var root = this.$store.state.IPPORT;
             //url
             var form=this.editform;
+            console.log(form)
             var urlone=form.URL
             var suburl=form.SUBURL
             console.log(suburl)
@@ -335,14 +336,10 @@ import uuid from '../../../assets/js/uuid'
                 "&session="+ this.$store.state.token;
                 console.log("++++++++++++++++",url);
             if(form.enablesub){
-                 console.log(addsuburl)
-                if(suburl!==undefined){
-                    console.log(addsuburl)
-                   var url=url+'&enablesub='+form.enablesub+'&suburl'+addsuburl
-                }else{
-                   var url=url
-                }
-            }else{console.log(url)}
+                 var url=url+'&enablesub='+form.enablesub+'&suburl='+addsuburl
+            }else{
+                console.log(url)
+            }
             console.log(url)
             this.$http.get(url).then(result=>{
                 //console.log(result);
@@ -400,6 +397,8 @@ import uuid from '../../../assets/js/uuid'
                         });
                         return false;
                     }
+                }else{
+                    console.log()
                 }
             })
             
