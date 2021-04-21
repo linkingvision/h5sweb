@@ -104,6 +104,8 @@ export default {
             this.watermarktoggle = "block";
             var watermarktoggle=this.watermarktoggle;
 			localStorage.setItem("watermarktoggle",watermarktoggle);
+            this.$store.state.watermarkstring=this.watermarkstring
+            localStorage.setItem("watermarkstring",this.watermarkstring);
 
             this.addWaterMarker();
             this.$store.state.watermarktoggle="block";
@@ -133,6 +135,10 @@ export default {
         },
 
         addWaterMarker(){
+            this.$message({
+                    message: '水印已打开',
+                    type: 'success'
+                });
 			if(!document.getElementById("watermarktoggle")){
 				return
 			}

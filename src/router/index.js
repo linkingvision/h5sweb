@@ -35,6 +35,9 @@ const Settings = () => import('@/views/Settings')
 const GB = () => import('@/views/GB')
 const Clouds = () => import('@/views/Clouds')
 const Event = () => import('@/views/Event')
+const Storage = () => import('@/views/storaged/Storage')
+const StorageConfig = () => import('@/views/storaged/StorageConfig')
+const StorageTerminal = () => import('@/views/storaged/StorageTerminal')
 
 const Device = () => import('@/views/dashboard/Device')
 const GPU = () => import('@/views/dashboard/GPU')
@@ -63,6 +66,7 @@ const DeviceOnvif = () => import('@/views/settings/device/DeviceOnvif')
 const DeviceFile = () => import('@/views/settings/device/DeviceFile')
 const DeviceAll = () => import('@/views/settings/device/DeviceAll')
 const Docker = () => import('@/views/settings/docker/Docker')
+const Storagepage = () => import('@/views/settings/storagedconfig/storageconfig')
 const RTSP = () => import('@/views/settings/Protocol/RTSP')
 const DeviceSdk = () => import('@/views/settings/SDK/DeviceSdk')
 const User = () => import('@/views/settings/user/User')
@@ -330,7 +334,7 @@ export default new Router({
 							name:i18n.tc("message.left.camera"),
 							icon:'iconfont icon-jiankong',
 							type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
-						}
+						    }
 						},{
 							path: 'Cluster',
 							name: 'Cluster',
@@ -447,6 +451,16 @@ export default new Router({
 							component: Docker,
 							meta: {
 								title: '/Docker',
+								name:i18n.tc("message.left.dashboard"),
+								icon:'iconfont icon-11111-copy',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'Storagepage',
+							name: 'Storagepage',
+							component: Storagepage,
+							meta: {
+								title: '/Storagepage',
 								name:i18n.tc("message.left.dashboard"),
 								icon:'iconfont icon-11111-copy',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
@@ -633,7 +647,40 @@ export default new Router({
 							},
 						}
 					]
-				}
+				},{
+					path: 'Storage',
+					name: 'Storage',
+					component: Storage,
+					meta: {
+						title: '/storage/StorageConfig',
+						name:i18n.tc("message.left.storage"),
+						icon:'iconfont icon-shezhi',
+						type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+					},
+					children:[
+						{   path: 'StorageConfig',
+							name: 'StorageConfig',
+							component: StorageConfig,
+							meta: {
+								title: '/storage/StorageConfig',
+								name:i18n.tc("message.left.storage"),
+								icon:'iconfont icon-shezhi',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						},{
+							path: 'StorageTerminal',
+							name: 'StorageTerminal',
+							component: StorageTerminal,
+							meta: {
+								title: '/storage/StorageTerminal',
+								name:i18n.tc("message.left.storage"),
+								icon:'iconfont icon-shezhi',
+								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
+							},
+						}
+					]
+				},
+				
 			]
 		},{
 			path: '/Login',
@@ -667,9 +714,6 @@ export default new Router({
 if(sessionStorage.getItem('Adswitch')){
 	store.state.Adswitch=sessionStorage.getItem('Adswitch');
 }
-if(sessionStorage.devicemarktoggle){
-	store.state.devicemarktoggle=sessionStorage.devicemarktoggle;
-}
 if(sessionStorage.getItem('mcuroot')){
 	store.state.root=sessionStorage.getItem('mcuroot');
 }
@@ -689,8 +733,14 @@ if(localStorage.getItem('Mapurl')){
 if(localStorage.getItem('liveviewrtc')){
 	store.state.liveviewrtc=localStorage.getItem('liveviewrtc');
 }
+if(localStorage.getItem('watermarkstring')){
+	store.state.watermarkstring=localStorage.getItem('watermarkstring');
+}
 if(localStorage.getItem('watermarktoggle')){
 	store.state.watermarktoggle=localStorage.getItem('watermarktoggle');
+}
+if(localStorage.getItem('storageconfig')){
+	store.state.bStorageConfig=localStorage.getItem('storageconfig');
 }
 // if(localStorage.getItem('tourrtc')){
 // 	store.state.tourrtc=localStorage.getItem('tourrtc');
@@ -701,11 +751,14 @@ if(localStorage.getItem('themetoggle')){
 }
 
 let root=process.env.VUE_APP_URL;
+let rtmplink=window.location.host.split(':')
+let rtmproot="rtmp://" + rtmplink[0]+':8554' + window.location.pathname+'live'
 if (root == undefined){
 	root = window.location.protocol + '//' + window.location.host + window.location.pathname;
 }
 // console.log(root)
 store.state.IPPORT=root
+store.state.RTMPROOT=rtmproot
 
 console.log("host",window.location.hostname,window.location.host,window.location.href)
 

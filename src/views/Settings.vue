@@ -163,6 +163,13 @@
 							<span slot="title">{{$t("message.left.screenshots")}}</span>
 						</el-menu-item>
 					</a>
+					<!--存储配置 -->
+					<div index="/Settings/LogLevel">
+						<el-menu-item index="/Settings/Storagepage">
+							<!-- <i class="iconfont icon-wenjianjia" style="font-size:20px"></i> -->
+							<span slot="title">存储配置</span>
+						</el-menu-item>
+					</div>
 				</el-submenu>
 
 				<el-submenu index="协议">

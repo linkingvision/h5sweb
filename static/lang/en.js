@@ -40,7 +40,10 @@ export default {
 			camera: "Camera",
 			VideoConference: "Video Conference",
 			MapManagement:"Map Management",
-			Map:"Map"
+			Map:"Map",
+			storage:'Storage',
+			StorageConfig:'Storage Config',
+			StorageTerminal:"Storage Terminal"
 		},
 		login:
 		{
@@ -156,9 +159,8 @@ export default {
 		{
 			LoadAllChannel:'Load All Channel',
 			Sandbox:"Sandbox",
-			Maxichannels:'Maxichannels',
+            Maxichannels:'Maxichannels',
 			Maxinit:'0 represents all channels',
-
 			ClientConfiguration:"Client Configuration",
 			Domainlist:"Domain list",
 			ForceHTTPS:"Force HTTPS",

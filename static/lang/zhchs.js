@@ -42,7 +42,10 @@ export default {
 			camera: "监控点",
 			VideoConference: "视频会议",
 			MapManagement:"地图管理",
-			Map:"地图"
+			Map:"地图",
+			storage:'存储',
+			StorageTerminal:"终端",
+			StorageConfig:"存储配置"
 		},
 		login:
 		{
