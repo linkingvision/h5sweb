@@ -2,7 +2,7 @@
    <div class="StorageTerminal">
        <div class="terminal_left"></div>
        <div class="terminal_right">
-           <iframe width="100%" height="100%" id="terminal" src="https://192.168.100.163:9090/cockpit/@localhost/system/terminal.html" frameborder="0"></iframe>
+           <iframe width="100%" height="100%" id="terminal" frameborder="0"></iframe>
             <div class="divifram"></div>
        </div>
    </div>

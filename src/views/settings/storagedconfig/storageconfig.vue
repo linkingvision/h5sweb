@@ -36,7 +36,7 @@ export default {
    methods:{
         configsubmit(){
           this.$store.state.strNodeName=this.form.strNodeName
-          this.$store.state.strNodeName=this.form.switch
+          this.$store.state.switch=this.form.switch
           localStorage.setItem('strNodeName',JSON.stringify(this.form.strNodeName)) 
           localStorage.setItem('switchconfig',JSON.stringify(this.form.switch)) 
           this.$message({
