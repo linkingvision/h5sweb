@@ -20,12 +20,11 @@ export default {
 	methods:{
        url(){
            var iframe = document.getElementById("terminal");
-           var configport=JSON.parse(this.$store.state.bStorageConfig)
-               console.log(configport.strNodeName)
+           var configport=this.$store.state.strNodeName
            var configip=this.$store.state.IPPORT
            var configipnew=configip.split(":")
-           iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport.strNodeName+"/cockpit/@localhost/storage/index.html");
-           console.log("https://"+configipnew[1]+":"+configport.strNodeName+"/cockpit/@localhost/storage/index.html")
+           iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html");
+           console.log("https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html")
        }
 	},
 	mounted(){

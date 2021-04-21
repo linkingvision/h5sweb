@@ -739,8 +739,11 @@ if(localStorage.getItem('watermarkstring')){
 if(localStorage.getItem('watermarktoggle')){
 	store.state.watermarktoggle=localStorage.getItem('watermarktoggle');
 }
-if(localStorage.getItem('storageconfig')){
-	store.state.bStorageConfig=localStorage.getItem('storageconfig');
+if(localStorage.getItem('strNodeName')){
+	store.state.strNodeName=JSON.parse(localStorage.getItem('strNodeName'));
+}
+if(localStorage.getItem('switchconfig')){
+	store.state.switch=JSON.parse(localStorage.getItem('switchconfig'));
 }
 // if(localStorage.getItem('tourrtc')){
 // 	store.state.tourrtc=localStorage.getItem('tourrtc');

@@ -27,22 +27,24 @@ export default {
               configuiport:"nStorageConfigPort"
            },
            form:{
-               strNodeName:'9090',
-               switch:false
+                strNodeName:this.$store.state.strNodeName,
+                switch:this.$store.state.switch
            },
 
        } 
      },
    methods:{
         configsubmit(){
-          console.log('你 好')
-          localStorage.setItem('storageconfig',JSON.stringify(this.form)) 
+          this.$store.state.strNodeName=this.form.strNodeName
+          this.$store.state.strNodeName=this.form.switch
+          localStorage.setItem('strNodeName',JSON.stringify(this.form.strNodeName)) 
+          localStorage.setItem('switchconfig',JSON.stringify(this.form.switch)) 
           this.$message({
                           message:"保存成功!",
                           type: 'success'
                         })
             } 
-         }
+      }
 }
 </script>
 

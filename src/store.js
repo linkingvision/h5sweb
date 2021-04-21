@@ -10,6 +10,8 @@ const state = {
   asideShows:false,
   liveviewrtc:'WS',
   deviceprintcolor:'',
+  strNodeName:9090,
+  switch:false,
   // tourrtc:"WS",
   watermarkstring:"linkingvision",
   watermarktoggle:"",

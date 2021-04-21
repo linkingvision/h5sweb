@@ -338,7 +338,7 @@ import uuid from '../../../assets/js/uuid'
                  console.log(addsuburl)
                 if(suburl!==undefined){
                     console.log(addsuburl)
-                   var url=url+addsuburl
+                   var url=url+'&enablesub='+form.enablesub+'&suburl'+addsuburl
                 }else{
                    var url=url
                 }

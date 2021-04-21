@@ -60,6 +60,10 @@
 					<i class="iconfont icon-shezhi"></i>
 					<span slot="title">{{$t("message.setting.setting")}}</span>
 				</el-menu-item>
+				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Storage/StorageConfig" v-show="bStorageConfigUI">
+					<i class="iconfont icon-storageconfig"></i>
+					<span slot="title">{{$t("message.left.storage")}}</span>
+				</el-menu-item>
 			</el-menu>
 		</CSidebar>
 	</div>
@@ -80,10 +84,14 @@ export default {
 	},
 	data(){
 		return {
-			activeIndex:"Dashboard"
+			activeIndex:"Dashboard",
+			bStorageConfigUI:''
 		}
 	},
 	mounted(){
+		var configflag=this.$store.state.switch
+		this.bStorageConfigUI=configflag
+		console.log(configflag.switch)
 		this.menuList();	
 	},
 	methods:{
