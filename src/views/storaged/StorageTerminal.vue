@@ -25,8 +25,8 @@ export default {
          var configport=this.$store.state.strNodeName
          var configip=this.$store.state.IPPORT
          var configipnew=configip.split(":")
-         iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html");
-         console.log("https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html")
+         iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/system/terminal.html");
+         console.log("https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/system/terminal.html")
        }
    }
 }
@@ -35,7 +35,7 @@ export default {
 <style scoped>
  .terminal_right{
     height:90vh; 
-    background-color: #222222;
+    /* background-color: #222222; */
  } 
  iframe{
      position: relative;

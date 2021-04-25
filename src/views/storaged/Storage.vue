@@ -1,6 +1,6 @@
 <template>
-    <div class="cockpit">
-         <div class="cockpit_left">
+    <div class="storage">
+         <div class="storage_left">
             <el-menu
                 router
                 :default-active="activemenu" 
@@ -17,7 +17,7 @@
 				</el-menu-item> 
             </el-menu>
          </div>
-         <div class="cockpit_right">
+         <div class="storage_right">
              <router-view></router-view>
          </div>
     </div>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'cockpit',
+  name: 'storage',
 	data(){
 		return{
 			activemenu:''
@@ -45,20 +45,20 @@ export default {
 </script>
 
 <style scoped>
- .cockpit{
+ .storage{
     display: flex;
     /* //flex-wrap: wrap; */
     justify-content: space-between; 
 }
- .cockpit_left{
+ .storage_left{
     width: 16%;
     min-width: 290px;
     height: 90vh;
     margin: 0 5px;
-    background-color: #2D2D2D;
+    /* background-color: #2D2D2D; */
     overflow: auto;
  }
- .cockpit_right{
+ .storage_right{
     width: 84%;
     height:100%; 
     /* background-color: #222222; */

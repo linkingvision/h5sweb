@@ -25,7 +25,7 @@ export default {
            var configipnew=configip.split(":")
            iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html");
            console.log("https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html")
-       }
+       } 
 	},
 	mounted(){
 		this.url()
@@ -37,7 +37,7 @@ export default {
 <style scoped>
  .storage_right{ 
      height: 90vh;
-     background-color: #222222;
+     /* background-color: #222222; */
  }
  iframe{
      position: relative;

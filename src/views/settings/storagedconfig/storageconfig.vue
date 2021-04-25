@@ -23,27 +23,50 @@ export default {
    data(){
        return{
            label:{
-              strNodeName:'bStorageConfigUI',
-              configuiport:"nStorageConfigPort"
+              strNodeName:this.$t("message.setting.bStorageConfigUI"),
+              configuiport:this.$t("message.setting.nStorageConfigPort")
            },
            form:{
-                strNodeName:this.$store.state.strNodeName,
-                switch:this.$store.state.switch
+                strNodeName:'',
+                switch:''
            },
 
        } 
      },
+   mounted(){
+        this.configdata()
+   },
    methods:{
+        configdata(){
+            var confurl=this.$store.state.IPPORT+"/api/v1/GetStorageConf?session="+this.$store.state.token
+            console.log(confurl)
+            this.$http.get(confurl).then(res=>{
+               console.log(res)
+               var storageres=res.data
+               if(res.status==200){
+                  this.form.strNodeName= storageres.nStorageConfigPort
+                  this.form.switch= storageres.bStorageConfigUI
+                  localStorage.setItem('strNodeName',JSON.stringify(storageres.nStorageConfigPort)) 
+                  localStorage.setItem('switchconfig',JSON.stringify(storageres.bStorageConfigUI)) 
+               }
+            })
+        },
         configsubmit(){
-          this.$store.state.strNodeName=this.form.strNodeName
-          this.$store.state.switch=this.form.switch
-          localStorage.setItem('strNodeName',JSON.stringify(this.form.strNodeName)) 
-          localStorage.setItem('switchconfig',JSON.stringify(this.form.switch)) 
-          this.$message({
-                          message:"保存成功!",
+          var submiturl=this.$store.state.IPPORT+"/api/v1/SetStorageConf?session="+this.$store.state.token+"&storageui="+this.form.switch+'&storageport='+this.form.strNodeName
+          console.log(submiturl)
+          this.$http.get(submiturl).then(res=>{
+               console.log(res)
+               if(res.status==200){
+                 if(res.data.bStatus){
+                   this.configdata()
+                   this.$message({
+                          message:res.data.strCode,
                           type: 'success'
                         })
-            } 
+                 }
+               }
+            })
+          } 
       }
 }
 </script>

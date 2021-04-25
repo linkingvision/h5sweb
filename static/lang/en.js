@@ -256,7 +256,9 @@ export default {
 			Twopassword: "Two password are not same, please check!",
 			all: "All",
 			Creationfailed: "Creation failed",
-			Illegal: "Illegal login lock"
+			Illegal: "Illegal login lock",
+			bStorageConfigUI:"Enable Storage Config",
+			nStorageConfigPort:"Storage Config Port"
 		},
 		table: {
 			pleasechoose: "please choose",

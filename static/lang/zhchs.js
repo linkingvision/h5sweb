@@ -258,7 +258,9 @@ export default {
 			all: "全部",
 			Editorfailure: "编辑失败",
 			Creationfailed: "创建失败",
-			Illegal: "非法登录锁定"
+			Illegal: "非法登录锁定",
+			bStorageConfigUI:"开启存储配置",
+			nStorageConfigPort:"存储配置端口"
 		},
 		table: {
 			pleasechoose: "请选择",
