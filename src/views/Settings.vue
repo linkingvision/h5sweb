@@ -10,6 +10,7 @@
 				:text-color="($store.state.darkMode) ? '#B7B7B7' : '#7A7A7A'">
 				<el-submenu index="/Settings/DeviceStream">
 					<template slot="title">
+						<i class="iconfont icon-shezhi_guanli"></i>
 						<span>{{$t("message.setting.device")}} </span>
 					</template>
                     <el-menu-item index="/Settings/DeviceStream">
@@ -55,6 +56,7 @@
 				</el-submenu> -->
 				<el-submenu index="/Settings/Client">
 					<template slot="title">
+						<i class="iconfont icon-kehuduanpeizhi"></i>
 						<span>{{$t("message.setting.ClientConfiguration")}}</span>
 					</template>
                     <el-menu-item index="/Settings/Client">
@@ -63,6 +65,7 @@
 				</el-submenu>
 				<el-submenu index="/Settings/Record">
 					<template slot="title">
+						<i class="iconfont icon-bofang2"></i>
 						<span>{{$t("message.setting.record")}} </span>
 					</template>
                     <el-menu-item index="/Settings/Record">
@@ -72,6 +75,7 @@
 
 				<el-submenu index="/Settings/Edit">
 					<template slot="title">
+						<i class="iconfont icon-jianzhu"></i>
 						<span>{{$t("message.setting.Regional")}} </span>
 					</template>
                     <el-menu-item index="/Settings/Edit">
@@ -84,6 +88,7 @@
 
 				<el-submenu index="/Settings/Default">
 					<template slot="title">
+						<i class="iconfont icon-transcode-management"></i>
 						<span>{{$t("message.setting.Transcoding")}}</span>
 					</template>
                     <el-menu-item index="/Settings/Default">
@@ -96,6 +101,7 @@
 
 				<el-submenu index="/Settings/CloudConnect">
 					<template slot="title">
+						<i class="iconfont icon-jilian"></i>
 						<span>{{$t("message.setting.CloudConnect")}}</span>
 					</template>
                     <el-menu-item index="/Settings/CloudConnect">
@@ -106,6 +112,7 @@
 				<!-- 系统 -->
 				<el-submenu index="System">
 					<template slot="title">
+						<i class="iconfont icon-xitongweihu"></i>
 						<span>{{$t("message.dashboard.system_info")}} </span>
 					</template>
 					<!-- 系统 -->
@@ -174,6 +181,7 @@
 
 				<el-submenu index="协议">
 					<template slot="title">
+						<i class="iconfont icon-xieyi"></i>
 						<span>{{$t("message.setting.Protocol")}} </span>
 					</template>
 					<!-- 协议 rtsp -->
@@ -219,6 +227,7 @@
 
 				<el-submenu index="/Settings/Map">
 					<template slot="title">
+						<i class="iconfont icon-ditu"></i>
 						<span>{{$t("message.left.Map")}}</span>
 					</template>
 					<el-menu-item index="/Settings/Mapmanagement">
@@ -231,6 +240,7 @@
 
 				<el-submenu index="/Settings/Cluster">
 					<template slot="title">
+						<i class="iconfont icon-jiqun"></i>
 						<span>{{$t("message.dashboard.cluster")}}</span>
 					</template>
 					<el-menu-item index="/Settings/Cluster">
@@ -242,7 +252,7 @@
 				</el-submenu>
 				
 				<el-menu-item index="/Settings/Camera">
-					<!-- <i class="iconfont icon-jiankong" style="font-size:18px"></i> -->
+					<i class="iconfont icon-jiankongdianliebiao"></i>
 					<span slot="title">{{$t("message.left.camera")}}</span>
 				</el-menu-item>
 				
