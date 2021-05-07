@@ -96,7 +96,7 @@
 										placeholder="选择日期时间"
 										default-time="00:00:00">
 									</el-date-picker>
-                                    <el-select v-if="r=='1'&&c=='1'" v-model="region" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select v-if="r=='1'&&c=='1'" v-model="region" size="mini" :popper-append-to-body="false" popper-class='selectdrop' style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -104,7 +104,7 @@
                                             :value="item.value">
                                         </el-option>
                                     </el-select>
-                                    <el-select v-if="r=='1'&&c=='2'" v-model="region1" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select v-if="r=='1'&&c=='2'" v-model="region1" size="mini" :popper-append-to-body="false" popper-class='selectdrop' style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -112,7 +112,7 @@
                                             :value="item.value">
                                         </el-option>
                                     </el-select>
-                                    <el-select v-if="r=='2'&&c=='1'" v-model="region2" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select v-if="r=='2'&&c=='1'" v-model="region2" size="mini" :popper-append-to-body="false" popper-class='selectdrop' style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -120,7 +120,7 @@
                                             :value="item.value">
                                         </el-option>
                                     </el-select>
-                                    <el-select v-if="r=='2'&&c=='2'" v-model="region3" size="mini" style="width:70px" @change="Speed()">
+                                    <el-select v-if="r=='2'&&c=='2'" v-model="region3" size="mini" :popper-append-to-body="false" popper-class='selectdrop' style="width:70px" @change="Speed()">
                                         <el-option
                                             v-for="item in regiondata"
                                             :key="item.value"
@@ -135,6 +135,7 @@
                                     
                                 </div>
                                 <div class="caveat_butt" style="">
+									<button class="mr-0" type="button"></button> {{$t("message.archive.Schedulerecord")}}
                                     <button class="mr-1" type="button"></button>{{$t("message.archive.ManualRecord")}}
                                     <button class="mr-2" type="button"></button>{{$t("message.archive.AlarmRecord")}}
                                 </div>
@@ -400,6 +401,8 @@ export default {
 								if(item["nType"]==="H5_REC_MANUAL"){
 									timeitem["style"].background="rgba(60,196,60, 0.498039)"
 									//console.log("录像段时间段颜色1",timeitem["style"].background);
+								}else if(item["nType"]==="H5_REC_SCHEDULE"){
+									timeitem["style"].background="#31b1ff"
 								}else{
 									timeitem["style"].background="rgba(238,17,17, 0.498039)"
 									//console.log("录像段时间段颜色2",timeitem["style"].background);
@@ -971,6 +974,8 @@ export default {
 						if(item["nType"]==="H5_REC_MANUAL"){
 							timeitem["style"].background="rgba(60,196,60, 0.498039)"
 							//console.log("录像段时间段颜色1",timeitem["style"].background);
+						}else if(item["nType"]==="H5_REC_SCHEDULE"){
+							timeitem["style"].background="#31b1ff"
 						}else{
 							timeitem["style"].background="rgba(238,17,17, 0.498039)"
 							//console.log("录像段时间段颜色2",timeitem["style"].background);
@@ -1335,7 +1340,16 @@ export default {
 				
 			}
             .caveat_butt{
-                display: flex;align-items:center;width:11%;min-width: 180px;
+                display: flex;align-items:center;min-width: 180px;
+				.mr-0{
+                    width: 15px;
+                    height:15px;
+                    border-radius: 50px;
+                    border: 0;
+					margin-right: 5px !important;
+                    vertical-align:middle;
+                    background-color: #31b1ff;
+                }
                 .mr-1{
                     width: 15px;
                     height: 15px;
@@ -1362,4 +1376,11 @@ export default {
 .g_flex{
     display: flex;
 }
+/deep/ .selectdrop{
+	border: none !important;
+    background-color:#2D2D2D !important;
+}
+/deep/ .selectdrop .hover{
+            background: #181818 !important;
+        }
 </style>
