@@ -135,6 +135,7 @@
                                     
                                 </div>
                                 <div class="caveat_butt" style="">
+                                    <button class="mr-0" type="button"></button> {{$t("message.archive.Schedulerecord")}}
                                     <button class="mr-1" type="button"></button>{{$t("message.archive.ManualRecord")}}
                                     <button class="mr-2" type="button"></button>{{$t("message.archive.AlarmRecord")}}
                                 </div>
@@ -967,10 +968,13 @@ export default {
 								endTime :end,
 								style:{background:"rgba(60,196,60, 0.498039)"}
 							};
+							console.log(item["nType"],555555555555555);
 						//console.log("录像段时间段颜色",timeitem["style"].background); //录像段时间段颜色
 						if(item["nType"]==="H5_REC_MANUAL"){
 							timeitem["style"].background="rgba(60,196,60, 0.498039)"
 							//console.log("录像段时间段颜色1",timeitem["style"].background);
+						}else if(item["nType"]==="H5_REC_SCHEDULE"){
+							timeitem["style"].background="#31b1ff"
 						}else{
 							timeitem["style"].background="rgba(238,17,17, 0.498039)"
 							//console.log("录像段时间段颜色2",timeitem["style"].background);
@@ -1335,7 +1339,7 @@ export default {
 				
 			}
             .caveat_butt{
-                display: flex;align-items:center;width:11%;min-width: 180px;
+                display: flex;align-items:center;min-width: 180px;
                 .mr-1{
                     width: 15px;
                     height: 15px;
@@ -1352,7 +1356,16 @@ export default {
                     border: 0;
                     margin: 0 5px;
                     vertical-align:middle;
-                    background-color: rgb(238,17,17);
+                    background-color: #ee1011;
+                }
+                .mr-0{
+                    width: 15px;
+                    height:15px;
+                    border-radius: 50px;
+                    border: 0;
+					margin-right: 5px !important;
+                    vertical-align:middle;
+                    background-color: #31b1ff;
                 }
             }
         }
