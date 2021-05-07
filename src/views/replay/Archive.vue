@@ -473,6 +473,8 @@ export default {
                                     //   console.log(data)
                                     if(item['nType']=="H5_REC_MANUAL"){
                                         timeitem["type"] = this.$t("message.archive.ManualRecord");
+                                    }else if(item["nType"]==="H5_REC_SCHEDULE"){
+                                        timeitem["type"] = this.$t("message.archive.Schedulerecord");
                                     }else{
                                         timeitem["type"] = this.$t("message.archive.AlarmRecord");
                                     }
