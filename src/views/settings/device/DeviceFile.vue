@@ -2,7 +2,7 @@
 <template>
     <div>
       <!-- 编辑弹窗 -->
-        <el-dialog :title="eltitle" :visible.sync="editPopup">
+        <el-dialog width="25%" :title="eltitle" :visible.sync="editPopup">
           <el-form class="el_form" ref="form" label-position='left' label-width="100px" size="small " :model="editform">
               <el-form-item :label="label.Type">
                 <el-input v-model="editform.Type"></el-input>
@@ -16,15 +16,7 @@
               <el-form-item label="URL">
                   <el-input v-model="editform.URL"></el-input>
               </el-form-item>
-              <el-form-item label="辅码流">
-                  <el-switch
-                    v-model="editform.enablesub">
-                  </el-switch>
-               </el-form-item>
-                <el-form-item v-if="editform.enablesub">
-                    <span slot="label">{{$t("message.setting.Stremlang")}}</span>
-                    <el-input v-model="editform.SUBURL"></el-input>
-                </el-form-item>
+              
           </el-form>
           <div slot="footer" class="dialog-footer button_table">
               <el-button class="form_butt1" @click="editPopup = false">{{$t("message.setting.Cancel")}}</el-button>
@@ -32,7 +24,7 @@
           </div>
         </el-dialog>
         <!-- 添加的弹窗 -->
-        <el-dialog :title="eltitle" :visible.sync="dialogFormVisible">
+        <el-dialog width="25%" :title="eltitle" :visible.sync="dialogFormVisible">
             <el-form class="el_form" ref="form" label-position='left' label-width="100px" size="small " :model="form">
                 <el-form-item :label="label.Type">
                     <el-input v-model="form.Type"></el-input>
@@ -45,15 +37,6 @@
                 </el-form-item>
                 <el-form-item label="URL">
                     <el-input v-model="form.URL"></el-input>
-                </el-form-item>
-                <el-form-item label='辅码流'>
-                    <el-switch
-                    v-model="form.enablesub">
-                    </el-switch>
-                </el-form-item>
-                 <el-form-item v-if="form.enablesub">
-                    <span slot="label">{{$t("message.setting.Stremlang")}}</span>
-                    <el-input v-model="form.SUBURL"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer button_table">
@@ -191,21 +174,17 @@ import uuid from '../../../assets/js/uuid'
             Username:"admin",
             Password:"12345",
             URL:"rtsp://192.168.1.1/stream",
-            SUBURL:'rtsp://192.168.1.1/stream2',
-            enablesub:"false",
             Audio:"false",
             IP:"192.168.1.1",
             Port:"80"
         },
         editform: {
             Audio:"false",
-            enablesub:"false",
             Name:"",
             Token:"",
             Username:"",
             Password:"",
             URL:"",
-            SUBURL:'',
             Audio:"",
             IP:"",
             Port:""
@@ -232,7 +211,6 @@ import uuid from '../../../assets/js/uuid'
               console.log("a",result);
               if(result.status == 200){
                   var itme=result.data.src;
-                  console.log(itme)
                   this.tableData2=[]
                   for(var i=0;i<itme.length;i++){
                       var tabledata={
@@ -245,10 +223,8 @@ import uuid from '../../../assets/js/uuid'
                           IP:itme[i].strSrcIpAddress,
                           Port:itme[i].strSrcPort,
                           Audio :itme[i].bEnableAudio,
-                          enablesub:itme[i].bEnableUrlSub,
                           Online:itme[i].bOnline+"",
                           strUrl:itme[i].strUrl,
-                          strUrlSub:itme[i].strUrlSub,
                           bPasswdEncrypt:itme[i].bPasswdEncrypt
                       };
                       this.tableData2.push(tabledata);
@@ -265,46 +241,25 @@ import uuid from '../../../assets/js/uuid'
             var root = this.$store.state.IPPORT;
             //url
             var form=this.editform;
-            var suburl=form.SUBURL
-            var urlone=form.URL
-           
-            if(suburl!==undefined){
-                var suburlparam=suburl.split('&')
-                var suburlarr=suburlparam.splice(1)
-                var suburldat=suburlarr.join(encodeURIComponent('%26'))
-                var suburlyu=suburl.split('')
-                if(suburlyu.indexOf("&")>-1){
-                     var addsuburl="&enablesub="+form.enablesub+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
-                }else{
-                     var addsuburl="&enablesub="+'true'+"&suburl="+suburl
-                }
+            var list = {
+                index:form.index,
+                Type:form.Type,
+                Name:form.Name,
+                Token:form.Token,
+                User:form.Username,
+                Password:form.Password,
+                IP:form.IP,
+                Port:form.Port,
+                Audio :form.Audio,
+                Online:form.Online+"",
+                bPasswdEncrypt:form.bPasswdEncrypt
             }
-            if(urlone!==undefined){
-                console.log('jjj')
-                 var urloneparam=urlone.split('&')
-                 var urlonearr=urloneparam.splice(1)
-                 var urlonedat=urlonearr.join(encodeURIComponent('%26'))
-                 var urloneyu=urlone.split('')
-                 if(urloneyu.indexOf('&')>-1){
-                    var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-                 }else{
-                    var urloneparam=urlone
-                 }
-            }
-           
             var url = root + "/api/v1/AddSrcFile?&name="
             +encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
-            "&url="+urloneparam+
+            "&url="+encodeURIComponent(form.URL)+
             "&session="+ this.$store.state.token;
-            if(form.enablesub){
-                if(suburl!==undefined){
-                   var url=url+addsuburl
-                }else{
-                   var url=url
-                }
-            }else{console.log(url)}
-           
+            console.log(url);
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
@@ -353,43 +308,16 @@ import uuid from '../../../assets/js/uuid'
             
         },
         platformyes(){
-             this.dialogFormVisible=false;
+            this.dialogFormVisible=false;
             var form=this.form;
             var root = this.$store.state.IPPORT;
-            var urlone=form.URL
-            var suburl=form.SUBURL
-
-            var suburlparam=suburl.split('&')
-            var urloneparam=urlone.split('&')
-
-            var suburlarr=suburlparam.splice(1)
-            var urlonearr=urloneparam.splice(1)
-
-             var suburldat=suburlarr.join(encodeURIComponent('%26'))
-            var urlonedat=urlonearr.join(encodeURIComponent('%26'))
-            var urloneyu=urlone.split('')
-             if(urloneyu.indexOf('&')>-1){
-                var urloneparam=urloneparam[0]+encodeURIComponent('%26')+urlonedat
-            }else{
-                var urloneparam=urlone
-            }
-            
             console.log("H5_FILE",form.Audio);
             var url = root + "/api/v1/AddSrcFile?&name="
             +encodeURIComponent(form.Name)+
             "&token="+encodeURIComponent(form.Token)+
-            "&url="+urloneparam+
+            "&url="+encodeURIComponent(form.URL)+
             "&session="+ this.$store.state.token;
-            console.log(form.enablesub);
-             if(form.enablesub){
-                var suburlyu=suburl.split('')
-                if(suburlyu.indexOf("&")>-1){
-                   var url=url+"&enablesub="+'true'+"&suburl="+suburlparam[0]+encodeURIComponent('%26')+suburldat
-                }else{
-                  var url=url+"&enablesub="+'true'+"&suburl="+suburl
-                }
-            }
-            console.log(url);
+            //console.log(url);
             this.$http.get(url).then(result=>{
                 //console.log(result);
                 if(result.status==200){
@@ -432,8 +360,6 @@ import uuid from '../../../assets/js/uuid'
             this.editform["Port"]=row.Port;
             this.editform["URL"]=row.strUrl;
             this.editform["Audio"]=row.Audio;
-            this.editform["SUBURL"]=row.strUrlSub;
-            this.editform["enablesub"]=row.enablesub;
             this.editform["Online"]=row.Online;
             this.editform["bPasswdEncrypt"]=row.bPasswdEncrypt;
             console.log(this.editform)

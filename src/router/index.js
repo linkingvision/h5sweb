@@ -51,7 +51,7 @@ const Snapshot = () => import('@/views/replay/Snapshot')
 const Configure = () => import('@/views/settings/https/Configure')
 const Domainlist = () => import('@/views/settings/https/Domainlist')
 
-const Client = () => import('@/views/settings/Client/Client')
+// const Client = () => import('@/views/settings/Client/Client')
 const License = () => import('@/views/settings/license/License')
 const Cluster = () => import('@/views/settings/cluster/Cluster')
 const Map = () => import('@/views/settings/Map/Map')
@@ -337,16 +337,6 @@ export default new Router({
 							component: Cluster,
 							meta: {
 								title: '/Cluster',
-								name:i18n.tc("message.dashboard.cluster"),
-								icon:'iconfont icon-jiankong',
-								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
-							},
-						},{
-							path: 'Client',
-							name: 'Client',
-							component: Client,
-							meta: {
-								title: '/Client',
 								name:i18n.tc("message.dashboard.cluster"),
 								icon:'iconfont icon-jiankong',
 								type: 'Administrator'  // 是否需要判断是否登录,这里是需要判断
