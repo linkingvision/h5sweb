@@ -1248,7 +1248,7 @@ export default {
             .videoClickColor{
                 /* border: 2px solid #f44336 !important;
                 box-sizing: border-box; */
-                box-shadow: 0 0 0 1px #f44336;
+                box-shadow: 0 0 0 2px #f44336;
                 box-sizing: border-box;
                 z-index: 10;
             }
