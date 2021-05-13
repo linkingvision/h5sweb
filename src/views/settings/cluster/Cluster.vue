@@ -31,7 +31,9 @@
         <div class="Cluster_block">
             <div class="Cluster_block_title">连接状态</div>
             <div class="Cluster_block_content">
-                <div class="lianjie">连接状态 <span>{{status}}</span></div>
+                <div class="lianjie">连接状态 <span>打开
+                    <!-- {{status}} -->
+                    </span></div>
                 <!-- <el-form class="Cluster_form" label-position="left" label-width="100px" :model="ruleForm">
                     <el-form-item :label="label.open_Close">
                         <el-switch active-color="#13ce66" v-model="ruleForm.switch"></el-switch>
