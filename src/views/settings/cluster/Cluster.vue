@@ -31,9 +31,7 @@
         <div class="Cluster_block">
             <div class="Cluster_block_title">连接状态</div>
             <div class="Cluster_block_content">
-                <div class="lianjie">连接状态 <span>打开
-                    <!-- {{status}} -->
-                    </span></div>
+                <div class="lianjie">连接状态 <span>{{status}}</span></div>
                 <!-- <el-form class="Cluster_form" label-position="left" label-width="100px" :model="ruleForm">
                     <el-form-item :label="label.open_Close">
                         <el-switch active-color="#13ce66" v-model="ruleForm.switch"></el-switch>
@@ -64,7 +62,7 @@ export default {
     name:"Cluster",
     data(){
         return {
-            status:'山东菏泽曹县',
+            status:'',
             editPopup:false,
             label:{
                 NodeName:this.$t("message.cluster.NodeName"),
@@ -91,8 +89,20 @@ export default {
     mounted(){
         this.GetRedisConf()
         this.GetEnableRedis()
+        this.Redis()
     },
     methods:{
+        Redis(){
+            var url = this.$store.state.IPPORT+"/api/v1/ConnectRedisStatus?session="+this.$store.state.token;
+            this.$http.get(url).then(result=>{
+                console.log(result);
+                if(result.data.bOnline){
+                    this.status='打开'
+                }else{
+                    this.status='关闭'
+                }
+            })
+        },
         SetRedis(){
             console.log(this.ruleForm,this.form)
             // return
