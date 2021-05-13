@@ -1,6 +1,7 @@
 <template>
     <div class="Avintercomsplay">
         <video class="videoo1" :id="videoid" autoplay webkit-playsinline playsinline></video>
+        <div :id="rtcid" class=""></div>
         <!-- <div class="liveplay_butt">
             <button class="iconfont icon-full" @click="FullScreen"></button>
             <button class="iconfont icon-roundclosefill" @click="CloseVideo"></button>
@@ -16,6 +17,7 @@ export default {
     data(){
         return{
             videoid: this.h5videoid,
+            rtcid:"rtc"+this.h5videoid,
         }
     },
     mounted(){
@@ -90,6 +92,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.rtc_new{
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+    background:url("~@/views/liveview/imgs/liveview_rtc.svg") no-repeat center;
+    background-size: contain;
+    background-position:center center;
+    position: absolute;
+    top: 0px;
+}
 .Avintercomsplay{
     width: 100%;
     height: 100%;

@@ -679,6 +679,10 @@ $collapse_size:#FFFFFF;
                 border-radius: 50px;
             }
         }
+        .el-checkbox{
+            margin-bottom: 0 !important;
+            line-height: 23px !important;
+        }
         .el-checkbox__inner{
             background-color: #494B4E !important;
             border-radius: 50px !important;
@@ -767,14 +771,24 @@ $collapse_size:#FFFFFF;
         }
     }
     //树形
+    .playback,.Root_node1{
+        .el-tree{
+            .el-tree-node{
+                overflow: auto;
+            }
+        }
+    }
     .el-tree{
         background: none !important;
         color: $collapse_size;
         font-size: 14px;
         .el-tree-node{
-            overflow: auto;
+            // overflow: auto;
             &::-webkit-scrollbar{
                 display: none;
+            }
+            >.el-tree-node__children{
+                overflow: visible !important;
             }
         }
         .el-tree-node.is-current>.el-tree-node__content{
@@ -796,6 +810,9 @@ $collapse_size:#FFFFFF;
         .el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner{
             background-color: #3277FF !important;
             border-color: rgba(255,255,255,1) !important;
+        }
+        .el-checkbox{
+            margin-bottom:0 ;
         }
     }
     //时间轴

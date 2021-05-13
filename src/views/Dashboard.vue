@@ -274,6 +274,7 @@ export default {
             this.GetDeviceSummary();
         }, 60000*5)
         var _this=this
+        console.log(_this.$root.bus.$on);
         _this.$root.bus.$on('skintoggle', function(a){
             console.log("更换皮肤",a)
             _this.GetRunInfo();

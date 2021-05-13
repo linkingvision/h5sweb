@@ -61,7 +61,7 @@
 					<span slot="title">{{$t("message.setting.setting")}}</span>
 				</el-menu-item>
 				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/Storage/StorageConfig" v-show="bStorageConfigUI">
-					<i class="iconfont icon-storageconfig"></i>
+					<i class="iconfont icon-wenjianjiqun"></i>
 					<span slot="title">{{$t("message.left.storage")}}</span>
 				</el-menu-item>
 			</el-menu>

@@ -1,7 +1,7 @@
 <template>
     <div class="Region">
         <div class="tow_node">
-            <div class="Root_node">
+            <div class="Root_node Root_node1">
                 <el-tree 
                 :data="camdata"
                 highlight-current
@@ -43,7 +43,7 @@
                 </el-tree>
             </div>
             <div class="Root_node">
-                <el-tree class="el_tree1" 
+                <el-tree class="flow-tree" 
                     :data="datanodecam"
                     show-checkbox
                     default-expand-all
@@ -389,6 +389,7 @@
 
 <style lang="scss" scoped>
 .Region{
+
     .tow_node{
         width: 100%;
         display: flex;

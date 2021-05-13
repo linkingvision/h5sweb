@@ -401,6 +401,8 @@ export default {
 								if(item["nType"]==="H5_REC_MANUAL"){
 									timeitem["style"].background="rgba(60,196,60, 0.498039)"
 									//console.log("录像段时间段颜色1",timeitem["style"].background);
+								}else if(item["nType"]==="H5_REC_SCHEDULE"){
+									timeitem["style"].background="#31b1ff"
 								}else{
 									timeitem["style"].background="rgba(238,17,17, 0.498039)"
 									//console.log("录像段时间段颜色2",timeitem["style"].background);
@@ -941,7 +943,6 @@ export default {
 			var wsroot = this.$store.state.WSROOT;
 			var url=""
 			if(this.Adswitch=="false"){
-				
 				url = root + "/api/v1/SearchDeviceRecordByTime?token="+token
 				+"&start="+encodeURIComponent(timevalues1)+"&end="+encodeURIComponent(timevaluee)+"&session="+ this.$store.state.token;
 			}else{
@@ -1015,7 +1016,16 @@ export default {
 					hlsver:'v1', //v1 is for ts, v2 is for fmp4
 					session: this.$store.state.token
 				};
-				this.v1 = new H5sPlayerRTC(conf);
+				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+					console.log(this.$store.state.liveviewrtc1,555552)
+					this.v1 = new H5sPlayerRTC(conf);
+					$("#rtcgaovideohb11").addClass("rtc_new");
+				}else{
+					console.log(this.$store.state.liveviewrtc1,555551)
+					this.v1 = new H5sPlayerWS(conf);
+					$("#rtcgaovideohb11").removeClass("rtc_new");
+				}
+				// this.v1 = new H5sPlayerRTC(conf);
 				console.log("v111111111111",this.v1)
 				//return false;
 				this.v1.connect();
@@ -1047,7 +1057,14 @@ export default {
 					hlsver:'v1', //v1 is for ts, v2 is for fmp4
 					session: this.$store.state.token
 				};
-				this.v2 = new H5sPlayerRTC(conf2);
+				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+					console.log(this.$store.state.liveviewrtc1,555552)
+					this.v2 = new H5sPlayerRTC(conf2);
+					$("#rtcgaovideohb12").addClass("rtc_new");
+				}else{
+					console.log(this.$store.state.liveviewrtc1,555551)
+					this.v2 = new H5sPlayerWS(conf2);
+				}
 				console.log("v22222222222222222",this.v2)
 				//return false;
 				this.v2.connect();
@@ -1080,7 +1097,14 @@ export default {
 					hlsver:'v1', //v1 is for ts, v2 is for fmp4
 					session: this.$store.state.token
 				};
-				this.v3 = new H5sPlayerRTC(conf3);
+				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+					console.log(this.$store.state.liveviewrtc1,555552)
+					this.v3 = new H5sPlayerRTC(conf3);
+					$("#rtcgaovideohb21").addClass("rtc_new");
+				}else{
+					console.log(this.$store.state.liveviewrtc1,555551)
+					this.v3 = new H5sPlayerWS(conf3);
+				}
 				//return false;
 				this.v3.connect();
 			}else if(this.selectRow=="2"&&this.selectCol=="2"){
@@ -1112,7 +1136,14 @@ export default {
 					hlsver:'v1', //v1 is for ts, v2 is for fmp4
 					session: this.$store.state.token
 				};
-				this.v4 = new H5sPlayerRTC(conf4);
+				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+					console.log(this.$store.state.liveviewrtc1,555552)
+					this.v4 = new H5sPlayerRTC(conf4);
+					$("#rtcgaovideohb22").addClass("rtc_new");
+				}else{
+					console.log(this.$store.state.liveviewrtc1,555551)
+					this.v4 = new H5sPlayerWS(conf4);
+				}
 				//return false;
 				this.v4.connect();
 			}

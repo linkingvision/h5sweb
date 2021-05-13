@@ -9,6 +9,13 @@
 						<el-button @click="changeRTC" :class="(proto=='RTC')?'button_addpv':'button_addpv1'"  type="success"  size="mini">WEBRTC</el-button>
 				</div>
 			</div>
+			<div class="Aside_content_top">
+				<div class="Aside_content_title">{{$t("message.live.protocol1")}}: {{proto1}}</div>
+				<div class="up_you_but">
+						<el-button @click="changeWS1" :class="(proto1=='WS')?'button_addpv':'button_addpv1'" type="success"  size="mini">WEBSOCKET</el-button>
+						<el-button @click="changeRTC1" :class="(proto1=='RTC')?'button_addpv':'button_addpv1'"  type="success"  size="mini">WEBRTC</el-button>
+				</div>
+			</div>
 			<div class="Aside_content_buttom">
 				<div class="Aside_content_title">{{$t("message.live.waterprint")}}：</div>
 				<div class="up_you_but">
@@ -59,6 +66,7 @@ export default {
 			waterprintcolor:true,
             deviceprintcolor:true,
 			proto: this.$store.state.liveviewrtc,
+			proto1: this.$store.state.liveviewrtc1,
 			watermarkstring:this.$store.state.watermarkstring,//水印、
 			watermarktoggle:this.$store.state.watermarktoggle,
 			devicemarktoggle:"",
@@ -177,6 +185,18 @@ export default {
             var proto=this.proto;
             this.$store.state.liveviewrtc=proto
             localStorage.setItem("liveviewrtc",proto);
+        },
+		changeWS1(event) {
+            this.proto1 = "WS";
+			var proto1=this.proto1;
+			this.$store.state.liveviewrtc1=proto1
+			localStorage.setItem("liveviewrtc1",proto1);
+        },
+        changeRTC1(event) {
+            this.proto1 = "RTC";
+            var proto1=this.proto1;
+            this.$store.state.liveviewrtc1=proto1
+            localStorage.setItem("liveviewrtc1",proto1);
         },
 	}
 }

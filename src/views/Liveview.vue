@@ -662,7 +662,7 @@ export default {
         },
 		//点击宫格
         changePanel(event,viewClick) {
-            // console.log(viewClick,event)
+            console.log(viewClick,event)
             var data=''
             if(viewClick=='viewClick'){
                 data=event.strLayoutType
@@ -1160,12 +1160,13 @@ export default {
             var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/GetRegion?session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
-                // console.log(result);
+                console.log(result);
                 var oldarr=result.data.root;
                 var oldarr1=result.data.src;
                 // console.log(oldarr,oldarr1)
                 var dataroot=this.getchild(oldarr,oldarr1);
                 this.data1.push(dataroot);
+                console.log(dataroot);
             })
         },
         getchild(arr,arr1) {
@@ -1289,6 +1290,9 @@ export default {
 
 <style lang="scss">
 .liveview{
+    .el-tree-node{
+        overflow: auto;
+    }
     padding-top: 10px;
     display: flex;
     // flex-wrap: wrap;

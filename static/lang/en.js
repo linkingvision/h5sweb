@@ -131,6 +131,7 @@ export default {
 			device: 'DEVICE',
 			setting: 'SETTING',
 			protocol: 'PROTOCOL',
+			protocol1: 'REAL TIME PROTOCOL',
 			mainstream: 'Main Stream',
 			substream: 'Sub Stream',
 			camera: "Camera",

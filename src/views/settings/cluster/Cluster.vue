@@ -29,6 +29,17 @@
             </div>
         </div>
         <div class="Cluster_block">
+            <div class="Cluster_block_title">连接状态</div>
+            <div class="Cluster_block_content">
+                <div class="lianjie">连接状态 <span>{{status}}</span></div>
+                <!-- <el-form class="Cluster_form" label-position="left" label-width="100px" :model="ruleForm">
+                    <el-form-item :label="label.open_Close">
+                        <el-switch active-color="#13ce66" v-model="ruleForm.switch"></el-switch>
+                    </el-form-item>
+                </el-form> -->
+            </div>
+        </div>
+        <div class="Cluster_block">
             <div class="Cluster_block_title">集群开关</div>
             <div class="Cluster_block_content">
                 <el-form class="Cluster_form" label-position="left" label-width="100px" :model="ruleForm">
@@ -51,6 +62,7 @@ export default {
     name:"Cluster",
     data(){
         return {
+            status:'山东菏泽曹县',
             editPopup:false,
             label:{
                 NodeName:this.$t("message.cluster.NodeName"),
@@ -189,6 +201,14 @@ export default {
             border: none;
             background: #3ABBFE;
             border-radius: 5px;
+        }
+    }
+    .lianjie{
+        color:#fff;
+        font-size:14px;
+        span{
+            padding-left:35px;
+            color: #b7b7b7;
         }
     }
 }

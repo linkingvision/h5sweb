@@ -733,6 +733,9 @@ if(localStorage.getItem('Mapurl')){
 if(localStorage.getItem('liveviewrtc')){
 	store.state.liveviewrtc=localStorage.getItem('liveviewrtc');
 }
+if(localStorage.getItem('liveviewrtc1')){
+	store.state.liveviewrtc1=localStorage.getItem('liveviewrtc1');
+}
 if(localStorage.getItem('watermarkstring')){
 	store.state.watermarkstring=localStorage.getItem('watermarkstring');
 }
@@ -744,6 +747,7 @@ if(localStorage.getItem('strNodeName')){
 }
 if(localStorage.getItem('switchconfig')){
 	store.state.switch=JSON.parse(localStorage.getItem('switchconfig'));
+	console.log(store.state.switch);
 }
 // if(localStorage.getItem('tourrtc')){
 // 	store.state.tourrtc=localStorage.getItem('tourrtc');

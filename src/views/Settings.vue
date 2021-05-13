@@ -297,6 +297,7 @@ export default {
 		width: 16%;
 		height: 91vh;
 		overflow-y: auto;
+		background: #2d2d2d;
 	}
 	i{
 		margin-right: 10px;

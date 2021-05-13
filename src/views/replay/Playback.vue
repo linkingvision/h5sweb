@@ -386,17 +386,30 @@ export default {
                                         strFileName:""
                                     };
                                     
-                                    console.log(timeitem.url)
+                                    // console.log(timeitem.url)
+                                    // if(item['nType']==="H5_REC_MANUAL"){
+                                    //         timeitem["type"] = this.$t("message.archive.ManualRecord");
+                                    // }
+                                    // if(item['nType']==="H5_REC_ALARM "){
+                                    //         timeitem["type"] = this.$t("message.archive.AlarmRecord");
+                                    // }
+                                    // if(item['nType']=="H5_REC_SCHEDULE "){
+                                    //         timeitem["type"] = this.$t("message.archive.Schedulerecord");
+                                    // }else{
+                                    //     timeitem["type"] = this.$t("message.archive.ManualRecord");
+                                    // }
+                                    // console.log(item['nType'],6666666)
                                     if(item['nType']==="H5_REC_MANUAL"){
                                             timeitem["type"] = this.$t("message.archive.ManualRecord");
                                     }
-                                    if(item['nType']==="H5_REC_ALARM "){
-                                            timeitem["type"] = this.$t("message.archive.AlarmRecord");
-                                    }
+                                    // if(item['nType']==="H5_REC_ALARM "){
+                                    //         timeitem["type"] = this.$t("message.archive.AlarmRecord");
+                                    // }
                                     if(item['nType']=="H5_REC_SCHEDULE "){
                                             timeitem["type"] = this.$t("message.archive.Schedulerecord");
                                     }else{
                                         timeitem["type"] = this.$t("message.archive.ManualRecord");
+                                        // timeitem["type"] = this.$t("message.archive.AlarmRecord");
                                     }
                                     // console.log(timeitem);
                                     //填充
