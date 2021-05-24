@@ -7,6 +7,12 @@
                     
                 <el-form-item :label="label.Type">
                     <el-select v-model="editform.Type" placeholder="请选择">
+                        <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item :label="label.Name">
@@ -92,6 +98,7 @@
                     <el-input v-if="form.Type=='H5_DEV_UNV'" v-model="form.Port_unv"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_DHDSS'" v-model="form.Port_DSS"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_IVS'" v-model="form.Port_1800"></el-input>
+                    <el-input v-if="form.Type=='H5_DEV_VIKOR'" v-model="form.Port_vikor"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.Audio">
                     <el-switch
@@ -276,6 +283,9 @@ import uuid from '../../../assets/js/uuid'
             }, {
                 value: 'H5_DEV_DHDSS',
                 label: 'H5_DEV_DHDSS'
+            },{
+                value: 'H5_DEV_VIKOR',
+                label: 'H5_DEV_VIKOR'
             }
         ],
         //分页
@@ -316,6 +326,7 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
+            Port_vikor:'9080',
             Audio:false,
             bSandbox: false,
             Maxichannels:'0'
@@ -336,6 +347,7 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
+            Port_vikor:'9080',
             Audio:false,
             bSandbox:false,
             Maxichannels:'0'
@@ -621,6 +633,34 @@ import uuid from '../../../assets/js/uuid'
                       }
                     }
                 })
+            }else if(form.Type=="H5_DEV_VIKOR"){
+                console.log(form.Type)
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceVik?&name="+encodeURIComponent(form.Name)+
+                "&token="+encodeURIComponent(form.Token)+
+                "&user="+encodeURIComponent(form.Username)+
+                "&password="+encodeURIComponent(form.Password)+
+                "&ip="+encodeURIComponent(form.IP)+
+                "&port="+encodeURIComponent(form.Port_vikor)+
+                "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
+                "&session="+ this.$store.state.token;
+                console.log(url);
+                this.$http.get(url).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                        }else{
+                            this.$message({
+                                message: '添加失败',
+                                type: 'warning'
+                            });
+                            return false;
+                        }
+                    }
+                })
             }
 
         },
@@ -855,6 +895,34 @@ import uuid from '../../../assets/js/uuid'
                 "&password="+encodeURIComponent(form.Password)+
                 "&ip="+encodeURIComponent(form.IP)+
                 "&port="+encodeURIComponent(form.Port_1800)+
+                "&audio="+form.Audio+
+                "&sandbox="+form.bSandbox+
+                "&maxchannel="+form.Maxichannels+
+                "&session="+ this.$store.state.token;
+                console.log(url);
+                this.$http.get(url).then(result=>{
+                    console.log(result);
+                    if(result.status==200){
+                        if(result.data.bStatus==true){
+                            this.tableData=[];
+                            this.loadHIK();
+                        }else{
+                            this.$message({
+                                message: '添加失败',
+                                type: 'warning'
+                            });
+                            return false;
+                        }
+                    }
+                })
+            }else if(form.Type=="H5_DEV_VIKOR"){
+                console.log(form.Type)
+                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceVik?&name="+encodeURIComponent(form.Name)+
+                "&token="+encodeURIComponent(form.Token)+
+                "&user="+encodeURIComponent(form.Username)+
+                "&password="+encodeURIComponent(form.Password)+
+                "&ip="+encodeURIComponent(form.IP)+
+                "&port="+encodeURIComponent(form.Port_vikor)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
                 "&maxchannel="+form.Maxichannels+
