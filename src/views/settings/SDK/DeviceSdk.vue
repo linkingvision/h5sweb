@@ -637,10 +637,10 @@ import uuid from '../../../assets/js/uuid'
                 console.log(form.Type)
                 var url = this.$store.state.IPPORT + "/api/v1/AddDeviceVik?&name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
-                "&user="+encodeURIComponent(form.Username)+
+                "&user="+encodeURIComponent(form.User)+
                 "&password="+encodeURIComponent(form.Password)+
                 "&ip="+encodeURIComponent(form.IP)+
-                "&port="+encodeURIComponent(form.Port_vikor)+
+                "&port="+encodeURIComponent(form.Port)+
                 "&audio="+form.Audio+
                 "&sandbox="+form.bSandbox+
                 "&maxchannel="+form.Maxichannels+
