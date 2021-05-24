@@ -326,7 +326,7 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
-            Port_vikor:'9080',
+            Port_vikor:'20000',
             Audio:false,
             bSandbox: false,
             Maxichannels:'0'
@@ -347,7 +347,7 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
-            Port_vikor:'9080',
+            Port_vikor:'20000',
             Audio:false,
             bSandbox:false,
             Maxichannels:'0'
