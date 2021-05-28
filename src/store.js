@@ -9,7 +9,7 @@ const state = {
   asideShow: false,
   asideShows:false,
   liveviewrtc:'WS',
-  liveviewrtc1:'WS',
+  liveviewrtc1:'RTC',
   deviceprintcolor:'',
   strNodeName:9090,
   switch:false,
