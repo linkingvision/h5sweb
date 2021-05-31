@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "21928193",
+      "name": "456464674641",
+      "font_class": "guobiao",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
       "icon_id": "17805935",
       "name": "监控点列表",
       "font_class": "jiankongdianliebiao",
