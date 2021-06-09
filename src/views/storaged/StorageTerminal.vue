@@ -25,8 +25,8 @@ export default {
          var configport=this.$store.state.strNodeName
          var configip=this.$store.state.IPPORT
          var configipnew=configip.split(":")
-         iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/system/terminal.html");
-         console.log("https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/system/terminal.html")
+         iframe.setAttribute("src",  configip +"/cockpit/@localhost/system/terminal.html");
+         console.log(configip +"/cockpit/@localhost/system/terminal.html")
        }
    }
 }
