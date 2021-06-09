@@ -21,11 +21,18 @@
                 <el-form-item :label="label.Token">
                     <el-input v-model="editform.Token"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.User">
+                <el-form-item :label="label.User"  v-if="editform.Type!='H5_DEV_HIKISC'">
                     <el-input v-model="editform.User"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.password">
+                <el-form-item :label="label.password"  v-if="editform.Type!='H5_DEV_HIKISC'">
                     <el-input v-model="editform.Password"></el-input>
+                </el-form-item>
+                <!-- lingyige -->
+                <el-form-item label="AppKey "  v-if="editform.Type=='H5_DEV_HIKISC'">
+                    <el-input v-model="form.Username_isc"></el-input>
+                </el-form-item>
+                <el-form-item label="AppSecret"  v-if="editform.Type=='H5_DEV_HIKISC'">
+                    <el-input v-model="form.Password_isc"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.IP">
                     <el-input v-model="editform.IP"></el-input>
