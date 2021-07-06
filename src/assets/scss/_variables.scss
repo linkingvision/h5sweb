@@ -620,52 +620,18 @@ $collapse_header:#E5E5E5;
         }
     }
     //树形
-    // .el-tree{
-    //     background: none !important;
-    //     color: $collapse_size;
-    //     font-size: 14px;
-    //     .el-tree-node.is-current>.el-tree-node__content{
-    //         background: none !important;
-    //         color: #3ABBFE;
-    //         overflow: auto;
-    //         width: 100%;
-    //         &::-webkit-scrollbar{
-    //             display: none;
-    //         }
-    //     }
-    //     .el-tree-node__content{
-    //         background: none !important;
-    //         &:hover{
-    //             background: none !important;
-    //             color: #3ABBFE;
-    //         }
-    //     }
-    //     .el-checkbox__inner{
-    //         // background-color: #2E2E2E !important;
-    //         border-radius: 50px !important;
-    //     }
-    //     .el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner{
-    //         background-color: #3277FF !important;
-    //         border-color: rgba(255,255,255,1) !important;
-    //     }
-    // }
     .el-tree{
         background: none !important;
         color: $collapse_size;
         font-size: 14px;
-        .el-tree-node{
-            overflow: auto;
-            &::-webkit-scrollbar{
-                display: none;
-            }
-            >.el-tree-node__children{
-                overflow: visible !important;
-            }
-        }
         .el-tree-node.is-current>.el-tree-node__content{
             background: none !important;
             color: #3ABBFE;
+            overflow: auto;
             width: 100%;
+            &::-webkit-scrollbar{
+                display: none;
+            }
         }
         .el-tree-node__content{
             background: none !important;
@@ -675,15 +641,12 @@ $collapse_header:#E5E5E5;
             }
         }
         .el-checkbox__inner{
-            // background-color: #494B4E !important;
+            // background-color: #2E2E2E !important;
             border-radius: 50px !important;
         }
         .el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner{
             background-color: #3277FF !important;
             border-color: rgba(255,255,255,1) !important;
-        }
-        .el-checkbox{
-            margin-bottom:0 ;
         }
     }
      // 存储
