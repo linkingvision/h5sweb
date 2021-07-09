@@ -7,7 +7,8 @@
                 :default-active="activemenu" 
 				class="el-menu-vertical-demo"
 				:background-color="($store.state.darkMode) ? '#2D2D2D' : '#F5F5F5'"
-				:text-color="($store.state.darkMode) ? '#B7B7B7' : '#7A7A7A'">
+				:text-color="($store.state.darkMode) ? '#B7B7B7' : '#7A7A7A'"
+				style="height:100%">
 				<el-submenu index="/Settings/DeviceStream">
 					<template slot="title">
 						<i class="iconfont icon-shezhi_guanli"></i>

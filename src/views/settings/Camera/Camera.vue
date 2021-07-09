@@ -218,25 +218,8 @@
         "
       >
         <div>
-          <span style="font-size: 16px">通道编号</span>
-          <el-input
-            type="text"
-            placeholder="(输入最小值为1)"
-            style="width: 30%; margin-left: 15px; text-align: center"
-            v-model="chinput"
-            ref="chNumber"
-          ></el-input>
-          <span style="margin-left: 15px">----</span>
-          <el-input
-            type="text"
-            placeholder="(最大值为20000)"
-            style="width: 30%; margin-left: 15px"
-            v-model="chinput2"
-            ref="chNumber2"
-          ></el-input>
-        </div>
-        <div>
-          <div slot="footer">
+          <span style="font-size: 16px; margin-right: 15px">通道编号</span>
+          <div slot="footer" style="display: inline">
             <CButton
               class="EditChannelSloganBtn1"
               @click="addpartsCh()"
@@ -247,6 +230,26 @@
               >全部更新</CButton
             >
           </div>
+          <el-input
+            type="text"
+            placeholder="(输入最小值为1)"
+            style="
+              width: 30%;
+              margin-left: 15px;
+              text-align: center;
+              display: none;
+            "
+            v-model="chinput"
+            ref="chNumber"
+          ></el-input>
+          <span style="margin-left: 15px; display: none">----</span>
+          <el-input
+            type="text"
+            placeholder="(最大值为20000)"
+            style="width: 30%; margin-left: 15px; display: none"
+            v-model="chinput2"
+            ref="chNumber2"
+          ></el-input>
         </div>
       </div>
       <div style="height: 550px">
@@ -264,24 +267,24 @@
             font-size: 16px;
             font-family: PingFang SC;
             font-weight: 500;
-            height: 500px;
+            height: 532px;
           "
         >
           <el-table-column
             label="通道号"
-            width="150"
+            width="140"
             style="background: #353535"
             prop="nCh"
           >
           </el-table-column>
-          <el-table-column label="编号" prop="strToken" width="260">
+          <el-table-column label="编号" prop="strToken" width="240">
           </el-table-column>
           <el-table-column
             label="国标"
-            width="260"
+            width="240"
             prop="strGbID"
           ></el-table-column>
-          <el-table-column width="150" label="开启/关闭">
+          <el-table-column width="140" label="开启/关闭">
             <template slot-scope="scope">
               <el-switch
                 @change="openchange"
@@ -293,7 +296,7 @@
               </el-switch>
             </template>
           </el-table-column>
-          <el-table-column width="150" label="音频">
+          <el-table-column width="140" label="音频">
             <template slot-scope="scope">
               <el-switch
                 @change="openchange"
@@ -449,6 +452,7 @@ export default {
 
       tableData2: [],
       tableData3: [],
+      tableData4: [],
       AddChannelSloganDialog: false,
       tabPosition: "left",
       EditChannelSloganDialog: false,
@@ -490,6 +494,7 @@ export default {
       addch2: [],
       edittableData: [],
       threevideo: [],
+      channeledit: [],
     };
   },
   mounted() {
@@ -586,12 +591,14 @@ export default {
                         // console.log(result);
                         // console.log(this.tableData2);
                         if (result.data.bStatus == true) {
-                          this.$refs.chNumber.value = "";
-                          this.AddChannelSloganDialog = false;
-                          this.loadSrc(
-                            this.tableData2,
-                            this.tableData2[key].token
-                          );
+                          // console.log(this.tableData);
+                          for (let m = 0; m < this.tableData.length; m++) {
+                            const element = this.tableData[m].token;
+                            // console.log(element);
+                            this.loadSrc(this.tableData[m], element);
+                            //  this.$refs.chNumber.value = "";
+                            this.AddChannelSloganDialog = false;
+                          }
                         }
                       })
                       .catch((error2) => {
@@ -616,68 +623,88 @@ export default {
       var root = this.$store.state.IPPORT;
       var url =
         root + "/api/v1/GetSrc?session=" + (await this.$store.state.token);
-      this.$http.get(url).then((result) => {
-        // console.log("a", result);
-        if (result.status == 200) {
-          var itme = result.data.src;
-          var tabledata = {};
-          for (var i = 0; i < itme.length; i++) {
-            tabledata = {
-              name: itme[i].strName,
-              token: itme[i].strToken,
-              open_close: true,
-              gbid: "",
-              audio: false,
-              disabled: false,
-              ChannelNumber: itme[i].nChannelNumber,
-            };
-            if (itme[i].nType != "H5_CH_DEV") {
-              // console.log(itme[i].nType)
-              tabledata["disabled"] = true;
+      this.$http
+        .get(url)
+        .then((result) => {
+          // console.log("a", result);
+          if (result.status == 200) {
+            var itme = result.data.src;
+            var tabledata = {};
+            for (var i = 0; i < itme.length; i++) {
+              tabledata = {
+                name: itme[i].strName,
+                token: itme[i].strToken,
+                open_close: true,
+                gbid: "",
+                audio: false,
+                disabled: false,
+                ChannelNumber: itme[i].nChannelNumber,
+              };
+              if (itme[i].nType != "H5_CH_DEV") {
+                // console.log(itme[i].nType)
+                tabledata["disabled"] = true;
+              }
+              // console.log(this.tableData2);
+              this.tableData2.push(tabledata);
+              // console.log(this.tableData2);
             }
-            // console.log(this.tableData2);
-            this.tableData2.push(tabledata);
-            // console.log(this.tableData2);
+            const res = new Promise((resolve) => {
+              setTimeout(() => resolve(this.addpartsChannel(), 500));
+            });
+            console.log(res);
           }
-          for (let key = 0; key < this.tableData2.length; key++) {
-            // console.log(this.tableData2[key]);
-            // console.log(key + 1);
-
-            if (
-              this.tableData2[key].gbid == "" ||
-              this.tableData2[key].gbid == "invalid"
-            ) {
-              var addChUrl = `${root}/api/v1/AddCamera?token=${
-                this.tableData2[key].token
-              }&enable=${this.tableData2[key].open_close}&audio=${
-                this.tableData2[key].audio
-              }&ch=${key + 1}&session=${this.$store.state.token}`;
-            } else {
-              var addChUrl = `${root}/api/v1/AddCamera?token=${
-                this.tableData2[key].token
-              }&enable=${this.tableData2[key].open_close}&audio=${
-                this.tableData2[key].audio
-              }&gbid=${this.tableData2[key].gbid}&ch=${key + 1}&session=${
-                this.$store.state.token
-              }`;
-            }
-            this.$http
-              .get(addChUrl)
-              .then((result) => {
-                // console.log(result);
-                // console.log(this.tableData2);
-                this.$refs.chNumber.value = "";
-                this.AddChannelSloganDialog = false;
-              })
-              .catch((error) => {
-                console.log("cuowu", error);
-              });
-          }
-        }
-      });
+        })
+        .catch((error) => {
+          console.log("cuowu", error);
+        });
     },
-
-
+    addpartsChannel() {
+      var root = this.$store.state.IPPORT;
+      for (let key = 0; key < this.tableData2.length; key++) {
+        console.log(this.tableData2[key]);
+        console.log(key + 1);
+        if (this.tableData2[key].ChannelNumber == 0) {
+          console.log(this.tableData2[key]);
+          this.tableData4.push(this.tableData2);
+          console.log(this.tableData4);
+        }
+        if (
+          this.tableData2[key].gbid == "" ||
+          this.tableData2[key].gbid == "invalid"
+        ) {
+          var addChUrl = `${root}/api/v1/AddCamera?token=${
+            this.tableData2[key].token
+          }&enable=${this.tableData2[key].open_close}&audio=${
+            this.tableData2[key].audio
+          }&ch=${key + 1}&session=${this.$store.state.token}`;
+        } else {
+          var addChUrl = `${root}/api/v1/AddCamera?token=${
+            this.tableData2[key].token
+          }&enable=${this.tableData2[key].open_close}&audio=${
+            this.tableData2[key].audio
+          }&gbid=${this.tableData2[key].gbid}&ch=${key + 1}&session=${
+            this.$store.state.token
+          }`;
+        }
+        this.$http
+          .get(addChUrl)
+          .then((result) => {
+            console.log(result);
+            // console.log(this.tableData2);
+            // this.$refs.chNumber.value = "";
+            for (let m = 0; m < this.tableData.length; m++) {
+              const element = this.tableData[m].token;
+              // console.log(element);
+              this.loadSrc(this.tableData[m], element);
+              //  this.$refs.chNumber.value = "";
+              this.AddChannelSloganDialog = false;
+            }
+          })
+          .catch((error1) => {
+            console.log("cuowu1", error1);
+          });
+      }
+    },
     //   编辑选择通道号
 
     // 打开编辑选择通道号弹窗
@@ -701,11 +728,43 @@ export default {
           // console.log(this.$refs.nowchnumber);
           // console.log(numcolor[m].innerText);
           if (this.chNowNumber == numcolor[m].innerText) {
-            console.log(11111);
+            // console.log(11111);
 
             numcolor[m].style.color = "#FF0000";
           } else {
             numcolor[m].style.color = "";
+          }
+        }
+      });
+
+      var root = this.$store.state.IPPORT;
+      var url = root + "/api/v1/GetCamera?session=" + this.$store.state.token;
+      // console.log(url);
+      this.$http.get(url).then((result) => {
+        if (result.status == 200) {
+          console.log(result);
+          if (result.data.bStatus == false) {
+          } else {
+            var itme = result.data.cam;
+            for (var i = 0; i < itme.length; i++) {
+              this.channeledit = itme[i].nCh;
+              console.log(this.channeledit);
+              // this.$nextTick(() => {
+              // var numcolor = this.$refs.nowchnumber;
+              // console.log(numcolor);
+              // for (let m = 0; m < numcolor.length; m++) {
+              //   // console.log(this.$refs.nowchnumber);
+              //   // console.log(numcolor[m].innerText);
+              //   if (this.channeledit == numcolor[m].innerText) {
+              //     console.log(11111);
+
+              //     numcolor[m].style.pointerEvents = "none";
+              //   } else {
+              //    numcolor[m].style.pointerEvents = "auto";
+              //   }
+              // }
+              // });
+            }
           }
         }
       });
@@ -735,7 +794,7 @@ export default {
     downeditdialog() {
       this.valuech = 64;
     },
-        // 编辑确定按钮
+    // 编辑确定按钮
     async editchaumbersure() {
       var num = this.chNowNumber;
       // console.log(num, this.num1);
@@ -799,7 +858,7 @@ export default {
         // console.log(numcolor);
         for (let m = 0; m < numcolor.length; m++) {
           // console.log(this.$refs.nowchnumber);
-          // console.log(numcolor[m].innerText);
+          console.log(numcolor[m].innerText);
           if (this.chNowNumber == numcolor[m].innerText) {
             // console.log(11111);
             numcolor[m].style.color = "#FF0000";
@@ -860,6 +919,7 @@ export default {
                   gbid: tableData[i].gbid,
                   audio: tableData[i].audio,
                   disabled: tableData[i].disabled,
+                  ChannelNumber: tableData[i].ChannelNumber,
                 };
                 this.tableData.splice(i, 1, tabledata);
                 this.Allpublic(
@@ -867,7 +927,8 @@ export default {
                   tableData[i].token,
                   open_close,
                   tableData[i].gbid,
-                  tableData[i].audio
+                  tableData[i].audio,
+                  tableData[i].ChannelNumber
                 );
               }
             }
@@ -907,14 +968,17 @@ export default {
                 gbid: tableData[i].gbid,
                 audio: tableData[i].audio,
                 disabled: tableData[i].disabled,
+                ChannelNumber: tableData[i].ChannelNumber,
               };
+              console.log(tabledata);
               this.tableData.splice(i, 1, tabledata);
               this.Allpublic(
                 root,
                 tableData[i].token,
                 open_close,
                 tableData[i].gbid,
-                tableData[i].audio
+                tableData[i].audio,
+                tableData[i].ChannelNumber
               );
             }
           }
@@ -953,6 +1017,7 @@ export default {
                 gbid: tableData[i].gbid,
                 audio: tableData[i].audio,
                 disabled: tableData[i].disabled,
+                ChannelNumber: tableData[i].ChannelNumber,
               };
               this.tableData.splice(i, 1, tabledata);
               this.Allpublic(
@@ -960,7 +1025,8 @@ export default {
                 tableData[i].token,
                 open_close,
                 tableData[i].gbid,
-                tableData[i].audio
+                tableData[i].audio,
+                tableData[i].ChannelNumber
               );
             }
           }
@@ -996,6 +1062,7 @@ export default {
                 gbid: tableData[i].gbid,
                 audio: tableData[i].audio,
                 disabled: tableData[i].disabled,
+                ChannelNumber: tableData[i].ChannelNumber,
               };
               this.tableData.splice(i, 1, tabledata);
               console.log(tabledata);
@@ -1004,7 +1071,8 @@ export default {
                 tableData[i].token,
                 tableData[i].open_close,
                 tableData[i].gbid,
-                tableData[i].audio
+                tableData[i].audio,
+                tableData[i].ChannelNumber
               );
             }
           }
@@ -1217,6 +1285,7 @@ export default {
               gbid: row.gbid,
               audio: row.audio,
               disabled: row.disabled,
+              ChannelNumber: row.ChannelNumber,
             };
             this.tableData.splice(index_xlh, 1, tabledata);
             console.log(row.gbid.length);
@@ -1231,6 +1300,8 @@ export default {
                 row.open_close +
                 "&audio=" +
                 row.audio +
+                "&ch=" +
+                row.ChannelNumber +
                 "&session=" +
                 this.$store.state.token;
             } else if (row.gbid.length == 20) {
@@ -1245,6 +1316,8 @@ export default {
                 row.audio +
                 "&gbid=" +
                 row.gbid +
+                "&ch=" +
+                row.ChannelNumber +
                 "&session=" +
                 this.$store.state.token;
             } else if (row.gbid.length == 7) {
@@ -1257,6 +1330,8 @@ export default {
                 row.open_close +
                 "&audio=" +
                 row.audio +
+                "&ch=" +
+                row.ChannelNumber +
                 "&session=" +
                 this.$store.state.token;
             }
@@ -1308,9 +1383,10 @@ export default {
               open_close: true,
               gbid: "",
               audio: false,
+              ChannelNumber: 0,
             };
+            // console.log(tabledata);
             this.tableData.splice(index_xlh, 1, tabledata);
-            this.loadSrc(tabledata, row.token);
             this.$message({
               message: this.$t("message.camera.Delete_successful"),
               type: "success",
@@ -1413,6 +1489,7 @@ export default {
                 bOnline: item["bOnline"],
                 ChannelNumber: item["nChannelNumber"],
               };
+              console.log(newItem);
               srcGroup.children1.push(newItem);
               // this.tableData3.push(newItem);
             }
@@ -1611,6 +1688,7 @@ export default {
       }
     }
     .button_edi {
+      margin-bottom: 0px;
       line-height: 27px;
       position: relative;
       .el-button {
@@ -1621,7 +1699,8 @@ export default {
         position: absolute;
         // top: 2px;
         // left: 15px;
-        font-size: 24px;
+        font-size: 23px;
+        line-height: 25px;
       }
     }
   }
@@ -1658,15 +1737,15 @@ export default {
   background: rgba(55, 62, 72, 1);
   border: 1px solid #3abbfe;
   padding: 2px 16px;
-  font-size: 12px;
+  font-size: 14px;
   font-family: PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
   box-sizing: border-box;
 }
-.addChannelSlogan .el-table::before {
-  height: 0px;
-}
+// .addChannelSlogan .el-table::before {
+//   height: 0px;
+// }
 .EditChannelSloganDialogTabs .el-tabs__nav-wrap::after {
   background-color: transparent !important;
 }

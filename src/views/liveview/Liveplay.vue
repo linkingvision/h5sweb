@@ -388,7 +388,7 @@ export default {
            var token=this.inputtoken
            this.videoname=name
            var streamprofile= command.strToken
-           this.PlayVideo(token,streamprofile,label,name)
+           this.PlayVideo(token,streamprofile,"",name)
            
         },
         //播放
