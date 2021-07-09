@@ -85,10 +85,10 @@ export default {
         if(localStorage.getItem('H5sRtcengine')){
            this.value=localStorage.getItem('H5sRtcengine') 
         }
-        if(typeof(sessionStorage.devicemarktoggle) == 'undefined'){
+        if(typeof(localStorage.devicemarktoggle) == 'undefined'){
            this.devicemarktoggle='block'
         }else{
-            this.devicemarktoggle = sessionStorage.devicemarktoggle; 
+            this.devicemarktoggle = localStorage.devicemarktoggle; 
             
         }
 	},
@@ -131,15 +131,15 @@ export default {
         //显示禁用
         deviceprintoff(){
 			this.deviceprintcolor=true
-            sessionStorage.devicemarktoggle = "block";
-            this.devicemarktoggle = sessionStorage.devicemarktoggle;
-            this.$store.state.devicemarktoggle=sessionStorage.devicemarktoggle;
+            localStorage.devicemarktoggle = "block";
+            this.devicemarktoggle = localStorage.devicemarktoggle;
+            this.$store.state.devicemarktoggle=localStorage.devicemarktoggle;
         }, 
         deviceprintno(){
 			this.deviceprintcolor=false
-            sessionStorage.devicemarktoggle = "none";
-            this.devicemarktoggle = sessionStorage.devicemarktoggle;
-            this.$store.state.devicemarktoggle=sessionStorage.devicemarktoggle
+            localStorage.devicemarktoggle = "none";
+            this.devicemarktoggle = localStorage.devicemarktoggle;
+            this.$store.state.devicemarktoggle=localStorage.devicemarktoggle
         },
 
         addWaterMarker(){
