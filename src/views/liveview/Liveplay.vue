@@ -202,6 +202,8 @@ export default {
             picturequality:'',//画质名称
             rtcid:"rtc"+this.h5videoid,
             streamprofileInformation:null,//码流区分
+            height:"",
+            width:""
         }
     },
     beforeDestroy() {
@@ -308,7 +310,30 @@ export default {
                             name:this.$t("message.live.Bitrate"),
                             data:(item.nAudioBitrate/1024).toFixed(1)+'kpbs'
                         }]
-
+                         if(this.height){
+                            var informationVideo = [
+                                {
+                                    name: this.$t("message.live.Codec"),
+                                    data: item.strVideoType,
+                                },
+                                {
+                                    name: this.$t("message.live.Width"),
+                                    data: this.width,
+                                },
+                                {
+                                    name: this.$t("message.live.Height"),
+                                    data: this.height,
+                                },
+                                {
+                                    name: this.$t("message.live.FPS"),
+                                    data: item.nVideoFPS,
+                                },
+                                {
+                                    name: this.$t("message.live.Bitrate"),
+                                    data: (item.nVideoBitrate / 1024).toFixed(1) + "kpbs",
+                                },
+                                ];
+                            }else{
                         var informationVideo=[{
                             name:this.$t("message.live.Codec"),
                             data:item.strVideoType
@@ -325,6 +350,7 @@ export default {
                             name:this.$t("message.live.Bitrate"),
                             data:(item.nVideoBitrate/1024).toFixed(1)+'kpbs'
                         }]
+                    }
                         this.informationAudio=informationAudio
                         this.informationVideo=informationVideo
                 }
@@ -382,6 +408,8 @@ export default {
         },
         // 画质
         handleCommand(command) {
+             this.height =command.nHeight
+      this.width =command.nWidth
            this.videoname=''
            var arr=this.inputlabel.split("-")
            var name=arr[0]+"-"+command.strName
