@@ -727,6 +727,9 @@ if(sessionStorage.getItem('Certificatetime')){
 	store.state.Certificatetime=sessionStorage.getItem('Certificatetime');
 }
 
+if(localStorage.getItem('devicemarktoggle')){
+	store.state.devicemarktoggle=localStorage.getItem('devicemarktoggle');
+}
 if(localStorage.getItem('Mapurl')){
 	store.state.Mapurl=localStorage.getItem('Mapurl');
 }
