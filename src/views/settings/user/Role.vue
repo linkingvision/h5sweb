@@ -9,7 +9,6 @@
                         <el-tree
                             :data="camdata" 
                             show-checkbox
-                            :check-strictly="true"
                             ref="tree">
                             <span slot-scope="{ data }" style="width:100%;">
                                     <div style="width:100%;display: flex;justify-content: space-between;">
@@ -35,7 +34,6 @@
                         <el-tree
                             :data="camroledata" 
                             show-checkbox
-                            :check-strictly="true"
                             :props="defaultrole"
                             ref="tree1">
                             <span slot-scope="{ data }" style="width:100%;">
@@ -68,7 +66,6 @@
                     <el-tree
                         :data="camdata" 
                         show-checkbox
-                        :check-strictly="true"
                         ref="tree">
                         <span slot-scope="{ data }" style="width:100%;">
                                 <div style="width:100%;display: flex;justify-content: space-between;">
