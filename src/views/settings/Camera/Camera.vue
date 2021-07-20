@@ -202,7 +202,6 @@
               font-size: 18px;
               font-family: PingFang SC;
               font-weight: 500;
-
               text-align: center;
             "
             >添加通道号</span
@@ -364,9 +363,9 @@
           @tab-click="handleClick"
           v-model="activeName"
         >
-          <el-tab-pane v-for="(v, i) in editchnumer" :label="v" :name="v">
-            <div slot="label" ref="chnumermoshi">
-              <span>{{ v }}</span>
+          <el-tab-pane v-for="(v, i) in editchnumer" :key="i" :label="v" :name="v">
+            <div slot="label" ref="chnumermoshi" style="text-algin: center">
+              <span style="font-size: 20px">{{ v }}</span>
             </div>
             <div
               style="
@@ -382,12 +381,11 @@
                   width: 12%;
                   line-height: 70px;
                   text-align: center;
-                  justify-content: space-between：;
                 "
-                v-for="(value, index) in editchnumers"
-                @click="editchanumber(value)"
+                v-for="(value, index) in editchnumers" :key="index"
+                
               >
-                <span ref="nowchnumber" class="nowChannelColor">{{
+                <span style="font-size: 20px; cursor: pointer" :id="value" ref="nowchnumber" @click="editchanumber(value)">{{
                   value
                 }}</span>
               </div>
@@ -495,6 +493,7 @@ export default {
       edittableData: [],
       threevideo: [],
       channeledit: [],
+      chedit: [],
     };
   },
   mounted() {
@@ -503,6 +502,9 @@ export default {
     this.NumberDevice();
   },
   methods: {
+    sortNumber(a, b) {
+      return a.nCh - b.nCh;
+    },
     // 打开添加通道号弹窗
     addChdialog() {
       this.AddChannelSloganDialog = true;
@@ -516,6 +518,9 @@ export default {
           this.tableData3 = result.data.cam;
           // console.log(this.tableData3);
           this.zongyeshu = this.tableData3.length;
+          this.tableData3 = result.data.cam.sort(
+            (pre, cur) => pre.nCh - cur.nCh
+          );
         }
       });
     },
@@ -709,67 +714,25 @@ export default {
 
     // 打开编辑选择通道号弹窗
     changeChannelSlogan(row) {
-      this.activeName = "1~64";
       this.addch2 = row;
       this.num1 = row.ChannelNumber;
-      // console.log(row);
       this.editchnumer = [];
+      this.arrchannel = [];
       this.EditChannelSloganDialog = true;
-
-      this.chNowNumber = row.ChannelNumber;
-      // console.log(this.chNowNumber);
       this.deltetoken = row.token;
-      // console.log(row.ChannelNumber);
+      // 通道号当前值
+      this.chNowNumber = row.ChannelNumber;
 
-      this.$nextTick(() => {
-        var numcolor = this.$refs.nowchnumber;
-        // console.log(numcolor);
-        for (let m = 0; m < numcolor.length; m++) {
-          // console.log(this.$refs.nowchnumber);
-          // console.log(numcolor[m].innerText);
-          if (this.chNowNumber == numcolor[m].innerText) {
-            // console.log(11111);
+      if (row.ChannelNumber > 64 && row.ChannelNumber < 129) {
+        this.valuech = 128;
+      } else if (row.ChannelNumber > 128 && row.ChannelNumber < 257) {
+        this.valuech = 256;
+      } else if (row.ChannelNumber > 256 && row.ChannelNumber < 513) {
+        this.valuech = 512;
+      } else if (row.ChannelNumber > 512 && row.ChannelNumber < 1025) {
+        this.valuech = 1024;
+      }
 
-            numcolor[m].style.color = "#FF0000";
-          } else {
-            numcolor[m].style.color = "";
-          }
-        }
-      });
-
-      var root = this.$store.state.IPPORT;
-      var url = root + "/api/v1/GetCamera?session=" + this.$store.state.token;
-      // console.log(url);
-      this.$http.get(url).then((result) => {
-        if (result.status == 200) {
-          console.log(result);
-          if (result.data.bStatus == false) {
-          } else {
-            var itme = result.data.cam;
-            for (var i = 0; i < itme.length; i++) {
-              this.channeledit = itme[i].nCh;
-              console.log(this.channeledit);
-              // this.$nextTick(() => {
-              // var numcolor = this.$refs.nowchnumber;
-              // console.log(numcolor);
-              // for (let m = 0; m < numcolor.length; m++) {
-              //   // console.log(this.$refs.nowchnumber);
-              //   // console.log(numcolor[m].innerText);
-              //   if (this.channeledit == numcolor[m].innerText) {
-              //     console.log(11111);
-
-              //     numcolor[m].style.pointerEvents = "none";
-              //   } else {
-              //    numcolor[m].style.pointerEvents = "auto";
-              //   }
-              // }
-              // });
-            }
-          }
-        }
-      });
-
-      // console.log(this.$refs);
       //定义外面的数组
       for (var i = 1; i <= 1024; i++) {
         //循环遍历
@@ -780,29 +743,84 @@ export default {
         }
         a.push(i); //将元素存到里面的数组中
       }
-      // console.log(this.arrchannel);
-      for (let j = 0; j < 1; j++) {
+      for (let j = 0; j < 1 || j < row.ChannelNumber / 64; j++) {
         this.editchnumer.push(
           `${this.arrchannel[j][0]}~${this.arrchannel[j].slice(-1)}`
         );
-        // console.log(this.editchnumer);
-        this.editchnumers = this.arrchannel[j];
-        // console.log(this.editchnumers);
+        for (let g = 0; g < this.editchnumer.length; g++) {
+          this.activeName = this.editchnumer[g];
+          for (let k = 0; k < this.arrchannel.length; k++) {
+            const element = this.arrchannel[g];
+            this.editchnumers = element;
+          }
+        }
       }
+
+      var root = this.$store.state.IPPORT;
+      var url = root + "/api/v1/GetCamera?session=" + this.$store.state.token;
+      this.$http.get(url).then((result) => {
+        if (result.status == 200) {
+          if (result.data.bStatus == false) {
+          } else {
+            var itme = result.data.cam;
+            this.channeledit = [];
+            for (var i = 0; i < itme.length; i++) {
+              this.channeledit.push(itme[i].nCh);
+            }
+
+            this.$nextTick(() => {
+              var numcolor = this.$refs.nowchnumber;
+              for (let m = 0; m < numcolor.length; m++) {
+                for (let s = 0; s < this.channeledit.length; s++) {
+                  this.chedit = this.channeledit[s];
+                  if (this.chedit == numcolor[m].innerText) {
+                    numcolor[m].style.color = "#FFFFFF";
+                    numcolor[m].style.opacity = "0.2";
+                    numcolor[m].style.pointerEvents = "none";
+                  }
+                }
+              }
+            });
+            this.$nextTick(() => {
+              var numcolor = this.$refs.nowchnumber;
+              for (let m = 0; m < numcolor.length; m++) {
+                if (this.chNowNumber == numcolor[m].innerText) {
+                  numcolor[m].style.color = "#FF0000";
+                  numcolor[m].style.opacity = "1";
+                } else {
+                  numcolor[m].style.color = "";
+                }
+              }
+            });
+          }
+        }
+      });
     },
     // 关闭编辑通道号弹窗
     downeditdialog() {
+      this.$nextTick(() => {
+        var numcolor = this.$refs.nowchnumber;
+        for (let m = 0; m < numcolor.length; m++) {
+          numcolor[m].style.color = "";
+          numcolor[m].style.opacity = "1";
+          numcolor[m].style.pointerEvents = "auto";
+        }
+      });
       this.valuech = 64;
     },
     // 编辑确定按钮
     async editchaumbersure() {
       var num = this.chNowNumber;
-      // console.log(num, this.num1);
-      // console.log(this.addch2);
       if (this.num1 == num) {
         return;
       }
 
+      for (let m = 0; m < this.channeledit.length; m++) {
+        const element = this.channeledit[m];
+        if (element == num) {
+          return;
+        }
+      }
       var root = this.$store.state.IPPORT;
       var url =
         root +
@@ -823,7 +841,6 @@ export default {
           this.$http
             .get(addChUrl)
             .then((result) => {
-              console.log(result);
               this.EditChannelSloganDialog = false;
               this.loadSrc(this.addch2, this.addch2.token);
             })
@@ -835,7 +852,6 @@ export default {
     },
     // 选择选择通道号模式
     onSelecteCh(value) {
-      console.log(value);
       this.editchnumer = [];
       for (let j = 0; j < value / 64; j++) {
         this.editchnumer.push(
@@ -845,25 +861,43 @@ export default {
     },
     // 编辑通道号左侧点击事件
     handleClick(tab) {
-      // console.log(tab.label);
-      // console.log(tab.index, this.arrchannel);
+     this.$nextTick(() => {
+        var numcolor = this.$refs.nowchnumber;
+        for (let m = 0; m < numcolor.length; m++) {
+          numcolor[m].style.color = "";
+          numcolor[m].style.opacity = "1";
+          numcolor[m].style.pointerEvents = "auto";
+        }
+      });
       for (let k = 0; k < this.arrchannel.length; k++) {
         const element = this.arrchannel[tab.index];
-        // console.log(element);
         this.editchnumers = element;
-        // console.log(this.editchnumers);
       }
       this.$nextTick(() => {
         var numcolor = this.$refs.nowchnumber;
-        // console.log(numcolor);
         for (let m = 0; m < numcolor.length; m++) {
-          // console.log(this.$refs.nowchnumber);
-          console.log(numcolor[m].innerText);
+          for (let t = 0; t < this.channeledit.length; t++) {
+            this.chedit = this.channeledit[t];
+            if (this.chedit == numcolor[m].innerText) {
+              numcolor[m].style.color = "#FFFFFF";
+              numcolor[m].style.opacity = "0.2";
+              numcolor[m].style.pointerEvents = "none";
+            }
+          }
+        }
+      });
+      this.$nextTick(() => {
+        var numcolor = this.$refs.nowchnumber;
+        for (let m = 0; m < numcolor.length; m++) {
           if (this.chNowNumber == numcolor[m].innerText) {
-            // console.log(11111);
             numcolor[m].style.color = "#FF0000";
+            numcolor[m].style.opacity = "1";
           } else {
-            numcolor[m].style.color = "";
+            if (this.chedit == numcolor[m].innerText) {
+              numcolor[m].style.color = "#FFFFFF";
+              numcolor[m].style.opacity = "0.2";
+              numcolor[m].style.pointerEvents = "none";
+            }
           }
         }
       });
@@ -884,6 +918,30 @@ export default {
           numcolor[m].style.color = "";
         }
       }
+         for (let s = 0; s < this.channeledit.length; s++) {
+        this.chedit = this.channeledit[s];
+        $("#" + this.chedit).css("pointerEvents", "none");
+        $("#" + this.chedit).css("color", "#FFFFFF");
+        $("#" + this.chedit).css("opacity", "0.2");
+      }
+      this.$nextTick(() => {
+        var numcolor = this.$refs.nowchnumber;
+        for (let m = 0; m < numcolor.length; m++) {
+          if (this.chNowNumber == numcolor[m].innerText) {
+            numcolor[m].style.color = "#FF0000";
+            numcolor[m].style.opacity = "1";
+          } else {
+            for (let s = 0; s < this.channeledit.length; s++) {
+              this.chedit = this.channeledit[s];
+              if (this.chedit == numcolor[m].innerText) {
+                numcolor[m].style.color = "#FFFFFF";
+                numcolor[m].style.opacity = "0.2";
+                numcolor[m].style.pointerEvents = "none";
+              }
+            }
+          }
+        }
+      });
     },
     //禁用离线
     async Allpart(off) {
@@ -1713,10 +1771,13 @@ export default {
       max-height: 500px !important;
       min-height: 700px;
       overflow-y: hidden;
+       padding-top: 0px;
     }
   }
+}
+.editChannelSlogan {
   .el-dialog__body {
-    padding-top: 0px;
+    padding: 20px 20px;
   }
 }
 
