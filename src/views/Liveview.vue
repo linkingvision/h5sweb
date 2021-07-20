@@ -57,8 +57,21 @@
                         node-key="strName" 
                         :default-expanded-keys="['root']" 
                         :data="data1" 
+                        @node-click="handleNodeClick"
                         :props="defaultProps1">
-                        <span slot-scope="{data }" style="width:100%;">
+                        <span slot-scope="{ data }" style="width:100%;">
+                            <div style="width:100%;display: flex;justify-content: space-between;">
+                                <span  
+                                    draggable="true" 
+                                    @dragstart="dragStart($event,data.strToken,data.strName,data.streamprofile, data.name,data.disabled_me)">
+                                    <span v-if="data.iconclass" style="font-size: 12px;" :class="data.iconclass" :id="'icon'+data.strToken"></span>
+                                    <span v-else style="font-size: 12px;" class="iconfont icon-quyu" :id="'icon'+data.strToken"></span>
+                                    <span :class="data.iconclass1" style="padding-left: 4px;">{{data.strName}}</span>
+                                </span>
+                                <span :class="data.iconclass2" class="black" style="">{{$t("message.live.Videorecording")}}</span>
+                            </div>
+                        </span>
+                        <!-- <span slot-scope="{data }" style="width:100%;">
                             <span>
                                 <span class="iconfont icon-quyu"></span>
                                 <span :class="data.iconclass1" style="padding-left: 4px;">{{data.strName}}</span>
@@ -78,7 +91,7 @@
                                     </span>
                                 </el-tree>
                             </div>
-                        </span>
+                        </span> -->
                     </el-tree>
                 </el-collapse-item>
                 <el-collapse-item name="2" id="viewclis">
@@ -1158,13 +1171,84 @@ export default {
             var root = this.$store.state.IPPORT;
             var url = root + "/api/v1/GetRegion?session="+ this.$store.state.token;
             this.$http.get(url).then(result=>{
-                // console.log(result);
+                console.log(result);
                 var oldarr=result.data.root;
                 var oldarr1=result.data.src;
                 // console.log(oldarr,oldarr1)
                 var dataroot=this.getchild(oldarr,oldarr1);
-                this.data1.push(dataroot);
+                // this.data1.push(dataroot);
+                console.log(dataroot);
+                this.datapush(dataroot)
+                console.log(this.data1);
             })
+        },
+        datapush(data){
+            this.a(data)
+        },
+        a(data){
+            console.log(data.cam);
+            if(data.node.length!=0){
+                for (let i = 0; i < data.node.length; i++) {
+                data.cam.push(data.node[i])
+            }
+            }
+            delete data.node
+            for (let i = 0; i < data.cam.length; i++) {
+                this.b(data.cam[i])
+                console.log(data);
+                this.data1=[];
+                this.data1.push(data);
+            }
+        },
+        b(data){
+            if(data.node.length!=0){
+                for (let i = 0; i < data.node.length; i++) {
+                data.cam.push(data.node[i])
+                }
+            }
+            delete data.node
+            for (let i = 0; i < data.cam.length; i++) {
+                console.log(data.cam[i]);
+                if (data.cam[i].cam) {
+                    this.c(data.cam[i])
+                }
+            }
+        },
+        c(data){
+            if(data.node.length!=0){
+                for (let i = 0; i < data.node.length; i++) {
+                data.cam.push(data.node[i])
+            }
+            }
+            delete data.node;
+            for (let i = 0; i < data.cam.length; i++) {
+                console.log(data.cam[i]);
+                if (data.cam[i].cam) {
+                    this.d(data.cam[i])
+                }
+            }
+        },
+        d(data){
+            if(data.node.length!=0){
+                for (let i = 0; i < data.node.length; i++) {
+                data.cam.push(data.node[i])
+            }
+            }
+            delete data.node;
+            for (let i = 0; i < data.cam.length; i++) {
+                console.log(data.cam[i]);
+                if (data.cam[i].cam) {
+                    this.e(data.cam[i])
+                }
+            }
+        },
+        e(data){
+            if(data.node.length!=0){
+                for (let i = 0; i < data.node.length; i++) {
+                data.cam.push(data.node[i])
+            }
+            }
+            delete data.node;
         },
         getchild(arr,arr1) {
             
