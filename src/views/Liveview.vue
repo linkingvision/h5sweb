@@ -1196,13 +1196,16 @@ export default {
             }
             delete data.node
             for (let i = 0; i < data.cam.length; i++) {
+                // console.log(data);
                 this.b(data.cam[i])
-                console.log(data);
                 this.data1=[];
                 this.data1.push(data);
             }
         },
         b(data){
+            if (data.name) {
+                return
+            }
             if(data.node.length!=0){
                 for (let i = 0; i < data.node.length; i++) {
                 data.cam.push(data.node[i])
@@ -1217,6 +1220,9 @@ export default {
             }
         },
         c(data){
+            if (data.name) {
+                return
+            }
             if(data.node.length!=0){
                 for (let i = 0; i < data.node.length; i++) {
                 data.cam.push(data.node[i])
@@ -1231,6 +1237,9 @@ export default {
             }
         },
         d(data){
+            if (data.name) {
+                return
+            }
             if(data.node.length!=0){
                 for (let i = 0; i < data.node.length; i++) {
                 data.cam.push(data.node[i])
@@ -1245,6 +1254,9 @@ export default {
             }
         },
         e(data){
+            if (data.name) {
+                return
+            }
             if(data.node.length!=0){
                 for (let i = 0; i < data.node.length; i++) {
                 data.cam.push(data.node[i])
