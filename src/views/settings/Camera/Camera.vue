@@ -454,7 +454,6 @@ export default {
       AddChannelSloganDialog: false,
       tabPosition: "left",
       EditChannelSloganDialog: false,
-      changeNumber: [],
       chnumber: [],
       chinput: "",
       chinput2: "",
@@ -490,7 +489,6 @@ export default {
       num1: "",
       deltetoken: "",
       addch2: [],
-      edittableData: [],
       threevideo: [],
       channeledit: [],
       chedit: [],
@@ -509,14 +507,12 @@ export default {
     addChdialog() {
       this.AddChannelSloganDialog = true;
       var root = this.$store.state.IPPORT;
-      // console.log(this.tableData3);
       // url
       var url = root + "/api/v1//GetCamera?session=" + this.$store.state.token;
       this.$http.get(url).then((result) => {
         // console.log("a", result);
         if (result.status == 200) {
           this.tableData3 = result.data.cam;
-          // console.log(this.tableData3);
           this.zongyeshu = this.tableData3.length;
           this.tableData3 = result.data.cam.sort(
             (pre, cur) => pre.nCh - cur.nCh
@@ -533,7 +529,7 @@ export default {
       this.$http
         .get(url)
         .then((result) => {
-          console.log("a", result);
+          // console.log("a", result);
           if (result.status == 200) {
             var itme = result.data.src;
             // console.log(itme);
@@ -549,16 +545,12 @@ export default {
                 ChannelNumber: itme[i].nChannelNumber,
               };
               if (itme[i].nType != "H5_CH_DEV") {
-                // console.log(itme[i].nType)
                 tabledata["disabled"] = true;
               }
-              // console.log(this.tableData2);
               this.tableData2.push(tabledata);
-              // console.log(this.tableData2);
             }
 
             for (let key = 0; key < this.tableData2.length; key++) {
-              // console.log(this.tableData2[key]);
               var url =
                 root +
                 "/api/v1/DelCamera?token=" +
@@ -589,19 +581,14 @@ export default {
                         key + 1
                       }&session=${this.$store.state.token}`;
                     }
-                    // console.log(addChUrl);
                     this.$http
                       .get(addChUrl)
                       .then((result) => {
                         // console.log(result);
-                        // console.log(this.tableData2);
                         if (result.data.bStatus == true) {
-                          // console.log(this.tableData);
                           for (let m = 0; m < this.tableData.length; m++) {
                             const element = this.tableData[m].token;
-                            // console.log(element);
                             this.loadSrc(this.tableData[m], element);
-                            //  this.$refs.chNumber.value = "";
                             this.AddChannelSloganDialog = false;
                           }
                         }
@@ -625,6 +612,9 @@ export default {
     // 局部更新
     async addpartsCh() {
       this.tableData2 = [];
+      this.tableData4= [];
+      var objchnumber =[];
+      var arrch = []
       var root = this.$store.state.IPPORT;
       var url =
         root + "/api/v1/GetSrc?session=" + (await this.$store.state.token);
@@ -646,67 +636,105 @@ export default {
                 ChannelNumber: itme[i].nChannelNumber,
               };
               if (itme[i].nType != "H5_CH_DEV") {
-                // console.log(itme[i].nType)
                 tabledata["disabled"] = true;
               }
-              // console.log(this.tableData2);
               this.tableData2.push(tabledata);
-              // console.log(this.tableData2);
             }
-            const res = new Promise((resolve) => {
-              setTimeout(() => resolve(this.addpartsChannel(), 500));
-            });
-            console.log(res);
+            var obj ={};
+            var datach = {};
+            for (let n = 0; n < this.tableData3.length; n++) {
+              var key = this.tableData3[n].strToken;
+              obj[key] =this.tableData3[n].strToken;
+              var chnumber = this.tableData3[n].nCh;
+              objchnumber.push(chnumber)
+              if(this.tableData3[n].nCh==0){
+                datach = {
+                  token: this.tableData3[n].strToken,
+                  open_close: this.tableData3[n].bEnable,
+                  gbid:this.tableData3[n].strGbID,
+                  audio: this.tableData3[n].bEnableAudio,
+                  disabled: false,
+                  ChannelNumber: this.tableData3[n].nCh,
+              };
+              this.tableData4.push(datach);
+              }
+            }
+            for (let key = 0; key < this.tableData2.length; key++) {
+              if(obj.hasOwnProperty(this.tableData2[key].token)==false){
+                this.tableData4.push(this.tableData2[key]);
+              }
+            }
+            for (let i = 1; i < 1024; i++) {
+              if (objchnumber.indexOf(i) == -1) {
+                arrch.push(i)
+              }
+            }
+            let addChUrl = '';
+            let arr = [];
+
+            for (let m = 0; m < this.tableData4.length;m++) {
+              var url =
+                root +
+                "/api/v1/DelCamera?token=" +
+                this.tableData4[m].token +
+                "&session=" +
+                this.$store.state.token;
+              // console.log("-****************", url);
+              this.$http
+                .get(url)
+                .then((result) => {
+                  // console.log(result);
+                  if (result.data.bStatus == true) {
+                    let gbid = this.tableData4[m].gbid;
+                    let token = this.tableData4[m].token;
+                    let open_close = this.tableData4[m].open_close;
+                    let audio = this.tableData4[m].audio;
+                    if (gbid == "" || gbid == "invalid") {
+                          addChUrl = `${root}/api/v1/AddCamera?token=${
+                            token
+                          }&enable=${open_close}&audio=${
+                            audio
+                          }&ch=${arrch[m]}&session=${this.$store.state.token}`;
+                      } else {
+                          addChUrl = `${root}/api/v1/AddCamera?token=${
+                            token
+                          }&enable=${open_close}&audio=${
+                            audio
+                          }&gbid=${gbid}&ch=${arrch[m]}&session=${
+                            this.$store.state.token
+                          }`;
+                    }
+                    arr.push(addChUrl)
+                    this.addpartsChannel(arr)
+                  }}).catch((error) => {
+                  console.log("cuowu1", error);
+              })
+            }
           }
         })
         .catch((error) => {
           console.log("cuowu", error);
         });
     },
-    addpartsChannel() {
-      var root = this.$store.state.IPPORT;
-      for (let key = 0; key < this.tableData2.length; key++) {
-        console.log(this.tableData2[key]);
-        console.log(key + 1);
-        if (this.tableData2[key].ChannelNumber == 0) {
-          console.log(this.tableData2[key]);
-          this.tableData4.push(this.tableData2);
-          console.log(this.tableData4);
-        }
-        if (
-          this.tableData2[key].gbid == "" ||
-          this.tableData2[key].gbid == "invalid"
-        ) {
-          var addChUrl = `${root}/api/v1/AddCamera?token=${
-            this.tableData2[key].token
-          }&enable=${this.tableData2[key].open_close}&audio=${
-            this.tableData2[key].audio
-          }&ch=${key + 1}&session=${this.$store.state.token}`;
-        } else {
-          var addChUrl = `${root}/api/v1/AddCamera?token=${
-            this.tableData2[key].token
-          }&enable=${this.tableData2[key].open_close}&audio=${
-            this.tableData2[key].audio
-          }&gbid=${this.tableData2[key].gbid}&ch=${key + 1}&session=${
-            this.$store.state.token
-          }`;
-        }
-        this.$http
-          .get(addChUrl)
-          .then((result) => {
-            console.log(result);
-            // console.log(this.tableData2);
-            // this.$refs.chNumber.value = "";
-            for (let m = 0; m < this.tableData.length; m++) {
-              const element = this.tableData[m].token;
-              // console.log(element);
-              this.loadSrc(this.tableData[m], element);
-              //  this.$refs.chNumber.value = "";
-              this.AddChannelSloganDialog = false;
-            }
-          })
-          .catch((error1) => {
-            console.log("cuowu1", error1);
+    addpartsChannel(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        // console.log(arr[i]);
+          this.$http
+              .get(arr[i])
+              .then((result) => {
+                // console.log(result);
+                if (result.status == 200 && result.data !== undefined) {
+                  if(result.data.bStatus == true){
+                    for (let m = 0; m < this.tableData.length; m++) {
+                      const element = this.tableData[m].token;
+                      this.loadSrc(this.tableData[m], element);
+                      this.AddChannelSloganDialog = false;
+                    }
+                  }
+                }
+              })
+          .catch((error) => {
+            console.log("cuowu2", error);
           });
       }
     },
@@ -904,14 +932,10 @@ export default {
     },
     // 编辑右侧点击事件
     editchanumber(value) {
-      // console.log(value);
       this.chNowNumber = value;
       var numcolor = this.$refs.nowchnumber;
       for (let m = 0; m < numcolor.length; m++) {
-        // console.log(this.$refs.nowchnumber);
-        // console.log(numcolor[m].innerText);
         if (this.chNowNumber == numcolor[m].innerText) {
-          // console.log(11111);
 
           numcolor[m].style.color = "#FF0000";
         } else {
