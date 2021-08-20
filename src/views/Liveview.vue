@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </template>
-                    <el-tree
+                   <el-tree
                         class="el_tree"
                         node-key="strName" 
                         :default-expanded-keys="['root']" 
@@ -223,7 +223,7 @@ export default {
                 iconclass:"iconclass"
             },
             defaultProps1: {
-                children: 'node',
+                children: 'cam',
                 label: 'strName',
                 cam:"cam"
             },
@@ -1188,7 +1188,7 @@ export default {
             this.a(data)
         },
         a(data){
-            // console.log(data.cam);
+            console.log(data.cam);
             if(data.node.length!=0){
                 for (let i = 0; i < data.node.length; i++) {
                 data.cam.push(data.node[i])
@@ -1196,8 +1196,8 @@ export default {
             }
             delete data.node
             for (let i = 0; i < data.cam.length; i++) {
-                this.b(data.cam[i])
                 // console.log(data);
+                this.b(data.cam[i])
                 this.data1=[];
                 this.data1.push(data);
             }
@@ -1213,7 +1213,7 @@ export default {
             }
             delete data.node
             for (let i = 0; i < data.cam.length; i++) {
-                // console.log(data.cam[i]);
+                console.log(data.cam[i]);
                 if (data.cam[i].cam) {
                     this.c(data.cam[i])
                 }
@@ -1230,7 +1230,7 @@ export default {
             }
             delete data.node;
             for (let i = 0; i < data.cam.length; i++) {
-                // console.log(data.cam[i]);
+                console.log(data.cam[i]);
                 if (data.cam[i].cam) {
                     this.d(data.cam[i])
                 }
@@ -1247,7 +1247,7 @@ export default {
             }
             delete data.node;
             for (let i = 0; i < data.cam.length; i++) {
-                // console.log(data.cam[i]);
+                console.log(data.cam[i]);
                 if (data.cam[i].cam) {
                     this.e(data.cam[i])
                 }
@@ -1265,7 +1265,6 @@ export default {
             delete data.node;
         },
         getchild(arr,arr1) {
-            
             for(var i in arr.cam){
                 if(!arr.cam[i].strName){
                     for(var j in arr1){
