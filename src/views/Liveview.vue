@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </template>
-                    <el-tree
+                   <el-tree
                         class="el_tree"
                         node-key="strName" 
                         :default-expanded-keys="['root']" 
@@ -223,7 +223,7 @@ export default {
                 iconclass:"iconclass"
             },
             defaultProps1: {
-                children: 'node',
+                children: 'cam',
                 label: 'strName',
                 cam:"cam"
             },
@@ -1265,7 +1265,6 @@ export default {
             delete data.node;
         },
         getchild(arr,arr1) {
-            
             for(var i in arr.cam){
                 if(!arr.cam[i].strName){
                     for(var j in arr1){
