@@ -1,8 +1,14 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2028119 */
+<<<<<<< HEAD
   src: url('iconfont.woff2?t=1631010282526') format('woff2'),
        url('iconfont.woff?t=1631010282526') format('woff'),
        url('iconfont.ttf?t=1631010282526') format('truetype');
+=======
+  src: url('iconfont.woff2?t=1629696204683') format('woff2'),
+       url('iconfont.woff?t=1629696204683') format('woff'),
+       url('iconfont.ttf?t=1629696204683') format('truetype');
+>>>>>>> 3caee1adc2738f6119795c2ad5be32529502612c
 }
 
 .iconfont {
@@ -13,11 +19,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+<<<<<<< HEAD
 .icon-qietu16:before {
   content: "\e651";
 }
 
 .icon-qietu25:before {
+=======
+.icon-a-16qietu-01:before {
+  content: "\e651";
+}
+
+.icon-a-25qietu-01:before {
+>>>>>>> 3caee1adc2738f6119795c2ad5be32529502612c
   content: "\e655";
 }
 
