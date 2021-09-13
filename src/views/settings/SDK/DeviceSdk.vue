@@ -21,27 +21,12 @@
                 <el-form-item :label="label.Token">
                     <el-input v-model="editform.Token"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.User"  v-if="editform.Type!='H5_DEV_HIKISC'&&editform.Type!='H5_DEV_HIKINFOV'">
+                <el-form-item :label="label.User">
                     <el-input v-model="editform.User"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.password"  v-if="editform.Type!='H5_DEV_HIKISC'&&editform.Type!='H5_DEV_HIKINFOV'">
+                <el-form-item :label="label.password">
                     <el-input v-model="editform.Password"></el-input>
                 </el-form-item>
-                <!-- lingyige -->
-                <el-form-item label="AppKey "  v-if="editform.Type=='H5_DEV_HIKISC'">
-                    <el-input v-model="editform.User"></el-input>
-                </el-form-item>
-                <el-form-item label="AppSecret"  v-if="editform.Type=='H5_DEV_HIKISC'">
-                    <el-input v-model="editform.Password"></el-input>
-                </el-form-item>
-
-                <el-form-item label="AppKey "  v-if="editform.Type=='H5_DEV_HIKINFOV'">
-                    <el-input v-model="editform.User"></el-input>
-                </el-form-item>
-                <el-form-item label="AppSecret"  v-if="editform.Type=='H5_DEV_HIKINFOV'">
-                    <el-input v-model="editform.Password"></el-input>
-                </el-form-item>
-
                 <el-form-item :label="label.IP">
                     <el-input v-model="editform.IP"></el-input>
                 </el-form-item>
@@ -88,10 +73,10 @@
                 <el-form-item :label="label.Token">
                     <el-input v-model="form.Token"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.username" v-if="form.Type!='H5_DEV_HIKISC'&&form.Type!='H5_DEV_HIKINFOV'">
+                <el-form-item :label="label.username" v-if="form.Type!='H5_DEV_HIKISC'">
                     <el-input v-model="form.Username"></el-input>
                 </el-form-item>
-                <el-form-item :label="label.password" v-if="form.Type!='H5_DEV_HIKISC'&&form.Type!='H5_DEV_HIKINFOV'">
+                <el-form-item :label="label.password" v-if="form.Type!='H5_DEV_HIKISC'">
                     <el-input v-model="form.Password"></el-input>
                 </el-form-item>
                 <!-- lingyige -->
@@ -100,13 +85,6 @@
                 </el-form-item>
                 <el-form-item label="AppSecret"  v-if="form.Type=='H5_DEV_HIKISC'">
                     <el-input v-model="form.Password_isc"></el-input>
-                </el-form-item>
-                
-                <el-form-item label="AppKey "  v-if="form.Type=='H5_DEV_HIKINFOV'">
-                    <el-input v-model="form.Username_INFOV"></el-input>
-                </el-form-item>
-                <el-form-item label="AppSecret"  v-if="form.Type=='H5_DEV_HIKINFOV'">
-                    <el-input v-model="form.Password_INFOV"></el-input>
                 </el-form-item>
 
                 <el-form-item :label="label.IP">
@@ -120,7 +98,6 @@
                     <el-input v-if="form.Type=='H5_DEV_UNV'" v-model="form.Port_unv"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_DHDSS'" v-model="form.Port_DSS"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_IVS'" v-model="form.Port_1800"></el-input>
-                    <el-input v-if="form.Type=='H5_DEV_HIKINFOV'" v-model="form.Port_INFOV"></el-input>
                     <el-input v-if="form.Type=='H5_DEV_VIKOR'" v-model="form.Port_vikor"></el-input>
                 </el-form-item>
                 <el-form-item :label="label.Audio">
@@ -296,10 +273,8 @@ import uuid from '../../../assets/js/uuid'
             , {
                 value: 'H5_DEV_HIKISC',
                 label: 'H5_DEV_HIKISC'
-            }, {
-                value: 'H5_DEV_HIKINFOV',
-                label: 'H5_DEV_HIKINFOV'
-            }, {
+            }
+            , {
                 value: 'H5_DEV_TD',
                 label: 'H5_DEV_TD'
             }, {
@@ -341,10 +316,8 @@ import uuid from '../../../assets/js/uuid'
             Token:"platform1",
             Username:"admin",
             Username_isc:"22936233",
-            Username_INFOV:"22936233",
             Password:"admin12345",
             Password_isc:"px50TzrNNUiU1uxloJLG",
-            Password_INFOV:"px50TzrNNUiU1uxloJLG",
             IP:"192.168.1.1",
             Port:"8000",
             Port_dh:"37777",
@@ -353,7 +326,6 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
-            Port_INFOV:'443',
             Port_vikor:'20000',
             Audio:false,
             bSandbox: false,
@@ -365,10 +337,8 @@ import uuid from '../../../assets/js/uuid'
             Token:"platform1",
             User:"admin",
             Username_isc:"22936233",
-            Username_INFOV:"22936233",
             Password:"admin12345",
             Password_isc:"px50TzrNNUiU1uxloJLG",
-            Password_INFOV:"px50TzrNNUiU1uxloJLG",
             IP:"192.168.1.1",
             Port:"8000",
             Port_dh:"37777",
@@ -377,7 +347,6 @@ import uuid from '../../../assets/js/uuid'
             Port_unv:"80",
             Port_DSS:"9000",
             Port_1800:"18531",
-            Port_INFOV:'443',
             Port_vikor:'20000',
             Audio:false,
             bSandbox:false,
@@ -639,33 +608,6 @@ import uuid from '../../../assets/js/uuid'
                 })
             }else if(form.Type=="H5_DEV_IVS"){
                 var url = this.$store.state.IPPORT + "/api/v1/AddDeviceIvs?&name="+encodeURIComponent(form.Name)+
-                "&token="+encodeURIComponent(form.Token)+
-                "&user="+encodeURIComponent(form.User)+
-                "&password="+encodeURIComponent(form.Password)+
-                "&ip="+encodeURIComponent(form.IP)+
-                "&port="+encodeURIComponent(form.Port)+
-                "&audio="+form.Audio+
-                "&sandbox="+form.bSandbox+
-                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
-                "&session="+ this.$store.state.token;
-                console.log("yushi****************************",url);
-                this.$http.get(url).then(result=>{
-                    console.log(result);
-                    if(result.status==200){
-                        if(result.data.bStatus==true){
-                            this.tableData=[];
-                            this.loadHIK();
-                       }else{
-                         this.$message({
-                            message: '添加失败',
-                            type: 'warning'
-                        });
-                        return false;
-                      }
-                    }
-                })
-            }else if(form.Type=="H5_DEV_HIKINFOV"){
-                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceHikInfov?&name="+encodeURIComponent(form.Name)+
                 "&token="+encodeURIComponent(form.Token)+
                 "&user="+encodeURIComponent(form.User)+
                 "&password="+encodeURIComponent(form.Password)+
@@ -971,33 +913,6 @@ import uuid from '../../../assets/js/uuid'
                             });
                             return false;
                         }
-                    }
-                })
-            }else if(form.Type=="H5_DEV_HIKINFOV"){
-                var url = this.$store.state.IPPORT + "/api/v1/AddDeviceHikInfov?&name="+encodeURIComponent(form.Name)+
-                "&token="+encodeURIComponent(form.Token)+
-                "&user="+encodeURIComponent(form.Username_INFOV)+
-                "&password="+encodeURIComponent(form.Password_INFOV)+
-                "&ip="+encodeURIComponent(form.IP)+
-                "&port="+encodeURIComponent(form.Port_INFOV)+
-                "&audio="+form.Audio+
-                "&sandbox="+form.bSandbox+
-                "&maxchannel="+encodeURIComponent(form.Maxichannels)+
-                "&session="+ this.$store.state.token;
-                console.log("yushi****************************",url);
-                this.$http.get(url).then(result=>{
-                    console.log(result);
-                    if(result.status==200){
-                        if(result.data.bStatus==true){
-                            this.tableData=[];
-                            this.loadHIK();
-                       }else{
-                         this.$message({
-                            message: '添加失败',
-                            type: 'warning'
-                        });
-                        return false;
-                      }
                     }
                 })
             }else if(form.Type=="H5_DEV_VIKOR"){

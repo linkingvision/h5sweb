@@ -324,7 +324,7 @@
     <el-dialog
       title=""
       :visible.sync="EditChannelSloganDialog"
-      class=""
+      class="editChannelSlogan"
       @close="downeditdialog"
     >
       <div slot="title">
@@ -333,7 +333,6 @@
             <span style="font-size: 16px">选择通道号模式</span>
             <el-select
               style="width: 50%; margin-left: 15px"
-              placeholder="64"
               v-model="valuech"
               @change="onSelecteCh(valuech)"
             >
@@ -362,8 +361,14 @@
           style="height: 600px"
           @tab-click="handleClick"
           v-model="activeName"
+          ref="tabsLeftLineheight"
         >
-          <el-tab-pane v-for="(v, i) in editchnumer" :key="i" :label="v" :name="v">
+          <el-tab-pane
+            v-for="(v, i) in editchnumer"
+            :key="i"
+            :label="v"
+            :name="v"
+          >
             <div slot="label" ref="chnumermoshi" style="text-algin: center">
               <span style="font-size: 20px">{{ v }}</span>
             </div>
@@ -382,12 +387,16 @@
                   line-height: 70px;
                   text-align: center;
                 "
-                v-for="(value, index) in editchnumers" :key="index"
-                
+                v-for="(value, index) in editchnumers"
+                :key="index"
               >
-                <span style="font-size: 20px; cursor: pointer" :id="value" ref="nowchnumber" @click="editchanumber(value)">{{
-                  value
-                }}</span>
+                <span
+                  style="font-size: 20px; cursor: pointer"
+                  :id="value"
+                  ref="nowchnumber"
+                  @click="editchanumber(value)"
+                  >{{ value }}</span
+                >
               </div>
             </div>
           </el-tab-pane>
@@ -412,6 +421,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 export default {
   name: "Camera",
   data() {
@@ -508,11 +518,12 @@ export default {
       this.AddChannelSloganDialog = true;
       var root = this.$store.state.IPPORT;
       // url
+      this.tableData3=[]
       var url = root + "/api/v1//GetCamera?session=" + this.$store.state.token;
       this.$http.get(url).then((result) => {
         // console.log("a", result);
         if (result.status == 200) {
-          this.tableData3 = result.data.cam;
+          this.tableData3 = result.data.cam
           this.zongyeshu = this.tableData3.length;
           this.tableData3 = result.data.cam.sort(
             (pre, cur) => pre.nCh - cur.nCh
@@ -532,7 +543,6 @@ export default {
           // console.log("a", result);
           if (result.status == 200) {
             var itme = result.data.src;
-            // console.log(itme);
             var tabledata = {};
             for (var i = 0; i < itme.length; i++) {
               tabledata = {
@@ -621,7 +631,7 @@ export default {
       this.$http
         .get(url)
         .then((result) => {
-          // console.log("a", result);
+          console.log("a", result);
           if (result.status == 200) {
             var itme = result.data.src;
             var tabledata = {};
@@ -638,7 +648,7 @@ export default {
               if (itme[i].nType != "H5_CH_DEV") {
                 tabledata["disabled"] = true;
               }
-              this.tableData2.push(tabledata);
+                this.tableData2.push(tabledata);
             }
             var obj ={};
             var datach = {};
@@ -683,7 +693,7 @@ export default {
               this.$http
                 .get(url)
                 .then((result) => {
-                  // console.log(result);
+                  console.log(result);
                   if (result.data.bStatus == true) {
                     let gbid = this.tableData4[m].gbid;
                     let token = this.tableData4[m].token;
@@ -716,9 +726,9 @@ export default {
           console.log("cuowu", error);
         });
     },
-    addpartsChannel(arr) {
+    addpartsChannel(arr){
       for (let i = 0; i < arr.length; i++) {
-        // console.log(arr[i]);
+        console.log(arr[i]);
           this.$http
               .get(arr[i])
               .then((result) => {
@@ -842,13 +852,13 @@ export default {
       if (this.num1 == num) {
         return;
       }
-
       for (let m = 0; m < this.channeledit.length; m++) {
         const element = this.channeledit[m];
         if (element == num) {
           return;
         }
       }
+
       var root = this.$store.state.IPPORT;
       var url =
         root +
@@ -858,7 +868,6 @@ export default {
         (await this.$store.state.token);
       // console.log("-****************", url);
       this.$http.get(url).then((result) => {
-        // console.log(result);
         if (result.data.bStatus == true) {
           var num = this.chNowNumber;
           if (this.addch2.gbid == "" || this.addch2.gbid == "invalid") {
@@ -889,7 +898,7 @@ export default {
     },
     // 编辑通道号左侧点击事件
     handleClick(tab) {
-     this.$nextTick(() => {
+      this.$nextTick(() => {
         var numcolor = this.$refs.nowchnumber;
         for (let m = 0; m < numcolor.length; m++) {
           numcolor[m].style.color = "";
@@ -936,13 +945,12 @@ export default {
       var numcolor = this.$refs.nowchnumber;
       for (let m = 0; m < numcolor.length; m++) {
         if (this.chNowNumber == numcolor[m].innerText) {
-
           numcolor[m].style.color = "#FF0000";
         } else {
           numcolor[m].style.color = "";
         }
       }
-         for (let s = 0; s < this.channeledit.length; s++) {
+      for (let s = 0; s < this.channeledit.length; s++) {
         this.chedit = this.channeledit[s];
         $("#" + this.chedit).css("pointerEvents", "none");
         $("#" + this.chedit).css("color", "#FFFFFF");
@@ -1272,9 +1280,9 @@ export default {
       });
     },
     loadSrc(tabledata, token) {
-      console.log(token);
+      // console.log(token);
       var data = tabledata;
-      console.log(data);
+      // console.log(data);
       var root = this.$store.state.IPPORT;
       var url =
         root +
@@ -1285,7 +1293,7 @@ export default {
       // console.log(url);
       this.$http.get(url).then((result) => {
         if (result.status == 200) {
-          console.log(result);
+          // console.log(result);
           if (result.data.bStatus == false) {
           } else {
             var itme = result.data.cam;
@@ -1296,14 +1304,14 @@ export default {
               data["audio"] = itme[i].bEnableAudio;
               data["ChannelNumber"] = itme[i].nCh;
               this.tableData.push(data);
-              console.log(this.tableData);
+              // console.log(this.tableData);
               for (var i = 0; i < this.tableData.length; i++) {
                 for (var j = i + 1; j < this.tableData.length; j++) {
                   if (this.tableData[i] == this.tableData[j]) {
                     //第一个等同于第二个，splice方法删除第二个
                     this.tableData.splice(j, 1);
                     j--;
-                    console.log(this.tableData, 11111);
+                    // console.log(this.tableData, 11111);
                   }
                 }
               }
@@ -1337,7 +1345,7 @@ export default {
           tabledata["disabled"] = true;
         }
         this.tableData.push(tabledata);
-        console.log(this.tableData);
+        // console.log(this.tableData);
         this.loadSrc(tabledata, data[i].token);
       }
       this.total = this.tableData.length;
@@ -1467,7 +1475,7 @@ export default {
               audio: false,
               ChannelNumber: 0,
             };
-            // console.log(tabledata);
+            console.log(this.tableData);
             this.tableData.splice(index_xlh, 1, tabledata);
             this.$message({
               message: this.$t("message.camera.Delete_successful"),
@@ -1571,7 +1579,7 @@ export default {
                 bOnline: item["bOnline"],
                 ChannelNumber: item["nChannelNumber"],
               };
-              console.log(newItem);
+              // console.log(newItem);
               srcGroup.children1.push(newItem);
               // this.tableData3.push(newItem);
             }
@@ -1795,7 +1803,7 @@ export default {
       max-height: 500px !important;
       min-height: 700px;
       overflow-y: hidden;
-       padding-top: 0px;
+      padding-top: 0px;
     }
   }
 }
@@ -1804,7 +1812,6 @@ export default {
     padding: 20px 20px;
   }
 }
-
 .EditChannelSloganBtn {
   margin-left: auto;
   background: #3abbfe;

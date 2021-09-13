@@ -42,7 +42,7 @@
 					<span slot="title">{{$t("message.left.tour")}}</span>
 				</el-menu-item>
 				<el-menu-item v-if="this.$store.state.root=='Administrator'" index="/GB/GB28181">
-					<i class="iconfont icon-guobiao" style="font-size:16px"></i>
+					<i class="iconfont icon-wendang" style="font-size:18px"></i>
 					<span slot="title">GB</span>
 				</el-menu-item>
 				

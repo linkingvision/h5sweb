@@ -310,7 +310,7 @@ export default {
                             name:this.$t("message.live.Bitrate"),
                             data:(item.nAudioBitrate/1024).toFixed(1)+'kpbs'
                         }]
-                        if(this.height){
+                         if(this.height){
                             var informationVideo = [
                                 {
                                     name: this.$t("message.live.Codec"),
@@ -350,7 +350,7 @@ export default {
                             name:this.$t("message.live.Bitrate"),
                             data:(item.nVideoBitrate/1024).toFixed(1)+'kpbs'
                         }]
-                     }    
+                    }
                         this.informationAudio=informationAudio
                         this.informationVideo=informationVideo
                 }
@@ -408,7 +408,7 @@ export default {
         },
         // 画质
         handleCommand(command) {
-            this.height =command.nHeight
+             this.height =command.nHeight
       this.width =command.nWidth
            this.videoname=''
            var arr=this.inputlabel.split("-")

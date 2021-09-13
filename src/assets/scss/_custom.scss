@@ -667,6 +667,11 @@ $collapse_size:#FFFFFF;
             color: #FFFFFF;
         }
     }
+    .top_el_menu{
+        .el-table{
+            min-height: 77.58vh;
+        }
+    }
     // 表格
     .el-table {
         min-height: 80vh;
