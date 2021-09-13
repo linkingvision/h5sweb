@@ -9,6 +9,7 @@
                         <el-tree
                             :data="camdata" 
                             show-checkbox
+                            
                             ref="tree">
                             <span slot-scope="{ data }" style="width:100%;">
                                     <div style="width:100%;display: flex;justify-content: space-between;">

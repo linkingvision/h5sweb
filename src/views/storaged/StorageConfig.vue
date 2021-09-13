@@ -23,8 +23,13 @@ export default {
            var configport=this.$store.state.strNodeName
            var configip=this.$store.state.IPPORT
            var configipnew=configip.split(":")
+<<<<<<< HEAD
            iframe.setAttribute("src", "https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html");
            console.log("https://"+configipnew[1]+":"+configport+"/cockpit/@localhost/storage/index.html")
+=======
+           iframe.setAttribute("src", configip +"/cockpit/@localhost/storage/index.html");
+           console.log(configip +"/cockpit/@localhost/storage/index.html")
+>>>>>>> 74b991e7f11d0d9bbc011ac8d59b67e2615d6d54
        } 
 	},
 	mounted(){

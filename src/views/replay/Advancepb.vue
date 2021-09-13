@@ -381,6 +381,7 @@ export default {
 					// console.log(url);
 					//  return false;
 					_this.$http.get(url).then(result=>{
+						console.log(result);
 						if(result.status == 200){
 							var data=result.data;
 							var timedata1=[];

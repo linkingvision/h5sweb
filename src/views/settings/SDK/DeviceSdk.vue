@@ -266,11 +266,11 @@ import uuid from '../../../assets/js/uuid'
             }, {
                 value: 'H5_DEV_IVS',
                 label: 'H5_DEV_IVS'
-            }, {
+            }, 
+            {
                 value: 'H5_DEV_DH',
                 label: 'H5_DEV_DH'
-            }
-            , {
+            }, {
                 value: 'H5_DEV_HIKISC',
                 label: 'H5_DEV_HIKISC'
             }

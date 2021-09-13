@@ -332,8 +332,7 @@ import uuid from '../../../assets/js/uuid'
                 "&user="+encodeURIComponent(form.Username)+
                 "&password="+encodeURIComponent(form.Password)+
                 "&audio="+form.Audio+
-                // "&url="+urlfirst+
-                "&url="+encodeURIComponent(urlone)+
+                "&url="+urlfirst+
                 "&session="+ this.$store.state.token;
                 console.log("++++++++++++++++",url);
             if(form.enablesub){
@@ -451,8 +450,7 @@ import uuid from '../../../assets/js/uuid'
             "&user="+encodeURIComponent(form.Username)+
             "&password="+encodeURIComponent(form.Password)+
             "&audio="+form.Audio+
-            // "&url="+urlfirst+
-            "&url="+encodeURIComponent(urlone)+
+            "&url="+urlfirst+
             "&session="+ this.$store.state.token
            
             if(form.enablesub){
