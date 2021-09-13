@@ -6,40 +6,16 @@
   "description": "",
   "glyphs": [
     {
-<<<<<<< HEAD
       "icon_id": "23797827",
       "name": "切图16",
       "font_class": "qietu16",
-=======
-<<<<<<< HEAD
-      "icon_id": "23797827",
-      "name": "切图16",
-      "font_class": "qietu16",
-=======
-      "icon_id": "23773996",
-      "name": "16切图-01",
-      "font_class": "a-16qietu-01",
->>>>>>> 3caee1adc2738f6119795c2ad5be32529502612c
->>>>>>> 74b991e7f11d0d9bbc011ac8d59b67e2615d6d54
       "unicode": "e651",
       "unicode_decimal": 58961
     },
     {
-<<<<<<< HEAD
       "icon_id": "23797828",
       "name": "切图25",
       "font_class": "qietu25",
-=======
-<<<<<<< HEAD
-      "icon_id": "23797828",
-      "name": "切图25",
-      "font_class": "qietu25",
-=======
-      "icon_id": "23773997",
-      "name": "25切图-01",
-      "font_class": "a-25qietu-01",
->>>>>>> 3caee1adc2738f6119795c2ad5be32529502612c
->>>>>>> 74b991e7f11d0d9bbc011ac8d59b67e2615d6d54
       "unicode": "e655",
       "unicode_decimal": 58965
     },

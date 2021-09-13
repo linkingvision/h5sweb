@@ -377,7 +377,7 @@ import '../../../assets/js/jQuery.md5.js'
                           nHeight:itme[i].nHeight
                       };
                       this.tableData2.push(tabledata);
-                      console.log(this.tableData2);
+                      
                   }
                   this.total2=this.tableData2.length;
               }
@@ -510,7 +510,6 @@ import '../../../assets/js/jQuery.md5.js'
             this.$http.get(url).then(result=>{
                 if(result.status==200){
                   if(result.data.bStatus==true){
-                      console.log(result);
                         //this.reload();
                         this.tableData2=[];
                         this.loadstpro();
