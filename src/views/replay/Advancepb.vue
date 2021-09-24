@@ -166,6 +166,8 @@ export default {
     },
     data() {
         return {
+			starttimes:'',
+			endtimes:'',
             defaultProps: {
                 children: 'children',
                 label: 'label',
@@ -383,6 +385,7 @@ export default {
 					_this.$http.get(url).then(result=>{
 						if(result.status == 200){
 							var data=result.data;
+							console.log(data);
 							var timedata1=[];
 							//console.log("length",data.record.length);
 							for(var i=0;i<data.record.length;i++){
@@ -931,6 +934,15 @@ export default {
 			var strDate = timevalue.getDate();
 			var strDate1 = timevalue.getDate()-1;
 			var localOffset = Math.abs(timevalue.getTimezoneOffset() /60);
+			if (month<10) {
+				month = '0'+month;
+			}
+			if (strDate<10) {
+				strDate = '0'+strDate;
+			}
+			if (strDate1<10) {
+				strDate1 = '0'+strDate1;
+			}
 			var timevalues=year+"-"+month+"-"+strDate+"T"+"00:00:00"+"+0"+localOffset+":00";
 			var timevalues1=year+"-"+month+"-"+strDate1+"T"+"00:00:00"+"+0"+localOffset+":00";
 			var timevaluee=year+"-"+month+"-"+strDate+"T"+"23:59:59"+"+0"+localOffset+":00";
@@ -953,15 +965,30 @@ export default {
 			//return false;
 			this.$http.get(url).then(result=>{
 				console.log(url,result);
+				let tim0 = new Date(timevalues).getTime();
+				console.log(tim0);
 				if(result.status == 200){
 					var data=result.data;
 					var timedata1=[];
 					//console.log("length",data.record.length);
 					for(var i=0;i<data.record.length;i++){
 						var item=data.record[i];
+						var item1
+						if (i < data.record.length-1) {
+							item1=data.record[i+1];
+						}
 						//时间转换
 						var starf=new Date(item['strStartTime']).getTime();
+						var starf1=new Date(item1['strStartTime']).getTime();
 						var end=new Date(item['strEndTime']).getTime();
+						if (starf<tim0&&end>tim0) {
+							this.starttimes = timevalues
+							console.log(starf,end,tim0,this.starttimes);
+						}
+						if (end<tim0&&starf1>tim0) {
+							this.starttimes = item1['strStartTime'];
+							console.log('零点没有视频');
+						}
 						var starf=new Date(starf);
 						var end=new Date(end);
 						var timeitem={
@@ -969,7 +996,7 @@ export default {
 								endTime :end,
 								style:{background:"rgba(60,196,60, 0.498039)"}
 							};
-							console.log(item["nType"],555555555555555);
+							console.log(item["nType"]);
 						//console.log("录像段时间段颜色",timeitem["style"].background); //录像段时间段颜色
 						if(item["nType"]==="H5_REC_MANUAL"){
 							timeitem["style"].background="rgba(60,196,60, 0.498039)"
@@ -981,172 +1008,176 @@ export default {
 							//console.log("录像段时间段颜色2",timeitem["style"].background);
 						}
 						timedata1.push(timeitem);
-						// console.log("4545454",timeitem)
+						// console.log("4545454",timeitem);
 						$("#timeline"+this.selectRow+this.selectCol).TimeSlider('init',timevalue,timedata1);
 					}
 				}
+				if(this.selectRow=="1"&&this.selectCol=="1"){
+					this.selectCol1 = this.selectCol;
+					this.selectRow1 = this.selectCol;
+					if (this.v1 != undefined)
+					{
+						this.v1.disconnect();
+						delete this.v1;
+						this.v1 = undefined;
+						console.log("上this.v1",this.v1);
+					}
+					console.log(timevalues,this.starttimes);
+					var pbconf1 = {
+						begintime: this.starttimes,
+						// begintime: timevalues,
+						endtime: timevaluee,
+						autoplay: 'true',
+						showposter:"false", //'true' or 'false' show poster
+						callback: this.PlaybackCB,
+						serverpb: this.Adswitch, 
+						userdata:  this // user data
+					};
+					console.log(pbconf1,444444444);
+					let conf = {
+						videoid: "gaovideohb"+this.selectRow+this.selectCol,
+						protocol: window.location.protocol, //http: or https:
+						host: wsroot, //localhost:8080
+						rootpath:'/', // '/'
+						token:token,
+						pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+						hlsver:'v1', //v1 is for ts, v2 is for fmp4
+						session: this.$store.state.token
+					};
+					if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+						console.log(this.$store.state.liveviewrtc1,555552)
+						this.v1 = new H5sPlayerRTC(conf);
+						$("#rtcgaovideohb11").addClass("rtc_new");
+					}else{
+						console.log(this.$store.state.liveviewrtc1,555551)
+						this.v1 = new H5sPlayerWS(conf);
+						$("#rtcgaovideohb11").removeClass("rtc_new");
+					}
+					// this.v1 = new H5sPlayerRTC(conf);
+					console.log("v111111111111",this.v1)
+					//return false;
+					this.v1.connect();
+				}else if(this.selectRow=="1"&&this.selectCol=="2"){
+					this.selectCol1 = this.selectCol;
+					this.selectRow1 = this.selectCol;
+					if (this.v2 != undefined)
+					{
+						this.v2.disconnect();
+						delete this.v2;
+						this.v2 = undefined;
+					}
+					var pbconf1 = {
+						begintime: this.starttimes,
+						endtime: timevaluee,
+						autoplay: 'true',
+						showposter:"false", //'true' or 'false' show poster
+						callback: this.PlaybackCB1,
+						serverpb: this.Adswitch, 
+						userdata:  this // user data
+					};
+					let conf2 = {
+						videoid: "gaovideohb"+this.selectRow+this.selectCol,
+						protocol: window.location.protocol, //http: or https:
+						host: wsroot, //localhost:8080
+						rootpath:'/', // '/'
+						token:token,
+						pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+						hlsver:'v1', //v1 is for ts, v2 is for fmp4
+						session: this.$store.state.token
+					};
+					if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+						console.log(this.$store.state.liveviewrtc1,555552)
+						this.v2 = new H5sPlayerRTC(conf2);
+						$("#rtcgaovideohb12").addClass("rtc_new");
+					}else{
+						console.log(this.$store.state.liveviewrtc1,555551)
+						this.v2 = new H5sPlayerWS(conf2);
+					}
+					console.log("v22222222222222222",this.v2)
+					//return false;
+					this.v2.connect();
+				}else if(this.selectRow=="2"&&this.selectCol=="1"){
+					this.selectCol1 = this.selectCol;
+					this.selectRow1 = this.selectCol;
+					if (this.v3 != undefined)
+					{
+						this.v3.disconnect();
+						delete this.v3;
+						this.v3 = undefined;
+						console.log("上this.v1",this.v1);
+					}
+					var pbconf1 = {
+						begintime: this.starttimes,
+						endtime: timevaluee,
+						autoplay: 'true',
+						showposter:"false", //'true' or 'false' show poster
+						callback: this.PlaybackCB2,
+						serverpb: this.Adswitch, 
+						userdata:  this // user data
+					};
+					let conf3 = {
+						videoid: "gaovideohb"+this.selectRow+this.selectCol,
+						protocol: window.location.protocol, //http: or https:
+						host: wsroot, //localhost:8080
+						rootpath:'/', // '/'
+						token:token,
+						pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+						hlsver:'v1', //v1 is for ts, v2 is for fmp4
+						session: this.$store.state.token
+					};
+					if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+						console.log(this.$store.state.liveviewrtc1,555552)
+						this.v3 = new H5sPlayerRTC(conf3);
+						$("#rtcgaovideohb21").addClass("rtc_new");
+					}else{
+						console.log(this.$store.state.liveviewrtc1,555551)
+						this.v3 = new H5sPlayerWS(conf3);
+					}
+					//return false;
+					this.v3.connect();
+				}else if(this.selectRow=="2"&&this.selectCol=="2"){
+					this.selectCol1 = this.selectCol;
+					this.selectRow1 = this.selectCol;
+					if (this.v4 != undefined)
+					{
+						this.v4.disconnect();
+						delete this.v4;
+						this.v4 = undefined;
+						console.log("上this.v1",this.v1);
+					}
+					var pbconf1 = {
+						begintime: this.starttimes,
+						endtime: timevaluee,
+						autoplay: 'true',
+						showposter:"false", //'true' or 'false' show poster
+						callback: this.PlaybackCB3,
+						serverpb: this.Adswitch, 
+						userdata:  this // user data
+					};
+					let conf4 = {
+						videoid: "gaovideohb"+this.selectRow+this.selectCol,
+						protocol: window.location.protocol, //http: or https:
+						host: wsroot, //localhost:8080
+						rootpath:'/', // '/'
+						token:token,
+						pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
+						hlsver:'v1', //v1 is for ts, v2 is for fmp4
+						session: this.$store.state.token
+					};
+					if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
+						console.log(this.$store.state.liveviewrtc1,555552)
+						this.v4 = new H5sPlayerRTC(conf4);
+						$("#rtcgaovideohb22").addClass("rtc_new");
+					}else{
+						console.log(this.$store.state.liveviewrtc1,555551)
+						this.v4 = new H5sPlayerWS(conf4);
+					}
+					//return false;
+					this.v4.connect();
+				}
 			})
 			// return false;
-			if(this.selectRow=="1"&&this.selectCol=="1"){
-				this.selectCol1 = this.selectCol;
-            	this.selectRow1 = this.selectCol;
-				if (this.v1 != undefined)
-				{
-					this.v1.disconnect();
-					delete this.v1;
-					this.v1 = undefined;
-					console.log("上this.v1",this.v1);
-				}
-				var pbconf1 = {
-					begintime: timevalues,
-					endtime: timevaluee,
-					autoplay: 'true',
-					showposter:"false", //'true' or 'false' show poster
-					callback: this.PlaybackCB,
-					serverpb: this.Adswitch, 
-					userdata:  this // user data
-				};
-				let conf = {
-					videoid: "gaovideohb"+this.selectRow+this.selectCol,
-					protocol: window.location.protocol, //http: or https:
-					host: wsroot, //localhost:8080
-					rootpath:'/', // '/'
-					token:token,
-					pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-					hlsver:'v1', //v1 is for ts, v2 is for fmp4
-					session: this.$store.state.token
-				};
-				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
-					console.log(this.$store.state.liveviewrtc1,555552)
-					this.v1 = new H5sPlayerRTC(conf);
-					$("#rtcgaovideohb11").addClass("rtc_new");
-				}else{
-					console.log(this.$store.state.liveviewrtc1,555551)
-					this.v1 = new H5sPlayerWS(conf);
-					$("#rtcgaovideohb11").removeClass("rtc_new");
-				}
-				// this.v1 = new H5sPlayerRTC(conf);
-				console.log("v111111111111",this.v1)
-				//return false;
-				this.v1.connect();
-			}else if(this.selectRow=="1"&&this.selectCol=="2"){
-				this.selectCol1 = this.selectCol;
-            	this.selectRow1 = this.selectCol;
-				if (this.v2 != undefined)
-				{
-					this.v2.disconnect();
-					delete this.v2;
-					this.v2 = undefined;
-				}
-				var pbconf1 = {
-					begintime: timevalues,
-					endtime: timevaluee,
-					autoplay: 'true',
-					showposter:"false", //'true' or 'false' show poster
-					callback: this.PlaybackCB1,
-					serverpb: this.Adswitch, 
-					userdata:  this // user data
-				};
-				let conf2 = {
-					videoid: "gaovideohb"+this.selectRow+this.selectCol,
-					protocol: window.location.protocol, //http: or https:
-					host: wsroot, //localhost:8080
-					rootpath:'/', // '/'
-					token:token,
-					pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-					hlsver:'v1', //v1 is for ts, v2 is for fmp4
-					session: this.$store.state.token
-				};
-				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
-					console.log(this.$store.state.liveviewrtc1,555552)
-					this.v2 = new H5sPlayerRTC(conf2);
-					$("#rtcgaovideohb12").addClass("rtc_new");
-				}else{
-					console.log(this.$store.state.liveviewrtc1,555551)
-					this.v2 = new H5sPlayerWS(conf2);
-				}
-				console.log("v22222222222222222",this.v2)
-				//return false;
-				this.v2.connect();
-			}else if(this.selectRow=="2"&&this.selectCol=="1"){
-				this.selectCol1 = this.selectCol;
-            	this.selectRow1 = this.selectCol;
-				if (this.v3 != undefined)
-				{
-					this.v3.disconnect();
-					delete this.v3;
-					this.v3 = undefined;
-					console.log("上this.v1",this.v1);
-				}
-				var pbconf1 = {
-					begintime: timevalues,
-					endtime: timevaluee,
-					autoplay: 'true',
-					showposter:"false", //'true' or 'false' show poster
-					callback: this.PlaybackCB2,
-					serverpb: this.Adswitch, 
-					userdata:  this // user data
-				};
-				let conf3 = {
-					videoid: "gaovideohb"+this.selectRow+this.selectCol,
-					protocol: window.location.protocol, //http: or https:
-					host: wsroot, //localhost:8080
-					rootpath:'/', // '/'
-					token:token,
-					pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-					hlsver:'v1', //v1 is for ts, v2 is for fmp4
-					session: this.$store.state.token
-				};
-				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
-					console.log(this.$store.state.liveviewrtc1,555552)
-					this.v3 = new H5sPlayerRTC(conf3);
-					$("#rtcgaovideohb21").addClass("rtc_new");
-				}else{
-					console.log(this.$store.state.liveviewrtc1,555551)
-					this.v3 = new H5sPlayerWS(conf3);
-				}
-				//return false;
-				this.v3.connect();
-			}else if(this.selectRow=="2"&&this.selectCol=="2"){
-				this.selectCol1 = this.selectCol;
-            	this.selectRow1 = this.selectCol;
-				if (this.v4 != undefined)
-				{
-					this.v4.disconnect();
-					delete this.v4;
-					this.v4 = undefined;
-					console.log("上this.v1",this.v1);
-				}
-				var pbconf1 = {
-					begintime: timevalues,
-					endtime: timevaluee,
-					autoplay: 'true',
-					showposter:"false", //'true' or 'false' show poster
-					callback: this.PlaybackCB3,
-					serverpb: this.Adswitch, 
-					userdata:  this // user data
-				};
-				let conf4 = {
-					videoid: "gaovideohb"+this.selectRow+this.selectCol,
-					protocol: window.location.protocol, //http: or https:
-					host: wsroot, //localhost:8080
-					rootpath:'/', // '/'
-					token:token,
-					pbconf: pbconf1, //This is optional, if no pbconf, this will be live.
-					hlsver:'v1', //v1 is for ts, v2 is for fmp4
-					session: this.$store.state.token
-				};
-				if (this.$store.state.liveviewrtc1 == 'RTC' || (H5siOS() === true)){
-					console.log(this.$store.state.liveviewrtc1,555552)
-					this.v4 = new H5sPlayerRTC(conf4);
-					$("#rtcgaovideohb22").addClass("rtc_new");
-				}else{
-					console.log(this.$store.state.liveviewrtc1,555551)
-					this.v4 = new H5sPlayerWS(conf4);
-				}
-				//return false;
-				this.v4.connect();
-			}
+			
 			
 			
 		},
