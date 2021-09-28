@@ -367,6 +367,15 @@ $collapse_size:#FFFFFF;
             }
         }
     }
+    .Region{
+        .elinput{
+            background: #313131;
+            .el-input__inner{
+                border: none;
+                border-radius: 30px;
+            }
+        }
+    }
     //区域
     .Region{
         padding: 0 10px;
