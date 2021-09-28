@@ -2,11 +2,20 @@
     <div class="Region">
         <div class="tow_node">
             <div class="Root_node Root_node1">
+                <el-input
+                    class="elinput"
+                    prefix-icon="el-icon-search"
+                    placeholder="输入区域名进行过滤"
+                    v-model="filterText1">
+                </el-input>
+                <div style="font-size:16px;font-family:PingFang SC;color:#cbcbcb;line-height:50px;">根节点</div>
                 <el-tree 
                 :data="camdata"
                 highlight-current
                 show-checkbox
-                ref="tree">
+                :filter-node-method="filterNode1"
+                :props="defaultProps1"
+                ref="menuPermissionTree1">
                 <span slot-scope="{ data }" style="width:100%;">
                         <div style="width:100%;display: flex;justify-content: space-between;">
                             <span >
@@ -29,10 +38,12 @@
             </div>
             <div class="Root_node">
                 <el-input
+                    class="elinput"
                     placeholder="输入区域名进行过滤"
+                    prefix-icon="el-icon-search"
                     v-model="filterText">
                 </el-input>
-                <div style="font-size:16px;font-family:PingFang SC;font-weight:600;color:rgba(51,51,51,1);line-height:50px;">根节点</div>
+                <div style="font-size:16px;font-family:PingFang SC;color:#cbcbcb;line-height:50px;">根节点</div>
                 <el-tree highlight-current :filter-node-method="filterNode" :data="data" :props="defaultProps" ref="menuPermissionTree" @node-click="handleNodeClick2">
                     <span slot-scope="{data}" style="width:100%;">
                         <span>
@@ -43,13 +54,21 @@
                 </el-tree>
             </div>
             <div class="Root_node">
+                <el-input
+                    class="elinput"
+                    prefix-icon="el-icon-search"
+                    placeholder="输入区域名进行过滤"
+                    v-model="filterText2">
+                </el-input>
+                <div style="font-size:16px;font-family:PingFang SC;color:#cbcbcb;line-height:50px;">根节点</div>
                 <el-tree class="flow-tree" 
                     :data="datanodecam"
                     show-checkbox
                     default-expand-all
                     highlight-current
+                    :filter-node-method="filterNode"
                     :props="defaultPropscam"
-                    ref="menuPermissionTree1"
+                    ref="menuPermissionTree2"
                     >
                     <span slot-scope="{ node, data }" style="width:100%;">
                         <div class="datanodecam">
@@ -84,6 +103,8 @@
                     placeholder:this.$t("message.setting.Please")
                 },
                 filterText:"",
+                filterText1:"",
+                filterText2:"",
                 activeName: 'first',
                 data: [],
                 camdata:listdatag,
@@ -99,6 +120,10 @@
                     label: 'strName',
                     cam:"cam"
                 },
+                defaultProps1: {
+                    children: 'children',
+                    label: 'label'
+                },
                 defaultPropscam:{
                     children: 'cam',
                     label: 'strName',
@@ -108,12 +133,19 @@
             };
         },
         mounted(){
+            console.log(this.camdata,'111111111');
             this.Regional();
             // this.addcam();
         },
         watch: {
             filterText(val) {
                 this.$refs.menuPermissionTree.filter(val);
+            },
+            filterText1(val) {
+                this.$refs.menuPermissionTree1.filter(val);
+            },
+            filterText2(val) {
+                this.$refs.menuPermissionTree2.filter(val);
             }
         },
         methods:{
@@ -383,13 +415,21 @@
                 if (!value) return true;
                 return data.strName.indexOf(value) !== -1;
             },
+            filterNode1(value, data) {
+                console.log(value);
+                if (!value) return true;
+                return data.label.indexOf(value) !== -1;
+            },
+            filterNode2(value, data) {
+                if (!value) return true;
+                return data.strName.indexOf(value) !== -1;
+            },
         },
     }
 </script>
 
 <style lang="scss" scoped>
 .Region{
-
     .tow_node{
         width: 100%;
         display: flex;
