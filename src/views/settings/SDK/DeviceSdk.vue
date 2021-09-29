@@ -283,10 +283,11 @@ import uuid from '../../../assets/js/uuid'
             }, {
                 value: 'H5_DEV_DHDSS',
                 label: 'H5_DEV_DHDSS'
-            },{
-                value: 'H5_DEV_VIKOR',
-                label: 'H5_DEV_VIKOR'
             }
+            // ,{
+            //     value: 'H5_DEV_VIKOR',
+            //     label: 'H5_DEV_VIKOR'
+            // }
         ],
         //分页
         pageSize: 10,//一页数量
